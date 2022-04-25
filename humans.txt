@@ -1,0 +1,10 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+
+# TEAM
+  
+  Web Developer: Caroline Hagan
+  Site: https://blueocto.co.uk
+  Twitter: @blueocto
+  Location: Newcastle upon Tyne, UK
