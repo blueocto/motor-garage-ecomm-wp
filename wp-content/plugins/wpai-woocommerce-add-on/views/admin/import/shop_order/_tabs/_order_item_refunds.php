@@ -18,7 +18,7 @@
 			<tr>
 				<td colspan="2">
 					<label><?php _e('Date', PMWI_Plugin::TEXT_DOMAIN); ?></label>
-					<div class="clear">
+					<div class="date">
 						<input type="text" class="datepicker rad4" name="pmwi_order[order_refund_date]" value="<?php echo esc_attr($post['pmwi_order']['order_refund_date']) ?>"/>																
 					</div>
 					<span class="wpallimport-clear"></span>
@@ -28,7 +28,7 @@
 						<div class="wpallimport-radio-field">
 							<input type="radio" id="order_refund_issued_source_existing" name="pmwi_order[order_refund_issued_source]" value="existing" <?php echo 'existing' == $post['pmwi_order']['order_refund_issued_source'] ? 'checked="checked"' : '' ?> class="switcher"/>
 							<label for="order_refund_issued_source_existing" style="width:auto;"><?php _e('Load details from existing user', PMWI_Plugin::TEXT_DOMAIN) ?></label>
-							<a href="#help" class="wpallimport-help" title="<?php _e('If no user is matched, refund issuer will be left blank.', PMWI_Plugin::TEXT_DOMAIN) ?>" style="position:relative; top: 3px;">?</a>
+							<a href="#help" class="wpallimport-help" title="<?php _e('If no user is matched, refund issuer will be left blank.', PMWI_Plugin::TEXT_DOMAIN) ?>" style="position:relative;top:0;">?</a>
 						</div>
 						<span class="wpallimport-clear"></span>
 						<div class="switcher-target-order_refund_issued_source_existing" style="padding-left:7px;">				
@@ -66,11 +66,11 @@
 									<div class="switcher-target-order_refund_issued_by_cf set_with_xpath">
 										<span class="wpallimport-slide-content" style="padding-left:0;">
 											<p>
-												<label style="line-height: 30px;"><?php _e('Name', PMWI_Plugin::TEXT_DOMAIN); ?></label>
+												<label style="width: 30px;"><?php _e('Name', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 												<input type="text" class="short rad4" name="pmwi_order[order_refund_issued_cf_name]" style="" value="<?php echo esc_attr($post['pmwi_order']['order_refund_issued_cf_name']) ?>"/>			
 											</p>
 											<p>
-												<label style="line-height: 30px;"><?php _e('Value', PMWI_Plugin::TEXT_DOMAIN); ?></label>
+												<label style="width: 30px;"><?php _e('Value', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 												<input type="text" class="short rad4" name="pmwi_order[order_refund_issued_cf_value]" style="" value="<?php echo esc_attr($post['pmwi_order']['order_refund_issued_cf_value']) ?>"/>			
 											</p>
 										</span>

@@ -121,8 +121,7 @@ class PMWI_Import_Record extends PMWI_Model_Record {
                 if (!in_array($attid, $gallery)) {
                     $gallery[] = $attid;
                 }
-            }
-            else {
+            } else {
                 $gallery = array($attid);
             }
             update_post_meta($p->post_parent, '_product_image_gallery_tmp', implode(',', $gallery));
@@ -136,13 +135,26 @@ class PMWI_Import_Record extends PMWI_Model_Record {
      */
     public function action_wpai_additional_variation_images($pid, $xml, $update) {
         $product = wc_get_product($pid);
-        $variationID = get_post_meta($product->get_id(), XmlImportWooCommerceService::FIRST_VARIATION, TRUE);
-        if ($product->is_type('variation') || !empty($variationID)) {
-            if (empty($variationID)) {
-                $variationID = $pid;
-            }
-            if ($gallery = get_post_meta($product->get_id(), '_product_image_gallery', TRUE)) {
-                update_post_meta($variationID, '_wc_additional_variation_images', $gallery);
+
+        if ( $product ) {
+            $variationID = get_post_meta($product->get_id(), XmlImportWooCommerceService::FIRST_VARIATION, TRUE);
+            if ($product->is_type('variation') || !empty($variationID)) {
+                if (empty($variationID)) {
+                    $variationID = $pid;
+                }
+                if ($gallery = get_post_meta($product->get_id(), '_product_image_gallery', TRUE)) {
+                    $key = null;
+                    if ( class_exists( 'Woo_Variation_Gallery' ) ) {
+                        $key = 'woo_variation_gallery_images';
+                        $gallery = explode( ',', trim( $gallery, ',' ) );
+                    } elseif ( class_exists( 'WC_Additional_Variation_Images' ) ) {
+                        $key = '_wc_additional_variation_images';
+                    }
+
+                    if ( ! empty( $key ) ) {
+                        update_post_meta($variationID, $key, $gallery);
+                    }
+                }
             }
         }
     }

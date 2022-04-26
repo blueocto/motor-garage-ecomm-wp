@@ -66,8 +66,7 @@ class ImportVariationProductType5 extends ImportVariationBase {
                 parent::import();
                 do_action('pmxi_update_product_variation', $this->getProduct()->get_id());
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log(__('<b>ERROR:</b> ' . $e->getMessage(), \PMWI_Plugin::TEXT_DOMAIN));
         }
     }
@@ -79,8 +78,32 @@ class ImportVariationProductType5 extends ImportVariationBase {
      */
     public function setProperties() {
         if ($this->getImportService()->isUpdateDataAllowed('is_update_attributes', $this->isNewProduct())) {
-          // Force updating variation attributes.
-          $this->product->set_attributes([]);
+            $keep_attributes = [];
+            $attributes = $this->product->get_attributes();
+            if (!empty($attributes)) {
+                foreach ($attributes as $attribute_key => $attribute_value) {
+                    // Update only these Attributes, leave the rest alone.
+                    if ($this->isNewVariation() || $this->getImport()->options['update_attributes_logic'] == 'only') {
+                        if ( !empty($this->getImport()->options['attributes_list'])
+                            && is_array($this->getImport()->options['attributes_list'])
+                            && !in_array(str_replace("attribute_", "", $attribute_key), array_filter($this->getImport()->options['attributes_list'], 'trim'))
+                        ) {
+                            $keep_attributes[$attribute_key] = $attribute_value;
+                        }
+                    }
+                    // Leave these attributes alone, update all other Attributes.
+                    if ($this->isNewVariation() || $this->getImport()->options['update_attributes_logic'] == 'all_except') {
+                        if ( !empty($this->getImport()->options['attributes_list'])
+                            && is_array($this->getImport()->options['attributes_list'])
+                            && in_array(str_replace("attribute_", "", $attribute_key), array_filter($this->getImport()->options['attributes_list'], 'trim'))
+                        ) {
+                            $keep_attributes[$attribute_key] = $attribute_value;
+                        }
+                    }
+                }
+            }
+            // Force updating variation attributes.
+            $this->product->set_attributes($keep_attributes);
         }
         // Set variation basic properties.
         parent::setProperties();
@@ -135,6 +158,9 @@ class ImportVariationProductType5 extends ImportVariationBase {
     protected function generateSKU() {
         // Unique SKU.
         $newSKU = esc_html(trim(stripslashes( $this->getValue('product_sku'))));
+        if ($this->getImport()->options['variable_sku_add_parent']) {
+            $newSKU = $this->getParentProduct()->get_sku() . '-' . $newSKU;
+        }
         if ($newSKU == '' && !$this->getImport()->options['disable_auto_sku_generation']) {
             if ($this->isNewVariation() || $this->getImportService()->isUpdateCustomField('_sku')) {
                 $variationTitle = sprintf( __( 'Variation #%s of %s', \PMWI_Plugin::TEXT_DOMAIN ), absint( $this->getProduct()->get_id() ), $this->getProduct()->get_title());
@@ -151,9 +177,7 @@ class ImportVariationProductType5 extends ImportVariationBase {
      * @throws \Exception
      */
     public function initProductVariation() {
-
         $sku = $this->getValue('product_sku');
-
         $variationSkuForTitle = ('' == $sku) ? $this->getIndex() : $sku;
         if ($this->getImport()->options['variable_sku_add_parent']) {
             $sku = $this->getParentProduct()->get_sku() . '-' . $sku;
@@ -171,31 +195,30 @@ class ImportVariationProductType5 extends ImportVariationBase {
         if (!$isVariationHaveAttributes && $this->getImport()->options['make_simple_product']) {
             return FALSE;
         }
-
         // Enabled or disabled.
         $postStatus = $this->getValue('product_enabled') == 'yes' ? 'publish' : 'private';
         $variationToUpdateID = FALSE;
         $postRecord = new \PMXI_Post_Record();
         $postRecord->clear();
-
         // Generate a useful post title.
         $variationPostTitle = sprintf(__('Variation #%s of %s', \PMWI_Plugin::TEXT_DOMAIN), $variationSkuForTitle, $this->getParentProduct()->get_title());
 
-        $variation = array(
-            'post_title' => $variationPostTitle,
+        $variation = [
+            'post_title'   => $variationPostTitle,
             'post_content' => '',
-            'post_status' => $postStatus,
-            'post_parent' => $this->getParentProduct()->get_id(),
-            'post_type' => 'product_variation'
-        );
+            'post_author'  => get_post_field( 'post_author', $this->getParentProduct()->get_id() ),
+            'post_status'  => $postStatus,
+            'post_parent'  => $this->getParentProduct()->get_id(),
+            'post_type'    => 'product_variation'
+        ];
         $this->isNewVariation = FALSE;
-        $postRecord->getBy(array(
+        $postRecord->getBy([
             'unique_key' => 'Variation ' . $variationSkuForTitle . ' of ' . $this->getParentProduct()->get_id(),
             'import_id' => $this->getImport()->id
-        ));
+        ]);
         if (!$postRecord->isEmpty()) {
             $variationToUpdateID = $postRecord->post_id;
-            $postRecord->set(array('iteration' => $this->getImport()->iteration))
+            $postRecord->set(['iteration' => $this->getImport()->iteration])
                 ->update();
         }
 
@@ -207,13 +230,13 @@ class ImportVariationProductType5 extends ImportVariationBase {
             // Create new variation.
             $variationToUpdateID = wp_insert_post($variation);
             // Associate variation with import.
-            $postRecord->isEmpty() and $postRecord->set(array(
+            $postRecord->isEmpty() and $postRecord->set([
                 'post_id' => $variationToUpdateID,
                 'import_id' => $this->getImport()->id,
                 'unique_key' => 'Variation ' . $variationSkuForTitle . ' of ' . $this->getParentProduct()->get_id(),
                 'product_key' => ''
-            ))->insert();
-            $postRecord->set(array('iteration' => $this->getImport()->iteration))
+            ])->insert();
+            $postRecord->set(['iteration' => $this->getImport()->iteration])
                 ->update();
             $this->isNewVariation = TRUE;
             $this->getLogger() && call_user_func($this->getLogger(), sprintf(__('- `%s`: variation created successfully', \PMWI_Plugin::TEXT_DOMAIN), sprintf(__('Variation #%s of %s', \PMWI_Plugin::TEXT_DOMAIN), absint($variationToUpdateID), esc_html($this->getParentProduct()->get_title()))));
@@ -224,7 +247,7 @@ class ImportVariationProductType5 extends ImportVariationBase {
                 return FALSE;
             }
             // Update existing variation.
-            $this->wpdb->update($this->wpdb->posts, $variation, array('ID' => $variationToUpdateID));
+            $this->wpdb->update($this->wpdb->posts, $variation, ['ID' => $variationToUpdateID]);
             $this->getLogger() && call_user_func($this->getLogger(), sprintf(__('- `%s`: variation updated successfully', \PMWI_Plugin::TEXT_DOMAIN), $variationPostTitle));
             // Handle obsolete files (i.e. delete or keep) according to import settings.
             if ($this->getImport()->options['update_all_data'] == 'yes' || (
@@ -260,7 +283,6 @@ class ImportVariationProductType5 extends ImportVariationBase {
         // Delete keys which are no longer correspond to import settings.
         if (!empty($existing_variation_meta_keys)) {
             foreach ($existing_variation_meta_keys as $cur_meta_key) {
-                // Do not delete post meta for features image.
                 if (in_array($cur_meta_key, array(
                     '_thumbnail_id',
                     '_product_image_gallery'
@@ -280,7 +302,6 @@ class ImportVariationProductType5 extends ImportVariationBase {
                 ) {
                     continue;
                 }
-
                 // Update only these Attributes, leave the rest alone.
                 if (($this->isNewVariation() || $this->getImport()->options['is_update_attributes']) && $this->getImport()->options['update_attributes_logic'] == 'only') {
                     if ($cur_meta_key == '_product_attributes') {
@@ -342,24 +363,9 @@ class ImportVariationProductType5 extends ImportVariationBase {
                     }
                 }
                 // Update all Custom Fields is defined.
-                if ($this->getImport()->options['update_custom_fields_logic'] == "full_update") {
-                    delete_post_meta($this->getProduct()->get_id(), $cur_meta_key);
-                }
-                // Update only these Custom Fields, leave the rest alone.
-                elseif ($this->getImport()->options['update_custom_fields_logic'] == "only") {
-                    if (!empty($this->getImport()->options['custom_fields_list'])
-                        && is_array($this->getImport()->options['custom_fields_list'])
-                        && in_array($cur_meta_key, $this->getImport()->options['custom_fields_list'])
-                    ) {
-                        delete_post_meta($this->getProduct()->get_id(), $cur_meta_key);
-                    }
-                }
-                // Leave these fields alone, update all other Custom Fields.
-                elseif ($this->getImport()->options['update_custom_fields_logic'] == "all_except") {
-                    if (empty($this->getImport()->options['custom_fields_list']) || !in_array($cur_meta_key, $this->getImport()->options['custom_fields_list'])) {
-                        delete_post_meta($this->getProduct()->get_id(), $cur_meta_key);
-                    }
-                }
+	            if ($this->getImportService()->isUpdateCustomField($cur_meta_key)) {
+		            delete_post_meta($this->getProduct()->get_id(), $cur_meta_key);
+	            }
             }
         }
         // Add any default post meta.
@@ -376,13 +382,18 @@ class ImportVariationProductType5 extends ImportVariationBase {
         $images = $this->getValue('product_image');
         $uploads = wp_upload_dir();
         if (!empty($uploads) && false === $uploads['error'] && !empty($images) && $this->getImportService()->isUpdateDataAllowed('is_update_images', $this->isNewVariation())) {
+	        // Delete post meta for features image.
+	        if ($this->isNewVariation() || $this->getImport()->options['update_all_data'] == "yes" || ( $this->getImport()->options['update_all_data'] == "no" && $this->getImport()->options['is_update_images'] && $this->getImport()->options['update_images_logic'] == "full_update")) {
+		        delete_post_meta($this->getProduct()->get_id(), '_thumbnail_id');
+		        delete_post_meta($this->getProduct()->get_id(), '_product_image_gallery');
+	        }
             require_once(ABSPATH . 'wp-admin/includes/image.php');
             $gallery = array();
             $images = array_filter(explode(',', $images));
             if (!empty($images)) {
                 $images = array_map('trim', $images);
                 foreach ($images as $imgURL) {
-                    $attachmentID = \PMXI_API::upload_image($this->getProduct()->get_id(), $imgURL, $this->getImport()->options['download_images'], $this->getLogger(), TRUE);
+                    $attachmentID = \PMXI_API::upload_image($this->getProduct()->get_id(), $imgURL, $this->getImport()->options['download_images'], $this->getLogger(), TRUE, "", "images", $this->getImport()->options['search_existing_images'], $this->getArticle());
                     if ($attachmentID) {
                         $variationThumbnailID = get_post_thumbnail_id( $this->getProduct()->get_id() );
                         if (empty($variationThumbnailID) && $this->getImport()->options['is_featured']) {
@@ -395,7 +406,17 @@ class ImportVariationProductType5 extends ImportVariationBase {
                 }
             }
             if (!empty($this->getImport()->options['import_additional_variation_images'])){
-                update_post_meta($this->getProduct()->get_id(), '_wc_additional_variation_images', implode(",", $gallery) );
+                $key = null;
+                if ( class_exists( 'Woo_Variation_Gallery' ) ) {
+                    $key = 'woo_variation_gallery_images';
+                } elseif ( class_exists( 'WC_Additional_Variation_Images' ) ) {
+                    $key = '_wc_additional_variation_images';
+                    $gallery = implode( ',', $gallery );
+                }
+
+                if ( ! empty( $key ) ) {
+                    update_post_meta($this->getProduct()->get_id(), $key, $gallery );
+                }                
             }
         }
     }

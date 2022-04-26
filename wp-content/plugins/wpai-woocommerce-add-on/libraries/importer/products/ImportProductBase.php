@@ -84,79 +84,29 @@ abstract class ImportProductBase extends ImportBase {
      *
      * Get list of Linked Product IDs.
      *
-     * @param $pid - Current product ID.
      * @param $products - Products which needs to be linked.
      * @param $type
      *
      * @return array
      */
-    protected function getLinkedProducts($pid, $products, $type) {
+    protected function getLinkedProducts($products, $type) {
         $linked_products = array();
         if (!empty($products)) {
             $not_found = [];
-            $ids = array_filter(explode(',', $products), 'trim');
+            $ids = array_filter(explode(',', $products));
+            $ids = array_map('trim', $ids);
             foreach ($ids as $id) {
                 // Do not link product to himself.
-                if ($id == $pid) continue;
-                // Search linked product by _SKU.
-                $args = [
-                    'post_type' => ['product', 'product_variation'],
-                    'meta_query' => [
-                        [
-                            'key' => '_sku',
-                            'value' => $id,
-                        ]
-                    ]
-                ];
-                $query = new \WP_Query($args);
-                $linked_product = FALSE;
-                if ($query->have_posts()) {
-                    $linked_product = get_post($query->post->ID);
-                }
-                wp_reset_postdata();
-                if (!$linked_product) {
-                    if (is_numeric($id)) {
-                        // Search linked product by ID.
-                        $query = new \WP_Query([
-                            'post_type' => [
-                                'product',
-                                'product_variation'
-                            ],
-                            'post__in' => [$id]
-                        ]);
-                        if ($query->have_posts()) {
-                            $linked_product = get_post($query->post->ID);
-                        }
-                        wp_reset_postdata();
-                    }
-                    if (!$linked_product) {
-                        // Search linked product by slug.
-                        $args = [
-                            'name' => $id,
-                            'post_type' => 'product',
-                            'post_status' => 'publish',
-                            'numberposts' => 1
-                        ];
-                        $query = get_posts($args);
-                        if ($query) {
-                            $linked_product = $query[0];
-                        }
-                        wp_reset_postdata();
-                        if (!$linked_product) {
-                            // Search linked product by title.
-                            $linked_product = get_page_by_title( $id, OBJECT, 'product' );
-                        }
-                    }
-                }
-                if ($linked_product) {
+                if ($id == $this->getPid()) continue;
+                $linked_product_id = self::getProductIdByIdentifier($id);
+                if ($linked_product_id) {
                     // Do not link product to himself.
-                    if ($pid == $linked_product->ID) {
+                    if ($this->getPid() == $linked_product_id) {
                         continue;
                     }
-                    $linked_products[] = $linked_product->ID;
-                    $this->getLogger() and call_user_func($this->getLogger(), sprintf(__('Product `%s` with ID `%d` added to %s list.', \PMWI_Plugin::TEXT_DOMAIN), $linked_product->post_title, $linked_product->ID, $type == '_upsell_ids' ? 'Up-Sells' : 'Cross-Sells'));
-                }
-                else {
+                    $linked_products[] = $linked_product_id;
+                    $this->getLogger() and call_user_func($this->getLogger(), sprintf(__('Product with ID `%d` added to %s list.', \PMWI_Plugin::TEXT_DOMAIN), $linked_product_id, $type == '_upsell_ids' ? 'Up-Sells' : 'Cross-Sells'));
+                } else {
                     $not_found[] = $id;
                 }
             }
@@ -168,7 +118,7 @@ abstract class ImportProductBase extends ImportBase {
                     $not_founded_linked_products = [];
                 }
                 $not_founded_linked_products[] = [
-                    'pid' => $pid,
+                    'pid' => $this->getPid(),
                     'type' => $type,
                     'not_linked_products' => $not_found
                 ];
@@ -176,6 +126,55 @@ abstract class ImportProductBase extends ImportBase {
             }
         }
         return $linked_products;
+    }
+
+    /**
+     * Get product or variation ID by identifier.
+     *
+     * @param $identifier
+     * @return false|int
+     */
+    public static function getProductIdByIdentifier($identifier) {
+        // Trying to find linked product by _sku.
+        $product_id = wc_get_product_id_by_sku($identifier);
+        // Trying to find linked product by ID, slug or title.
+        if (!$product_id) {
+            // Trying to find linked product by ID.
+            if (is_numeric($identifier)) {
+                // Search linked product by ID.
+                $query = new \WP_Query([
+                    'post_type' => [
+                        'product',
+                        'product_variation'
+                    ],
+                    'post__in' => [$identifier]
+                ]);
+                if ($query->have_posts()) {
+                    $product_id = $query->post->ID;
+                }
+            }
+            if (!$product_id) {
+                // Search linked product by slug.
+                $args = [
+                    'name' => $identifier,
+                    'post_type' => 'product',
+                    'post_status' => 'publish',
+                    'numberposts' => 1
+                ];
+                $query = get_posts($args);
+                if ($query) {
+                    $product_id = $query[0]->ID;
+                }
+            }
+            if (!$product_id) {
+                // Search linked product by title.
+                $product = get_page_by_title( $identifier, OBJECT, 'product' );
+                if ($product && !is_wp_error($product)) {
+                    $product_id = $product->ID;
+                }
+            }
+        }
+        return $product_id ? $product_id : FALSE;
     }
 
     /**

@@ -70,7 +70,7 @@
 							<span class="wpallimport-slide-content" style="padding-left:0;">	
 								<label class="order-separator-label" style="line-height: 30px;"><?php _e('Multiple fees separated by', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 								<input type="text" class="short rad4 order-separator-input" name="pmwi_order[fees_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['fees_repeater_mode_separator']) ?>" style="width:10%; text-align: center;"/>
-								<a href="#help" class="wpallimport-help" style="top:10px;left:8px;" original-title="For example, two fees would be imported like this 'Fee 1|Fee 2' and the fee amounts like this 10|20">?</a>							
+								<a href="#help" class="wpallimport-help" style="top:12px;left:8px;" title="For example, two fees would be imported like this 'Fee 1|Fee 2' and the fee amounts like this 10|20">?</a>
 							</span>
 						</div>
 					</div>						
@@ -81,7 +81,7 @@
 							<span class="wpallimport-slide-content" style="padding-left:0;">	
 								<label style="width: 60px; line-height: 30px;"><?php _e('For each', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 								<input type="text" class="short rad4" name="pmwi_order[fees_repeater_mode_foreach]" value="<?php echo esc_attr($post['pmwi_order']['fees_repeater_mode_foreach']) ?>" style="width:50%;"/>							
-								<label class="foreach-do" style="padding-left: 10px; line-height: 30px;"><?php _e('do...', PMWI_Plugin::TEXT_DOMAIN); ?></label>
+								<label class="foreach-do" style="padding-left: 12px; line-height: 30px;"><?php _e('do...', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 							</span>
 						</div>		
 					</div>						
@@ -90,7 +90,7 @@
 					<div class="form-field input" style="margin-bottom: 20px;">
 						<label class="order-separator-label" style="line-height: 30px;"><?php _e('Multiple fees separated by', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 						<input type="text" class="short rad4 order-separator-input" name="pmwi_order[fees_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['fees_repeater_mode_separator']) ?>" style="width:10%; text-align: center;"/>	
-						<a href="#help" class="wpallimport-help" style="top:10px;left:8px;" original-title="For example, two fees would be imported like this 'Fee 1|Fee 2' and the fee amounts like this 10|20">?</a>						
+						<a href="#help" class="wpallimport-help" style="top:12px;left:8px;" title="For example, two fees would be imported like this 'Fee 1|Fee 2' and the fee amounts like this 10|20">?</a>
 					</div>
 					<?php endif; ?>		
 				</div>	

@@ -205,8 +205,10 @@ abstract class Parser implements ParserInterface {
      * Remove all temporary created files.
      */
     public function unlinkTempFiles() {
-        foreach ($this->tmp_files as $file) { // remove all temporary files created
-            unlink($file);
+        if (!empty($this->tmp_files)) {
+            foreach ($this->tmp_files as $file) { // remove all temporary files created
+                unlink($file);
+            }
         }
         $this->tmp_files = array();
     }

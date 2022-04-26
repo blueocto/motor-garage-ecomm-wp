@@ -58,12 +58,10 @@ class ImportOrderCouponItems extends ImportOrderItemsBase {
 
                 if ($order_item->isEmpty()) {
                     $item_id = FALSE;
-
                     if (!$this->isNewOrder()) {
                         $order_items = $this->getOrder()->get_items('coupon');
-
-                        foreach ($order_items as $order_item_id => $order_item) {
-                            if ($order_item['name'] == $coupon['code']) {
+                        foreach ($order_items as $order_item_id => $order_item_coupon) {
+                            if ($order_item_coupon['name'] == $coupon['code']) {
                                 $item_id = $order_item_id;
                                 break(2);
                             }
@@ -74,8 +72,7 @@ class ImportOrderCouponItems extends ImportOrderItemsBase {
                         if (version_compare(WOOCOMMERCE_VERSION, '3.0') < 0) {
                             $item_id = $this->getOrder()
                                 ->add_coupon($coupon['code'], $absAmount, $coupon['amount_tax']);
-                        }
-                        else {
+                        } else {
                             $item = new \WC_Order_Item_Coupon();
                             $item->set_props(array(
                                 'code' => $coupon['code'],
@@ -89,8 +86,7 @@ class ImportOrderCouponItems extends ImportOrderItemsBase {
 
                     if (!$item_id) {
                         $this->getLogger() and call_user_func($this->getLogger(), __('- <b>WARNING</b> Unable to create order coupon line.', \PMWI_Plugin::TEXT_DOMAIN));
-                    }
-                    else {
+                    } else {
                         $order_item->set(array(
                             'import_id' => $this->getImport()->id,
                             'post_id' => $this->getOrderID(),
@@ -99,12 +95,9 @@ class ImportOrderCouponItems extends ImportOrderItemsBase {
                             'iteration' => $this->getImport()->iteration
                         ))->save();
                     }
-                }
-                else {
+                } else {
                     $item_id = str_replace('coupon-item-', '', $order_item->product_key);
-
                     if (version_compare(WOOCOMMERCE_VERSION, '3.0') < 0) {
-
                         $is_updated = $this->getOrder()
                             ->update_coupon($item_id, array(
                                 'code' => $coupon['code'],
@@ -112,22 +105,18 @@ class ImportOrderCouponItems extends ImportOrderItemsBase {
                                 // 'discount_amount_tax' => empty($coupon['amount_tax']) ? NULL : $coupon['amount_tax']
                             ));
 
-                    }
-                    else {
+                    } else {
 
                         $item = new \WC_Order_Item_Coupon($item_id);
 
                         if (isset($coupon['code'])) {
                             $item->set_code($coupon['code']);
                         }
-
                         if (isset($coupon['amount'])) {
                             $item->set_discount($absAmount);
                         }
-
                         $is_updated = $item->save();
                     }
-
                     if ($is_updated) {
                         $order_item->set(array(
                             'iteration' => $this->getImport()->iteration

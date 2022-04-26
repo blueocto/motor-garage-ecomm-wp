@@ -81,27 +81,39 @@ class ImportVariableProduct extends ImportProduct {
                 parent::import();
                 // Update parent product _price field.
                 if ($this->isNewProduct() || $this->getImportService()->isUpdateCustomField('_price')) {
-                    update_post_meta($this->getProduct()->get_id(), '_price', $this->getProduct()->get_regular_price());
+                    $_price = $this->getProduct()->get_regular_price();
+                    $_sale_price = $this->getProduct()->get_sale_price();
+                    if ( ! empty($_sale_price) ) {
+                        $_price = $_sale_price;
+                    }
+                    update_post_meta($this->getProduct()->get_id(), '_price', $_price);
                 }
                 // Save originally parsed data, but without attributes.
                 $this->saveParsedData();
-                if ($this->getImportService()->isUpdateDataAllowed('is_update_attributes', $this->isNewProduct())) {
-                    $added_variations = $this->linkAllVariations();
-                    $this->getImportService()->syncVariableProductData($this->getProduct()->get_id());
-                    $this->log(sprintf(__('<b>CREATED</b>: %s variations for parent product %s.', \PMWI_Plugin::TEXT_DOMAIN), $added_variations, $this->product->get_title()));
-                }
+	            $added_variations = $this->linkAllVariations();
+	            $this->getImportService()->syncVariableProductData($this->getProduct()->get_id());
+	            $this->log(sprintf(__('<b>CREATED</b>: %s variations for parent product %s.', \PMWI_Plugin::TEXT_DOMAIN), $added_variations, $this->product->get_title()));
                 return;
             }
             switch ($this->getImport()->options['matching_parent']) {
                 // Importing new variation to existing products #6.
                 case 'existing':
                     // Matching parent product.
-                    $this->importParentProduct();
+                    $this->initParentProduct();
                     if (!empty($this->parent)) {
                         // Define Product Variation Importer.
                         $this->variationImporter = new ImportVariationProduct($this->index, $this->getOptions(), $this->getParsedData());
                         // Import variations.
                         $this->importVariations($this->parent->get_id());
+                    } else {
+                    	if (empty($this->getImport()->options['create_new_product_if_no_parent'])) {
+		                    $this->log(sprintf(__('- Variation `%s` skipped. No parent product found.', \PMWI_Plugin::TEXT_DOMAIN), $this->getArticleData('post_title')));
+		                    wp_delete_post($this->getPid());
+	                    } else {
+		                    // Import basic product data.
+		                    $this->importParentProduct();
+		                    $this->getImportService()->syncVariableProductData($this->getPid());
+	                    }
                     }
                     break;
                 // Importing variable product using option #5.
@@ -130,9 +142,6 @@ class ImportVariableProduct extends ImportProduct {
                         // Init variations imported.
                         $this->variationImporter = new ImportVariationProductType5($index, new ImporterOptions($parser), $parser->getData(), $this->getProduct());
                         $this->variationImporter->import();
-                        if (empty($i) && $this->variationImporter->getProduct()) {
-                            update_post_meta($this->getProduct()->get_id(), XmlImportWooCommerceService::FIRST_VARIATION, $this->variationImporter->getProduct()->get_id());
-                        }
                     }
                     // Set is new product flag.
                     update_post_meta($this->getProduct()->get_id(), XmlImportWooCommerceService::FLAG_IS_NEW_PRODUCT, $this->isNewProduct());
@@ -205,8 +214,7 @@ class ImportVariableProduct extends ImportProduct {
                     'post_parent' => $this->getArticleData('post_parent'),
                     'post_title' => $this->getValue('existing_parent_product')
                 ));
-            }
-            else {
+            } else {
                 if (empty($this->getImport()->options['existing_parent_product_cf_name'])) {
                     throw new \Exception(__('Name field can\'t be empty in Match by Custom Field setting.', \PMWI_Plugin::TEXT_DOMAIN));
                 }
@@ -228,13 +236,10 @@ class ImportVariableProduct extends ImportProduct {
                 $this->variations[] = new \WC_Product_Variation($this->getPid());
                 // Init parent product object.
                 $this->log(sprintf(__('- Existing parent product founded by %s - `%s` #%s', \PMWI_Plugin::TEXT_DOMAIN), $this->getImport()->options['existing_parent_product_matching_logic'], $this->parent->get_title(), $this->parent->get_id()));
-            }
-            else {
+            } else {
                 $this->log(sprintf(__('<b>WARNING:</b> - Existing parent product not founded by %s', \PMWI_Plugin::TEXT_DOMAIN), $this->getImport()->options['existing_parent_product_matching_logic']));
             }
-        }
-        else {
-
+        } else {
             if ( "manual" != $this->getImport()->options['duplicate_matching'] || $this->isNewProduct() ) {
                 // Find corresponding article among previously imported.
                 $identity = $this->getValue('single_product_parent_ID');
@@ -253,14 +258,14 @@ class ImportVariableProduct extends ImportProduct {
                 }
             }
             if ($parent_id && $parent_id != $this->getPid()) {
+                // Init parent product object.
+                $this->parent = new \WC_Product_Variable($parent_id);
                 wp_update_post([
                     'post_type' => 'product_variation',
                     'ID' => $this->getPid()
                 ]);
                 $this->variations[] = new \WC_Product_Variation($this->getPid());
             }
-            // Init parent product object.
-            $this->parent = $parent_id ? new \WC_Product_Variable($parent_id) : NULL;
         }
     }
 
@@ -306,7 +311,7 @@ class ImportVariableProduct extends ImportProduct {
         $firstVariationID = $this->createVariationFromParentRow();
         // Import variations.
         /** @var \WC_Product_Variation $variation */
-        foreach ($this->variations as $variation) {
+        foreach ($this->variations as $key => $variation) {
             // Set variation parent product.
             $variation->set_parent_id($parentID);
             $this->variationImporter->setProduct($variation);
@@ -344,6 +349,10 @@ class ImportVariableProduct extends ImportProduct {
                 }
             }
             do_action( 'pmxi_update_product_variation', $variation->get_id() );
+            // Save first variation ID for 1st and 3rd types of import variable products.
+			if (!$key && !$this->isFirstRowVariationImportType() && $this->getImport()->options['make_simple_product']) {
+				update_post_meta($parentID, XmlImportWooCommerceService::FIRST_VARIATION, $variation->get_id());
+			}
         }
         // Sync parent product with variations.
         $productStack = get_option('wp_all_import_product_stack_' . $this->getImport()->id, array());
@@ -374,22 +383,21 @@ class ImportVariableProduct extends ImportProduct {
             $postRecord = new \PMXI_Post_Record();
             $postRecord->clear();
             $variationID = $this->getExistingVariation($parentSKU, $postRecord);
-
             // Enabled or disabled.
             $post_status = $this->getValue('product_enabled') == 'yes' ? 'publish' : 'private';
-
             // Generate a useful post title.
             $variation_post_title = sprintf( __( 'Variation #%s of %s', \PMWI_Plugin::TEXT_DOMAIN ), absint( $variationID ), $this->product->get_title());
-
+            // Generate variation unique key.
+            $variation_unique_key = 'Variation of ' . $this->getPid();
             // Update or Add Variation.
-            $variationData = array(
+            $variationData = [
                 'post_title' 	=> $variation_post_title,
                 'post_content' 	=> '',
+                'post_author'   => get_post_field( 'post_author', $this->getPid() ),
                 'post_status'   => $post_status,
                 'post_parent' 	=> $this->getPid(),
-                'post_type' 	=> 'product_variation',
-            );
-
+                'post_type' 	=> 'product_variation'
+            ];
             if (!$variationID) {
                 if ($this->getImport()->options['create_new_records']) {
                     $variationID = wp_insert_post($variationData);
@@ -401,22 +409,23 @@ class ImportVariableProduct extends ImportProduct {
                             $postRecord->isEmpty() && $postRecord->set(array(
                                 'post_id' => $variation->get_id(),
                                 'import_id' => $this->getImport()->id,
-                                'unique_key' => 'Variation ' . $parentSKU,
+                                'unique_key' => $variation_unique_key,
                                 'product_key' => '',
                                 'iteration' => $this->getImport()->iteration,
                             ))->insert();
                         }
-                    }
-                    else {
+                    } else {
                         $this->log(__('<b>ERROR</b>', \PMWI_Plugin::TEXT_DOMAIN) . ': ' . $variationID->get_error_message());
                     }
                 }
-            }
-            else {
+            } else {
                 // Create product variation object.
                 $variation = new \WC_Product_Variation($variationID);
                 if (!$postRecord->isEmpty()) {
-                    $postRecord->set(array('iteration' => $this->getImport()->iteration))->update();
+                    $postRecord->set([
+                        'iteration' => $this->getImport()->iteration,
+                        'unique_key' => $variation_unique_key
+                    ])->update();
                 }
                 if (!$this->getImportService()->isUpdateDataAllowed('is_update_status', $this->isNewProduct())) {
                     $variationData['post_status'] = $variation->get_status();
@@ -447,12 +456,18 @@ class ImportVariableProduct extends ImportProduct {
         if ("manual" != $this->getImport()->options['duplicate_matching'] || $this->isNewProduct()) {
             // Find corresponding article among previously imported.
             $postRecord->getBy(array(
-                'unique_key' => 'Variation ' . $parentSKU,
+                'unique_key' => 'Variation of ' . $this->getPid(),
                 'import_id'  => $this->getImport()->id,
             ));
+            // Backward compatibility for matching first variation by  parent product SKU.
+            if ($postRecord->isEmpty()) {
+                $postRecord->getBy(array(
+                    'unique_key' => 'Variation ' . $parentSKU,
+                    'import_id'  => $this->getImport()->id,
+                ));
+            }
             $variationID = ( ! $postRecord->isEmpty() ) ? $postRecord->post_id : FALSE;
-        }
-        else{
+        } else {
             // Trying to find additional variation by parent product SKU.
             $variationID = $this->isVariationExistBySKU(get_post_meta($this->getPid(), '_sku', TRUE));
         }
@@ -508,7 +523,7 @@ class ImportVariableProduct extends ImportProduct {
             // Set shipping class for first variation.
             if ($this->isImportingParentProduct() && $firstVariationID == $variation->get_id()) {
                 if ($this->getImportService()
-                    ->isUpdateTaxonomy('product_shipping_class', $this->isNewProduct())) {
+                    ->isUpdateTaxonomy('product_shipping_class', $this->isNewProduct()) && $this->getImport()->options['update_categories_logic'] !== "add_new") {
                     $variation->set_shipping_class_id($this->getProduct()
                         ->get_shipping_class_id());
                 }
@@ -564,22 +579,24 @@ class ImportVariableProduct extends ImportProduct {
         $available_variations = array();
         foreach($this->product->get_children() as $child_id) {
             $child = wc_get_product($child_id);
-            if (!empty( $child->variation_id)) {
+            if (!empty( $child->get_id())) {
                 $postRecord = new \PMXI_Post_Record();
                 $postRecord->getBy(array(
-                    'post_id' => $child->variation_id,
+                    'post_id' => $child->get_id(),
                     'import_id' => $this->getImport()->id,
-                    'unique_key' => 'Variation ' . $child->variation_id . ' of ' . $this->product->get_id(),
+                    'unique_key' => 'Variation ' . $child->get_id() . ' of ' . $this->product->get_id(),
                 ));
                 $variation_attributes = $child->get_variation_attributes();
                 foreach ($variation_attributes as $key => $value) {
-                    $variation_attributes[$key] = sanitize_title($value);
+                    $variation_attributes[$key] = remove_accents($value);
                 }
+                ksort($variation_attributes);
                 $available_variations[] = $variation_attributes;
                 if (!$postRecord->isEmpty()) {
                     foreach ($possible_variations as $key => $variation) {
+                        ksort($variation);
                         if (maybe_serialize($variation) === maybe_serialize($variation_attributes)) {
-                            $variation = new \WC_Product_Variation($child->variation_id);
+                            $variation = new \WC_Product_Variation($child->get_id());
                             $variation->set_status('publish');
                             $variation->save();
                             $postRecord->set(array('iteration' => $this->getImport()->iteration))->update();
@@ -587,8 +604,8 @@ class ImportVariableProduct extends ImportProduct {
                         }
                     }
                 }
-                $this->syncVariationWithParent($child->variation_id);
-                do_action( 'pmxi_product_variation_saved', $child->variation_id );
+                $this->syncVariationWithParent($child->get_id(), false);
+                do_action( 'pmxi_product_variation_saved', $child->get_id() );
             }
         }
 
@@ -609,8 +626,7 @@ class ImportVariableProduct extends ImportProduct {
                             if ($term && !is_wp_error($term) && !in_array($term->term_taxonomy_id, $current_values)) {
                                 $current_values[] = $term->term_taxonomy_id;
                             }
-                        }
-                        else {
+                        } else {
                             if (!in_array($attribute_value, $current_values)) {
                                 $current_values[] = $attribute_value;
                             }
@@ -625,6 +641,10 @@ class ImportVariableProduct extends ImportProduct {
             }
             update_post_meta($this->product->get_id(), '_product_attributes', array_unique($currentAttributes));
         }
+
+	    if (!$this->getImportService()->isUpdateDataAllowed('is_update_attributes', $this->isNewProduct())) {
+	    	return 0;
+	    }
 
         // Created posts will all have the following data.
         $variation_post_data = array(
@@ -662,7 +682,7 @@ class ImportVariableProduct extends ImportProduct {
                 'iteration' => $this->getImport()->iteration,
             ))->insert();
 
-            $this->syncVariationWithParent($variation_id);
+            $this->syncVariationWithParent($variation_id, true);
             $variation_ids[] = $variation_id;
             foreach ( $variation as $key => $value ) {
                 update_post_meta( $variation_id, $key, $value );
@@ -679,21 +699,16 @@ class ImportVariableProduct extends ImportProduct {
      *
      * @param $variationID
      */
-    protected function syncVariationWithParent($variationID) {
+    protected function syncVariationWithParent($variationID, $isNewProduct) {
         $fields = array('_regular_price', '_sale_price', '_sale_price_dates_from', '_sale_price_dates_to', '_price', '_stock', '_backorders');
         foreach ($fields as $field) {
             $value = get_post_meta( $this->product->get_id(), $field, TRUE);
-            update_post_meta( $variationID, $field, $value);
+	        XmlImportWooCommerceService::getInstance()->pushMeta($variationID, $field, $value, $isNewProduct);
         }
         if ( class_exists('woocommerce_wholesale_pricing') ) {
             update_post_meta( $variationID, 'pmxi_wholesale_price', get_post_meta( $this->product->get_id(), 'pmxi_wholesale_price', true ) );
         }
-        $stockStatus = get_post_meta( $this->product->get_id(), '_stock_status', true );
-        $manageStock = get_post_meta($this->product->get_id(), '_manage_stock', true);
-        if ($manageStock == 'no') {
-            $stockStatus = 'instock';
-        }
-        update_post_meta( $variationID, '_stock_status', $stockStatus);
-        update_post_meta( $variationID, '_manage_stock', $manageStock);
+	    XmlImportWooCommerceService::getInstance()->pushMeta($variationID, '_stock_status', $this->getProperty('stock_status'), $isNewProduct);
+	    XmlImportWooCommerceService::getInstance()->pushMeta($variationID, '_manage_stock', $this->getProperty('manage_stock'), $isNewProduct);
     }
 }

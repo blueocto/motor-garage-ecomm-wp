@@ -29,19 +29,18 @@ abstract class ImportOrderItemsBase extends ImportOrderBase {
             return FALSE;
         }
 
-        $order = &$this->getOrder();
+        $order = $this->getOrder();
 
         if ('billing' === $tax_based_on) {
-            $country = $order->billing_country;
-            $state = $order->billing_state;
-            $postcode = $order->billing_postcode;
-            $city = $order->billing_city;
-        }
-        elseif ('shipping' === $tax_based_on) {
-            $country = $order->shipping_country;
-            $state = $order->shipping_state;
-            $postcode = $order->shipping_postcode;
-            $city = $order->shipping_city;
+            $country = $order->get_billing_country();
+            $state = $order->get_billing_state();
+            $postcode = $order->get_billing_postcode();
+            $city = $order->get_billing_city();
+        } elseif ('shipping' === $tax_based_on) {
+            $country = $order->get_shipping_country();
+            $state = $order->get_shipping_state();
+            $postcode = $order->get_shipping_postcode();
+            $city = $order->get_shipping_city();
         }
 
         // Default to base
@@ -56,11 +55,10 @@ abstract class ImportOrderItemsBase extends ImportOrderBase {
         // Get items
         foreach ($order->get_items(array('fee')) as $item_id => $item) {
 
-            $product = $order->get_product_from_item($item);
             $line_total = isset($item['line_total']) ? $item['line_total'] : 0;
             $line_subtotal = isset($item['line_subtotal']) ? $item['line_subtotal'] : 0;
             $tax_class = $item['tax_class'];
-            $item_tax_status = $product ? $product->get_tax_status() : 'taxable';
+            $item_tax_status = $item->get_tax_status();;
 
             if ('0' !== $tax_class && 'taxable' === $item_tax_status) {
 
@@ -113,8 +111,7 @@ abstract class ImportOrderItemsBase extends ImportOrderBase {
             $state = $order->get_billing_state();
             $postcode = $order->get_billing_postcode();
             $city = $order->get_billing_city();
-        }
-        elseif ('shipping' === $tax_based_on) {
+        } elseif ('shipping' === $tax_based_on) {
             $country = $order->get_shipping_country();
             $state = $order->get_shipping_state();
             $postcode = $order->get_billing_postcode();
@@ -144,8 +141,7 @@ abstract class ImportOrderItemsBase extends ImportOrderBase {
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 $tax_rates = \WC_Tax::find_shipping_rates(array(
                     'country' => $country,
                     'state' => $state,
@@ -169,6 +165,6 @@ abstract class ImportOrderItemsBase extends ImportOrderBase {
             wc_update_order_item_meta($item_id, 'taxes', $shipping_taxes);
         }
         // Save tax totals
-        $order->set_total($shipping_tax_total, 'shipping_tax');
+        $order->set_shipping_tax($shipping_tax_total);
     }
 }

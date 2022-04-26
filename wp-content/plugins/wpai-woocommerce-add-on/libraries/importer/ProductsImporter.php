@@ -114,8 +114,7 @@ class ProductsImporter extends Importer {
                     }
                 }
                 $post_to_update_id = $p->post_parent;
-            }
-            else {
+            } else {
                 // Unset missing attributes.
                 $product_attributes = get_post_meta( $this->getPid(), '_product_attributes', TRUE );
                 $attributes = $this->getImportService()->getProductTaxonomies();
@@ -126,36 +125,8 @@ class ProductsImporter extends Importer {
                         }
                     }
                 }
-
                 update_post_meta( $this->getPid(), '_product_version', WC_VERSION );
-
                 $post_to_update_id = $this->getPid();
-
-                // Associate linked products.
-                $wp_all_import_not_linked_products = get_option('wp_all_import_not_linked_products_' . $this->getImport()->id );
-                if (!empty($wp_all_import_not_linked_products)) {
-                    $post_to_update_sku = get_post_meta($post_to_update_id, '_sku', TRUE);
-                    foreach ($wp_all_import_not_linked_products as $product) {
-                        if ($product['pid'] != $post_to_update_id && ! empty($product['not_linked_products'])) {
-                            if ( in_array($post_to_update_sku, $product['not_linked_products'])
-                                || in_array( (string) $post_to_update_id, $product['not_linked_products'])
-                                || in_array($p->post_title, $product['not_linked_products'])
-                                || in_array($p->post_name, $product['not_linked_products'])
-                            )
-                            {
-                                $linked_products = get_post_meta($product['pid'], $product['type'], TRUE);
-                                if (empty($linked_products)) {
-                                    $linked_products = array();
-                                }
-                                if ( ! in_array($post_to_update_id, $linked_products)) {
-                                    $linked_products[] = $post_to_update_id;
-                                    $this->getLogger() && call_user_func($this->getLogger(), sprintf(__('Added to %s list of product ID %d.', \PMWI_Plugin::TEXT_DOMAIN), $product['type'] == '_upsell_ids' ? 'Up-Sells' : 'Cross-Sells', $product['pid']) );
-                                    update_post_meta($product['pid'], $product['type'], $linked_products);
-                                }
-                            }
-                        }
-                    }
-                }
             }
 
             if ($post_to_update_id){
@@ -163,9 +134,16 @@ class ProductsImporter extends Importer {
                 $postRecord->clear();
                 // Find corresponding article among previously imported.
                 $postRecord->getBy(array(
-                    'unique_key' => 'Variation ' . get_post_meta($post_to_update_id, '_sku', TRUE),
-                    'import_id'  => $this->getImport()->id,
+                    'unique_key' => 'Variation of ' . $post_to_update_id,
+                    'import_id'  => $this->getImport()->id
                 ));
+                // Backward compatibility for matching first variation by  parent product SKU.
+                if ($postRecord->isEmpty()) {
+                    $postRecord->getBy(array(
+                        'unique_key' => 'Variation ' . get_post_meta($post_to_update_id, '_sku', TRUE),
+                        'import_id'  => $this->getImport()->id
+                    ));
+                }
                 $pid = ( ! $postRecord->isEmpty() ) ? $postRecord->post_id : FALSE;
                 // Update first variation.
                 if ( $pid ) {
@@ -197,8 +175,7 @@ class ProductsImporter extends Importer {
                 if (!empty($tmp_gallery)) {
                     $gallery = array_unique(array_merge($gallery, $tmp_gallery));
                 }
-            }
-            elseif (!empty($tmp_gallery)) {
+            } elseif (!empty($tmp_gallery)) {
                 $gallery = array_unique($tmp_gallery);
             }
             //  Do not add featured image to the gallery.
@@ -210,7 +187,6 @@ class ProductsImporter extends Importer {
                     }
                 }
             }
-
             $this->getImportService()->pushMeta( $post_to_update_id, '_product_image_gallery', implode(",", $gallery), $this->isNewProduct );
         }
     }

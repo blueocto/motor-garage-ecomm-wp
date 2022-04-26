@@ -18,19 +18,4 @@ class ImportGroupedProduct extends ImportProduct {
      */
     protected $productType = 'grouped';
 
-    /**
-     * @return mixed
-     */
-    public function import() {
-        parent::import();
-    }
-
-    /**
-     *  Define general properties for grouped product.
-     */
-    public function prepareGeneralProperties() {
-        parent::prepareGeneralProperties();
-        $children = array();
-        $this->setProperty('children', $children);
-    }
 }

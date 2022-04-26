@@ -36,12 +36,9 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
                 ));
 
                 if ($fee_item->isEmpty()) {
-
                     $item_id = FALSE;
-
                     if (!$this->isNewOrder()) {
                         $order_items = $this->getOrder()->get_items('fee');
-
                         foreach ($order_items as $order_item_id => $order_item) {
                             if ($order_item['name'] == $fee['name']) {
                                 $item_id = $order_item_id;
@@ -49,7 +46,6 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
                             }
                         }
                     }
-
                     if (!$item_id) {
                         $fee_line = array(
                             'name' => $fee['name'],
@@ -62,27 +58,21 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
                         if (version_compare(WOOCOMMERCE_VERSION, '3.0') < 0) {
                             $item_id = $this->getOrder()
                                 ->add_fee((object) $fee_line);
-                        }
-                        else {
-
+                        } else {
                             $item = new \WC_Order_Item_Fee();
                             $item->set_order_id($this->getOrderID());
                             $item->set_name(wc_clean($fee_line['name']));
                             $item->set_total(isset($fee_line['amount']) ? floatval($fee_line['amount']) : 0);
-
                             // if taxable, tax class and total are required
                             if (!empty($fee_line['taxable'])) {
                                 if (!isset($fee_line['tax_class'])) {
                                     $this->getLogger() and call_user_func($this->getLogger(), __('- <b>WARNING</b> Fee tax class is required when fee is taxable.', \PMWI_Plugin::TEXT_DOMAIN));
-                                }
-                                else {
+                                } else {
                                     $item->set_tax_status('taxable');
                                     $item->set_tax_class($fee_line['tax_class']);
-
                                     if (isset($fee_line['total_tax'])) {
                                         $item->set_total_tax(isset($fee_line['total_tax']) ? wc_format_refund_total($fee_line['total_tax']) : 0);
                                     }
-
                                     if (isset($fee_line['tax_data'])) {
                                         $item->set_total_tax(wc_format_refund_total(array_sum($fee_line['tax_data'])));
                                         $item->set_taxes(array_map('wc_format_refund_total', $fee_line['tax_data']));
@@ -95,8 +85,7 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
 
                     if (!$item_id) {
                         $this->getLogger() and call_user_func($this->getLogger(), __('- <b>WARNING</b> order line fee is not added.', \PMWI_Plugin::TEXT_DOMAIN));
-                    }
-                    else {
+                    } else {
                         $fee_item->set(array(
                             'import_id' => $this->getImport()->id,
                             'post_id' => $this->getOrderID(),
@@ -105,8 +94,7 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
                             'iteration' => $this->getImport()->iteration
                         ))->save();
                     }
-                }
-                else {
+                } else {
                     $item_id = str_replace('fee-item-', '', $fee_item->product_key);
 
                     if (version_compare(WOOCOMMERCE_VERSION, '3.0') < 0) {
@@ -117,8 +105,7 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
                                 'line_total' => $fee['amount'],
                                 'line_tax' => 0
                             ));
-                    }
-                    else {
+                    } else {
                         $item = new \WC_Order_Item_Fee($item_id);
 
                         if (isset($fee['title'])) {
@@ -135,7 +122,6 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
                         }
                         $is_updated = $item->save();
                     }
-
                     if ($is_updated) {
                         $fee_item->set(array(
                             'iteration' => $this->getImport()->iteration
@@ -146,5 +132,4 @@ class ImportOrderFeeItems extends ImportOrderItemsBase {
             $this->_calculate_fee_taxes();
         }
     }
-
 }

@@ -81,8 +81,7 @@ class ImportOrderRefunds extends ImportOrderBase {
                             'post_author' => $customer->ID
                         ));
                         update_post_meta($refund->get_id(), '_refunded_by', $customer->ID);
-                    }
-                    else {
+                    } else {
                         wp_update_post(array(
                             'ID' => $refund->get_id(),
                             'post_author' => 0

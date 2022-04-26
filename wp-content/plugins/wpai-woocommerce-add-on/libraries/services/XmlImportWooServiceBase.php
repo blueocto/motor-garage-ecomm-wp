@@ -46,7 +46,7 @@ abstract class XmlImportWooServiceBase {
     public function getLogger() {
         $logger = FALSE;
         if (PMXI_Plugin::is_ajax()) {
-            $logger = function($m) {echo "<div class='progress-msg'>[". date("H:i:s") ."] $m</div>\n";flush();};
+            $logger = function($m) {echo "<div class='progress-msg'>[". date("H:i:s") ."] ".wp_all_import_filter_html_kses($m)."</div>\n";flush();};
         }
         return $logger;
     }

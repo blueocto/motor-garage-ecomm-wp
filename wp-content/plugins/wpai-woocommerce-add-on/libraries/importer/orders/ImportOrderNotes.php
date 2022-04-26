@@ -60,8 +60,7 @@ class ImportOrderNotes extends ImportOrderBase {
                     if (is_user_logged_in()) {
                         $user = get_user_by('id', get_current_user_id());
                         $comment_author_email = $user->user_email;
-                    }
-                    else {
+                    } else {
                         $comment_author_email = strtolower(__('WooCommerce', \PMWI_Plugin::TEXT_DOMAIN)) . '@';
                         $comment_author_email .= isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', $_SERVER['HTTP_HOST']) : 'noreply.com';
                         $comment_author_email = sanitize_email($comment_author_email);
@@ -121,16 +120,15 @@ class ImportOrderNotes extends ImportOrderBase {
                         'product_key' => 'note-item-' . $comment_id,
                         'iteration' => $this->getImport()->iteration
                     ))->save();
-                }
-                else {
+                } else {
+
                     $commentdata['comment_ID'] = str_replace('note-item-', '', $note_item->product_key);
 
                     wp_update_comment($commentdata);
 
                     if ($note['visibility'] != 'private') {
                         update_comment_meta($commentdata['comment_ID'], 'is_customer_note', 1);
-                    }
-                    else {
+                    } else {
                         delete_comment_meta($commentdata['comment_ID'], 'is_customer_note');
                     }
 

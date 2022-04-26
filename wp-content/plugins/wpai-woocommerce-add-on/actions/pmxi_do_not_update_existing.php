@@ -43,12 +43,19 @@ function pmwi_pmxi_do_not_update_existing($post_to_update_id, $import_id, $itera
 			
 			$postRecord = new \PMXI_Post_Record();
 			$postRecord->clear();
-			// Find corresponding article among previously imported.
-			$postRecord->getBy(array(
-				'unique_key' => 'Variation ' . get_post_meta($post_to_update_id, '_sku', TRUE),
-				'import_id'  => $import_id,
-			));
-			
+            // Find corresponding article among previously imported.
+            $postRecord->getBy(array(
+                'unique_key' => 'Variation of ' . $post_to_update_id,
+                'import_id'  => $import_id
+            ));
+            // Backward compatibility for matching first variation by  parent product SKU.
+            if ($postRecord->isEmpty()) {
+                $postRecord->getBy(array(
+                    'unique_key' => 'Variation ' . get_post_meta($post_to_update_id, '_sku', TRUE),
+                    'import_id'  => $import_id
+                ));
+            }
+
 			if ( ! $postRecord->isEmpty() ) $postRecord->set(array('iteration' => $iteration))->update();
 			
 		}

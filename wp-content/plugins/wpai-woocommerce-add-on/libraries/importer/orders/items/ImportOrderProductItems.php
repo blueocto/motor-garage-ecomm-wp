@@ -61,16 +61,17 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
             case 'existing':
 
                 foreach ($this->getValue('products') as $productIndex => $productItem) {
-                    if (empty($productItem['sku'])) {
+
+                    if (empty($productItem['sku']) || empty($productItem['qty'])) {
                         continue;
                     }
 
-                    $args = array(
+                    $args = [
                         'post_type' => 'product',
                         'meta_key' => '_sku',
                         'meta_value' => $productItem['sku'],
                         'meta_compare' => '=',
-                    );
+                    ];
 
                     $product = FALSE;
 
@@ -97,7 +98,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                         $is_product_founded = TRUE;
                         $item_price = empty($productItem['price_per_unit']) ? $product->get_price() : $productItem['price_per_unit'];
-                        $item_qty = empty($productItem['qty']) ? 1 : $productItem['qty'];
+                        $item_qty = $productItem['qty'];
                         $item_subtotal = (float) $item_price * (int) $item_qty;
                         $item_subtotal_tax = 0;
                         $line_taxes = array();
@@ -110,8 +111,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
                             $tax_class = FALSE;
                             if (!empty($this->tax_rates[$tax_rate['code']])) {
                                 $tax_class = $this->tax_rates[$tax_rate['code']];
-                            }
-                            else {
+                            } else {
                                 foreach ($this->tax_rates as $rate_id => $rate) {
                                     if (strtolower($rate->tax_rate_name) == strtolower($tax_rate['code']) || strtolower($rate->tax_rate_class) == strtolower($tax_rate['code'])) {
                                         $tax_class = $rate;
@@ -124,56 +124,45 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                             switch ($tax_rate['calculate_logic']) {
                                 case 'percentage':
-
                                     if (!empty($tax_rate['percentage_value']) and is_numeric($tax_rate['percentage_value'])) {
                                         $line_tax = \WC_Tax::round(($item_subtotal / 100) * $tax_rate['percentage_value']);
                                         $item_subtotal_tax += $line_tax;
                                     }
                                     break;
-
                                 case 'per_unit';
-
                                     if (!empty($tax_rate['amount_per_unit']) and is_numeric($tax_rate['amount_per_unit'])) {
                                         $line_tax = \WC_Tax::round($tax_rate['amount_per_unit'] * $item_qty);
                                         $item_subtotal_tax += $line_tax;
                                     }
                                     break;
-
                                 // Look up tax rate code
                                 default:
-
                                     $found_rates = [];
                                     foreach ($this->tax_rates as $tax_rate_object) {
                                         if (strtolower($tax_rate_object->tax_rate_name) == strtolower($tax_rate['code'])) {
                                             $found_rates[] = $tax_rate_object;
                                         }
                                     }
-
                                     if (!empty($found_rates)) {
                                         $matched_tax_rates = array();
                                         $found_priority = array();
-
                                         foreach ($found_rates as $found_rate) {
                                             if (in_array($found_rate->tax_rate_priority, $found_priority)) {
                                                 continue;
                                             }
-
                                             $matched_tax_rates[$found_rate->tax_rate_id] = array(
                                                 'rate' => $found_rate->tax_rate,
                                                 'label' => $found_rate->tax_rate_name,
                                                 'shipping' => $found_rate->tax_rate_shipping ? 'yes' : 'no',
                                                 'compound' => $found_rate->tax_rate_compound ? 'yes' : 'no'
                                             );
-
                                             $found_priority[] = $found_rate->tax_rate_priority;
                                         }
                                         $line_tax = array_sum(\WC_Tax::calc_tax($item_subtotal, $matched_tax_rates, TRUE));
                                         $item_subtotal_tax += $line_tax;
                                     }
-
                                     break;
                             }
-
                             if ($tax_class) {
                                 $line_taxes[$tax_class->tax_rate_id] = $line_tax;
                             }
@@ -185,7 +174,6 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                         if ($product instanceOf \WC_Product_Variation) {
                             $variation = $product->get_variation_attributes();
-
                             if (!empty($variation)) {
                                 foreach ($variation as $key => $value) {
                                     $variation_str .= $key . '-' . $value;
@@ -207,7 +195,6 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                         if ($product_item->isEmpty()) {
                             $item_id = FALSE;
-
                             // in case when this is new order just add new line items
                             if (!$item_id) {
                                 $item_id = $this->getOrder()->add_product(
@@ -231,8 +218,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                             if (!$item_id) {
                                 $this->getLogger() and call_user_func($this->getLogger(), __('- <b>WARNING</b> Unable to create order line product.', \PMWI_Plugin::TEXT_DOMAIN));
-                            }
-                            else {
+                            } else {
                                 $product_item->set(array(
                                     'import_id' => $this->getImport()->id,
                                     'post_id' => $this->getOrderID(),
@@ -247,8 +233,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
                                     }
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             $item_id = str_replace('line-item-', '', $product_item->product_key);
                             $is_updated = $this->getOrder()->update_product(
                                 $item_id,
@@ -293,12 +278,12 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                 foreach ($this->getValue('manual_products') as $productIndex => $productItem) {
 
-                    if (empty($productItem['sku'])) {
+                    if (empty($productItem['sku']) || empty($productItem['qty'])) {
                         continue;
                     }
 
                     $item_price = $productItem['price_per_unit'];
-                    $item_qty = empty($productItem['qty']) ? 1 : $productItem['qty'];
+                    $item_qty = $productItem['qty'];
                     $item_subtotal = $item_price * $item_qty;
                     $item_subtotal_tax = 0;
                     $line_taxes = array();
@@ -311,8 +296,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
                         $tax_class = FALSE;
                         if (!empty($this->tax_rates[$tax_rate['code']])) {
                             $tax_class = $this->tax_rates[$tax_rate['code']];
-                        }
-                        else {
+                        } else {
                             foreach ($this->tax_rates as $rate_id => $rate) {
                                 if (strtolower($rate->tax_rate_name) == strtolower($tax_rate['code']) || strtolower($rate->tax_rate_class) == strtolower($tax_rate['code'])) {
                                     $tax_class = $rate;
@@ -325,24 +309,19 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                         switch ($tax_rate['calculate_logic']) {
                             case 'percentage':
-
                                 if (!empty($tax_rate['percentage_value']) and is_numeric($tax_rate['percentage_value'])) {
                                     $line_tax = \WC_Tax::round(($item_subtotal / 100) * $tax_rate['percentage_value']);
                                     $item_subtotal_tax += $line_tax;
                                 }
                                 break;
-
                             case 'per_unit';
-
                                 if (!empty($tax_rate['amount_per_unit']) and is_numeric($tax_rate['amount_per_unit'])) {
                                     $line_tax = \WC_Tax::round($tax_rate['amount_per_unit'] * $item_qty);
                                     $item_subtotal_tax += $line_tax;
                                 }
                                 break;
-
                             // Look up tax rate code
                             default:
-
                                 $found_rates = [];
                                 foreach ($this->tax_rates as $tax_rate_object) {
                                     if (strtolower($tax_rate_object->tax_rate_name) == strtolower($tax_rate['code'])) {
@@ -358,23 +337,19 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
                                         if (in_array($found_rate->tax_rate_priority, $found_priority)) {
                                             continue;
                                         }
-
                                         $matched_tax_rates[$found_rate->tax_rate_id] = array(
                                             'rate' => $found_rate->tax_rate,
                                             'label' => $found_rate->tax_rate_name,
                                             'shipping' => $found_rate->tax_rate_shipping ? 'yes' : 'no',
                                             'compound' => $found_rate->tax_rate_compound ? 'yes' : 'no'
                                         );
-
                                         $found_priority[] = $found_rate->tax_rate_priority;
                                     }
                                     $line_tax = array_sum(\WC_Tax::calc_tax($item_subtotal, $matched_tax_rates, TRUE));
                                     $item_subtotal_tax += $line_tax;
                                 }
-
                                 break;
                         }
-
                         if ($tax_class) {
                             $line_taxes[$tax_class->tax_rate_id] = $line_tax;
                         }
@@ -400,8 +375,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
 
                         if (!$item_id) {
                             $this->getLogger() and call_user_func($this->getLogger(), __('- <b>WARNING</b> Unable to create order line product.', \PMWI_Plugin::TEXT_DOMAIN));
-                        }
-                        else {
+                        } else {
                             wc_add_order_item_meta($item_id, '_qty', wc_stock_amount($item_qty));
                             wc_add_order_item_meta($item_id, '_tax_class', '');
 
@@ -428,8 +402,7 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
                                 'iteration' => $this->getImport()->iteration
                             ))->save();
                         }
-                    }
-                    else {
+                    } else {
                         $item_id = str_replace('manual-line-item-', '', $product_item->product_key);
 
                         if (is_numeric($item_id)) {
@@ -455,7 +428,6 @@ class ImportOrderProductItems extends ImportOrderItemsBase {
                                     wc_update_order_item_meta($item_id, $meta_name, isset($productItem['meta_value'][$key]) ? $productItem['meta_value'][$key] : '');
                                 }
                             }
-
                             $product_item->set(array(
                                 'iteration' => $this->getImport()->iteration
                             ))->save();

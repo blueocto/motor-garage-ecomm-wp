@@ -35,8 +35,7 @@ class ImportOrderShippingItems extends ImportOrderItemsBase {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 $zone = new \WC_Shipping_Zone(0);
                 $this->shipping_zone_methods = $zone->get_shipping_methods();
             }
@@ -64,14 +63,12 @@ class ImportOrderShippingItems extends ImportOrderItemsBase {
                 if ($this->getImport()->options['pmwi_order']['shipping'][0]['class'] == 'xpath') {
                     if (empty($this->shipping_methods[$shipping['class']])) {
                         foreach ($this->shipping_methods as $shipping_method_slug => $shipping_method) {
-
                             if ($shipping_method_slug == str_replace(" ", "_", strtolower(trim($shipping['class']))) || $shipping_method->method_title == $shipping['class']) {
                                 $method = $shipping_method;
                                 break;
                             }
                         }
-                    }
-                    else {
+                    } else {
                         $method = $this->shipping_methods[$shipping['class']];
                     }
 
@@ -83,8 +80,7 @@ class ImportOrderShippingItems extends ImportOrderItemsBase {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     foreach ($this->shipping_methods as $shipping_method_slug => $shipping_method) {
                         if ($shipping_method_slug == str_replace(" ", "_", strtolower(trim($shipping['class']))) || $shipping_method->method_title == $shipping['class']) {
                             $method = $shipping_method;
@@ -141,8 +137,7 @@ class ImportOrderShippingItems extends ImportOrderItemsBase {
 
                         if (!$item_id) {
                             $this->getLogger() and call_user_func($this->getLogger(), __('- <b>WARNING</b> Unable to create order shipping line.', \PMWI_Plugin::TEXT_DOMAIN));
-                        }
-                        else {
+                        } else {
                             $shipping_item->set(array(
                                 'import_id' => $this->getImport()->id,
                                 'post_id' => $this->getOrderID(),
@@ -151,8 +146,7 @@ class ImportOrderShippingItems extends ImportOrderItemsBase {
                                 'iteration' => $this->getImport()->iteration
                             ))->save();
                         }
-                    }
-                    else {
+                    } else {
                         $item_id = str_replace('shipping-item-', '', $shipping_item->product_key);
                         $item = $this->getOrder()->get_item($item_id);
                         if (is_object($item) && $item->is_type('shipping')) {

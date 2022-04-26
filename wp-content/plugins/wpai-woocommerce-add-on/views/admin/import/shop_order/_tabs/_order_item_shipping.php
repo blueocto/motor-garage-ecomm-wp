@@ -50,7 +50,7 @@
 									<div class="switcher-target-order_shipping_class_<?php echo $i; ?>" style="margin-top:10px;">
 										<span class="wpallimport-slide-content" style="padding-left:0;">
 											<input type="text" class="short rad4" name="pmwi_order[shipping][<?php echo $i;?>][class_xpath]" value="<?php echo esc_attr($shipping['class_xpath']) ?>"/>
-											<a href="#help" class="wpallimport-help" title="<?php printf(__('Shipping method can be matched by Name or ID: %s. If shipping method is not found then no shipping information will be imported.', PMWI_Plugin::TEXT_DOMAIN), implode(", ", $shipping_for_tooltip)); ?>" style="position:relative; top:10px;">?</a>
+											<a href="#help" class="wpallimport-help" title="<?php printf(__('Shipping method can be matched by Name or ID: %s. If shipping method is not found then no shipping information will be imported.', PMWI_Plugin::TEXT_DOMAIN), implode(", ", $shipping_for_tooltip)); ?>" style="position:relative; top:12px;">?</a>
 										</span>
 									</div>
 								</td>
@@ -96,7 +96,7 @@
 								<div class="switcher-target-order_shipping_class_ROWNUMBER" style="margin-top:10px; display: none;">
 									<span class="wpallimport-slide-content" style="padding-left:0;">
 										<input type="text" class="short rad4" name="pmwi_order[shipping][ROWNUMBER][class_xpath]" value=""/>
-										<a href="#help" class="wpallimport-help" title="<?php _e('Shipping method can be matched by Name or ID. If shipping method is not found then no shipping information will be imported.', PMWI_Plugin::TEXT_DOMAIN) ?>" style="position:relative; top:0px;">?</a>
+										<a href="#help" class="wpallimport-help" title="<?php _e('Shipping method can be matched by Name or ID. If shipping method is not found then no shipping information will be imported.', PMWI_Plugin::TEXT_DOMAIN) ?>" style="position:relative; top:12px;">?</a>
 									</span>
 								</div>
 							</td>
@@ -128,7 +128,7 @@
 							<span class="wpallimport-slide-content" style="padding-left:0;">	
 								<label class="order-separator-label" style="line-height: 30px;"><?php _e('Multiple shipping costs separated by', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 								<input type="text" class="short rad4 order-separator-input" name="pmwi_order[shipping_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['shipping_repeater_mode_separator']) ?>" style="width:10%; text-align: center;"/>	
-								<a href="#help" class="wpallimport-help" style="top:10px;left:8px;" original-title="For example, two shipping names would be imported like this 'Shipping 1|Shipping 2' and the shipping amounts like this 10|20">?</a>						
+								<a href="#help" class="wpallimport-help" style="top:12px;left:8px;" title="For example, two shipping names would be imported like this 'Shipping 1|Shipping 2' and the shipping amounts like this 10|20">?</a>
 							</span>
 						</div>
 					</div>						
@@ -139,7 +139,7 @@
 							<span class="wpallimport-slide-content" style="padding-left:0;">	
 								<label style="width: 60px; line-height: 30px;"><?php _e('For each', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 								<input type="text" class="short rad4" name="pmwi_order[shipping_repeater_mode_foreach]" value="<?php echo esc_attr($post['pmwi_order']['shipping_repeater_mode_foreach']) ?>" style="width:50%;"/>							
-								<label class="foreach-do" style="padding-left: 10px; line-height: 30px;"><?php _e('do...', PMWI_Plugin::TEXT_DOMAIN); ?></label>
+								<label class="foreach-do" style="padding-left: 12px; line-height: 30px;"><?php _e('do...', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 							</span>
 						</div>		
 					</div>			
@@ -148,7 +148,7 @@
 					<div class="form-field input" style="margin-bottom: 20px;">
 						<label class="order-separator-label" style="line-height: 30px;"><?php _e('Multiple shipping costs separated by', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 						<input type="text" class="short rad4 order-separator-input" name="pmwi_order[shipping_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['shipping_repeater_mode_separator']) ?>" style="width:10%; text-align: center;"/>
-						<a href="#help" class="wpallimport-help" style="top:10px;left:8px;" original-title="For example, two shipping names would be imported like this 'Shipping 1|Shipping 2' and the shipping amounts like this 10|20">?</a>						
+						<a href="#help" class="wpallimport-help" style="top:12px;left:8px;" title="For example, two shipping names would be imported like this 'Shipping 1|Shipping 2' and the shipping amounts like this 10|20">?</a>
 					</div>
 					<?php endif; ?>						
 				</div>	

@@ -85,8 +85,7 @@ class OrdersParser extends Parser {
                             }
                             $this->data['pmwi_order'][$option][$i] = date('Y-m-d H:i:s', $time);
                         }
-                    }
-                    else {
+                    } else {
                         $this->getCount() and $this->data['pmwi_order'][$option] = array_fill(0, $this->getCount(), date('Y-m-d H:i:s'));
                     }
 
@@ -100,8 +99,7 @@ class OrdersParser extends Parser {
                         $this->data['pmwi_order'][$option] = \XmlImportParser::factory($this->getXml(), $this->getCompleteXPath(), $this->getImport()->options['pmwi_order'][$option . '_xpath'], $file)
                             ->parse();
                         $this->tmp_files[] = $file;
-                    }
-                    else {
+                    } else {
                         $this->getCount() and $this->data['pmwi_order'][$option] = array_fill(0, $this->getCount(), $this->getImport()->options['pmwi_order'][$option]);
                     }
 
@@ -160,23 +158,19 @@ class OrdersParser extends Parser {
                                         }
                                         $this->data['pmwi_order'][$option][] = $products;
                                     }
-
                                     break;
                                 }
                             }
                             break;
-
                         case 'csv':
 
                             foreach ($this->getImport()->options['pmwi_order'][$option] as $key => $row) {
                                 if (empty($this->getImport()->options['pmwi_order']['products_repeater_mode_separator'])) {
                                     break;
                                 }
-
                                 $row_data = $this->parse_item_row($row, $this->getCompleteXPath(), $this->getCount());
                                 for ($k = 0; $k < $this->getCount(); $k++) {
                                     $products = array();
-
                                     $item_unique_key = isset($row_data['unique_key'][$k]) ? $row_data['unique_key'][$k] : '';
                                     $unique_key = '';
                                     if (!empty($item_unique_key)) {
@@ -236,23 +230,16 @@ class OrdersParser extends Parser {
                                     }
                                     $this->data['pmwi_order'][$option][] = $products;
                                 }
-
                                 break;
                             }
-
                             break;
-
                         default:
-
                             $row_data = array();
-
                             foreach ($this->getImport()->options['pmwi_order'][$option] as $key => $row) {
                                 $row_data[] = $this->parse_item_row($row, $this->getCompleteXPath(), $this->getCount());
                             }
-
                             for ($j = 0; $j < $this->getCount(); $j++) {
                                 $products = array();
-
                                 foreach ($row_data as $k => $product) {
                                     $products[] = array(
                                         'unique_key' => $product['unique_key'][$j],
@@ -261,7 +248,6 @@ class OrdersParser extends Parser {
                                         'price_per_unit' => isset($product['price_per_unit'][$j]) ? $product['price_per_unit'][$j] : 0,
                                         'tax_rates' => array()
                                     );
-
                                     if (!empty($product['tax_rates'])) {
                                         foreach ($product['tax_rates'] as $tax_rate) {
                                             $products[$k]['tax_rates'][] = array(
@@ -272,13 +258,11 @@ class OrdersParser extends Parser {
                                             );
                                         }
                                     }
-
                                     if (!empty($product['meta_name'])) {
                                         foreach ($product['meta_name'] as $meta_name) {
                                             $products[$k]['meta_name'][] = $meta_name[$k];
                                         }
                                     }
-
                                     if (!empty($product['meta_value'])) {
                                         foreach ($product['meta_value'] as $meta_value) {
                                             $products[$k]['meta_value'][] = $meta_value[$k];
@@ -287,35 +271,26 @@ class OrdersParser extends Parser {
                                 }
                                 $this->data['pmwi_order'][$option][] = $products;
                             }
-
                             break;
                     }
-
                     break;
-
                 case 'fees':
                 case 'coupons':
                 case 'shipping':
                 case 'taxes':
                 case 'notes':
-
                     $this->data['pmwi_order'][$option] = array();
-
                     switch ($this->getImport()->options['pmwi_order'][$option . '_repeater_mode']) {
                         case 'xml':
                             if (!empty($this->getImport()->options['pmwi_order'][$option . '_repeater_mode_foreach'])) {
                                 foreach ($this->getImport()->options['pmwi_order'][$option] as $key => $row) {
                                     for ($k = 0; $k < $this->getCount(); $k++) {
                                         $base_xpath = '[' . ($k + 1) . ']/' . ltrim(trim($this->getImport()->options['pmwi_order'][$option . '_repeater_mode_foreach'], '{}!'), '/');
-
                                         $rows = \XmlImportParser::factory($this->getXml(), $this->getCompleteXPath() . $base_xpath, "{.}", $file)
                                             ->parse();
                                         $this->tmp_files[] = $file;
-
                                         $row_data = $this->parse_item_row($row, $this->getCompleteXPath() . $base_xpath, count($rows));
-
                                         $items = array();
-
                                         if (!empty($row_data)) {
                                             for ($j = 0; $j < count($rows); $j++) {
                                                 foreach ($row_data as $itemkey => $values) {
@@ -323,48 +298,35 @@ class OrdersParser extends Parser {
                                                 }
                                             }
                                         }
-
                                         $this->data['pmwi_order'][$option][] = $items;
                                     }
-
                                     break;
                                 }
                             }
                             break;
-
                         case 'csv':
-
                             $separator = $this->getImport()->options['pmwi_order'][$option . '_repeater_mode_separator'];
-
                             foreach ($this->getImport()->options['pmwi_order'][$option] as $key => $row) {
                                 if (empty($separator)) {
                                     break;
                                 }
-
                                 $row_data = $this->parse_item_row($row, $this->getCompleteXPath(), $this->getCount(), $separator);
-
                                 for ($k = 0; $k < $this->getCount(); $k++) {
                                     $items = array();
-
                                     $maxCountRows = 0;
-
                                     foreach ($row_data as $itemkey => $values) {
                                         $itemIndex = 0;
-
                                         $rows = explode($separator, $values[$k]);
-
                                         if (!empty($rows)) {
                                             if (count($rows) > $maxCountRows) {
                                                 $maxCountRows = count($rows);
                                             }
-
                                             if (count($rows) == 1) {
                                                 for ($j = 0; $j < $maxCountRows; $j++) {
                                                     $items[$itemIndex][$itemkey] = trim($rows[0]);
                                                     $itemIndex++;
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 foreach ($rows as $val) {
                                                     $items[$itemIndex][$itemkey] = trim($val);
                                                     $itemIndex++;
@@ -372,63 +334,44 @@ class OrdersParser extends Parser {
                                             }
                                         }
                                     }
-
                                     $this->data['pmwi_order'][$option][] = $items;
                                 }
-
                                 break;
                             }
-
                             break;
-
                         default:
-
                             $row_data = array();
-
                             foreach ($this->getCount()->options['pmwi_order'][$option] as $key => $row) {
                                 $row_data[] = $this->parse_item_row($row, $this->getCompleteXPath(), $this->getCount());
                             }
-
                             for ($j = 0; $j < $this->getCount(); $j++) {
                                 $items = array();
-
                                 $itemIndex = 0;
-
                                 foreach ($row_data as $k => $item) {
                                     foreach ($item as $itemkey => $values) {
                                         $items[$itemIndex][$itemkey] = $values[$j];
                                     }
                                     $itemIndex++;
                                 }
-
                                 $this->data['pmwi_order'][$option][] = $items;
                             }
-
                             break;
                     }
-
                     break;
-
                 default:
-
                     if (!empty($this->getImport()->options['pmwi_order'][$option])) {
                         $this->data['pmwi_order'][$option] = \XmlImportParser::factory($this->getXml(), $this->getCompleteXPath(), $this->getImport()->options['pmwi_order'][$option], $file)
                             ->parse();
                         $this->tmp_files[] = $file;
-                    }
-                    else {
+                    } else {
                         $this->getCount() and $this->data['pmwi_order'][$option] = array_fill(0, $this->getCount(), $default_value);
                     }
-
                     break;
             }
         }
-
         // Remove all temporary files created.
         $this->unlinkTempFiles();
-
         return $this->data;
-
     }
 
     /**
@@ -445,9 +388,7 @@ class OrdersParser extends Parser {
      * @throws \XmlImportException
      */
     protected function parse_item_row($row, $cxpath, $count, $separator = FALSE) {
-
         $row_data = array();
-
         foreach ($row as $opt => $value) {
             switch ($opt) {
                 case 'class_xpath':
@@ -455,69 +396,52 @@ class OrdersParser extends Parser {
                 case 'visibility_xpath':
                     // skipp this field(s)
                     break;
-
                 case 'tax_rates':
-
                     foreach ($value as $i => $tax_rate_row) {
                         $tax_rate_data = array();
-
                         foreach ($tax_rate_row as $tax_rate_row_opt => $tax_rate_row_value) {
                             if (!empty($tax_rate_row_value)) {
                                 $tax_rate_data[$tax_rate_row_opt] = \XmlImportParser::factory($this->getXml(), $cxpath, $tax_rate_row_value, $file)
                                     ->parse();
                                 $this->tmp_files[] = $file;
-                            }
-                            else {
+                            } else {
                                 $count and $tax_rate_data[$tax_rate_row_opt] = array_fill(0, $count, $tax_rate_row_value);
                             }
                         }
                         $row_data[$opt][] = $tax_rate_data;
                     }
-
                     break;
-
                 case 'meta_name':
                 case 'meta_value':
-
                     foreach ($value as $meta) {
                         if (!empty($meta)) {
                             $row_data[$opt][] = \XmlImportParser::factory($this->getXml(), $cxpath, $meta, $file)
                                 ->parse();
                             $this->tmp_files[] = $file;
-                        }
-                        else {
+                        } else {
                             $row_data[$opt][] = array_fill(0, $count, $meta);
                         }
                     }
-
                     break;
-
                 case 'class':
                 case 'tax_code':
                 case 'visibility':
-
                     if ($value == 'xpath' and $row[$opt . '_xpath'] != '') {
                         $row_data[$opt] = \XmlImportParser::factory($this->getXml(), $cxpath, $row[$opt . '_xpath'], $file)
                             ->parse();
                         $this->tmp_files[] = $file;
-                    }
-                    else {
+                    } else {
                         $count and $row_data[$opt] = array_fill(0, $count, $value);
                     }
-
                     break;
-
                 case 'date':
-
                     if (!empty($value)) {
                         $dates = \XmlImportParser::factory($this->getXml(), $cxpath, $value, $file)
                             ->parse();
                         $this->tmp_files[] = $file;
-
                         foreach ($dates as $i => $d) {
                             $dates[$i] = $separator ? explode($separator, $d) : array($d);
                         }
-
                         $warned = array(); // used to prevent the same notice displaying several times
                         foreach ($dates as $i => $date) {
                             $times = array();
@@ -533,31 +457,23 @@ class OrdersParser extends Parser {
                             }
                             $row_data[$opt][$i] = $separator ? implode($separator, $times) : array_shift($times);
                         }
-                    }
-                    else {
+                    } else {
                         $count and $row_data[$opt] = array_fill(0, $count, date('Y-m-d H:i:s'));
                     }
-
                     break;
-
                 default:
-
                     if (!empty($value)) {
                         $row_data[$opt] = \XmlImportParser::factory($this->getXml(), $cxpath, $value, $file)
                             ->parse();
                         $this->tmp_files[] = $file;
-                    }
-                    else {
+                    } else {
                         $count and $row_data[$opt] = array_fill(0, $count, $value);
                     }
-
                     break;
             }
         }
-
         // remove all temporary files created
         $this->unlinkTempFiles();
-
         return $row_data;
     }
 
@@ -567,36 +483,28 @@ class OrdersParser extends Parser {
      * @return bool|false|mixed|\WP_User
      */
     public function get_existing_customer($option_slug, $index) {
-
         $customer = FALSE;
-
         switch ($this->getImport()->options['pmwi_order'][$option_slug . '_match_by']) {
             case 'username':
                 $search_by = $this->getValue($option_slug . '_username', $index);
                 $customer = get_user_by('login', $search_by) or $customer = get_user_by('slug', $search_by);
                 break;
-
             case 'email':
                 $search_by = $this->getValue($option_slug . '_email', $index);
                 $customer = get_user_by('email', $search_by);
                 break;
-
             case 'cf':
                 $cf_name = $this->getValue($option_slug . '_cf_name', $index);
                 $cf_value = $this->getValue($option_slug . '_cf_value', $index);
-
                 $user_query = new \WP_User_Query(array(
                     'meta_key' => $cf_name,
                     'meta_value' => $cf_value
                 ));
-
                 if (!empty($user_query->results)) {
                     // ignore nuisance error since we don't really want to change the 'results' value itself, just the value we are saving to $customer
                     $customer = @array_shift($user_query->results);
                 }
-
                 break;
-
             case 'id':
                 $search_by = $this->getValue($option_slug . '_id', $index);
                 $customer = get_user_by('id', $search_by);
@@ -612,7 +520,6 @@ class OrdersParser extends Parser {
      */
     public function get_existing_customer_for_logger($option_slug, $index ) {
         $log = __("Search customer by ", \PMWI_Plugin::TEXT_DOMAIN);
-
         switch ($this->getImport()->options['pmwi_order'][$option_slug . '_match_by']){
             case 'username':
                 $log .= __("username", \PMWI_Plugin::TEXT_DOMAIN) . " `" . $this->getValue($option_slug . '_username', $index) . "`";

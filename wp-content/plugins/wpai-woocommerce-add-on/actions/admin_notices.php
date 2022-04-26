@@ -43,7 +43,7 @@ function pmwi_admin_notices() {
 		deactivate_plugins( PMWI_ROOT_DIR . '/wpai-woocommerce-add-on.php');
 	}
 
-	if ( class_exists( 'Woocommerce' ) and defined('WOOCOMMERCE_VERSION') and version_compare(WOOCOMMERCE_VERSION, '2.1') <= 0 ) {
+	if ( class_exists( 'Woocommerce' ) and defined('WOOCOMMERCE_VERSION') and version_compare(WOOCOMMERCE_VERSION, '3.0') <= 0 ) {
 		?>
 		<div class="error"><p>
 			<?php printf(

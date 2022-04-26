@@ -288,8 +288,7 @@
 	$('#link_all_variations').change(function(){
 		if ($(this).is(':checked')) {
 			$('.variations_tab').hide();
-		}
-		else {
+		} else {
 			$('.variations_tab').show();
 		}
 	});
@@ -336,10 +335,7 @@
 	$('#variations_xpath').each(function () {
 
 		var $input = $('#variations_xpath');
-		var $xml = $('#variations_xml');		
-		var $next_element = $('#next_variation_element');
-		var $prev_element = $('#prev_variation_element');		
-		var $goto_element =  $('#goto_variation_element');
+		var $xml = $('#variations_xml');
 		var $variation_tagno = 0;
 		
 		var variationsXPathChanged = function () {
@@ -359,7 +355,7 @@
 			}, 'json');
 		};
 
-		$xml.find('.navigation a').live('click', function (e) {
+		$(document).on('click', '.variations_tag .title .navigation a', function (e) {
 			e.preventDefault();
 			$variation_tagno += '#variation_prev' == $(this).attr('href') ? -1 : 1;
 			$input.data('checkedValue', '');
@@ -384,7 +380,7 @@
 	});
     
 
-	$('.variation_attributes').find('label').live({
+	$('.variation_attributes').find('label').on({
         mouseenter: function () {
             if ("" == $(this).attr('for')) {
                 var counter = $(this).parents('table:first').find('tr.form-field:visible').length;
@@ -455,8 +451,7 @@
 		if (attrs.length) {
 			$(this).parents('#product:first').find('input[name=unique_key]').val($unique_key + attrs.join('-'));
 			alert('The unique key has been successfully generated');
-		}
-		else {
+		} else {
             alert('At first, you should add minimum one attribute on the "Attributes" tab.');
 		}
 	});
@@ -465,8 +460,7 @@
 		if ($(this).val() == '%') {
 			$(this).parents('.form-field:first').find('.pmwi_reduce_prices_note').hide();
 			$(this).parents('.form-field:first').find('.pmwi_percentage_prices_note').show();
-		}
-		else {
+		} else {
 			$(this).parents('.form-field:first').find('.pmwi_reduce_prices_note').show();
 			$(this).parents('.form-field:first').find('.pmwi_percentage_prices_note').hide();	
 		}
@@ -474,50 +468,42 @@
 
 	if ($('input[name=matching_parent]:checked').val() == 'first_is_parent_id' || $('input[name=matching_parent]:checked').val() == 'first_is_variation'){
 		$('.set_parent_stock_option').slideDown();
-	}
-	else{
+	} else {
 		$('.set_parent_stock_option').slideUp();
 	}
 
 	$('input[name=matching_parent]').click(function(){
 		if ($(this).val() == 'first_is_parent_id' || $(this).val() == 'first_is_variation'){
 			$('.set_parent_stock_option').slideDown();
-		}
-		else{
+		} else {
 			$('.set_parent_stock_option').slideUp();
 		}
 	});
 
 	$('.pmwi_trigger_adjust_prices').click(function(){
-		if ($(this).find('span').html() == '-') {
-            $(this).find('span').html('+');
-		}
-		else {
-            $(this).find('span').html('-');
-		}
+		$(this).find('span').toggleClass('expanded');
 		$('.pmwi_adjust_prices').slideToggle();
 	});
 
-	$('.advanced_attributes').live('click', function(){
+	$('.advanced_attributes').on('click', function(){
 		var $parent = $(this).parent('div.wpallimport-radio-field:first');
-		if ($(this).find('span').html() == "+") {
+		if (!$(this).hasClass('expanded')) {
 			$parent.find('.default_attribute_settings').hide();
 			$parent.find('.advanced_attribute_settings').each(function(){
 				$(this).find('.advanced_in_variations, .advanced_is_visible, .advanced_is_taxonomy, .advanced_is_create_terms').each(function(){
 					if (!$(this).find('input:checked').length) {
-						$(this).find('input[type="radio"]:first').attr('checked', 'checked');
+						$(this).find('input[type="radio"]:first').prop('checked', true);
 					}
 				});
 			});
 			$parent.find('.advanced_attribute_settings').fadeIn();
 			$parent.find('input[name^=is_advanced]').val('1');
-			$(this).find('span').html("-");			
-		}
-		else {
+			$(this).addClass('expanded');
+		} else {
 			$parent.find('.advanced_attribute_settings').hide();
 			$parent.find('.default_attribute_settings').fadeIn();
 			$parent.find('input[name^=is_advanced]').val('0');
-			$(this).find('span').html("+");
+			$(this).removeClass('expanded');
 		}
 	});
 
@@ -530,20 +516,17 @@
 
 	// [ WC Orders View ]
 	// swither show/hide logic
-	$('select.switcher').live('change', function (e) {	
-
+	$('select.switcher').on('change', function (e) {
 		var $targets = $('.switcher-target-' + $(this).attr('id'));
-
 		var is_show = $(this).val() == 'xpath'; if ($(this).is('.switcher-reversed')) is_show = ! is_show;
 		if (is_show) {
 			$targets.slideDown();
 		} else {
 			$targets.slideUp().find('.clear-on-switch').add($targets.filter('.clear-on-switch')).val('');
 		}
-
 	}).change();
 
-	$('a.add-new-line').live('click', function(){
+	$(document).on('click', 'a.add-new-line', function(){
 		var $parent = $(this).parents('table').first();
 		var $template = $parent.children('tbody').children('tr.template');
 		var $clone = $template.clone(true);
@@ -554,6 +537,31 @@
 		$clone.html($cloneHtml);		
 
 		$clone.insertBefore($template).css('display', 'none').removeClass('template').fadeIn();
+
+		$parent.on("change", "input.switcher", function (e) {
+			if ($(this).is(':radio:checked')) {
+				$(this).parents('form').find('input.switcher:radio[name="' + $(this).attr('name') + '"]').not(this).change();
+			}
+			let $targets = $('.switcher-target-' + $(this).attr('id'));
+			let is_show = $(this).is(':checked'); if ($(this).is('.switcher-reversed')) is_show = ! is_show;
+			if (is_show) {
+				$targets.slideDown('fast', function(){
+					$(this).css({'overflow': 'visible'});
+				});
+			} else {
+				$targets.slideUp().find('.clear-on-switch').add($targets.filter('.clear-on-switch')).val('');
+			}
+		}).change();
+
+		$parent.on("change", "select.switcher", function (e) {
+			var $targets = $('.switcher-target-' + $(this).attr('id'));
+			var is_show = $(this).val() == 'xpath'; if ($(this).is('.switcher-reversed')) is_show = ! is_show;
+			if (is_show) {
+				$targets.slideDown();
+			} else {
+				$targets.slideUp().find('.clear-on-switch').add($targets.filter('.clear-on-switch')).val('');
+			}
+		}).change();
 
 		// datepicker
 		$parent.find('input.datepicker').removeClass('date-picker').addClass('datepicker').datepicker({
@@ -587,51 +595,37 @@
 	});	
 
 	$('a.add-new-line').each(function(){
-		var $parent = $(this).parents('table:first');		
+		var $parent = $(this).parents('table:first');
 		if ($(this).parents('table').length < 4 && $parent.children('tbody').children('tr').length == 2) {
-			$(this).click();	
-		} 
+			$(this).click();
+		}
 	});
 
-	$('a.switcher').live('click', function (e) {	
-		
+	$('a.switcher').on('click', function (e) {
 		var $targets = $('.switcher-target-' + $(this).attr('id'));
-
 		var is_show = $(this).find('span').html() == '+'; if ($(this).is('.switcher-reversed')) is_show = ! is_show;
 		if (is_show) {
-			$(this).find('span').html('-');
-			
+			$(this).find('span').html('-').addClass('expanded');
 				if ($targets.find('a.add-new-line').length){
 					var $parent = $targets.find('a.add-new-line').parents('table:first');
 					if ($parent.children('tbody').children('tr').length == 2){
-						var $add_new = $targets.find('a.add-new-line');
-						var $taxes = $add_new.parents('table').first();
-						var $template = $taxes.children('tbody').children('tr.template');
-						var $clone = $template.clone(true);
-						var $number = parseInt($taxes.find('tbody:first').children().not('.template').length) - 1;	
-						
-						var $cloneHtml = $clone.html().replace(/ROWNUMBER/g, $number).replace(/CELLNUMBER/g, 'ROWNUMBER').replace('date-picker', 'datepicker');
-
-						$clone.html($cloneHtml);		
-
-						$clone.insertBefore($template).css('display', 'none').removeClass('template').show();		
+						$targets.find('a.add-new-line').click();
 					}
 				}
 			$targets.slideDown('slow');
 		} else {
-			$(this).find('span').html('+');
+			$(this).find('span').html('+').removeClass('expanded');
 			$targets.slideUp().find('.clear-on-switch').add($targets.filter('.clear-on-switch')).val('');
 		}
 	}).click();	
 
-	$('.variable_repeater_mode').live('change', function(){
+	$('.variable_repeater_mode').on('change', function(){
 		// if variable mode
 		if ($(this).is(':checked')) {
 			var $parent = $(this).parents('.options_group:first');
 			if ($(this).val() == 'xml' || $(this).val() == 'csv') {
 				$parent.find('table.wpallimport_variable_table').find('tr.wpallimport-row-actions').hide();			
-			}						
-			else {
+			} else {
 				$parent.find('table.wpallimport_variable_table').find('tr.wpallimport-row-actions').show();
 			}
 		}
@@ -645,25 +639,23 @@
 	$('#billing_is_guest_matching').on('change', function(){
 		if ($(this).is(':checked')){
 			$('.is_guest_matching_notice').hide();
-		}
-		else{
+		} else {
 			$('.is_guest_matching_notice').slideDown();
 		}
 	}).change();
 
-	$('input[name="is_multiple_product_subscription_period"]').live('click', function(){
+	$('input[name="is_multiple_product_subscription_period"]').on('click', function(){
 		if ($(this).val() == 'no') {
 			$('select[name="multiple_product_subscription_length"]').html($('.subscription_length-xpath').html());
-		}
-		else {
+		} else {
 			var $period = $('select[name="multiple_product_subscription_period"]').val();
 			$('select[name="multiple_product_subscription_length"]').html($('.subscription_length-' + $period).html());
-	}
+		}
 	});
 
 	$('input[name="is_multiple_product_subscription_period"]:checked').click();
 
-	$('select[name="multiple_product_subscription_period"]').live('change', function(){
+	$('select[name="multiple_product_subscription_period"]').on('change', function(){
 		$('select[name="multiple_product_subscription_length"]').html($('.subscription_length-' + $(this).val()).html());
 	});
 

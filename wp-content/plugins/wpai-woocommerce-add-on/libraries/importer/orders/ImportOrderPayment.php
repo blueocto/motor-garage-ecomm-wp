@@ -32,8 +32,7 @@ class ImportOrderPayment extends ImportOrderBase {
                 if (!empty($this->payment_gateways[$payment_method])) {
                     update_post_meta($this->getOrderID(), '_payment_method', $payment_method);
                     update_post_meta($this->getOrderID(), '_payment_method_title', $this->payment_gateways[$payment_method]->title);
-                }
-                else {
+                } else {
                     $method = FALSE;
                     if (!empty($this->payment_gateways)) {
                         foreach ($this->payment_gateways as $payment_gateway_slug => $payment_gateway) {
@@ -48,8 +47,7 @@ class ImportOrderPayment extends ImportOrderBase {
                         update_post_meta($this->getOrderID(), '_payment_method_title', $method->method_title);
                     }
                 }
-            }
-            else {
+            } else {
                 update_post_meta($this->getOrderID(), '_payment_method', 'N/A');
             }
             update_post_meta($this->getOrderID(), '_transaction_id', $this->getValue('transaction_id'));

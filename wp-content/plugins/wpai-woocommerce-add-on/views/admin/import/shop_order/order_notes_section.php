@@ -13,7 +13,7 @@
 								<input type="radio" id="notes_repeater_mode_fixed" name="pmwi_order[notes_repeater_mode]" value="fixed" <?php echo 'fixed' == $post['pmwi_order']['notes_repeater_mode'] ? 'checked="checked"' : '' ?> class="switcher variable_repeater_mode"/>
 								<label for="notes_repeater_mode_fixed" style="width:auto;"><?php _e('Fixed Repeater Mode', PMWI_Plugin::TEXT_DOMAIN) ?></label>
 							</div> -->	
-							<table class="form-field wpallimport_variable_table" style="width:98%;">
+							<table class="form-field wpallimport_variable_table order-notes" style="width:98%;">
 								<?php 
 								foreach ($post['pmwi_order']['notes'] as $i => $note): 
 
@@ -36,7 +36,7 @@
 												</tr>
 												<tr>
 													<td colspan="2">
-														<h4><?php _e('Date', PMWI_Plugin::TEXT_DOMAIN) ?><a href="#help" class="wpallimport-help" style="position:relative; top: 1px;" title="<?php _e('Use any format supported by the PHP <b>strtotime</b> function. That means pretty much any human-readable date will work.', PMWI_Plugin::TEXT_DOMAIN) ?>">?</a></h4>
+														<h4><?php _e('Date', PMWI_Plugin::TEXT_DOMAIN) ?><a href="#help" class="wpallimport-help" style="position:relative;top:-2px;" title="<?php _e('Use any format supported by the PHP <b>strtotime</b> function. That means pretty much any human-readable date will work.', PMWI_Plugin::TEXT_DOMAIN) ?>">?</a></h4>
 														<div class="input">
 															<input type="text" class="datepicker" name="pmwi_order[notes][<?php echo $i; ?>][date]" value="<?php echo esc_attr($note['date']) ?>"/>
 														</div>	
@@ -100,7 +100,7 @@
 											</tr>
 											<tr>
 												<td colspan="2">
-													<h4><?php _e('Date', PMWI_Plugin::TEXT_DOMAIN) ?><a href="#help" class="wpallimport-help" style="position:relative; top: 1px;" title="<?php _e('Use any format supported by the PHP <b>strtotime</b> function. That means pretty much any human-readable date will work.', PMWI_Plugin::TEXT_DOMAIN) ?>">?</a></h4>
+													<h4><?php _e('Date', PMWI_Plugin::TEXT_DOMAIN) ?><a href="#help" class="wpallimport-help" style="position:relative; top: -2px;" title="<?php _e('Use any format supported by the PHP <b>strtotime</b> function. That means pretty much any human-readable date will work.', PMWI_Plugin::TEXT_DOMAIN) ?>">?</a></h4>
 													<div class="input">
 														<input type="text" name="pmwi_order[notes][ROWNUMBER][date]" class="date-picker" value="now"/>
 													</div>	
@@ -177,8 +177,8 @@
 								<div class="switcher-target-notes_repeater_mode_variable_csv wpallimport-clear" style="padding: 10px 0 10px 25px; overflow: hidden;">
 									<span class="order-separator-label wpallimport-slide-content" style="padding-left:0;">	
 										<label><?php _e('Multiple notes separated by', PMWI_Plugin::TEXT_DOMAIN); ?></label>
-										<input type="text" class="short rad4 order-separator-input" name="pmwi_order[notes_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['notes_repeater_mode_separator']) ?>" style="width:10%; text-align: center;"/>
-										<a href="#help" class="wpallimport-help" style="top:0px;left:8px;" original-title="For example, two notes would be imported like this Note 1|Note 2">?</a>							
+										<input type="text" class="short rad4 order-separator-input" name="pmwi_order[notes_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['notes_repeater_mode_separator']) ?>" style="width:8%; text-align: center;"/>
+										<a href="#help" class="wpallimport-help" style="top:0px;left:4px;" title="For example, two notes would be imported like this Note 1|Note 2">?</a>
 									</span>
 								</div>
 							</div>								
@@ -198,7 +198,7 @@
 							<div class="form-field input" style="padding-left: 20px;">
 								<label class="order-separator-label" style="line-height: 30px;"><?php _e('Multiple notes separated by', PMWI_Plugin::TEXT_DOMAIN); ?></label>
 								<input type="text" class="short rad4 order-separator-input" name="pmwi_order[notes_repeater_mode_separator]" value="<?php echo esc_attr($post['pmwi_order']['notes_repeater_mode_separator']) ?>" style="width:10%; text-align: center;"/>
-								<a href="#help" class="wpallimport-help" style="top:0px;left:8px;" original-title="For example, two notes would be imported like this 'Note 1|Note 2'">?</a>							
+								<a href="#help" class="wpallimport-help" style="top:0px;left:8px;" title="For example, two notes would be imported like this 'Note 1|Note 2'">?</a>
 							</div>
 							<?php endif; ?>	
 						</div>				

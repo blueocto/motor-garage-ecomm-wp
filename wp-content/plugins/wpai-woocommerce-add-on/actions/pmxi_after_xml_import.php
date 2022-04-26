@@ -1,5 +1,7 @@
 <?php
 
+use wpai_woocommerce_add_on\libraries\importer\ImportProductBase;
+
 /**
  * @param $importID
  *
@@ -101,6 +103,26 @@ function pmwi_pmxi_after_xml_import($importID) {
                 }
             }
             delete_option('wp_all_import_products_maybe_to_delete_' . $importID);
+        }
+        // Associate linked products.
+        $wp_all_import_not_linked_products = get_option('wp_all_import_not_linked_products_' . $importID );
+        if (!empty($wp_all_import_not_linked_products)) {
+            foreach ($wp_all_import_not_linked_products as $product) {
+                if (!empty($product['not_linked_products'])) {
+                    $linked_products = get_post_meta($product['pid'], $product['type'], TRUE);
+                    if (empty($linked_products)) {
+                        $linked_products = [];
+                    }
+                    foreach ($product['not_linked_products'] as $linked_product_identifier) {
+                        // Trying to find linked product.
+                        $linked_product_id = ImportProductBase::getProductIdByIdentifier($linked_product_identifier);
+                        if ($linked_product_id && $linked_product_id != $product['pid'] ) {
+                            $linked_products[] = $linked_product_id;
+                        }
+                    }
+                    update_post_meta($product['pid'], $product['type'], array_unique($linked_products));
+                }
+            }
         }
         delete_option('wp_all_import_not_linked_products_' . $importID);
         // Regenerate product lookup tables.

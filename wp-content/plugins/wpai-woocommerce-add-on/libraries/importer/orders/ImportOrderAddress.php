@@ -68,8 +68,7 @@ class ImportOrderAddress extends ImportOrderBase {
                             $this->getLogger() and call_user_func($this->getLogger(), sprintf(__('- Billing field `%s` has been updated with value `%s` for order `%s` ...', \PMWI_Plugin::TEXT_DOMAIN), $billing_field, $this->billing_data[$billing_field], $this->getOrderID()));
                         }
                         update_post_meta($this->getOrderID(), '_customer_user', $customer->ID);
-                    }
-                    else {
+                    } else {
                         if ($this->getImport()->options['pmwi_order']['is_guest_matching']) {
                             foreach ($this->billing_fields as $billing_field) {
                                 $this->billing_data[$billing_field] = $this->getValue('guest_' . $billing_field);
@@ -78,8 +77,7 @@ class ImportOrderAddress extends ImportOrderBase {
                             }
 
                             update_post_meta($this->getOrderID(), '_customer_user', '0');
-                        }
-                        else {
+                        } else {
                             $this->getLogger() and call_user_func($this->getLogger(), sprintf(__('<b>WARNING</b>: Existing customer not found for Order `%s`.', \PMWI_Plugin::TEXT_DOMAIN), $this->order_data['post_title']));
                         }
                     }
@@ -139,8 +137,7 @@ class ImportOrderAddress extends ImportOrderBase {
                         $shipping_value = '';
                         if ($this->getValue($shipping_field) != '') {
                             $shipping_value = $this->getValue($shipping_field);
-                        }
-                        elseif ($this->getImport()->options['pmwi_order']['copy_from_billing']) {
+                        } elseif ($this->getImport()->options['pmwi_order']['copy_from_billing']) {
                             $shipping_value = empty($this->billing_data[$billing_field]) ? '' : $this->billing_data[$billing_field];
                         }
                         update_post_meta($this->getOrderID(), '_' . $shipping_field, $shipping_value);

@@ -84,8 +84,7 @@ class XmlImportWooTaxonomyService extends XmlImportWooServiceBase {
             if ( in_array( wc_sanitize_taxonomy_name( stripslashes( (string) $attr_name_real)), $this->reserved_terms ) ) {
                 $prefix++;
                 return $this->createTaxonomy($attr_name, $prefix);
-            }
-            else {
+            } else {
                 // Register the taxonomy now so that the import works!
                 $domain = wc_attribute_taxonomy_name( $attr_name_real );
                 if (strlen($domain) < 31){
@@ -100,23 +99,19 @@ class XmlImportWooTaxonomyService extends XmlImportWooServiceBase {
                     );
                     $this->createWooCommerceAttribute($args);
                     $this->getLogger() and call_user_func($this->getLogger(), sprintf(__('- <b>CREATED</b>: Taxonomy attribute “%s” have been successfully created.', \PMWI_Plugin::TEXT_DOMAIN), wc_attribute_taxonomy_name( $attribute_name )));
-                }
-                else {
+                } else {
                     $this->getLogger() and call_user_func($this->getLogger(), sprintf(__('- <b>WARNING</b>: Taxonomy “%s” name is more than 28 characters. Change it, please.', \PMWI_Plugin::TEXT_DOMAIN), $attr_name));
                 }
             }
-        }
-        else {
+        } else {
             if ( in_array( wc_sanitize_taxonomy_name( stripslashes( (string) $attr_name_real)), $this->reserved_terms ) ) {
                 $prefix++;
                 return $this->createTaxonomy($attr_name, $prefix);
             }
         }
-
         if (!wc_attribute_taxonomy_id_by_name($attr_name_real) && strlen($attribute_name) < 31) {
             $this->createWooCommerceAttribute($args);
         }
-
         return $attr_name_real;
     }
 
@@ -130,7 +125,6 @@ class XmlImportWooTaxonomyService extends XmlImportWooServiceBase {
             wp_cache_delete($prefix . $cache_key, 'woocommerce-attributes');
         }
         delete_transient('wc_attribute_taxonomies');
-
         $this->wpdb->insert(
             $this->wpdb->prefix . 'woocommerce_attribute_taxonomies',
             $args

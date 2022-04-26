@@ -58,12 +58,10 @@ abstract class VariationsParserBase extends Parser {
      * @param $option
      */
     public function parseOptionType_1($option) {
-
         try {
             if ($this->getImport()->options[$option] != ""){
                 $this->data[$this->getOptionName($option)] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options[$option], $file)->parse(); $this->tmp_files[] = $file;
-            }
-            else{
+            } else{
                 $this->countVariations && $this->data[$this->getOptionName($option)] = array_fill(0, $this->countVariations, '');
             }
         }
@@ -83,12 +81,10 @@ abstract class VariationsParserBase extends Parser {
                 if ($this->getImport()->options['single_variable_' . $option . '_use_parent']) {
                     $parsedData = XmlImportParser::factory($this->getXml(), $this->getCompleteParentXPath(), $this->getImport()->options['single_variable_' . $option], $file)->parse(); $this->tmp_files[] = $file;
                     $this->countVariations && $this->data[$option] = array_fill(0, $this->countVariations, $parsedData[$this->index]);
-                }
-                else {
+                } else {
                     $this->data[$option] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['single_variable_' . $option], $file)->parse(); $this->tmp_files[] = $file;
                 }
-            }
-            else{
+            } else {
                 $this->countVariations && $this->data[$option] = array_fill(0, $this->countVariations, $this->getImport()->options['is_variable_' . $option]);
             }
         }
@@ -108,16 +104,13 @@ abstract class VariationsParserBase extends Parser {
                 if ($this->getImport()->options['single_variable_' . $option . '_use_parent']) {
                     $parsedData = XmlImportParser::factory($this->getXml(), $this->getCompleteParentXPath(), $this->getImport()->options['single_variable_' . $option], $file)->parse(); $this->tmp_files[] = $file;
                     $this->countVariations && $this->data[$option] = array_fill(0, $this->countVariations, $parsedData[$this->index]);
-                }
-                else {
+                } else {
                     $this->data[$option] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['single_variable_' . $option], $file)->parse(); $this->tmp_files[] = $file;
                 }
-            }
-            else{
+            } else {
                 $this->countVariations && $this->data[$option] = array_fill(0, $this->countVariations, $this->getImport()->options['multiple_variable_' . $option]);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -130,19 +123,26 @@ abstract class VariationsParserBase extends Parser {
     public function parseOptionType_4($option) {
         try {
             if ($this->getImport()->options[$option] != "") {
-                if ($this->getImport()->options[$option . '_use_parent']) {
+                switch ($option) {
+                    case 'variable_length':
+                    case 'variable_width':
+                    case 'variable_height':
+                        $use_parent_option = 'variable_dimensions_use_parent';
+                        break;
+                    default:
+                        $use_parent_option = $option . '_use_parent';
+                        break;
+                }
+                if ($this->getImport()->options[$use_parent_option]) {
                     $parsedData = XmlImportParser::factory($this->getXml(), $this->getCompleteParentXPath(), $this->getImport()->options[$option], $file)->parse(); $this->tmp_files[] = $file;
                     $this->countVariations && $this->data[$this->getOptionName($option)] = array_fill(0, $this->countVariations, $parsedData[$this->index]);
-                }
-                else {
+                } else {
                     $this->data[$this->getOptionName($option)] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options[$option], $file)->parse(); $this->tmp_files[] = $file;
                 }
-            }
-            else{
+            } else {
                 $this->countVariations && $this->data[$this->getOptionName($option)] = array_fill(0, $this->countVariations, '');
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -166,8 +166,7 @@ abstract class VariationsParserBase extends Parser {
                         ->parse()), array_fill(0, $this->getCount(), $option));
                     $this->tmp_files[] = $file;
                     $this->countVariations && $this->data[$this->getOptionName($option)] = array_fill(0, $this->countVariations, $parsedData[$this->index]);
-                }
-                else {
+                } else {
                     $this->data[$this->getOptionName($option)] = array_map(array(
                         $this,
                         'preparePrice'
@@ -175,12 +174,10 @@ abstract class VariationsParserBase extends Parser {
                         ->parse());
                     $this->tmp_files[] = $file;
                 }
-            }
-            else {
+            } else {
                 $this->countVariations && $this->data[$this->getOptionName($option)] = array_fill(0, $this->countVariations, '');
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -195,8 +192,7 @@ abstract class VariationsParserBase extends Parser {
                 $this->data['product_stock_status'] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['single_variable_stock_status'], $file)
                     ->parse();
                 $this->tmp_files[] = $file;
-            }
-            elseif ($this->getImport()->options['variable_stock_status'] == 'auto') {
+            } elseif ($this->getImport()->options['variable_stock_status'] == 'auto') {
                 $this->countVariations && $this->data['product_stock_status'] = array_fill(0, $this->countVariations, $this->getImport()->options['variable_stock_status']);
                 $noStock = absint(max(get_option('woocommerce_notify_no_stock_amount'), 0));
                 foreach ($this->data['product_stock'] as $key => $value) {
@@ -207,12 +203,10 @@ abstract class VariationsParserBase extends Parser {
                         $this->data['product_stock_status'][$key] = 'instock';
                     }
                 }
-            }
-            else {
+            } else {
                 $this->getCount() && $this->data['product_stock_status'] = array_fill(0, $this->countVariations, $this->getImport()->options['variable_stock_status']);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -224,12 +218,10 @@ abstract class VariationsParserBase extends Parser {
         try {
             if ($this->getImport()->options['variable_allow_backorders'] == 'xpath' && "" != $this->getImport()->options['single_variable_allow_backorders']){
                 $this->data['product_allow_backorders'] =  XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['single_variable_allow_backorders'], $file)->parse(); $this->tmp_files[] = $file;
-            }
-            else{
+            } else {
                 $this->countVariations && $this->data['product_allow_backorders'] = array_fill(0, $this->countVariations, $this->getImport()->options['variable_allow_backorders']);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -241,12 +233,10 @@ abstract class VariationsParserBase extends Parser {
         try {
             if ($this->getImport()->options['is_variable_product_enabled'] == 'xpath' && "" != $this->getImport()->options['single_variable_product_enabled']){
                 $this->data['product_enabled'] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['single_variable_product_enabled'], $file)->parse(); $this->tmp_files[] = $file;
-            }
-            else{
+            } else {
                 $this->countVariations && $this->data['product_enabled'] = array_fill(0, $this->countVariations, $this->getImport()->options['is_variable_product_enabled']);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -266,14 +256,12 @@ abstract class VariationsParserBase extends Parser {
                             ->parse();
                         $this->tmp_files[] = $file;
                         $this->countVariations && $this->data['product_sale_price_dates_from'] = array_fill(0, $this->countVariations, $parsedData[$this->index]);
-                    }
-                    else {
+                    } else {
                         $this->data['product_sale_price_dates_from'] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['variable_sale_price_dates_from'], $file)
                             ->parse();
                         $this->tmp_files[] = $file;
                     }
-                }
-                else {
+                } else {
                     $this->countVariations && $this->data['product_sale_price_dates_from'] = array_fill(0, $this->countVariations, '');
                 }
                 // Sale price dates to.
@@ -283,19 +271,16 @@ abstract class VariationsParserBase extends Parser {
                             ->parse();
                         $this->tmp_files[] = $file;
                         $this->countVariations && $this->data['product_sale_price_dates_to'] = array_fill(0, $this->countVariations, $parsedData[$this->index]);
-                    }
-                    else {
+                    } else {
                         $this->data['product_sale_price_dates_to'] = XmlImportParser::factory($this->getXml(), $this->getCompleteVariationsXPath(), $this->getImport()->options['variable_sale_price_dates_to'], $file)
                             ->parse();
                         $this->tmp_files[] = $file;
                     }
-                }
-                else {
+                } else {
                     $this->countVariations && $this->data['product_sale_price_dates_to'] = array_fill(0, $this->countVariations, '');
                 }
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -338,8 +323,7 @@ abstract class VariationsParserBase extends Parser {
                     }
                 }
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->log('<b>ERROR:</b> ' . $e->getMessage());
         }
     }

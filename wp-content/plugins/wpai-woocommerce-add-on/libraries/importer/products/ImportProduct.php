@@ -155,15 +155,11 @@ abstract class ImportProduct extends ImportProductBase {
         public function prepareDownloadableProperties(){
             // Downloadable options.
             if ( $this->isDownloadable() ) {
-                $_download_limit = absint( $this->getValue('product_download_limit') );
-                if (!$_download_limit) {
-                    $_download_limit = ''; // 0 or blank = unlimited
-                }
+                $_download_limit = $this->getValue('product_download_limit');
+	            $_download_limit = -1 === (int) $_download_limit || '' === $_download_limit ? -1 : absint( $_download_limit );
                 $this->setProperty('download_limit', $_download_limit);
-                $_download_expiry = absint( $this->getValue('product_download_expiry') );
-                if (!$_download_expiry) {
-                    $_download_expiry = ''; // 0 or blank = unlimited
-                }
+                $_download_expiry = $this->getValue('product_download_expiry');
+	            $_download_expiry = -1 === (int) $_download_expiry || '' === $_download_expiry ? -1 : absint( $_download_expiry );
                 $this->setProperty('download_expiry', $_download_expiry);
                 // File paths will be stored in an array keyed off md5(file path).
                 if ($this->getValue('product_files')) {
@@ -189,7 +185,7 @@ abstract class ImportProduct extends ImportProductBase {
                                 $order = new \WC_Order($orderID);
                                 foreach ($_file_paths as $download_id => $download_data) {
                                     // Grant permission if it doesn't already exist.
-                                    if ( ! $wpdb->get_var( $wpdb->prepare( "SELECT 1=1 FROM {$wpdb->prefix}woocommerce_downloadable_product_permissions WHERE order_id = %d AND product_id = %d AND download_id = %s", $order->id, $this->getPid(), $download_id ) ) ) {
+                                    if ( ! $wpdb->get_var( $wpdb->prepare( "SELECT 1=1 FROM {$wpdb->prefix}woocommerce_downloadable_product_permissions WHERE order_id = %d AND product_id = %d AND download_id = %s", $order->get_id(), $this->getPid(), $download_id ) ) ) {
                                         wc_downloadable_file_permission( $download_id, $this->getPid(), $order );
                                     }
                                 }
@@ -276,12 +272,12 @@ abstract class ImportProduct extends ImportProductBase {
     public function prepareLinkedProducts() {
         // Upsells.
         if ($this->isNewProduct() || $this->getImportService()->isUpdateCustomField('_upsell_ids')) {
-            $linked = $this->getLinkedProducts($this->getPid(), $this->getValue('product_up_sells'), '_upsell_ids');
+            $linked = $this->getLinkedProducts($this->getValue('product_up_sells'), '_upsell_ids');
             $this->productProperties['upsell_ids'] = $linked;
         }
         // Cross sells.
         if ($this->isNewProduct() || $this->getImportService()->isUpdateCustomField('_crosssell_ids')) {
-            $linked = $this->getLinkedProducts($this->getPid(), $this->getValue('product_cross_sells'), '_crosssell_ids');
+            $linked = $this->getLinkedProducts($this->getValue('product_cross_sells'), '_crosssell_ids');
             $this->productProperties['cross_sell_ids'] = $linked;
         }
         // Grouping.
@@ -297,6 +293,10 @@ abstract class ImportProduct extends ImportProductBase {
         }
         $attributes = $this->getAttributesProperties();
         $this->setProperty('attributes', $attributes);
+        $default_attributes = $this->getValue('default_attributes_type');
+        if ($default_attributes && !in_array($default_attributes, ['first', 'instock'])) {
+            $this->setProperty('_default_attributes', $default_attributes);
+        }
     }
 
     /**
@@ -306,8 +306,7 @@ abstract class ImportProduct extends ImportProductBase {
         $attributes = $this->getAttributesData();
         if (!empty($attributes['attribute_names'])) {
             $attributes = \WC_Meta_Box_Product_Data::prepare_attributes($attributes);
-        }
-        else {
+        } else {
             $attributes = array();
         }
         return $attributes;
@@ -326,7 +325,6 @@ abstract class ImportProduct extends ImportProductBase {
             'attribute_variation' => array(),
             'attribute_position' => array()
         );
-        $is_any_attribute = apply_filters('wp_all_import_variation_any_attribute', false, $this->getImport()->id);
         $max_attribute_length = apply_filters('wp_all_import_max_woo_attribute_term_length', 199);
         $parsedAttributes = array();
         $attributesToImport = $this->getParsedDataOption('serialized_attributes');
@@ -358,9 +356,9 @@ abstract class ImportProduct extends ImportProductBase {
                     $values = $attribute['value'];
                     if ( $isTaxonomy ) {
                         if ( isset( $attribute['value']) ) {
-                            $values = array_map('stripslashes', array_map( 'strip_tags', explode( $attributes_delimiter, $attribute['value'])));
+                            $values = array_map('stripslashes', explode( $attributes_delimiter, $attribute['value']));
                             // Remove empty items in the array.
-                            $values = array_filter( $values, array($this, "filtering") );
+                            $values = array_filter( $values, [$this, "filtering"] );
                             if (intval($attribute['is_create_taxonomy_terms'])){
                                 $real_attr_name = $this->getImportService()->getTaxonomiesService()->createTaxonomy($real_attr_name);
                                 $attributeName = wc_attribute_taxonomy_name( $real_attr_name );
@@ -369,17 +367,23 @@ abstract class ImportProduct extends ImportProductBase {
                                 $attr_values = array();
                                 foreach ($values as $key => $val) {
                                     $value = substr($val, 0, $max_attribute_length);
+                                    $term_slug = sanitize_title(str_replace('#', '_', $value));
                                     $term = get_term_by('name', $value, wc_attribute_taxonomy_name( $real_attr_name ), ARRAY_A);
                                     // For compatibility with WPML plugin.
                                     $term = apply_filters('wp_all_import_term_exists', $term, wc_attribute_taxonomy_name( $real_attr_name ), $value, null);
-                                    if ( empty($term) && !is_wp_error($term) ){
-                                        $term = is_exists_term($value, wc_attribute_taxonomy_name( $real_attr_name ));
-                                        if ( empty($term) && !is_wp_error($term) ){
-                                            $term = is_exists_term(htmlspecialchars($value), wc_attribute_taxonomy_name( $real_attr_name ));
-                                            if ( empty($term) && !is_wp_error($term) && intval($attribute['is_create_taxonomy_terms'])){
+                                    if ( empty($term) && !is_wp_error($term) ) {
+                                        $term = is_exists_term($term_slug, wc_attribute_taxonomy_name( $real_attr_name ));
+                                        if ( empty($term) && !is_wp_error($term) ) {
+                                            $term = is_exists_term(htmlspecialchars($term_slug), wc_attribute_taxonomy_name( $real_attr_name ));
+                                            if ( empty($term) && !is_wp_error($term) && intval($attribute['is_create_taxonomy_terms'])) {
+                                                $term_options = [];
+                                                if (strpos($value, '#') !== FALSE) {
+                                                    $term_options['slug'] = $term_slug;
+                                                }
                                                 $term = wp_insert_term(
                                                     $value, // the term
-                                                    wc_attribute_taxonomy_name( $real_attr_name ) // the taxonomy
+                                                    wc_attribute_taxonomy_name( $real_attr_name ), // the taxonomy
+                                                    $term_options
                                                 );
                                             }
                                         }
@@ -391,22 +395,18 @@ abstract class ImportProduct extends ImportProductBase {
                                 $values = $attr_values;
                                 $values = array_map( 'intval', $values );
                                 $values = array_unique( $values );
-                            }
-                            else{
+                            } else {
                                 $values = array();
                             }
                         }
                     }
-                    if ($is_any_attribute && count($values) > 1 && $this->getProduct() instanceof \WC_Product_Variation) {
-                        $values = '';
-                    }
-                    $parsedAttributes[strtolower(urlencode($attributeName))] = array(
-                        'name' => $attributeName,
-                        'value' => $values,
-                        'is_visible' => intval($attribute['is_visible']),
-                        'in_variation' => intval($attribute['in_variation']),
-                        'position' => $attribute_position
-                    );
+	                $parsedAttributes[strtolower(urlencode($attributeName))] = array(
+		                'name' => $attributeName,
+		                'value' => $values,
+		                'is_visible' => intval($attribute['is_visible']),
+		                'in_variation' => intval($attribute['in_variation']),
+		                'position' => $attribute_position
+	                );
                 }
             }
         }
@@ -424,10 +424,10 @@ abstract class ImportProduct extends ImportProductBase {
                         $isAddNew = TRUE;
                     }
                 }
-                $name = $attribute->is_taxonomy() ? $attributeName : $attribute->get_name();
+                $name = $attribute->is_taxonomy() ? urldecode_deep($attributeName) : $attribute->get_name();
                 if (!$this->getImportService()->isUpdateAttribute($name, $this->isNewProduct()) || $isAddNew) {
                     $productAttributes[$attributeName] = array(
-                        'name' => $attribute->is_taxonomy() ? urldecode_deep($attributeName) : $attribute->get_name(),
+                        'name' => $name,
                         'value' => $attribute->is_taxonomy() ? $attribute->get_options() : implode("|", $attribute->get_options()),
                         'is_visible' => $attribute->get_visible(),
                         'in_variation' => $attribute->get_variation(),
@@ -483,8 +483,7 @@ abstract class ImportProduct extends ImportProductBase {
                 $term = is_exists_term( $shipping_class, 'product_shipping_class');
                 // For compatibility with WPML plugin.
                 $term = apply_filters('wp_all_import_term_exists', $term, 'product_shipping_class', $shipping_class, null);
-            }
-            else {
+            } else {
                 $term = is_exists_term( (int) $shipping_class, 'product_shipping_class');
                 if (empty($term) || is_wp_error($term)) {
                     $term = is_exists_term( $shipping_class, 'product_shipping_class');
@@ -493,14 +492,12 @@ abstract class ImportProduct extends ImportProductBase {
             // The term to check. Accepts term ID, slug, or name.
             if (!empty($term) && !is_wp_error($term)){
                 $shipping_class = (int) $term['term_id'];
-            }
-            else {
+            } else {
                 $term = wp_insert_term($shipping_class, 'product_shipping_class');
                 if (!empty($term) && !is_wp_error($term)) {
                     $shipping_class = (int) $term['term_id'];
                 }
             }
-
             if (empty($term) || is_wp_error($term)) {
                 $shipping_class = '';
             }
@@ -545,8 +542,7 @@ abstract class ImportProduct extends ImportProductBase {
                             @unlink($file);
                         }
                         $newSKU = substr(md5($unique_keys[$this->getIndex()]), 0, 12);
-                    }
-                    catch(\Exception $e){
+                    } catch(\Exception $e){
                         $this->log('<b>ERROR:</b> ' . $e->getMessage());
                     }
                 }
@@ -577,7 +573,7 @@ abstract class ImportProduct extends ImportProductBase {
         // Group products by Parent.
         if (in_array($this->productType, array( 'simple', 'external', 'variable', 'variable-subscription' ))) {
             // Group all product to one parent ( no XPath provided ).
-            if ($this->getImport()->options['is_multiple_grouping_product'] != 'yes') {
+            if ($this->getImport()->options['is_multiple_grouping_product'] == 'no') {
                 // Trying to find parent product according to matching options.
                 if ($this->getImport()->options['grouping_indicator'] == 'xpath' && !is_numeric($this->getValue('product_grouping_parent'))) {
                     $post = pmxi_findDuplicates(array(
@@ -588,17 +584,14 @@ abstract class ImportProduct extends ImportProductBase {
                     ));
                     if (!empty($post)) {
                         $this->setValue('product_grouping_parent', $post[0]);
-                    }
-                    else {
+                    } else {
                         $this->setValue('product_grouping_parent', 0);
                     }
-                }
-                elseif ($this->getImport()->options['grouping_indicator'] != 'xpath') {
+                } elseif ($this->getImport()->options['grouping_indicator'] != 'xpath') {
                     $post = pmxi_findDuplicates($this->getArticle(), $this->getValue('custom_grouping_indicator_name'), $this->getValue('custom_grouping_indicator_value'), 'custom field');
                     if (!empty($post)) {
                         $this->setValue('product_grouping_parent', array_shift($post));
-                    }
-                    else {
+                    } else {
                         $this->setValue('product_grouping_parent', 0);
                     }
                 }
@@ -616,6 +609,23 @@ abstract class ImportProduct extends ImportProductBase {
                 }
             }
         }
+	    if (in_array($this->productType, array( 'grouped' ))) {
+	    	$children = $this->getValue('grouped_product_children');
+		    if (!is_array($children)) {
+			    $children = explode(",", $children);
+			    $children = array_map('trim', $children);
+		    }
+		    $grouped = [];
+		    if (!empty($children)) {
+		    	foreach ($children as $child) {
+				    $product_id = wc_get_product_id_by_sku($child);
+				    if (!empty($product_id)) {
+					    $grouped[] = $product_id;
+				    }
+			    }
+		    }
+		    $this->setProperty('children', $grouped);
+	    }
     }
 
     /*
@@ -681,6 +691,16 @@ abstract class ImportProduct extends ImportProductBase {
                 break;
             case 'featured':
                 if ($this->getImportService()->isUpdateDataAllowed('is_update_featured_status', $this->isNewProduct())) {
+                    $this->productProperties[$property] = $value;
+                }
+                break;
+            case 'reviews_allowed':
+                if ($this->getImportService()->isUpdateDataAllowed('is_update_comment_status', $this->isNewProduct())) {
+                    $this->productProperties[$property] = $value;
+                }
+                break;
+            case 'shipping_class_id':
+                if ($this->isNewProduct() || $this->getImportService()->isUpdateTaxonomy('product_shipping_class', $this->isNewProduct()) && $this->getImport()->options['update_categories_logic'] !== "add_new") {
                     $this->productProperties[$property] = $value;
                 }
                 break;

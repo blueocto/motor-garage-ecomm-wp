@@ -76,6 +76,7 @@ abstract class ImportVariationBase extends ImportProduct {
                 'is_variation' 	=> $attribute->get_variation(),
                 'is_taxonomy' 	=> $attribute->is_taxonomy()
             );
+	        $is_any_attribute = apply_filters('wp_all_import_variation_any_attribute', false, $this->getImport()->id);
             // Check is current attribute saved as taxonomy term.
             if ($attribute->is_taxonomy()) {
                 // Get attribute terms.
@@ -91,20 +92,24 @@ abstract class ImportVariationBase extends ImportProduct {
                     }
                     // Get first attribute term slug and assign it to variation.
                     if ($attribute->get_variation()) {
-                        $term = get_term($terms[0], $attribute->get_taxonomy());
-                        if (empty($term) || is_wp_error($term)) {
-                            $term = get_term_by("term_taxonomy_id", $terms[0], $attribute->get_taxonomy());
-                        }
-                        if ($term && !is_wp_error($term)) {
-                            $parsedVariationAttributes[sanitize_title($attribute->get_name())] = $term->slug;
-                        }
+                    	if (count($terms) == 1 || !$is_any_attribute) {
+		                    $term = get_term($terms[0], $attribute->get_taxonomy());
+		                    if (empty($term) || is_wp_error($term)) {
+			                    $term = get_term_by("term_taxonomy_id", $terms[0], $attribute->get_taxonomy());
+		                    }
+		                    if ($term && !is_wp_error($term)) {
+			                    $parsedVariationAttributes[sanitize_title($attribute->get_name())] = $term->slug;
+		                    }
+	                    }
                     }
                 }
-            }
-            else {
+            } else {
                 $parentAttributeValues = $attribute->get_options();
                 if ($attribute->get_variation()) {
-                    $parsedVariationAttributes[sanitize_title($attribute->get_name())] = $attribute->get_data()['value'];
+                	$attribute_value = $attribute->get_data()['value'];
+                	if (count(explode("|", $attribute_value)) === 1 || !$is_any_attribute) {
+		                $parsedVariationAttributes[sanitize_title($attribute->get_name())] = $attribute_value;
+	                }
                 }
             }
 
@@ -119,8 +124,7 @@ abstract class ImportVariationBase extends ImportProduct {
                         }
                     }
                     $parentAttributes[sanitize_title($attribute->get_name())]['value'] = implode("|", array_filter($options));
-                }
-                else {
+                } else {
                     $parentAttributes[sanitize_title($attribute->get_name())]['value'] = implode("|", $parentAttributeValues);
                 }
             }

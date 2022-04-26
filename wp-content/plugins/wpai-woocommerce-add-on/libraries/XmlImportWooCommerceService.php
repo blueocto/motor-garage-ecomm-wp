@@ -72,8 +72,7 @@ final class XmlImportWooCommerceService {
             $taxonomies = array('post_format', 'product_type', 'product_shipping_class', 'product_visibility');
             $taxonomies = apply_filters('wp_all_import_variation_taxonomies', $taxonomies);
             $this->product_taxonomies = array_diff_key(get_taxonomies_by_object_type(array('product'), 'object'), array_flip($taxonomies));
-        }
-        catch(\Exception $e) {
+        } catch(\Exception $e) {
             self::getLogger() && call_user_func(self::getLogger(), '<b>ERROR:</b> ' . $e->getMessage());
         }
     }
@@ -161,6 +160,9 @@ final class XmlImportWooCommerceService {
      */
     public function syncVariableProductData($parentID) {
         $product = new \WC_Product_Variable($parentID);
+
+		do_action('wp_all_import_before_variable_product_import', $product->get_id());
+
         $variations = array();
         $variationIDs = $product->get_children();
         // Collect product variations.
@@ -170,24 +172,52 @@ final class XmlImportWooCommerceService {
         $parentAttributes = get_post_meta($product->get_id(), '_product_attributes', TRUE);
         // Sync attribute terms with parent product.
         if (!empty($parentAttributes)) {
-            $variation_attributes = $product->get_variation_attributes();
+            $variation_attributes = [];
+            foreach ($variations as $variation) {
+                $attributes = $variation->get_attributes();
+                if (!empty($attributes)) {
+                    foreach ($attributes as $attribute_name => $attribute_value) {
+                        if (!isset($variation_attributes[$attribute_name])) {
+                            $variation_attributes[$attribute_name] = [];
+                        }
+                        if (!in_array($attribute_value, $variation_attributes[$attribute_name])) {
+                            $variation_attributes[$attribute_name][] = $attribute_value;
+                        }
+                    }
+                }
+            }
             foreach ($parentAttributes as $name => $parentAttribute) {
                 // Only in case if attribute marked to import as taxonomy terms.
                 if ($parentAttribute['is_taxonomy']) {
+                    $taxonomy_name = strpos($name, "%") !== FALSE ? urldecode($name) : $name;
                     $terms = [];
+                    if (isset($variation_attributes[$name]) && is_array($variation_attributes[$name])) {
+	                    $variation_attributes[$name] = array_filter($variation_attributes[$name], 'strlen');
+                    }
                     if (!empty($variation_attributes[$name])) {
                         foreach ($variation_attributes[$name] as $attribute_term_slug) {
-                            $term = get_term_by('slug', $attribute_term_slug, $name);
+                            $term = get_term_by('slug', $attribute_term_slug, $taxonomy_name);
                             if ($term && !is_wp_error($term)) {
                                 $terms[] = $term->term_taxonomy_id;
                             }
                         }
+						if (!empty($parentAttribute['value'])) {
+							$parent_terms = explode("|", $parentAttribute['value']);
+							$parent_terms = array_filter($parent_terms);
+							if (!empty($parent_terms)) {
+								foreach ($parent_terms as $parent_term) {
+									if ( ! in_array($parent_term, $terms) ) {
+										$terms[] = $parent_term;
+									}
+								}
+							}
+						}
                     } else {
                         $terms = explode("|", $parentAttribute['value']);
                         $terms = array_filter($terms);
                     }
                     if (!empty($terms)) {
-                        $this->getTaxonomiesService()->associateTerms($parentID, $terms, $name);
+                        $this->getTaxonomiesService()->associateTerms($parentID, $terms, $taxonomy_name);
                     }
                 }
             }
@@ -216,7 +246,7 @@ final class XmlImportWooCommerceService {
                     if ($this->getImport()->options['default_attributes_type'] == 'instock') {
                         /** @var \WC_Product_Variation $variation */
                         foreach ($variations as $variation) {
-                            if ($variation->is_in_stock()) {
+                            if ($variation->get_stock_status() == 'instock') {
                                 $defaultVariation = $variation;
                                 break;
                             }
@@ -243,6 +273,11 @@ final class XmlImportWooCommerceService {
                                 }
                             }
                         }
+                    } else {
+                        $default_attributes = $this->getOriginallyParsedData($product->get_id(), '_default_attributes');
+                        if (!empty($default_attributes)) {
+                            $defaultAttributes = maybe_unserialize($default_attributes);
+                        }
                     }
                 }
                 $product->set_default_attributes($defaultAttributes);
@@ -251,27 +286,31 @@ final class XmlImportWooCommerceService {
         }
         // Sync custom fields for variation created from parent row.
         $firstVariationID = get_post_meta($product->get_id(), self::FIRST_VARIATION, TRUE);
-        if ($firstVariationID) {
+        if ($firstVariationID && in_array($this->getImport()->options['matching_parent'], array('first_is_parent_id', 'first_is_variation')) ) {
             $parentMeta = get_post_meta($product->get_id(), '');
             if ("manual" !== $this->getImport()->options['duplicate_matching']) {
                 foreach ($this->getImport()->options['custom_name'] as $customFieldName) {
-                    if ($this->isUpdateCustomField($customFieldName)) {
+                    if ($isNewProduct || $this->isUpdateCustomField($customFieldName)) {
                         update_post_meta($firstVariationID, $customFieldName, maybe_unserialize($parentMeta[$customFieldName][0]));
                     }
                 }
             }
-            // Sync all ACF fields.
-            foreach ($parentMeta as $parentMetaKey => $parentMetaValue) {
-                if (strpos($parentMetaValue[0], 'field_') === 0) {
-                    update_post_meta($firstVariationID, $parentMetaKey, $parentMetaValue[0]);
-                    $acfFieldKey = preg_replace("%^_(.*)%", "$1", $parentMetaKey);
-                    foreach ($parentMeta as $key => $value) {
-                        if (strpos($key, $acfFieldKey) === 0) {
-                            update_post_meta($firstVariationID, $key, $value[0]);
-                        }
-                    }
-                }
+            $sync_parent_acf_with_first_variation = apply_filters('wp_all_import_sync_parent_acf_with_first_variation', true);
+            if ($sync_parent_acf_with_first_variation) {
+	            // Sync all ACF fields.
+	            foreach ($parentMeta as $parentMetaKey => $parentMetaValue) {
+		            if (strpos($parentMetaValue[0], 'field_') === 0) {
+			            update_post_meta($firstVariationID, $parentMetaKey, $parentMetaValue[0]);
+			            $acfFieldKey = preg_replace("%^_(.*)%", "$1", $parentMetaKey);
+			            foreach ($parentMeta as $key => $value) {
+				            if (strpos($key, $acfFieldKey) === 0) {
+					            update_post_meta($firstVariationID, $key, $value[0]);
+				            }
+			            }
+		            }
+	            }
             }
+	        delete_post_meta($firstVariationID, '_variation_updated');
         }
 
         update_post_meta($product->get_id(), '_product_attributes', $parentAttributes);
@@ -296,6 +335,9 @@ final class XmlImportWooCommerceService {
      */
     public function maybeMakeProductSimple($product, $variationIDs) {
         $isNewProduct = get_post_meta($product->get_id(), self::FLAG_IS_NEW_PRODUCT, true);
+        if (empty($isNewProduct)) {
+	        $isNewProduct = FALSE;
+        }
         if ($this->isUpdateDataAllowed('is_update_product_type', $isNewProduct) && $this->getImport()->options['make_simple_product']) {
             do_action('wp_all_import_before_make_product_simple', $product->get_id(), $this->getImport()->id);
             $product_type_term = is_exists_term('simple', 'product_type', 0);
@@ -317,6 +359,12 @@ final class XmlImportWooCommerceService {
                 // Sync product data in case variations weren't created for this product.
                 $simpleProduct = new \WC_Product_Simple($product->get_id());
                 $simpleProduct->set_stock_status($parsedData['stock_status']);
+	            if (isset($parsedData['downloadable']) && ($isNewProduct || $this->isUpdateCustomField('_downloadable'))) {
+		            $simpleProduct->set_downloadable($parsedData['downloadable']);
+	            }
+	            if (isset($parsedData['virtual']) && ($isNewProduct || $this->isUpdateCustomField('_virtual'))) {
+		            $simpleProduct->set_virtual($parsedData['virtual']);
+	            }
                 $simpleProduct->save();
             }
             if (empty($price)) {
@@ -342,8 +390,7 @@ final class XmlImportWooCommerceService {
                 $stock_quantity = get_post_meta($product->get_id(), '_stock', TRUE);
                 $data_store = WC_Data_Store::load( 'product' );
                 $data_store->update_product_stock( $product->get_id(), $stock_quantity, 'set' );
-            }
-            catch(\Exception $e) {
+            } catch(\Exception $e) {
                 self::getLogger() && call_user_func(self::getLogger(), '<b>ERROR:</b> ' . $e->getMessage());
             }
             // Delete all variations.
@@ -397,11 +444,11 @@ final class XmlImportWooCommerceService {
                 if ($attribute->is_taxonomy()) {
                     $attribute_values = $attribute->get_terms();
                     if (!empty($attribute_values)) {
-                    $terms = [];
-                    foreach ($attribute_values as $key => $object) {
-                        $terms[] = $object->term_id;
-                    }
-                    wp_update_term_count_now($terms, $attributeName);
+	                    $terms = [];
+	                    foreach ($attribute_values as $key => $object) {
+	                        $terms[] = $object->term_id;
+	                    }
+	                    wp_update_term_count_now($terms, $attributeName);
                     }
                 }
             }
@@ -452,7 +499,7 @@ final class XmlImportWooCommerceService {
                 return FALSE;
             }
             if ($this->getImport()->options['update_all_data'] == "no" && $this->getImport()->options['update_categories_logic'] == "only" && ((!empty($this->getImport()->options['taxonomies_list'])
-                        && is_array($this->getImport()->options['taxonomies_list']) && ! in_array($tx_name, $this->getImport()->options['taxonomies_list'])) || empty($this->getImport()->options['taxonomies_list']))) {
+				&& is_array($this->getImport()->options['taxonomies_list']) && ! in_array($tx_name, $this->getImport()->options['taxonomies_list'])) || empty($this->getImport()->options['taxonomies_list']))) {
                 return FALSE;
             }
         }
@@ -491,17 +538,13 @@ final class XmlImportWooCommerceService {
      * @return bool
      */
     public function isUpdateCustomField($meta_key) {
-
         $options = $this->getImport()->options;
-
         if ($options['update_all_data'] == 'yes') {
             return TRUE;
         }
-
         if (!$options['is_update_custom_fields']) {
             return FALSE;
         }
-
         if ($options['update_custom_fields_logic'] == "full_update") {
             return TRUE;
         }
@@ -531,6 +574,9 @@ final class XmlImportWooCommerceService {
     public function pushMeta($pid, $meta_key, $meta_value, $isNewPost = TRUE) {
         if (!empty($meta_key) && ($isNewPost || $this->isUpdateCustomField($meta_key))) {
             update_post_meta($pid, $meta_key, $meta_value);
+        } elseif (in_array($meta_key, ['_product_image_gallery']) && $this->isUpdateDataAllowed('is_update_images', $isNewPost)) {
+	        // Update gallery custom field if images is set to be updated.
+	        update_post_meta($pid, $meta_key, $meta_value);
         }
     }
 
@@ -539,57 +585,48 @@ final class XmlImportWooCommerceService {
      * @return array
      */
     public static function arrayCartesian($input) {
-
         $result = array();
+        foreach ($input as $key => $values) {
+	        // If a sub-array is empty, it doesn't affect the cartesian product
+	        if ( empty( $values ) ) {
+		        continue;
+	        }
+	        // Special case: seeding the product array with the values from the first sub-array
+	        if ( empty( $result ) ) {
+		        foreach ( $values as $value ) {
+			        $result[] = array( $key => $value );
+		        }
+	        } else {
+		        // Second and subsequent input sub-arrays work like this:
+		        //   1. In each existing array inside $product, add an item with
+		        //      key == $key and value == first item in input sub-array
+		        //   2. Then, for each remaining item in current input sub-array,
+		        //      add a copy of each existing array inside $product with
+		        //      key == $key and value == first item in current input sub-array
 
-        while ( list( $key, $values ) = each( $input ) ) {
-            // If a sub-array is empty, it doesn't affect the cartesian product
-            if ( empty( $values ) ) {
-                continue;
-            }
-
-            // Special case: seeding the product array with the values from the first sub-array
-            if ( empty( $result ) ) {
-                foreach ( $values as $value ) {
-                    $result[] = array( $key => $value );
-                }
-            }
-            else {
-                // Second and subsequent input sub-arrays work like this:
-                //   1. In each existing array inside $product, add an item with
-                //      key == $key and value == first item in input sub-array
-                //   2. Then, for each remaining item in current input sub-array,
-                //      add a copy of each existing array inside $product with
-                //      key == $key and value == first item in current input sub-array
-
-                // Store all items to be added to $product here; adding them on the spot
-                // inside the foreach will result in an infinite loop
-                $append = array();
-                foreach( $result as &$product ) {
-                    // Do step 1 above. array_shift is not the most efficient, but it
-                    // allows us to iterate over the rest of the items with a simple
-                    // foreach, making the code short and familiar.
-                    $product[ $key ] = array_shift( $values );
-
-                    // $product is by reference (that's why the key we added above
-                    // will appear in the end result), so make a copy of it here
-                    $copy = $product;
-
-                    // Do step 2 above.
-                    foreach( $values as $item ) {
-                        $copy[ $key ] = $item;
-                        $append[] = $copy;
-                    }
-
-                    // Undo the side effecst of array_shift
-                    array_unshift( $values, $product[ $key ] );
-                }
-
-                // Out of the foreach, we can add to $results now
-                $result = array_merge( $result, $append );
-            }
+		        // Store all items to be added to $product here; adding them on the spot
+		        // inside the foreach will result in an infinite loop
+		        $append = array();
+		        foreach( $result as &$product ) {
+			        // Do step 1 above. array_shift is not the most efficient, but it
+			        // allows us to iterate over the rest of the items with a simple
+			        // foreach, making the code short and familiar.
+			        $product[ $key ] = array_shift( $values );
+			        // $product is by reference (that's why the key we added above
+			        // will appear in the end result), so make a copy of it here
+			        $copy = $product;
+			        // Do step 2 above.
+			        foreach( $values as $item ) {
+				        $copy[ $key ] = $item;
+				        $append[] = $copy;
+			        }
+			        // Undo the side effecst of array_shift
+			        array_unshift( $values, $product[ $key ] );
+		        }
+		        // Out of the foreach, we can add to $results now
+		        $result = array_merge( $result, $append );
+	        }
         }
-
         return $result;
     }
 
@@ -599,7 +636,7 @@ final class XmlImportWooCommerceService {
     public static function getLogger() {
         $logger = FALSE;
         if (PMXI_Plugin::is_ajax()) {
-            $logger = function($m) {echo "<div class='progress-msg'>[". date("H:i:s") ."] $m</div>\n";flush();};
+            $logger = function($m) {echo "<div class='progress-msg'>[". date("H:i:s") ."] ".wp_all_import_filter_html_kses($m)."</div>\n";flush();};
         }
         return $logger;
     }

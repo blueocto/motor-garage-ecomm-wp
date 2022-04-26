@@ -1,10 +1,14 @@
 <div class="panel woocommerce_options_panel" id="linked_product_data" style="display:none;">
-    <?php if (class_exists('PMWI_Plugin') && PMWI_EDITION == 'free'): ?>
-    <div class="woo-add-on-free-edition-notice upgrade_template">
-        <a href="https://www.wpallimport.com/checkout/?edd_action=add_to_cart&download_id=2707227&edd_options%5Bprice_id%5D=1&utm_source=free-plugin&utm_medium=in-plugin&utm_campaign=woocommerce" target="_blank" class="upgrade_woo_link"><?php _e('Upgrade to the Pro edition of WP All Import and the WooCommerce Add-On to Import to Variable, Affiliate, and Grouped Products', PMWI_Plugin::TEXT_DOMAIN);?></a>
-        <p><?php _e('If you already own it, remove the free edition and install the Pro edition.', 'wp_all_import_plugin'); ?></p>
-    </div>
-    <?php endif; ?>
+	<?php if (class_exists('PMWI_Plugin') && PMWI_EDITION == 'free'): ?>
+        <div class="woo-add-on-free-edition-notice upgrade_template">
+			<?php if(class_exists('PMXI_Plugin') && PMXI_EDITION == 'paid'):?>
+                <a href="https://www.wpallimport.com/portal/discounts/?utm_source=import-plugin-pro&utm_medium=upgrade-notice&utm_campaign=import-woo" target="_blank" class="upgrade_woo_link"><?php _e('Upgrade to the Pro edition of the WooCommerce Add-On to Import to Variable, Affiliate, and Grouped Products', PMWI_Plugin::TEXT_DOMAIN);?></a>
+			<?php else: ?>
+                <a href="https://www.wpallimport.com/checkout/?edd_action=add_to_cart&download_id=2707227&edd_options%5Bprice_id%5D=1" target="_blank" class="upgrade_woo_link"><?php _e('Upgrade to the WooCommerce Import Package to Import to Variable, Affiliate, and Grouped Products', PMWI_Plugin::TEXT_DOMAIN);?></a>
+			<?php endif; ?>
+            <p><?php _e('If you already own it, remove the free edition and install the Pro edition.', 'wp_all_import_plugin'); ?></p>
+        </div>
+	<?php endif; ?>
 	<div class="options_group">
 		<p class="form-field">
 			<label><?php _e("Up-Sells", PMWI_Plugin::TEXT_DOMAIN); ?></label>
@@ -66,7 +70,7 @@
 		
 		<p class="form-field wpallimport-radio-field">
 			<input type="radio" id="multiple_grouping_product_no" class="switcher" name="is_multiple_grouping_product" value="no" <?php echo 'no' == $post['is_multiple_grouping_product'] ? 'checked="checked"': '' ?>/>
-			<label for="multiple_grouping_product_no" style="width: 200px;"><?php _e('Manual Grouped Product Matching', PMWI_Plugin::TEXT_DOMAIN )?></label>
+			<label for="multiple_grouping_product_no" style="width:auto;"><?php _e('Manual Grouped Product Matching', PMWI_Plugin::TEXT_DOMAIN )?></label>
 			<a href="#help" class="wpallimport-help" style="top:2px;" title="<?php _e('Product will be assigned as the child of an already created product matching the specified criteria.', PMWI_Plugin::TEXT_DOMAIN); ?>">?</a>
 		</p>
 		
@@ -87,19 +91,26 @@
 				<input type="radio" id="duplicate_indicator_custom_field_grouping" class="switcher" name="grouping_indicator" value="custom field" <?php echo 'custom field' == $post['grouping_indicator'] ? 'checked="checked"': '' ?>/>
 				<label for="duplicate_indicator_custom_field_grouping"><?php _e('Match by Custom Field', PMWI_Plugin::TEXT_DOMAIN )?></label><br>
 				<span class="wpallimport-clear"></span>
-				<div class="switcher-target-duplicate_indicator_custom_field_grouping set_with_xpath" style="padding-left:40px;">
+				<div class="switcher-target-duplicate_indicator_custom_field_grouping set_with_xpath" style="padding-left:20px; padding-top: 10px;">
 					<span class="wpallimport-slide-content" style="padding-left:0;">
 						<label style="width: 80px;"><?php _e('Name', PMWI_Plugin::TEXT_DOMAIN) ?></label>
 						<input type="text" name="custom_grouping_indicator_name" value="<?php echo esc_attr($post['custom_grouping_indicator_name']) ?>" style="float:none; margin:1px;" />
 						
 						<span class="wpallimport-clear"></span>
 
-						<label style="width: 80px;"><?php _e('Value', PMWI_Plugin::TEXT_DOMAIN) ?></label>
-						<input type="text" name="custom_grouping_indicator_value" value="<?php echo esc_attr($post['custom_grouping_indicator_value']) ?>" style="float:none; margin:1px;" />
+						<label style="width: 80px;margin-top: 15px !important;"><?php _e('Value', PMWI_Plugin::TEXT_DOMAIN) ?></label>
+						<input type="text" name="custom_grouping_indicator_value" value="<?php echo esc_attr($post['custom_grouping_indicator_value']) ?>" style="float:none; margin: 10px 0 0 0;" />
 					</span>
 				</div>
 			</div>
-		</div>																						
-
+		</div>
 	</div>
+
+    <div class="options_group grouping show_if_grouped">
+        <div class="form-field wpallimport-radio-field">
+            <label for="multiple_grouping_product_children" style="width: 55px;"><?php _e('Children', PMWI_Plugin::TEXT_DOMAIN )?></label>
+            <input type="text" name="grouped_product_children_xpath" value="<?php echo esc_attr($post['grouped_product_children_xpath']) ?>" style="float:none; margin:1px;" />
+            <a href="#help" class="wpallimport-help" style="top:-4px;" title="<?php _e('Provide comma separated list of products _sku to group them with current product. This option works only for grouped products.', PMWI_Plugin::TEXT_DOMAIN); ?>">?</a>
+        </div>
+    </div>
 </div><!-- End Product Panel -->

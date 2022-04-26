@@ -83,18 +83,15 @@ class XmlImportWooPriceService extends XmlImportWooServiceBase {
                 $price = str_replace(".", "", $price);
                 $comma_position = strrpos($price, ",");
                 $price = str_replace(",", "", substr_replace($price, ".", $comma_position, 1));
-            }
-            else {
+            } else {
                 $comma_position = strrpos($price, ".", strlen($price) - 3);
                 if ($comma_position !== FALSE) {
                     $price = str_replace(",", "", $price);
-                }
-                elseif (strlen($price) > 4) {
+                } elseif (strlen($price) > 4) {
                     $comma_position = strrpos($price, ",", strlen($price) - 4);
                     if ($comma_position and strlen($price) - $comma_position == 4) {
                         $price = str_replace(",", "", $price);
-                    }
-                    else {
+                    } else {
                         $comma_position = strrpos($price, ".", strlen($price) - 4);
                         if ($comma_position and strlen($price) - $comma_position == 4) {
                             $price = str_replace(".", "", $price);

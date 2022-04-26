@@ -1,12 +1,16 @@
 <div class="panel woocommerce_options_panel" id="woocommerce_attributes" style="display:none;">
-    <?php if (class_exists('PMWI_Plugin') && PMWI_EDITION == 'free'): ?>
+	<?php if (class_exists('PMWI_Plugin') && PMWI_EDITION == 'free'): ?>
     <div style="margin-left:-2%;">
-        <div class="woo-add-on-free-edition-notice upgrade_template" style="margin-top:0;">
-            <a href="https://www.wpallimport.com/checkout/?edd_action=add_to_cart&download_id=2707227&edd_options%5Bprice_id%5D=1&utm_source=free-plugin&utm_medium=in-plugin&utm_campaign=woocommerce" target="_blank" class="upgrade_woo_link"><?php _e('Upgrade to the Pro edition of WP All Import and the WooCommerce Add-On to import to Variable, Affiliate, and Grouped Products', PMWI_Plugin::TEXT_DOMAIN);?></a>
+        <div class="woo-add-on-free-edition-notice upgrade_template">
+			<?php if(class_exists('PMXI_Plugin') && PMXI_EDITION == 'paid'):?>
+                <a href="https://www.wpallimport.com/portal/discounts/?utm_source=import-plugin-pro&utm_medium=upgrade-notice&utm_campaign=import-woo" target="_blank" class="upgrade_woo_link"><?php _e('Upgrade to the Pro edition of the WooCommerce Add-On to Import to Variable, Affiliate, and Grouped Products', PMWI_Plugin::TEXT_DOMAIN);?></a>
+			<?php else: ?>
+                <a href="https://www.wpallimport.com/checkout/?edd_action=add_to_cart&download_id=2707227&edd_options%5Bprice_id%5D=1" target="_blank" class="upgrade_woo_link"><?php _e('Upgrade to the WooCommerce Import Package to Import to Variable, Affiliate, and Grouped Products', PMWI_Plugin::TEXT_DOMAIN);?></a>
+			<?php endif; ?>
             <p><?php _e('If you already own it, remove the free edition and install the Pro edition.', 'wp_all_import_plugin'); ?></p>
         </div>
     </div>
-    <?php endif; ?>
+	<?php endif; ?>
 	<div class="input">
 		<table class="form-table custom-params" id="attributes_table" style="max-width:95%;">
 			<thead>
@@ -14,7 +18,7 @@
 					<td><?php _e('Name', PMWI_Plugin::TEXT_DOMAIN); ?></td>
 					<td>
 						<?php _e('Values', PMWI_Plugin::TEXT_DOMAIN); ?>
-						<a href="#help" class="wpallimport-help" title="<?php _e('Separate multiple values with a |', PMWI_Plugin::TEXT_DOMAIN) ?>" style="top:-1px;">?</a>
+						<a href="#help" class="wpallimport-help" title="<?php _e('Separate multiple values with a |', PMWI_Plugin::TEXT_DOMAIN) ?>" style="top:-2px;">?</a>
 					</td>
 					<td></td>
 				</tr>
@@ -33,7 +37,7 @@
 								<span class="wpallimport-clear"></span>
 								<div class="form-field wpallimport-radio-field" style="padding: 0 !important; position: relative; left: -100%; width: 200%;">
 									
-									<a href="javascript:void(0);" id="advanced_attributes_<?php echo $i; ?>" class="action advanced_attributes"><span>+</span> <?php _e('Advanced', PMWI_Plugin::TEXT_DOMAIN) ?></a>
+									<a href="javascript:void(0);" id="advanced_attributes_<?php echo $i; ?>" class="action advanced_attributes"><?php _e('Advanced', PMWI_Plugin::TEXT_DOMAIN) ?></a>
 									<input type="hidden" value="<?php echo (empty($post['is_advanced'][$i])) ? '0' : $post['is_advanced'][$i];?>" name="is_advanced[]">
 
 									<span class="default_attribute_settings">
@@ -152,7 +156,7 @@
 
 								</div>
 							</td>
-							<td class="action remove"><a href="#remove" style="top:9px;"></a></td>
+							<td class="action remove"><a href="#remove" style="top:9px;right:9px;"></a></td>
 						</tr>
 					<?php endforeach ?>
 				<?php else: ?>
@@ -167,7 +171,7 @@
 						<span class="wpallimport-clear"></span>					
 						<div class="form-field wpallimport-radio-field" style="padding: 0 !important; position: relative; left: -100%; width: 200%;">
 
-							<a href="javascript:void(0);" id="advanced_attributes_0" class="action advanced_attributes"><span>+</span> <?php _e('Advanced', PMWI_Plugin::TEXT_DOMAIN) ?></a>
+							<a href="javascript:void(0);" id="advanced_attributes_0" class="action advanced_attributes"><?php _e('Advanced', PMWI_Plugin::TEXT_DOMAIN) ?></a>
 							<input type="hidden" value="0" name="is_advanced[]">
 
 							<span class="default_attribute_settings">
@@ -283,7 +287,7 @@
 							
 						</div>
 					</td>
-					<td class="action remove"><a href="#remove" style="top: 9px;"></a></td>
+					<td class="action remove"><a href="#remove" style="top: 9px;right: 9px;"></a></td>
 				</tr>
 				<?php endif;?>
 				<tr class="form-field template">
@@ -297,7 +301,7 @@
 						<span class="wpallimport-clear"></span>
 						<div class="form-field wpallimport-radio-field" style="padding: 0 !important; position: relative; left: -100%; width: 200%;">
 
-							<a href="javascript:void(0);" id="advanced_attributes_0" class="action advanced_attributes"><span>+</span> <?php _e('Advanced', PMWI_Plugin::TEXT_DOMAIN) ?></a>
+							<a href="javascript:void(0);" id="advanced_attributes_0" class="action advanced_attributes"><?php _e('Advanced', PMWI_Plugin::TEXT_DOMAIN) ?></a>
 							<input type="hidden" value="0" name="is_advanced[]">
 
 							<span class="default_attribute_settings">
@@ -413,16 +417,16 @@
 															
 						</div>
 					</td>
-					<td class="action remove"><a href="#remove" style="top: 9px;"></a></td>
+					<td class="action remove"><a href="#remove" style="top: 9px;right: 9px;"></a></td>
 				</tr>
 				<tr class="wpallimport-table-actions">
-					<td colspan="3"><a href="#add" title="<?php _e('add', PMWI_Plugin::TEXT_DOMAIN)?>" class="action add-new-custom"><?php _e('Add more', PMWI_Plugin::TEXT_DOMAIN) ?></a></td>
+					<td colspan="3"><a href="#add" title="<?php _e('add', PMWI_Plugin::TEXT_DOMAIN)?>" class="action add-new-custom"><?php _e('Add Attribute', PMWI_Plugin::TEXT_DOMAIN) ?></a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<div class="options_group show_if_variable">
-		<p class="form-field wpallimport-radio-field" style="padding-left: 10px !important;">
+		<p class="form-field wpallimport-radio-field" style="padding-left: 0 !important;">
 			<input type="hidden" name="link_all_variations" value="0" />
 			<input type="checkbox" id="link_all_variations" name="link_all_variations" value="1" <?php echo $post['link_all_variations'] ? 'checked="checked"' : '' ?>/>
 			<label style="width: 100px;" for="link_all_variations"><?php _e('Link all variations', PMWI_Plugin::TEXT_DOMAIN) ?></label>
