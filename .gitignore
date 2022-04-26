@@ -1,3 +1,4 @@
 wp-config.php
 wp-content/uploads
 wp-content/updraft
+wp-migrate-db-pro-compatibility.php
