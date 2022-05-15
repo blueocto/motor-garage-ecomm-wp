@@ -4,13 +4,15 @@ Donate link: https://peachpay.app
 Tags: products slider, random, related products, slider, woocommerce
 Requires at least: 4.0
 Tested up to: 5.9
-Stable tag: 3.3.12
+Stable tag: 3.3.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Display random related products in a slider based on product category, tag, or attribute on every product page.
 
 == Description ==
+
+⚠️ **Related Products for WooCommerce will be discontinued on 1 May 2022**. We recommend switching to the Related Products feature that is built-in to [PeachPay](https://wordpress.org/plugins/peachpay-for-woocommerce/), an all-in-one checkout and product recommendation solution engineered to increase sales on your store.
 
 Display fresh, random WooCommerce related products on every single product page load (in a slider or not) based on the current product's category, tags, or attributes.
 
@@ -105,6 +107,9 @@ You can see a [demo of the plugin here](http://woorelated.eboxnet.com).
 - Feel free to use the [support forum](https://wordpress.org/support/plugin/woo-related-products-refresh-on-reload/), and we will get back to you as soon as possible.
 
 == Changelog ==
+
+### 3.3.13 (04/29/2022)
+* Tweak - Update banner message
 
 ### 3.3.12 (02/02/2022)
 * Tweak - Clarify that future improvements to this plugin will happen in PeachPay, but that this standalone plugin will still work

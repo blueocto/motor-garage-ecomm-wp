@@ -9,7 +9,7 @@
  * Plugin Name:       Related Products for WooCommerce
  * Plugin URI:        http://woorelated.eboxnet.com
  * Description:       Display random related products in a slider based on product category, tag, or attribute on every product page.
- * Version:           3.3.12
+ * Version:           3.3.13
  * Author:            PeachPay
  * Author URI:        https://peachpay.app/
  * License:           GPL-2.0+
@@ -594,7 +594,7 @@ function wrprr_render_peachpay_banner() {
 			style="display: block;"
 		>
 		<p>
-			Related Products for WooCommerce has joined PeachPay! The standalone plugin will continue to work, but future improvements will happen in PeachPay. Get PeachPay for the latest updates and features, plus more! PeachPay is developed by a world-class company and is backed by the WooCommerce team.
+			Related Products for WooCommerce has joined PeachPay! The standalone plugin will no longer be supported as of 1 May 2022. Get PeachPay for the latest updates and features, plus more! PeachPay is developed by a world-class company and is backed by the WooCommerce team.
 		</p>
 		<div style="text-align: center">
 			<a
