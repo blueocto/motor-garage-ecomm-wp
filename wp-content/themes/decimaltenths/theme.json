@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"settings": {
+		"color": {
+			"duotone": [],
+			"customDuotone": false
+		},
+		"layout": {
+			"contentSize": "674px",
+			"wideSize": "1348px"
+		}
+	}
+}
