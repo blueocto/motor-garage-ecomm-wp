@@ -165,16 +165,15 @@ class Digital_Wallet {
 		}
 
 		$apple_pay_classes[]  = 'wc-square-wallet-button-' . $apple_button_style;
-		$google_pay_classes[] = 'wc-square-wallet-button-' . $this->gateway->get_option( 'digital_wallets_google_pay_button_color', 'black' );
 
 		?>
 		<div id="wc-square-digital-wallet" style="display:none;">
-			<div id="wc-square-apple-pay" class="apple-pay-button <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $apple_pay_classes ) ) ); ?>" lang="<?php echo esc_attr( substr( get_locale(), 0, 2 ) ); ?>" style="-apple-pay-button-type: <?php echo esc_attr( $button_type ); ?>; -apple-pay-button-style: <?php echo esc_attr( $apple_button_style ); ?>">
+			<div id="apple-pay-button" class="apple-pay-button <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $apple_pay_classes ) ) ); ?>" lang="<?php echo esc_attr( substr( get_locale(), 0, 2 ) ); ?>" style="-apple-pay-button-type: <?php echo esc_attr( $button_type ); ?>; -apple-pay-button-style: <?php echo esc_attr( $apple_button_style ); ?>">
 				<span class="text"><?php echo esc_html( $button_text ); ?></span>
 				<span class="logo"></span>
 			</div>
 
-			<div id="wc-square-google-pay" class="google-pay-button <?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $google_pay_classes ) ) ); ?>" lang="<?php echo esc_attr( substr( get_locale(), 0, 2 ) ); ?>"></div>
+			<div id="wc-square-google-pay" lang="<?php echo esc_attr( substr( get_locale(), 0, 2 ) ); ?>"></div>
 			<p id="wc-square-wallet-divider">&ndash; <?php esc_html_e( 'OR', 'woocommerce-square' ); ?> &ndash;</p>
 		</div>
 		<?php
@@ -215,6 +214,8 @@ class Digital_Wallet {
 					'logging_enabled'          => $this->gateway->debug_log(),
 					'hide_button_options'      => $this->get_hidden_button_options(),
 					'is_3d_secure_enabled'     => $this->gateway->is_3d_secure_enabled(),
+					'google_pay_color'         => $this->gateway->get_option( 'digital_wallets_google_pay_button_color', 'black' ),
+					'apple_pay_color'          => $this->gateway->get_option( 'digital_wallets_apple_pay_button_color', 'black' ),
 				)
 			);
 
@@ -320,11 +321,11 @@ class Digital_Wallet {
 			$items[] = array(
 				'label'   => __( 'Tax', 'woocommerce-square' ),
 				'amount'  => '0.00',
-				'pending' => true,
+				'pending' => false,
 			);
 		}
 
-		$data['requestShippingAddress'] = wc_shipping_enabled() && $product->needs_shipping() ? true : false;
+		$data['requestShippingContact'] = true;
 		$data['lineItems']              = $items;
 
 		return $this->build_payment_request( $amount, $data );
@@ -344,9 +345,9 @@ class Digital_Wallet {
 		$data = wp_parse_args(
 			$data,
 			array(
-				'requestShippingAddress' => wc_shipping_enabled() && isset( WC()->cart ) && WC()->cart->needs_shipping(),
-				'requestBillingInfo'     => true,
+				'requestShippingContact' => wc_shipping_enabled() && isset( WC()->cart ) && WC()->cart->needs_shipping(),
 				'requestEmailAddress'    => true,
+				'requestBillingContact'  => true,
 				'countryCode'            => substr( get_option( 'woocommerce_default_country' ), 0, 2 ),
 				'currencyCode'           => get_woocommerce_currency(),
 			)
@@ -360,7 +361,7 @@ class Digital_Wallet {
 			$data['lineItems'] = $this->build_payment_request_line_items();
 		}
 
-		if ( true === $data['requestShippingAddress'] ) {
+		if ( true === $data['requestShippingContact'] ) {
 			$data['shippingOptions'] = array(
 				array(
 					'id'      => '0',
@@ -535,9 +536,9 @@ class Digital_Wallet {
 	public function calculate_shipping( $address = array() ) {
 		WC()->shipping->reset_shipping();
 
-		if ( $address['country'] ) {
-			WC()->customer->set_location( strtoupper( $address['country'] ), $address['region'], $address['postalCode'], $address['city'] );
-			WC()->customer->set_shipping_location( strtoupper( $address['country'] ), $address['region'], $address['postalCode'], $address['city'] );
+		if ( $address['countryCode'] ) {
+			WC()->customer->set_location( strtoupper( $address['countryCode'] ), $address['state'], $address['postalCode'], $address['city'] );
+			WC()->customer->set_shipping_location( strtoupper( $address['countryCode'] ), $address['state'], $address['postalCode'], $address['city'] );
 		} else {
 			WC()->customer->set_billing_address_to_base();
 			WC()->customer->set_shipping_address_to_base();
@@ -551,8 +552,8 @@ class Digital_Wallet {
 		$packages[0]['contents_cost']            = 0;
 		$packages[0]['applied_coupons']          = WC()->cart->applied_coupons;
 		$packages[0]['user']['ID']               = get_current_user_id();
-		$packages[0]['destination']['country']   = $address['country'];
-		$packages[0]['destination']['state']     = $address['region'];
+		$packages[0]['destination']['country']   = $address['countryCode'];
+		$packages[0]['destination']['state']     = $address['state'];
 		$packages[0]['destination']['postcode']  = $address['postalCode'];
 		$packages[0]['destination']['city']      = $address['city'];
 		$packages[0]['destination']['address']   = $address['address'];
@@ -589,12 +590,12 @@ class Digital_Wallet {
 			$shipping_address = wp_parse_args(
 				wc_clean( wp_unslash( $_POST['shipping_contact'] ) ),
 				array(
-					'country'    => null,
-					'region'     => null,
-					'city'       => null,
-					'postalCode' => null,
-					'address'    => null,
-					'address_2'  => null,
+					'countryCode' => null,
+					'state'       => null,
+					'city'        => null,
+					'postalCode'  => null,
+					'address'     => null,
+					'address_2'   => null,
 				)
 			);
 

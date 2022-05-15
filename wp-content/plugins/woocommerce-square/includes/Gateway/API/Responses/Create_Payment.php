@@ -1,41 +1,19 @@
 <?php
-/**
- * WooCommerce Square
- *
- * This source file is subject to the GNU General Public License v3.0
- * that is bundled with this package in the file license.txt.
- * It is also available through the world-wide-web at this URL:
- * http://www.gnu.org/licenses/gpl-3.0.html
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@woocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Square to newer
- * versions in the future. If you wish to customize WooCommerce Square for your
- * needs please refer to https://docs.woocommerce.com/document/woocommerce-square/
- *
- * @author    WooCommerce
- * @copyright Copyright: (c) 2019, Automattic, Inc.
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
- */
 
 namespace WooCommerce\Square\Gateway\API\Responses;
+use WooCommerce\Square\Framework\PaymentGateway\Api\Payment_Gateway_API_Authorization_Response;
+use WooCommerce\Square\Framework\PaymentGateway\Api\Payment_Gateway_API_Response_Message_Helper;
 
 defined( 'ABSPATH' ) || exit;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 
 /**
  * The Create Payment API response object.
  *
  * @since 2.2.0
  *
- * @method \SquareConnect\Model\CreatePaymentResponse get_data()
+ * @method \Square\Models\CreatePaymentResponse get_data()
  */
-class Create_Payment extends \WooCommerce\Square\Gateway\API\Response implements Framework\SV_WC_Payment_Gateway_API_Authorization_Response {
-
+class Create_Payment extends \WooCommerce\Square\Gateway\API\Response implements Payment_Gateway_API_Authorization_Response {
 
 	/**
 	 * Determines if the charge was held.
@@ -118,10 +96,9 @@ class Create_Payment extends \WooCommerce\Square\Gateway\API\Response implements
 	 *
 	 * @since 2.2.0
 	 *
-	 * @return \SquareConnect\Model\Payment|null
+	 * @return \Square\Models\Payment|null
 	 */
 	public function get_payment() {
-
 		return ! $this->has_errors() && $this->get_data()->getPayment() ? $this->get_data()->getPayment() : null;
 	}
 
@@ -155,7 +132,7 @@ class Create_Payment extends \WooCommerce\Square\Gateway\API\Response implements
 				break;
 		}
 
-		$helper = new Framework\SV_WC_Payment_Gateway_API_Response_Message_Helper();
+		$helper = new Payment_Gateway_API_Response_Message_Helper();
 
 		return $helper->get_user_message( $message_id );
 	}

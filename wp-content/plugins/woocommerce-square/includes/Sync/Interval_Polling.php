@@ -22,10 +22,8 @@
  */
 
 namespace WooCommerce\Square\Sync;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\SearchCatalogObjectsResponse;
-use SquareConnect\Model\BatchRetrieveInventoryCountsResponse;
+use Square\Models\SearchCatalogObjectsResponse;
+use Square\Models\BatchRetrieveInventoryCountsResponse;
 use WooCommerce\Square\Handlers\Product;
 use WooCommerce\Square\Handlers\Category;
 
@@ -37,7 +35,6 @@ defined( 'ABSPATH' ) || exit;
  * @since 2.0.0
  */
 class Interval_Polling extends Stepped_Job {
-
 
 	/**
 	 * Assigns the next steps needed for this sync job.
@@ -71,7 +68,7 @@ class Interval_Polling extends Stepped_Job {
 	 *
 	 * @since 2.0.8
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function update_category_data() {
 		$date = new \DateTime();
@@ -121,10 +118,9 @@ class Interval_Polling extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function update_product_data() {
-
 		$date = new \DateTime();
 		$date->setTimestamp( $this->get_attr( 'catalog_last_synced_at', (int) wc_square()->get_sync_handler()->get_last_synced_at() ) );
 		$date->setTimezone( new \DateTimeZone( 'UTC' ) );
@@ -228,7 +224,7 @@ class Interval_Polling extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function update_inventory_counts() {
 
@@ -285,6 +281,4 @@ class Interval_Polling extends Stepped_Job {
 			$this->complete_step( 'update_inventory_counts' );
 		}
 	}
-
-
 }

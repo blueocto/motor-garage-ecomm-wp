@@ -23,8 +23,8 @@
 
 namespace WooCommerce\Square\API;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use SquareConnect\Configuration;
+use \WooCommerce\Square\Framework\Api\API_Request;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.0.0
  */
-class Request implements Framework\SV_WC_API_Request {
+class Request implements API_Request {
 
 
 	/** @var Configuration the configuration object */
@@ -76,10 +76,7 @@ class Request implements Framework\SV_WC_API_Request {
 	 * @return string
 	 */
 	public function get_square_api_method() {
-
-		$method = $this->square_api_method;
-
-		return $this->with_http_info ? $method . 'WithHttpInfo' : $method;
+		return $this->square_api_method;
 	}
 
 

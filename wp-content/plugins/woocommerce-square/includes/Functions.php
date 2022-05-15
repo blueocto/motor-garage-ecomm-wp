@@ -23,8 +23,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 
 /**
  * Gets the singleton instance of WooCommerce Square.

@@ -23,9 +23,7 @@
 
 namespace WooCommerce\Square\Handlers;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square\Plugin;
-use WooCommerce\Square\Sync\Interval_Polling;
 use WooCommerce\Square\Sync\Records;
 
 defined( 'ABSPATH' ) || exit;
@@ -131,17 +129,15 @@ class Sync {
 		as_unschedule_action( $this->sync_scheduled_event_name, array(), $this->get_plugin()->get_id() );
 	}
 
-
 	/**
 	 * Performs a product import from Square.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param bool $dispatch whether the job should be immediately dispatched
 	 * @param bool $update_during_import whether the store manager has ticked to update products during an import
 	 * @return \stdClass|null
 	 */
-	public function start_product_import( $dispatch = true, $update_during_import = false ) {
+	public function start_product_import( $update_during_import = false ) {
 
 		$job = $this->get_plugin()->get_background_job_handler()->create_job(
 			array(
@@ -151,26 +147,21 @@ class Sync {
 		);
 
 		if ( $job ) {
-
-			if ( $dispatch ) {
-				$this->get_plugin()->get_background_job_handler()->dispatch();
-			}
+			as_enqueue_async_action( 'wc_square_job_runner' );
 		}
 
 		return $job;
 	}
-
 
 	/**
 	 * Performs a manual sync.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param bool $dispatch whether the job should be immediately dispatched
 	 * @param int[] $product_ids (optional) array of product IDs to sync
 	 * @return \stdClass|null
 	 */
-	public function start_manual_sync( $dispatch = true, array $product_ids = array() ) {
+	public function start_manual_sync( array $product_ids = array() ) {
 
 		$product_ids = empty( $product_ids ) ? Product::get_products_synced_with_square() : $product_ids;
 
@@ -183,15 +174,11 @@ class Sync {
 		);
 
 		if ( $job ) {
-
-			if ( $dispatch ) {
-				$this->get_plugin()->get_background_job_handler()->dispatch();
-			}
+			as_enqueue_async_action( 'wc_square_job_runner' );
 		}
 
 		return $job;
 	}
-
 
 	/**
 	 * Performs a manual product deletion.
@@ -199,10 +186,9 @@ class Sync {
 	 * @since 2.0.0
 	 *
 	 * @param int[] $product_ids array of product IDs to delete
-	 * @param bool $dispatch whether the job should be immediately dispatched
 	 * @return \stdClass|null
 	 */
-	public function start_manual_deletion( array $product_ids, $dispatch = true ) {
+	public function start_manual_deletion( array $product_ids ) {
 
 		$job = $this->get_plugin()->get_background_job_handler()->create_job(
 			array(
@@ -213,15 +199,11 @@ class Sync {
 		);
 
 		if ( $job ) {
-
-			if ( $dispatch ) {
-				$this->get_plugin()->get_background_job_handler()->dispatch();
-			}
+			as_enqueue_async_action( 'wc_square_job_runner' );
 		}
 
 		return $job;
 	}
-
 
 	/**
 	 * Performs an interval sync with Square.
@@ -248,32 +230,12 @@ class Sync {
 		);
 
 		if ( $job ) {
-			$this->get_plugin()->get_background_job_handler()->dispatch();
+			as_enqueue_async_action( 'wc_square_job_runner' );
 		}
 	}
 
 
 	/** Conditional methods *******************************************************************************************/
-
-
-	/**
-	 * Determines whether a sync process should happen in background.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return bool
-	 */
-	public function should_sync_in_background() {
-
-		/**
-		 * Filters whether a sync process should happen in background.
-		 *
-		 * @since 2.0.0
-		 *
-		 * @param bool $sync_in_background defaults to whether loopback connections are supported
-		 */
-		return (bool) apply_filters( 'wc_square_sync_in_background', $this->get_plugin()->get_background_job_handler()->test_connection() );
-	}
 
 
 	/**
@@ -384,56 +346,6 @@ class Sync {
 
 		return $job && isset( $job->status ) && in_array( $job->status, array( 'created', 'queued', 'processing' ), true ) ? $job : null;
 	}
-
-
-	/**
-	 * Gets a date or time of a sync job (helper method).
-	 *
-	 * @see Sync::get_last_synced_at()
-	 * @see Sync::get_next_sync_at()
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param null|int $timestamp a valid timestamp (raw data)
-	 * @param string $format the output type, either 'timestamp' or a valid PHP date format for a date string
-	 * @param string|null|\DateTimeZone $timezone the timezone output (defaults to the site timezone)
-	 * @return int|string|null a timestamp or date, or null on error or invalid timestamp
-	 */
-	private function get_sync_date_time( $timestamp, $format, $timezone ) {
-
-		$output = null;
-
-		if ( is_numeric( $timestamp ) ) {
-
-			try {
-
-				if ( null === $timezone ) {
-					$timezone = new \DateTimeZone( wc_timezone_string() );
-				} elseif ( is_string( $timezone ) ) {
-					$timezone = new \DateTimeZone( $timezone );
-				}
-
-				$date      = new \DateTime( date( 'Y-m-d H:i:s', (int) $timestamp ), new \DateTimeZone( 'UTC' ) );
-				$offset    = $timezone->getOffset( $date );
-				$timestamp = $date->getTimestamp() + $offset;
-
-			} catch ( \Exception $e ) {
-
-				$timestamp = null;
-			}
-		}
-
-		if ( is_numeric( $timestamp ) ) {
-			if ( 'timestamp' !== $format ) {
-				$output = date( $format, (int) $timestamp );
-			} else {
-				$output = (int) $timestamp;
-			}
-		}
-
-		return $output;
-	}
-
 
 	/**
 	 * Gets the timestamp when the next sync job should start.

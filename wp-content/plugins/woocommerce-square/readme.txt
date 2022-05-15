@@ -3,8 +3,8 @@ Contributors: woocommerce, automattic, royho, woothemes, bor0, mattdallan, menak
 Tags: credit card, square, woocommerce, inventory sync
 Requires at least: 4.6
 Tested up to: 5.9
-Requires PHP: 5.6
-Stable tag: 2.9.1
+Requires PHP: 7.2
+Stable tag: 3.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -71,6 +71,21 @@ If you get stuck, you can ask for help in the [Plugin Forum](https://wordpress.o
 2. The payment gateway settings.
 
 == Changelog ==
+= 3.0.1 - 2022-05-09 =
+* Fix - Checkout stuck processing when using a card that doesn't require a postal code. #782
+
+= 3.0.0 - 2022-05-04 =
+* New - Upgrade the payment form on checkout to use the latest Square Web Payments SDK. PR#668
+* Fix - Compatibility issues with WooCommerce 6.1.0. PR#715
+* Fix - Sync issues caused by product variations having an empty SKU and incorrectly being set to the variable product (parent product) SKU value. PR#764
+* Update - Remove admin notice warning of v3.0.0 release. PR#744
+* Dev - Product importing is now handled by Action Scheduler. PR#698
+* Dev - Syncing is now handled by Action Scheduler. PR#699
+* Dev - Manual Sync is now handled by Action Scheduler. PR#710
+* Dev - Upgrade Action Scheduler to 3.4.0. PR#762
+* Dev - Updated Square Connect to Square SDK v 15.0.0. PR#673 PR#670 PR#668 PR#664 PR#659 PR#657
+* Dev - Remove SkyVerge framework. PR#690 PR#689 PR#688 PR#687 PR#684 PR#683 PR#681 PR#678
+
 = 2.9.1 - 2022.03.17 =
 * Fix - Fatal error while deactivating WooCommerce before WooCommerce Square.
 

@@ -25,14 +25,16 @@ namespace WooCommerce\Square;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\Customer;
 use WooCommerce\Square\Gateway\Card_Handler;
 use WooCommerce\Square\Gateway\Customer_Helper;
 use WooCommerce\Square\Gateway\Payment_Form;
 use WooCommerce\Square\Handlers\Product;
 use WooCommerce\Square\Utilities\Money_Utility;
 use WooCommerce\Square\Gateway\Digital_Wallet;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway_Direct;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway_Helper;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway;
+use WooCommerce\Square\Framework\Square_Helper;
 
 /**
  * The Square payment gateway class.
@@ -41,7 +43,7 @@ use WooCommerce\Square\Gateway\Digital_Wallet;
  *
  * @method Plugin get_plugin()
  */
-class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
+class Gateway extends Payment_Gateway_Direct {
 
 
 	/** @var Gateway\API API base instance */
@@ -194,15 +196,19 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 	 * @since 2.0.0
 	 */
 	protected function enqueue_gateway_assets() {
+
+		$is_payment_form_or_checkout = is_add_payment_method_page() || is_checkout() || ( function_exists( 'has_block' ) && has_block( 'woocommerce/checkout' ) );
+		$is_digital_wallet_page = 'yes' === $this->get_option( 'enable_digital_wallets', 'yes' ) && ( is_product() || is_cart() );
+
 		// bail if *not* on add payment method page or checkout page or not on the product or cart when digital wallets are enabled
-		if ( ! ( is_add_payment_method_page() || is_checkout() || ( 'yes' === $this->get_option( 'enable_digital_wallets', 'yes' ) && ( is_product() || is_cart() ) ) ) ) {
+		if ( ! ( $is_payment_form_or_checkout || $is_digital_wallet_page ) ) {
 			return;
 		}
 
 		if ( $this->get_plugin()->get_settings_handler()->is_sandbox() ) {
-			$url = 'https://js.squareupsandbox.com/v2/paymentform';
+			$url = 'https://sandbox.web.squarecdn.com/v1/square.js';
 		} else {
-			$url = 'https://js.squareup.com/v2/paymentform';
+			$url = 'https://web.squarecdn.com/v1/square.js';
 		}
 
 		wp_enqueue_script( 'wc-' . $this->get_plugin()->get_id_dasherized() . '-payment-form', $url, array(), Plugin::VERSION );
@@ -227,22 +233,22 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 
 		try {
 
-			if ( $this->is_3d_secure_enabled() && ! Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-buyer-verification-token' ) ) {
-				throw new Framework\SV_WC_Payment_Gateway_Exception( '3D Secure Verification Token is missing' );
+			if ( $this->is_3d_secure_enabled() && ! Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-buyer-verification-token' ) ) {
+				throw new \Exception( '3D Secure Verification Token is missing' );
 			}
 
-			if ( Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-token' ) ) {
+			if ( Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-token' ) ) {
 				return $is_valid;
 			}
 
-			if ( ! Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-nonce' ) ) {
-				throw new Framework\SV_WC_Payment_Gateway_Exception( 'Payment nonce is missing' );
+			if ( ! Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-nonce' ) ) {
+				throw new \Exception( 'Payment nonce is missing' );
 			}
-		} catch ( Framework\SV_WC_Payment_Gateway_Exception $exception ) {
+		} catch ( \Exception $exception ) {
 
 			$is_valid = false;
 
-			Framework\SV_WC_Helper::wc_add_notice( __( 'An error occurred, please try again or try an alternate form of payment.', 'woocommerce-square' ), 'error' );
+			Square_Helper::wc_add_notice( __( 'An error occurred, please try again or try an alternate form of payment.', 'woocommerce-square' ), 'error' );
 
 			$this->add_debug_message( $exception->getMessage(), 'error' );
 		}
@@ -264,18 +270,18 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 		$order = parent::get_order( $order_id );
 
 		if ( $this->is_3d_secure_enabled() ) {
-			$order->payment->verification_token = Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-buyer-verification-token' );
+			$order->payment->verification_token = Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-buyer-verification-token' );
 		}
 
 		if ( empty( $order->payment->token ) ) {
 
-			$order->payment->nonce = Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-nonce' );
+			$order->payment->nonce = Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-nonce' );
 
-			$order->payment->card_type      = Framework\SV_WC_Payment_Gateway_Helper::normalize_card_type( Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-card-type' ) );
-			$order->payment->account_number = $order->payment->last_four = substr( Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-last-four' ), -4 );
-			$order->payment->exp_month      = Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-exp-month' );
-			$order->payment->exp_year       = Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-exp-year' );
-			$order->payment->postcode       = Framework\SV_WC_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-postcode' );
+			$order->payment->card_type      = Payment_Gateway_Helper::normalize_card_type( Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-card-type' ) );
+			$order->payment->account_number = $order->payment->last_four = substr( Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-last-four' ), -4 );
+			$order->payment->exp_month      = Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-exp-month' );
+			$order->payment->exp_year       = Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-exp-year' );
+			$order->payment->postcode       = Square_Helper::get_post( 'wc-' . $this->get_id_dasherized() . '-payment-postcode' );
 		}
 
 		$order->square_customer_id = $order->customer_id;
@@ -285,7 +291,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 		// look up in the index for guest customers
 		if ( ! $order->get_user_id() ) {
 
-			$indexed_customers = Gateway\Customer_Helper::get_customers_by_email( $order->get_billing_email() );
+			$indexed_customers = Customer_Helper::get_customers_by_email( $order->get_billing_email() );
 
 			// only use an indexed customer ID if there was a single one returned, otherwise we can't know which to use
 			if ( ! empty( $indexed_customers ) && count( $indexed_customers ) === 1 ) {
@@ -304,7 +310,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 
 				// store the guests customers in our index to avoid future duplicates
 				if ( ! $order->get_user_id() ) {
-					Gateway\Customer_Helper::add_customer( $order->square_customer_id, $order->get_billing_email() );
+					Customer_Helper::add_customer( $order->square_customer_id, $order->get_billing_email() );
 				}
 			} catch ( \Exception $exception ) {
 
@@ -326,7 +332,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 	 *
 	 * @param \WC_Order $order
 	 * @return bool
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function do_transaction( $order ) {
 
@@ -358,9 +364,9 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 				}
 
 				// reset the payment total to the total calculated by Square to prevent errors
-				$order->payment_total = Framework\SV_WC_Helper::number_format( Money_Utility::cents_to_float( $response->getTotalMoney()->getAmount() ) );
+				$order->payment_total = Square_Helper::number_format( Money_Utility::cents_to_float( $response->getTotalMoney()->getAmount() ) );
 
-			} catch ( Framework\SV_WC_API_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				// log the error, but continue with payment
 				if ( $this->debug_log() ) {
@@ -453,7 +459,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 				$response = version_compare( $order->square_version, '2.2', '>=' ) ? $this->get_api()->get_payment( $order->refund->trans_id ) : $this->get_api()->get_transaction( $order->refund->trans_id, $order->refund->location_id );
 
 				if ( ! $response->get_authorization_code() ) {
-					throw new Framework\SV_WC_Plugin_Exception( 'Tender missing' );
+					throw new \Exception( 'Tender missing' );
 				}
 
 				$this->update_order_meta( $order, 'authorization_code', $response->get_authorization_code() );
@@ -462,7 +468,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 				$order->refund->location_id = $response->get_location_id();
 				$order->refund->tender_id   = $response->get_authorization_code();
 
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				return new \WP_Error( 'wc_square_refund_tender_missing', __( 'Could not find original transaction tender. Please refund this transaction from your Square dashboard.', 'woocommerce-square' ) );
 			}
@@ -542,7 +548,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 		$order = parent::get_order_for_add_payment_method();
 
 		// if the customer doesn't have a postcode yet, use the value returned by Square JS
-		if ( ! $order->get_billing_postcode() && $postcode = Framework\SV_WC_Helper::get_post( 'wc-square-credit-card-payment-postcode' ) ) {
+		if ( ! $order->get_billing_postcode() && $postcode = Square_Helper::get_post( 'wc-square-credit-card-payment-postcode' ) ) {
 			$order->set_billing_postcode( $postcode );
 		}
 
@@ -639,7 +645,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 			'title'   => esc_html__( 'Debug Mode', 'woocommerce-square' ),
 			'type'    => 'select',
 			/* translators: Placeholders: %1$s - <a> tag, %2$s - </a> tag */
-			'desc'    => sprintf( esc_html__( 'Show Detailed Error Messages and API requests/responses on the checkout page and/or save them to the %1$sdebug log%2$s', 'woocommerce-square' ), '<a href="' . Framework\SV_WC_Helper::get_wc_log_file_url( $this->get_id() ) . '">', '</a>' ),
+			'desc'    => sprintf( esc_html__( 'Show Detailed Error Messages and API requests/responses on the checkout page and/or save them to the %1$sdebug log%2$s', 'woocommerce-square' ), '<a href="' . Square_Helper::get_wc_log_file_url( $this->get_id() ) . '">', '</a>' ),
 			'default' => self::DEBUG_MODE_OFF,
 			'options' => array(
 				self::DEBUG_MODE_OFF      => esc_html__( 'Off', 'woocommerce-square' ),
@@ -662,7 +668,7 @@ class Gateway extends Framework\SV_WC_Payment_Gateway_Direct {
 		 *
 		 * @since 4.0.0
 		 * @param array $form_fields array of form fields in format required by WC_Settings_API
-		 * @param \SV_WC_Payment_Gateway $this gateway instance
+		 * @param Payment_Gateway $this gateway instance
 		 */
 		$this->form_fields = apply_filters( 'wc_payment_gateway_' . $this->get_id() . '_form_fields', $this->form_fields, $this );
 	}

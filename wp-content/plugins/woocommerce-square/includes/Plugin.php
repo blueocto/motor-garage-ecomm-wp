@@ -25,7 +25,8 @@ namespace WooCommerce\Square;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway_Plugin;
+use WooCommerce\Square\Framework\Square_Helper;
 use WooCommerce\Square\Handlers\Background_Job;
 use WooCommerce\Square\Handlers\Email;
 use WooCommerce\Square\Handlers\Order;
@@ -38,11 +39,11 @@ use WooCommerce\Square\Handlers\Products;
  *
  * @since 2.0.0
  */
-class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
+class Plugin extends Payment_Gateway_Plugin {
 
 
 	/** plugin version number */
-	const VERSION = '2.9.1';
+	const VERSION = '3.0.1';
 
 	/** plugin ID */
 	const PLUGIN_ID = 'square';
@@ -116,7 +117,7 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 		do_action( 'wc_square_loaded' );
 
 		add_action( 'woocommerce_register_taxonomy', array( $this, 'init_taxonomies' ) );
-
+		add_action( 'admin_notices', array( $this, 'add_admin_notices' ) );
 		add_filter( 'woocommerce_locate_template', array( $this, 'locate_template' ), 20, 3 );
 		add_filter( 'woocommerce_locate_core_template', array( $this, 'locate_template' ), 20, 3 );
 	}
@@ -134,9 +135,8 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 		$this->sync_handler = new Sync( $this );
 
 		// background export must be loaded all the time, because otherwise background jobs simply won't work
-		require_once $this->get_framework_path() . '/utilities/class-sv-wp-async-request.php';
-		require_once $this->get_framework_path() . '/utilities/class-sv-wp-background-job-handler.php';
-		require_once $this->get_framework_path() . '/utilities/class-sv-wp-job-batch-handler.php';
+		require_once $this->get_framework_path() . '/Utilities/WP_Background_Job_Handler.php';
+		require_once $this->get_framework_path() . '/Utilities/WP_Job_Batch_Handler.php';
 
 		$this->background_job_handler = new Background_Job();
 
@@ -253,7 +253,7 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 
 		// only keep looking if no custom theme template was found
 		// or if a default WooCommerce template was found
-		if ( ! $template || Framework\SV_WC_Helper::str_starts_with( $template, WC()->plugin_path() ) ) {
+		if ( ! $template || Square_Helper::str_starts_with( $template, WC()->plugin_path() ) ) {
 
 			// set the path to our templates directory
 			$plugin_path = $this->get_plugin_path() . '/templates/';
@@ -277,8 +277,6 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 	 * @since 2.0.0
 	 */
 	public function add_admin_notices() {
-
-		parent::add_admin_notices();
 
 		// show any one-off messages
 		$this->get_message_handler()->show_messages();
@@ -401,9 +399,6 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 		// add a notice for out-of-bounds base locations
 		$this->add_base_location_admin_notice();
 
-		// add a notice when background processing is not supported
-		$this->add_background_processing_notice();
-
 		// add a notice when no refresh token is available
 		$this->add_missing_refresh_token_notice();
 
@@ -459,38 +454,11 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 					'<strong>',
 					'</strong>',
 					esc_html( $base_location['country'] ),
-					esc_html( Framework\SV_WC_Helper::list_array_items( $accepted_countries ) )
+					esc_html( Square_Helper::list_array_items( $accepted_countries ) )
 				),
 				'wc-square-base-location',
 				array(
 					'notice_class' => 'notice-error',
-				)
-			);
-		}
-	}
-
-
-	/**
-	 * Adds a notice when background processing is not supported.
-	 *
-	 * @since 2.0.0
-	 */
-	protected function add_background_processing_notice() {
-
-		if ( $this->get_settings_handler()->is_product_sync_enabled() && ! $this->get_background_job_handler()->test_connection() ) {
-
-			$this->get_admin_notice_handler()->add_admin_notice(
-				sprintf(
-					/* translators: Placeholders: %1$s - <strong> tag, %2$s - </strong> tag, %3$s - <a> tag, %4$s - </a> tag */
-					__( '%1$sWooCommerce Square:%2$s It looks like your site does not support background processing, which means large numbers of products may not sync successfully with Square. %3$sRead more here%4$s on how to resolve this.', 'woocommerce-square' ),
-					'<strong>',
-					'</strong>',
-					'<a href="https://docs.woocommerce.com/document/woocommerce-square/#sync-issues" target="_blank">',
-					'</a>'
-				),
-				'wc-square-background-processing',
-				array(
-					'notice_class' => 'notice-warning',
 				)
 			);
 		}
@@ -741,6 +709,7 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 	}
 
 
+
 	/**
 	 * Gets the admin handler instance.
 	 *
@@ -751,7 +720,7 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 	public function get_admin_handler() {
 
 		// throw a notice if calling before admin_init
-		Framework\SV_WC_Helper::maybe_doing_it_early( 'admin_init', __METHOD__, '2.0.0' );
+		Square_Helper::maybe_doing_it_early( 'admin_init', __METHOD__, '2.0.0' );
 
 		return $this->admin_handler;
 	}
@@ -792,101 +761,6 @@ class Plugin extends Framework\SV_WC_Payment_Gateway_Plugin {
 	public function get_products_handler() {
 		return $this->products_handler;
 	}
-
-
-	/**
-	 * Gets the deprecated hook details.
-	 *
-	 * @see Framework\SV_WC_Hook_Deprecator
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return array
-	 */
-	protected function get_deprecated_hooks() {
-
-		// the following are filters, except when an action is explicitly mentioned
-		$v2_0_0_removed_hooks = array(
-
-			// to filter the locale, the default WordPress filter should be used:
-			'woocommerce_square_plugin_locale'             => array(
-				'replacement' => 'plugin_locale',
-				'map'         => true,
-			),
-
-			// sync square product variation properties
-			'woocommerce_square_currency'                  => array(), // used when passing a WooCommerce product price into a Square ItemVariation
-			'wc_square_sync_to_square_price'               => array(), // used when passing a WooCommerce product price into a Square ItemVariation
-			'woocommerce_square_format_price'              => array(), // formats the price coming from Square
-			'woocommerce_square_sync_from_square_description' => array(), // flag whether to add a description to created item
-
-			// we no longer filter inventory type in v2.0.0 and timeout is handled by background job differently
-			'woocommerce_square_inventory_type'            => array(),
-			'woocommerce_square_inventory_sync_timeout_limit' => array(),
-			'woocommerce_square_inventory_poll_frequency'  => array(),
-
-			// Square payment
-			'woocommerce_square_payment_form_trigger_element' => array(),
-			'woocommerce_square_payment_order_note'        => array(
-				'replacement' => 'wc_square_payment_order_note',
-				'map'         => true,
-			),
-			'woocommerce_square_description'               => array(), // front end payment fields description
-
-			// most gateway properties and settings can be mapped to new filters:
-			'woocommerce_square_api_url'                   => array(
-				'replacement' => 'wc_square_api_url',
-				'map'         => true,
-			), // filter is reinstated with name change for consistency
-			'woocommerce_square_payment_gateway_is_available' => array(
-				'replacement' => 'wc_gateway_square_credit_card_is_available',
-				'map'         => true,
-			),  // filter handled by SkyVerge Framework
-			'woocommerce_square_integration_settings_args' => array(
-				'replacement' => 'woocommerce_settings_api_form_fields_square',
-				'map'         => true,
-			), // filters gateway settings
-			'woocommerce_square_integration_custom_settings' => array(
-				'replacement' => 'woocommerce_settings_tabs_square',
-				'map'         => true,
-			), // settings action hook
-
-			// API requests filters, these are handled differently and can't be mapped:
-			'woocommerce_square_request_args'              => array(),
-			'woocommerce_square_request_retries'           => array(),
-
-			// transients are no longer used to handle these cache types:
-			'woocommerce_square_business_location_cache'   => array(),
-			'woocommerce_square_item_sku_cache'            => array(),
-			'woocommerce_square_inventory_cache'           => array(),
-			'woocommerce_square_sync_processing_ids_cache' => array(),
-			'woocommerce_square_manual_sync_processing_cache' => array(),
-			'woocommerce_square_syncing_square_ids_cache'  => array(),
-			'woocommerce_square_syncing_wc_product_ids_cache' => array(),
-
-			// when a bulk sync action is triggered (action hook):
-			'woocommerce_square_bulk_syncing_square_to_wc' => array(),
-
-			// get_posts args filter, the new implementation has different scope:
-			'woocommerce_square_get_all_product_ids_args'  => array(),
-
-			// idempotency key
-			'woocommerce_square_idempotency_key'           => array(
-				'replacement' => 'wc_square_idempotency_key',
-				'map'         => true,
-			),
-
-		);
-
-		// add common array data for all removed hooks in version 2.0.0
-		foreach ( array_keys( $v2_0_0_removed_hooks ) as $hook_name ) {
-			$v2_0_0_removed_hooks[ $hook_name ]['version'] = '2.0.0';
-			$v2_0_0_removed_hooks[ $hook_name ]['removed'] = true;
-		}
-
-		return $v2_0_0_removed_hooks;
-	}
-
 
 	/**
 	 * Gets the plugin name.

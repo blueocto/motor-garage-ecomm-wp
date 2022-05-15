@@ -25,8 +25,7 @@ namespace WooCommerce\Square\Gateway\API\Requests;
 
 defined( 'ABSPATH' ) || exit;
 
-use SquareConnect\Api\RefundsApi;
-use SquareConnect\Model\RefundPaymentRequest;
+use Square\Models\RefundPaymentRequest;
 use WooCommerce\Square\Utilities\Money_Utility;
 
 /**
@@ -40,10 +39,10 @@ class Refunds extends \WooCommerce\Square\API\Request {
 	 * Initializes a new refund request.
 	 *
 	 * @since 2.2.0
-	 * @param \SquareConnect\ApiClient $api_client the API client
+	 * @param \Square\SquareClient $api_client the API client
 	 */
 	public function __construct( $api_client ) {
-		$this->square_api = new RefundsApi( $api_client );
+		$this->square_api = $api_client->getRefundsApi();
 	}
 
 
@@ -62,15 +61,14 @@ class Refunds extends \WooCommerce\Square\API\Request {
 		$refunds    = $order->get_refunds();
 		$refund_obj = $refunds[0];
 
-		$this->square_request = new RefundPaymentRequest();
-		$this->square_request->setIdempotencyKey( wc_square()->get_idempotency_key( $order->get_id() . ':' . $refund_obj->get_id() ) );
-		$this->square_request->setPaymentId( $order->refund->tender_id );
+		$this->square_request = new RefundPaymentRequest(
+			wc_square()->get_idempotency_key( $order->get_id() . ':' . $refund_obj->get_id() ),
+			Money_Utility::amount_to_money( $order->refund->amount, $order->get_currency() ),
+			$order->refund->tender_id
+		);
+
 		$this->square_request->setReason( $order->refund->reason );
 
-		$this->square_request->setAmountMoney( Money_Utility::amount_to_money( $order->refund->amount, $order->get_currency() ) );
-
-		$this->square_api_args = array(
-			$this->square_request,
-		);
+		$this->square_api_args = array( $this->square_request );
 	}
 }

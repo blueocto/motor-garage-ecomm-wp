@@ -23,7 +23,6 @@
 
 namespace WooCommerce\Square\API\Responses;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square\API\Response;
 
 defined( 'ABSPATH' ) || exit;
@@ -33,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.0.0
  *
- * @method \SquareConnect\Model\ListCatalogResponse|\SquareConnect\Model\BatchUpsertCatalogObjectsResponse|\SquareConnect\Model\SearchCatalogObjectsResponse|\SquareConnect\Model\RetrieveCatalogObjectResponse|\SquareConnect\Model\CatalogInfoResponse get_data()
+ * @method \Square\Models\ListCatalogResponse|\Square\Models\BatchUpsertCatalogObjectsResponse|\Square\Models\SearchCatalogObjectsResponse|\Square\Models\RetrieveCatalogObjectResponse|\Square\Models\CatalogInfoResponse get_data()
  */
 class Catalog extends Response {
 

@@ -25,9 +25,11 @@ namespace WooCommerce\Square\Gateway;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\PaymentGateway\Api\Payment_Gateway_API_Response;
+use WooCommerce\Square\Framework\PaymentGateway\PaymentTokens\Payment_Gateway_Payment_Token;
+use WooCommerce\Square\Framework\PaymentGateway\PaymentTokens\Payment_Gateway_Payment_Tokens_Handler;
 
-class Card_Handler extends Framework\SV_WC_Payment_Gateway_Payment_Tokens_Handler {
+class Card_Handler extends Payment_Gateway_Payment_Tokens_Handler {
 
 
 	/**
@@ -37,10 +39,10 @@ class Card_Handler extends Framework\SV_WC_Payment_Gateway_Payment_Tokens_Handle
 	 * @since 2.1.0
 	 *
 	 * @param \WC_Order $order order object
-	 * @param Framework\SV_WC_Payment_Gateway_API_Create_Payment_Token_Response|null $response payment token API response, or null if the request should be made
+	 * @param Payment_Gateway_API_Create_Payment_Token_Response|null $response payment token API response, or null if the request should be made
 	 * @param string $environment_id optional environment ID, defaults to the current environment
 	 * @return \WC_Order order object
-	 * @throws Framework\SV_WC_Plugin_Exception on transaction failure
+	 * @throws \Exception on transaction failure
 	 */
 	public function create_token( \WC_Order $order, $response = null, $environment_id = null ) {
 
@@ -60,25 +62,25 @@ class Card_Handler extends Framework\SV_WC_Payment_Gateway_Payment_Tokens_Handle
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param Framework\SV_WC_Payment_Gateway_Payment_Token $token
-	 * @param Framework\SV_WC_Payment_Gateway_API_Response $response
+	 * @param Payment_Gateway_Payment_Token $token
+	 * @param Payment_Gateway_API_Response $response
 	 * @return bool
 	 */
-	public function should_delete_token( Framework\SV_WC_Payment_Gateway_Payment_Token $token, Framework\SV_WC_Payment_Gateway_API_Response $response ) {
+	public function should_delete_token( Payment_Gateway_Payment_Token $token, Payment_Gateway_API_Response $response ) {
 
 		return 'NOT_FOUND' === $response->get_status_code();
 	}
 
 	/**
 	 * Gets the available payment tokens for a user as an associative array of
-	 * payment token to SV_WC_Payment_Gateway_Payment_Token
+	 * payment token to Payment_Gateway_Payment_Token
 	 *
 	 * @since 2.2.0
 	 * @param int $user_id WordPress user identifier, or 0 for guest
 	 * @param array $args optional arguments, can include
 	 *    `customer_id` - if not provided, this will be looked up based on $user_id
 	 *    `environment_id` - defaults to plugin current environment
-	 * @return array array of string token to SV_WC_Payment_Gateway_Payment_Token object
+	 * @return array array of string token to Payment_Gateway_Payment_Token object
 	 */
 	public function get_tokens( $user_id, $args = array() ) {
 		// default to current environment
@@ -155,7 +157,7 @@ class Card_Handler extends Framework\SV_WC_Payment_Gateway_Payment_Tokens_Handle
 					// persist locally after merging
 					$this->update_tokens( $user_id, $this->tokens[ $environment_id ][ $user_id ], $environment_id );
 				}
-			} catch ( Framework\SV_WC_Plugin_Exception $e ) {
+			} catch ( \Exception $e ) {
 
 				// communication or other error
 				$this->get_gateway()->add_debug_message( $e->getMessage(), 'error' );
@@ -166,7 +168,7 @@ class Card_Handler extends Framework\SV_WC_Payment_Gateway_Payment_Tokens_Handle
 
 		// set the payment type image url, if any, for convenience
 		foreach ( $this->tokens[ $environment_id ][ $user_id ] as $key => $token ) {
-			$this->tokens[ $environment_id ][ $user_id ][ $key ]->set_image_url( $this->get_gateway()->get_payment_method_image_url( $token->is_credit_card() ? $token->get_card_type() : 'echeck' ) );
+			$this->tokens[ $environment_id ][ $user_id ][ $key ]->set_image_url( $this->get_gateway()->get_payment_method_image_url( $token->get_card_type() ) );
 		}
 
 		if ( $transient_key ) {
@@ -177,6 +179,4 @@ class Card_Handler extends Framework\SV_WC_Payment_Gateway_Payment_Tokens_Handle
 
 		return $this->tokens[ $environment_id ][ $user_id ];
 	}
-
-
 }

@@ -25,7 +25,6 @@ namespace WooCommerce\Square\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square;
 
 /**

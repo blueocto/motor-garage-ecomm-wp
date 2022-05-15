@@ -22,8 +22,6 @@
  */
 
 namespace WooCommerce\Square\Sync;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square\Handlers\Product;
 
 defined( 'ABSPATH' ) || exit;
@@ -39,7 +37,7 @@ class Catalog_Item {
 	/** @var \WC_Product the product object */
 	protected $product;
 
-	/** @var \SquareConnect\Model\CatalogObjectBatch the batch object */
+	/** @var \Square\Models\CatalogObjectBatch the batch object */
 	protected $batch;
 
 	/** @var int the total number of catalog objects in this batch */
@@ -55,7 +53,7 @@ class Catalog_Item {
 	 *
 	 * @param int|false|\WC_Product $product the product ID or product object
 	 * @param bool $is_soft_delete whether this catalog object should be soft-deleted
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	public function __construct( $product, $is_soft_delete = false ) {
 
@@ -63,7 +61,7 @@ class Catalog_Item {
 
 		if ( ! $product instanceof \WC_Product ) {
 
-			throw new Framework\SV_WC_Plugin_Exception( 'Invalid product' );
+			throw new \Exception( 'Invalid product' );
 		}
 
 		$this->product     = $product;
@@ -76,11 +74,11 @@ class Catalog_Item {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\Model\CatalogObject|null $catalog_object existing catalog object or null to create a new one
-	 * @return \SquareConnect\Model\CatalogObjectBatch
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @param \Square\Models\CatalogObject|null $catalog_object existing catalog object or null to create a new one
+	 * @return \Square\Models\CatalogObjectBatch
+	 * @throws \Exception
 	 */
-	public function get_batch( \SquareConnect\Model\CatalogObject $catalog_object = null ) {
+	public function get_batch( \Square\Models\CatalogObject $catalog_object = null ) {
 
 		if ( ! $this->batch ) {
 			$this->create_batch( $catalog_object );
@@ -121,26 +119,22 @@ class Catalog_Item {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\Model\CatalogObject|null $catalog_object existing catalog object or null to create a new one
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @param \Square\Models\CatalogObject|null $catalog_object existing catalog object or null to create a new one
+	 * @throws \Exception
 	 */
-	protected function create_batch( \SquareConnect\Model\CatalogObject $catalog_object = null ) {
+	protected function create_batch( \Square\Models\CatalogObject $catalog_object = null ) {
 
 		if ( ! $catalog_object ) {
-
-			$catalog_object = new \SquareConnect\Model\CatalogObject(
-				array(
-					'type' => 'ITEM',
-				)
-			);
+			$catalog_id     = Product\Woo_SOR::get_square_item_id( $this->product );
+			$catalog_object = new \Square\Models\CatalogObject( 'ITEM', $catalog_id );
 		}
 
 		// update the object data from the Woo product
 		$catalog_object = Product\Woo_SOR::update_catalog_item( $catalog_object, $this->product );
 
-		$batch_data = array( 'objects' => array( $catalog_object ) );
+		$batch_data = array( $catalog_object );
 
-		$this->batch = new \SquareConnect\Model\CatalogObjectBatch( $batch_data );
+		$this->batch = new \Square\Models\CatalogObjectBatch( $batch_data );
 
 		$variations = $catalog_object->getItemData()->getVariations() ?: array();
 

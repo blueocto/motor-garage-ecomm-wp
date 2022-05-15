@@ -25,8 +25,6 @@ namespace WooCommerce\Square;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 /**
  * The settings API class.
  *
@@ -419,7 +417,7 @@ class Settings extends \WC_Settings_API {
 
 					$token = $encryption->encrypt_data( $token );
 
-				} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+				} catch ( \Exception $exception ) {
 
 					// log the event, but don't halt the process.
 					$this->get_plugin()->log( 'Could not encrypt refresh token. ' . $exception->getMessage() );
@@ -457,7 +455,7 @@ class Settings extends \WC_Settings_API {
 
 					$token = $encryption->encrypt_data( $token );
 
-				} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+				} catch ( \Exception $exception ) {
 
 					// log the event, but don't halt the process.
 					$this->get_plugin()->log( 'Could not encrypt access token. ' . $exception->getMessage() );
@@ -678,7 +676,7 @@ class Settings extends \WC_Settings_API {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @return \SquareConnect\Model\Location[]
+	 * @return \Square\Models\Location[]
 	 */
 	public function get_locations() {
 
@@ -719,7 +717,7 @@ class Settings extends \WC_Settings_API {
 				if ( ! $found ) {
 					$this->clear_location_id();
 				}
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				$this->get_plugin()->log( 'Could not retrieve business locations.' );
 			}
@@ -793,7 +791,7 @@ class Settings extends \WC_Settings_API {
 
 					$token = $encryption->decrypt_data( $token );
 
-				} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+				} catch ( \Exception $exception ) {
 
 					// log the event, but don't halt the process.
 					$this->get_plugin()->log( 'Could not decrypt refresh token. ' . $exception->getMessage() );
@@ -839,7 +837,7 @@ class Settings extends \WC_Settings_API {
 
 					$token = $encryption->decrypt_data( $token );
 
-				} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+				} catch ( \Exception $exception ) {
 
 					// log the event, but don't halt the process.
 					$this->get_plugin()->log( 'Could not decrypt access token. ' . $exception->getMessage() );

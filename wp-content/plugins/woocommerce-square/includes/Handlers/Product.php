@@ -22,9 +22,6 @@
  */
 
 namespace WooCommerce\Square\Handlers;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\CatalogObject;
 use WooCommerce\Square\Utilities\Money_Utility;
 use WooCommerce\Square\Sync\Records;
 
@@ -54,9 +51,9 @@ class Product {
 
 	/**
 	 * @param \WC_Product $product
-	 * @param \SquareConnect\Model\CatalogObject $catalog_object
+	 * @param \Square\Models\CatalogObject $catalog_object
 	 */
-	public static function update_product( \WC_Product $product, \SquareConnect\Model\CatalogObject $catalog_object ) {
+	public static function update_product( \WC_Product $product, \Square\Models\CatalogObject $catalog_object ) {
 
 		if ( 'ITEM' !== $catalog_object->getType() || ! $catalog_object->getItemData() ) {
 			throw new \InvalidArgumentException( 'Type of $catalog_object must be an ITEM' );
@@ -72,9 +69,9 @@ class Product {
 
 	/**
 	 * @param \WC_Product $product
-	 * @param \SquareConnect\Model\CatalogObject $catalog_object
+	 * @param \Square\Models\CatalogObject $catalog_object
 	 */
-	public static function update_variation( \WC_Product $product, \SquareConnect\Model\CatalogObject $catalog_object ) {
+	public static function update_variation( \WC_Product $product, \Square\Models\CatalogObject $catalog_object ) {
 
 		if ( 'ITEM_VARIATION' !== $catalog_object->getType() || ! $catalog_object->getItemVariationData() ) {
 			throw new \InvalidArgumentException( 'Type of $catalog_object must be an ITEM_VARIATION' );
@@ -93,11 +90,11 @@ class Product {
 	 * @since 2.0.0
 	 *
 	 * @param \WC_Product $product product object
-	 * @param \SquareConnect\Model\CatalogItem $catalog_item Square API catalog item data
+	 * @param \Square\Models\CatalogItem $catalog_item Square API catalog item data
 	 * @param bool $with_inventory whether to pull the latest product inventory from Square
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
-	public static function update_from_square( \WC_Product $product, \SquareConnect\Model\CatalogItem $catalog_item, $with_inventory = true ) {
+	public static function update_from_square( \WC_Product $product, \Square\Models\CatalogItem $catalog_item, $with_inventory = true ) {
 
 		$catalog_id         = null;
 		$catalog_variations = $catalog_item->getVariations();
@@ -107,7 +104,7 @@ class Product {
 			foreach ( $catalog_variations as $catalog_variation ) {
 
 				// sanity check to ensure the correct data structure
-				if ( ! $catalog_variation->getItemVariationData() instanceof \SquareConnect\Model\CatalogItemVariation ) {
+				if ( ! $catalog_variation->getItemVariationData() instanceof \Square\Models\CatalogItemVariation ) {
 					continue;
 				}
 
@@ -139,7 +136,7 @@ class Product {
 					 * @since 2.0.0
 					 *
 					 * @param \WC_Product_Variation $variation variation object
-					 * @param \SquareConnect\Model\CatalogItemVariation $catalog_variation Square API catalog variation item object
+					 * @param \Square\Models\CatalogItemVariation $catalog_variation Square API catalog variation item object
 					 */
 					do_action( 'wc_square_updated_product_variation_from_square', $variation, $catalog_variation );
 				}
@@ -149,7 +146,7 @@ class Product {
 			$catalog_variation = current( $catalog_variations );
 
 			if ( $product->get_sku() !== $catalog_variation->getItemVariationData()->getSku() ) {
-				throw new Framework\SV_WC_Plugin_Exception( 'The WooCommerce SKU and Square SKU do not match' );
+				throw new \Exception( 'The WooCommerce SKU and Square SKU do not match' );
 			}
 
 			$catalog_id = $catalog_variation->getItemVariationData()->getItemId();
@@ -208,7 +205,7 @@ class Product {
 		 * @since 2.0.0
 		 *
 		 * @param \WC_Product $product product object
-		 * @param \SquareConnect\Model\CatalogItem $catalog_item Square API catalog item object
+		 * @param \Square\Models\CatalogItem $catalog_item Square API catalog item object
 		 */
 		do_action( 'wc_square_updated_product_from_square', $product, $catalog_item );
 	}
@@ -242,13 +239,13 @@ class Product {
 			$image_response = wc_square()->get_api()->retrieve_catalog_object( $image_id );
 
 			if ( ! $image_response->get_data() || ! $image_response->get_data()->getObject() || ! $image_response->get_data()->getObject()->getImageData() ) {
-				throw new Framework\SV_WC_Plugin_Exception( 'No image data present' );
+				throw new \Exception( 'No image data present' );
 			}
 
 			$image_url = $image_response->get_data()->getObject()->getImageData()->getUrl();
 
 			if ( empty( $image_url ) ) {
-				throw new Framework\SV_WC_Plugin_Exception( 'Square image url empty' );
+				throw new \Exception( 'Square image url empty' );
 			}
 
 			if ( ! function_exists( 'media_sideload_image' ) ) {
@@ -264,10 +261,10 @@ class Product {
 				$product_image_src = get_post_meta( $product_image_id, '_source_url', true );
 
 				if ( empty( $product_image_src ) ) {
-					throw new Framework\SV_WC_Plugin_Exception( 'Cannot compare existing product image src with new upload. Exiting to avoid uploading duplicate' );
+					throw new \Exception( 'Cannot compare existing product image src with new upload. Exiting to avoid uploading duplicate' );
 				} elseif ( $product_image_src === $image_url ) {
 					$product->update_meta_data( '_square_item_image_id', $image_id );
-					throw new Framework\SV_WC_Plugin_Exception( 'This image has already been uploaded to WordPress and is now set on the product' );
+					throw new \Exception( 'This image has already been uploaded to WordPress and is now set on the product' );
 				}
 			}
 
@@ -275,7 +272,7 @@ class Product {
 			$attachment_id = media_sideload_image( $image_url, $product->get_id(), $product->get_title(), 'id' );
 
 			if ( is_wp_error( $attachment_id ) ) {
-				throw new Framework\SV_WC_Plugin_Exception( $attachment_id->get_error_message() );
+				throw new \Exception( $attachment_id->get_error_message() );
 			}
 
 			// attach the newly updated image to product
@@ -283,7 +280,7 @@ class Product {
 
 			self::set_square_image_id( $product, $image_id );
 
-		} catch ( Framework\SV_WC_Plugin_Exception $e ) {
+		} catch ( \Exception $e ) {
 
 			wc_square()->log( sprintf( 'Could not import image from Square at %1$s for attaching to product #%2$s. %3$s.', $image_url, $product->get_id(), $e->getMessage() ) );
 		}
@@ -302,14 +299,14 @@ class Product {
 	 * @param \WC_Product $product product object
 	 * @param bool $save whether to save the product object
 	 * @return \WC_Product
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	public static function update_stock_from_square( \WC_Product $product, $save = true ) {
 
 		$square_id = $product->get_meta( self::SQUARE_VARIATION_ID_META_KEY );
 
 		if ( ! $square_id ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Product not synced with Square', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Product not synced with Square', 'woocommerce-square' ) );
 		}
 
 		// if saving the product, flag as syncing so updating the stock won't trigger another sync
@@ -323,7 +320,7 @@ class Product {
 
 		if ( $response->get_data() && $response->get_data()->getCounts() ) {
 
-			/* @type \SquareConnect\Model\InventoryCount $count */
+			/* @type \Square\Models\InventoryCount $count */
 			foreach ( $response->get_data()->getCounts() as $count ) {
 
 				if ( 'IN_STOCK' === $count->getState() ) {
@@ -497,9 +494,10 @@ class Product {
 	public static function has_sku( \WC_Product $product ) {
 		if ( $product->is_type( 'variable' ) && $product->has_child() ) {
 			foreach ( $product->get_children() as $variation_id ) {
-				$variation = wc_get_product( $variation_id );
+				$variation     = wc_get_product( $variation_id );
+				$variation_sku = $variation->get_sku( 'edit' );
 
-				if ( $variation instanceof \WC_Product && empty( $variation->get_sku() ) ) {
+				if ( $variation instanceof \WC_Product && empty( $variation_sku ) ) {
 					return false;
 				}
 			}
@@ -708,7 +706,7 @@ class Product {
 	 * @since 2.0.0
 	 *
 	 * @param \WC_Product $product
-	 * @return null|\SquareConnect\Model\CatalogObject
+	 * @return null|\Square\Models\CatalogObject
 	 */
 	public static function convert_to_catalog_object( \WC_Product $product ) {
 
@@ -745,20 +743,23 @@ class Product {
 			return null;
 		}
 
-		$data = array(
-			'type'                    => 'ITEM',
-			'id'                      => self::get_square_item_id( $product ),
-			'version'                 => self::get_square_version( $product ),
-			'present_at_location_ids' => array( wc_square()->get_settings_handler()->get_location_id() ),
-			'item_data'               => array(
-				'name'       => $product->get_name(),
-				'variations' => $variations,
-			),
+		$catalog_object = new \Square\Models\CatalogObject(
+			'ITEM',
+			self::get_square_item_id( $product )
 		);
+
+		$catalog_object->setVersion( self::get_square_version( $product ) );
+		$catalog_object->setPresentAtLocationIds( array( wc_square()->get_settings_handler()->get_location_id() ) );
+
+		$catalog_item = new \Square\Models\CatalogItem();
+		$catalog_item->setName( $product->get_name() );
+		$catalog_item->setVariations( $variations );
+
+		$catalog_object->setItemData( $catalog_item );
 
 		// TODO: Handle categories
 
-		return new \SquareConnect\Model\CatalogObject( $data );
+		return $catalog_object;
 	}
 
 
@@ -768,7 +769,7 @@ class Product {
 	 * @since 2.0.0
 	 *
 	 * @param \WC_Product $product the product object
-	 * @param \SquareConnect\Model\CatalogItemVariation[] $variations (optional) array of variations to include
+	 * @param \Square\Models\CatalogItemVariation[] $variations (optional) array of variations to include
 	 * @param bool $is_soft_delete whether or not this item data is for a soft-delete
 	 * @return array
 	 */
@@ -878,7 +879,7 @@ class Product {
 	 * @since 2.0.0
 	 *
 	 * @param int|float $price
-	 * @return \SquareConnect\Model\Money
+	 * @return \Square\Models\Money
 	 */
 	public static function price_to_money( $price ) {
 
@@ -1301,7 +1302,7 @@ class Product {
 	 * @since 2.0.0
 	 *
 	 * @param int|false|\WC_Product $product the product object or ID
-	 * @param \SquareConnect\Model\CatalogObject $remote_product the remote catalog object
+	 * @param \Square\Models\CatalogObject $remote_product the remote catalog object
 	 */
 	public static function import_remote_meta( $product, $remote_product ) {
 
@@ -1322,12 +1323,12 @@ class Product {
 
 
 	/**
-	 * Gets an InventoryChange object filled with a \SquareConnect\Model\InventoryPhysicalCount object for a given product.
+	 * Gets an InventoryChange object filled with a \Square\Models\InventoryPhysicalCount object for a given product.
 	 *
 	 * @since 2.0.0
 	 *
 	 * @param \WC_Product $product the product object
-	 * @return \SquareConnect\Model\InventoryChange|null
+	 * @return \Square\Models\InventoryChange|null
 	 */
 	public static function get_inventory_change_physical_count_type( \WC_Product $product ) {
 
@@ -1335,20 +1336,16 @@ class Product {
 
 		if ( $square_variation_id = self::get_square_item_variation_id( $product->get_id(), false ) ) {
 
-			$inventory_change = new \SquareConnect\Model\InventoryChange(
-				array(
-					'type'           => 'PHYSICAL_COUNT',
-					'physical_count' => new \SquareConnect\Model\InventoryPhysicalCount(
-						array(
-							'catalog_object_id' => $square_variation_id,
-							'quantity'          => '' . max( 0, $product->get_stock_quantity() ),
-							'location_id'       => wc_square()->get_settings_handler()->get_location_id(),
-							'state'             => 'IN_STOCK',
-							'occurred_at'       => date( 'Y-m-d\TH:i:sP' ),
-						)
-					),
-				)
-			);
+			$inventory_physical_count = new \Square\Models\InventoryPhysicalCount();
+			$inventory_physical_count->setCatalogObjectId( $square_variation_id );
+			$inventory_physical_count->setQuantity( '' . max( 0, $product->get_stock_quantity() ) );
+			$inventory_physical_count->setLocationId( wc_square()->get_settings_handler()->get_location_id() );
+			$inventory_physical_count->setState( 'IN_STOCK' );
+			$inventory_physical_count->setOccurredAt( date( 'Y-m-d\TH:i:sP' ) );
+
+			$inventory_change = new \Square\Models\InventoryChange();
+			$inventory_change->setType( 'PHYSICAL_COUNT' );
+			$inventory_change->setPhysicalCount( $inventory_physical_count );
 		}
 
 		return $inventory_change;
@@ -1356,14 +1353,14 @@ class Product {
 
 
 	/**
-	 * Gets an InventoryChange object filled with a \SquareConnect\Model\InventoryAdjustment object for a given product.
+	 * Gets an InventoryChange object filled with a \Square\Models\InventoryAdjustment object for a given product.
 	 *
 	 * @since 2.0.8
 	 *
 	 * @param \WC_Product $product the product object
 	 * @param int $adjustment Value can negative or positive.
 	 *
-	 * @return \SquareConnect\Model\InventoryChange|null
+	 * @return \Square\Models\InventoryChange|null
 	 */
 	public static function get_inventory_change_adjustment_type( \WC_Product $product, $adjustment ) {
 
@@ -1381,21 +1378,17 @@ class Product {
 			$to   = 'IN_STOCK';
 		}
 
-		$inventory_change = new \SquareConnect\Model\InventoryChange(
-			array(
-				'type'       => 'ADJUSTMENT',
-				'adjustment' => new \SquareConnect\Model\InventoryAdjustment(
-					array(
-						'catalog_object_id' => $square_variation_id,
-						'location_id'       => wc_square()->get_settings_handler()->get_location_id(),
-						'quantity'          => '' . absint( $adjustment ),
-						'from_state'        => $from,
-						'to_state'          => $to,
-						'occurred_at'       => date( 'Y-m-d\TH:i:sP' ),
-					)
-				),
-			)
-		);
+		$inventory_adjustment = new \Square\Models\InventoryAdjustment();
+		$inventory_adjustment->setCatalogObjectId( $square_variation_id );
+		$inventory_adjustment->setLocationId( wc_square()->get_settings_handler()->get_location_id() );
+		$inventory_adjustment->setQuantity( '' . absint( $adjustment ) );
+		$inventory_adjustment->setFromState( $from );
+		$inventory_adjustment->setToState( $to );
+		$inventory_adjustment->setOccurredAt( date( 'Y-m-d\TH:i:sP' ) );
+
+		$inventory_change = new \Square\Models\InventoryChange();
+		$inventory_change->setType( 'ADJUSTMENT' );
+		$inventory_change->setAdjustment( $inventory_adjustment );
 
 		return $inventory_change;
 	}

@@ -23,8 +23,6 @@
 
 namespace WooCommerce\Square\API\Responses;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model as SquareModel;
 use WooCommerce\Square\API\Response;
 
 defined( 'ABSPATH' ) || exit;
@@ -34,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.0.0
  *
- * @method SquareModel\ListLocationsResponse get_data()
+ * @method \Square\Models\ListLocationsResponse get_data()
  */
 class Locations extends Response {
 
@@ -44,7 +42,7 @@ class Locations extends Response {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @return SquareModel\Location[]
+	 * @return \Square\Models\Location[]
 	 */
 	public function get_locations() {
 

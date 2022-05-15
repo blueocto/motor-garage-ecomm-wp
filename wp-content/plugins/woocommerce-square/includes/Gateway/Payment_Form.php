@@ -25,7 +25,8 @@ namespace WooCommerce\Square\Gateway;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway_Helper;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway_Payment_Form;
 
 /**
  * The payment form handler.
@@ -34,13 +35,13 @@ use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
  *
  * @method \WooCommerce\Square\Gateway get_gateway()
  */
-class Payment_Form extends Framework\SV_WC_Payment_Gateway_Payment_Form {
+class Payment_Form extends Payment_Gateway_Payment_Form {
 
 	/**
 	 * Adds hooks for rendering the payment form.
 	 * Extended from SV framework and remove render_js action
 	 *
-	 * @see SV_WC_Payment_Gateway_Payment_Form::render()
+	 * @see Payment_Gateway_Payment_Form::render()
 	 *
 	 * @since 2.2.3
 	 */
@@ -53,9 +54,6 @@ class Payment_Form extends Framework\SV_WC_Payment_Gateway_Payment_Form {
 
 		// saved payment methods
 		add_action( "wc_{$gateway_id}_payment_form_start", array( $this, 'render_saved_payment_methods' ), 20 );
-
-		// sample eCheck image (if eCheck gateway)
-		add_action( "wc_{$gateway_id}_payment_form_start", array( $this, 'render_sample_check' ), 25 );
 
 		// fieldset start
 		add_action( "wc_{$gateway_id}_payment_form_start", array( $this, 'render_fieldset_start' ), 30 );
@@ -140,8 +138,6 @@ class Payment_Form extends Framework\SV_WC_Payment_Gateway_Payment_Form {
 	 */
 	public function render_payment_fields() {
 
-		parent::render_payment_fields();
-
 		$fields = array(
 			'card-type',
 			'last-four',
@@ -158,6 +154,8 @@ class Payment_Form extends Framework\SV_WC_Payment_Gateway_Payment_Form {
 		foreach ( $fields as $field_id ) {
 			echo '<input type="hidden" name="wc-' . esc_attr( $this->get_gateway()->get_id_dasherized() ) . '-' . esc_attr( $field_id ) . '" />';
 		}
+
+		echo '<div id="wc-' . esc_attr( $this->get_gateway()->get_id_dasherized() ) . '-container"></div>';
 
 		$this->render_supplementary_billing_info();
 	}
@@ -252,15 +250,15 @@ class Payment_Form extends Framework\SV_WC_Payment_Gateway_Payment_Form {
 
 		// map the unique square card type string to our framework standards
 		$square_card_types = array(
-			Framework\SV_WC_Payment_Gateway_Helper::CARD_TYPE_MASTERCARD => 'masterCard',
-			Framework\SV_WC_Payment_Gateway_Helper::CARD_TYPE_AMEX       => 'americanExpress',
-			Framework\SV_WC_Payment_Gateway_Helper::CARD_TYPE_DINERSCLUB => 'discoverDiners',
-			Framework\SV_WC_Payment_Gateway_Helper::CARD_TYPE_JCB        => 'JCB',
+			Payment_Gateway_Helper::CARD_TYPE_MASTERCARD => 'masterCard',
+			Payment_Gateway_Helper::CARD_TYPE_AMEX       => 'americanExpress',
+			Payment_Gateway_Helper::CARD_TYPE_DINERSCLUB => 'discoverDiners',
+			Payment_Gateway_Helper::CARD_TYPE_JCB        => 'JCB',
 		);
 
 		$card_types = is_array( $this->get_gateway()->get_card_types() ) ? $this->get_gateway()->get_card_types() : array();
 
-		$framework_card_types = array_map( array( Framework\SV_WC_Payment_Gateway_Helper::class, 'normalize_card_type' ), $card_types );
+		$framework_card_types = array_map( array( Payment_Gateway_Helper::class, 'normalize_card_type' ), $card_types );
 		$square_card_types    = array_merge( array_combine( $framework_card_types, $framework_card_types ), $square_card_types );
 
 		$args['enabled_card_types'] = $framework_card_types;

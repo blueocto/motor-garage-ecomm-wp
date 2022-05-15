@@ -23,9 +23,10 @@
 
 namespace WooCommerce\Square\Utilities;
 
-defined( 'ABSPATH' ) || exit;
+use WooCommerce\Square\Framework\Plugin_Compatibility;
+use WooCommerce\Square\Framework\Square_Helper;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Helper for converting money values.
@@ -45,16 +46,14 @@ class Money_Utility {
 	 * @param float $amount amount to convert
 	 * @param string $currency currency code
 	 *
-	 * @return \SquareConnect\Model\Money
+	 * @return \Square\Models\Money
 	 */
 	public static function amount_to_money( $amount, $currency ) {
+		$amount_money = new \Square\Models\Money();
+		$amount_money->setAmount( self::amount_to_cents( $amount, $currency ) );
+		$amount_money->setCurrency( $currency );
 
-		return new \SquareConnect\Model\Money(
-			array(
-				'amount'   => self::amount_to_cents( $amount, $currency ),
-				'currency' => $currency,
-			)
-		);
+		return $amount_money;
 	}
 
 
@@ -127,7 +126,7 @@ class Money_Utility {
 			'XPF' => 0,
 		);
 
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.5' ) ) {
+		if ( Plugin_Compatibility::is_wc_version_gte( '3.5' ) ) {
 
 			$locale_info = include( WC()->plugin_path() . '/i18n/locale-info.php' );
 

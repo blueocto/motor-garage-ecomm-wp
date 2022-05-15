@@ -25,7 +25,6 @@ namespace WooCommerce\Square;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square\Handlers\Product;
 
 /**
@@ -35,8 +34,7 @@ use WooCommerce\Square\Handlers\Product;
  *
  * @method Plugin get_plugin()
  */
-class Lifecycle extends Framework\Plugin\Lifecycle {
-
+class Lifecycle extends \WooCommerce\Square\Framework\Lifecycle {
 
 	/**
 	 * Lifecycle constructor.
@@ -268,7 +266,7 @@ class Lifecycle extends Framework\Plugin\Lifecycle {
 
 				try {
 					$legacy_access_token = $encryption->encrypt_data( $legacy_access_token );
-				} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+				} catch ( \Exception $exception ) {
 					// log the event, but don't halt the process.
 					$this->get_plugin()->log( 'Could not encrypt access token during upgrade. ' . $exception->getMessage() );
 				}
@@ -385,7 +383,6 @@ class Lifecycle extends Framework\Plugin\Lifecycle {
 
 		$this->get_plugin()->log( 'Migrating orders data...' );
 
-		// move charge captured flag in orders to SkyVerge framework meta key.
 		$wpdb->update( $wpdb->postmeta, array( 'meta_key' => '_wc_square_credit_card_charge_captured' ), array( 'meta_key' => '_square_charge_captured' ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery
 
 		// move payment ID to new gateway ID meta key value.

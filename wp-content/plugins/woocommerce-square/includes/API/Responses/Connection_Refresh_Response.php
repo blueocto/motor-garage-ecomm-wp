@@ -22,10 +22,9 @@
  */
 
 namespace WooCommerce\Square\API\Responses;
+use WooCommerce\Square\Framework\Api\API_JSON_Response;
 
 defined( 'ABSPATH' ) || exit;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 
 /**
  * The connection refresh response class.
@@ -34,8 +33,7 @@ use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
  *
  * @since 2.0.0
  */
-class Connection_Refresh_Response extends Framework\SV_WC_API_JSON_Response {
-
+class Connection_Refresh_Response extends API_JSON_Response {
 
 	/**
 	 * Gets the access token, if any.
@@ -95,6 +93,4 @@ class Connection_Refresh_Response extends Framework\SV_WC_API_JSON_Response {
 
 		return ! empty( $this->response_data->error );
 	}
-
-
 }

@@ -23,9 +23,6 @@
 
 namespace WooCommerce\Square\API\Requests;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model as SquareModel;
-use SquareConnect\Api\CatalogApi;
 use WooCommerce\Square\API\Request;
 
 defined( 'ABSPATH' ) || exit;
@@ -43,11 +40,10 @@ class Catalog extends Request {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\ApiClient $api_client the API client
+	 * @param \Square\SquareClient $api_client the API client
 	 */
 	public function __construct( $api_client ) {
-
-		$this->square_api = new CatalogApi( $api_client );
+		$this->square_api = $api_client->getCatalogApi();
 	}
 
 
@@ -55,7 +51,7 @@ class Catalog extends Request {
 	 * Sets the data for a batchDeleteCatalogObjects request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-batchdeletecatalogobjects
-	 * @see \SquareConnect\Api\CatalogApi::batchDeleteCatalogObjects()
+	 * @see \Square\Apis\CatalogApi::batchDeleteCatalogObjects()
 	 *
 	 * @since 2.0.0
 	 *
@@ -64,7 +60,9 @@ class Catalog extends Request {
 	public function set_batch_delete_catalog_objects_data( array $object_ids ) {
 
 		$this->square_api_method = 'batchDeleteCatalogObjects';
-		$this->square_api_args   = array( new SquareModel\BatchDeleteCatalogObjectsRequest( array( 'object_ids' => $object_ids ) ) );
+		$body                    = new \Square\Models\BatchDeleteCatalogObjectsRequest();
+		$body->setObjectIds( $object_ids );
+		$this->square_api_args = array( $body );
 	}
 
 
@@ -72,7 +70,7 @@ class Catalog extends Request {
 	 * Sets the data for a batchRetrieveCatalogObjects request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-batchretrievecatalogobjects
-	 * @see \SquareConnect\Api\CatalogApi::batchRetrieveCatalogObjects()
+	 * @see \Square\Apis\CatalogApi::batchRetrieveCatalogObjects()
 	 *
 	 * @since 2.0.0
 	 *
@@ -82,14 +80,10 @@ class Catalog extends Request {
 	public function set_batch_retrieve_catalog_objects_data( array $object_ids, $include_related_objects = false ) {
 
 		$this->square_api_method = 'batchRetrieveCatalogObjects';
-		$this->square_api_args   = array(
-			new SquareModel\BatchRetrieveCatalogObjectsRequest(
-				array(
-					'object_ids'              => $object_ids,
-					'include_related_objects' => (bool) $include_related_objects,
-				)
-			),
-		);
+		$body                    = new \Square\Models\BatchRetrieveCatalogObjectsRequest( $object_ids );
+		$body->setIncludeRelatedObjects( (bool) $include_related_objects );
+
+		$this->square_api_args = array( $body );
 	}
 
 
@@ -97,22 +91,20 @@ class Catalog extends Request {
 	 * Sets the data for a batchUpsertCatalogObjects request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-batchupsertcatalogobjects
-	 * @see \SquareConnect\Api\CatalogApi::batchUpsertCatalogObjects()
+	 * @see \Square\Apis\CatalogApi::batchUpsertCatalogObjects()
 	 *
 	 * @since 2.0.0
 	 *
 	 * @param string $idempotency_key the UUID for this request
-	 * @param SquareModel\CatalogObjectBatch[] $batches array of catalog object batches
+	 * @param \Square\Models\CatalogObjectBatch[] $batches array of catalog object batches
 	 */
 	public function set_batch_upsert_catalog_objects_data( $idempotency_key, array $batches ) {
 
 		$this->square_api_method = 'batchUpsertCatalogObjects';
 		$this->square_api_args   = array(
-			new SquareModel\BatchUpsertCatalogObjectsRequest(
-				array(
-					'idempotency_key' => $idempotency_key,
-					'batches'         => $batches,
-				)
+			new \Square\Models\BatchUpsertCatalogObjectsRequest(
+				$idempotency_key,
+				$batches
 			),
 		);
 	}
@@ -122,7 +114,7 @@ class Catalog extends Request {
 	 * Sets the data for a catalogInfo request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-cataloginfo
-	 * @see \SquareConnect\Api\CatalogApi::catalogInfo()
+	 * @see \Square\Apis\CatalogApi::catalogInfo()
 	 *
 	 * @since 2.0.0
 	 *
@@ -139,7 +131,7 @@ class Catalog extends Request {
 	 * Sets the data for a deleteCatalogObject request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-deletecatalogobject
-	 * @see \SquareConnect\Api\CatalogApi::deleteCatalogObject()
+	 * @see \Square\Apis\CatalogApi::deleteCatalogObject()
 	 *
 	 * @since 2.0.0
 	 *
@@ -156,7 +148,7 @@ class Catalog extends Request {
 	 * Sets the data for a listCatalog request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-listcatalog
-	 * @see \SquareConnect\Api\CatalogApi::listCatalog()
+	 * @see \Square\Apis\CatalogApi::listCatalog()
 	 *
 	 * @since 2.0.0
 	 *
@@ -177,7 +169,7 @@ class Catalog extends Request {
 	 * Sets the data for a retrieveCatalogObject request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-retrievecatalogobject
-	 * @see \SquareConnect\Api\CatalogApi::retrieveCatalogObject()
+	 * @see \Square\Apis\CatalogApi::retrieveCatalogObject()
 	 *
 	 * @since 2.0.0
 	 *
@@ -195,7 +187,7 @@ class Catalog extends Request {
 	 * Sets the data for a searchCatalogObjects request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-searchcatalogobjects
-	 * @see \SquareConnect\Api\CatalogApi::searchCatalogObjects()
+	 * @see \Square\Apis\CatalogApi::searchCatalogObjects()
 	 *
 	 * @since 2.0.0
 	 *
@@ -221,8 +213,17 @@ class Catalog extends Request {
 		// apply defaults and remove any keys that aren't recognized
 		$args = array_intersect_key( wp_parse_args( $args, $defaults ), $defaults );
 
+		$body = new \Square\Models\SearchCatalogObjectsRequest();
+		$body->setCursor( $args['cursor'] );
+		$body->setObjectTypes( $args['object_types'] );
+		$body->setIncludeDeletedObjects( $args['include_deleted_objects'] );
+		$body->setIncludeRelatedObjects( $args['include_related_objects'] );
+		$body->setBeginTime( $args['begin_time'] );
+		$body->setQuery( $args['query'] );
+		$body->setLimit( $args['limit'] );
+
 		$this->square_api_method = 'searchCatalogObjects';
-		$this->square_api_args   = array( new SquareModel\SearchCatalogObjectsRequest( $args ) );
+		$this->square_api_args   = array( $body );
 	}
 
 
@@ -230,7 +231,7 @@ class Catalog extends Request {
 	 * Sets the data for a updateItemModifierLists request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-updateitemmodifierlists
-	 * @see \SquareConnect\Api\CatalogApi::updateItemModifierLists()
+	 * @see \Square\Apis\CatalogApi::updateItemModifierLists()
 	 *
 	 * @since 2.0.0
 	 *
@@ -241,15 +242,11 @@ class Catalog extends Request {
 	public function set_update_item_modifier_lists_data( array $item_ids, array $modifier_lists_to_enable = array(), array $modifier_lists_to_disable = array() ) {
 
 		$this->square_api_method = 'updateItemModifierLists';
-		$this->square_api_args   = array(
-			new SquareModel\UpdateItemModifierListsRequest(
-				array(
-					'item_ids'                  => $item_ids,
-					'modifier_lists_to_enable'  => $modifier_lists_to_enable,
-					'modifier_lists_to_disable' => $modifier_lists_to_disable,
-				)
-			),
-		);
+		$body                    = new \Square\Models\UpdateItemModifierListsRequest( $item_ids );
+		$body->setModifierListsToEnable( $modifier_lists_to_enable );
+		$body->setModifierListsToDisable( $modifier_lists_to_disable );
+
+		$this->square_api_args = array( $body );
 	}
 
 
@@ -257,7 +254,7 @@ class Catalog extends Request {
 	 * Sets the data for an updateItemTaxes request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-updateitemtaxes
-	 * @see \SquareConnect\Api\CatalogApi::updateItemTaxes()
+	 * @see \Square\Apis\CatalogApi::updateItemTaxes()
 	 *
 	 * @since 2.0.0
 	 *
@@ -268,15 +265,10 @@ class Catalog extends Request {
 	public function set_update_item_taxes_data( array $item_ids, array $taxes_to_enable = array(), array $taxes_to_disable = array() ) {
 
 		$this->square_api_method = 'updateItemTaxes';
-		$this->square_api_args   = array(
-			new SquareModel\UpdateItemTaxesRequest(
-				array(
-					'item_ids'         => $item_ids,
-					'taxes_to_enable'  => $taxes_to_enable,
-					'taxes_to_disable' => $taxes_to_disable,
-				)
-			),
-		);
+		$body                    = new \Square\Models\UpdateItemTaxesRequest( $item_ids );
+		$body->setTaxesToEnable( $taxes_to_enable );
+		$body->setTaxesToDisable( $taxes_to_disable );
+		$this->square_api_args   = array( $body );
 	}
 
 
@@ -284,22 +276,20 @@ class Catalog extends Request {
 	 * Sets the data for an upsertCatalogObject request.
 	 *
 	 * @see https://docs.connect.squareup.com/api/connect/v2#endpoint-catalog-upsertcatalogobject
-	 * @see \SquareConnect\Api\CatalogApi::upsertCatalogObject()
+	 * @see \Square\Apis\CatalogApi::upsertCatalogObject()
 	 *
 	 * @since 2.0.0
 	 *
 	 * @param string $idempotency_key a UUID for this request
-	 * @param SquareModel\CatalogObject $object the object to update
+	 * @param \Square\Models\CatalogObject $object the object to update
 	 */
 	public function set_upsert_catalog_object_data( $idempotency_key, $object ) {
 
 		$this->square_api_method = 'upsertCatalogObject';
 		$this->square_api_args   = array(
-			new SquareModel\UpsertCatalogObjectRequest(
-				array(
-					'idempotency_key' => $idempotency_key,
-					'object'          => $object,
-				)
+			new \Square\Models\UpsertCatalogObjectRequest(
+				$idempotency_key,
+				$object
 			),
 		);
 	}

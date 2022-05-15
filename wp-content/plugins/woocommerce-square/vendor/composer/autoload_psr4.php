@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'SquareConnect\\' => array($vendorDir . '/square/connect/lib'),
+    'apimatic\\jsonmapper\\' => array($vendorDir . '/apimatic/jsonmapper/src'),
+    'Square\\' => array($vendorDir . '/square/square/src'),
 );

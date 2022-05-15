@@ -23,8 +23,6 @@
 
 namespace WooCommerce\Square\Handlers;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -153,7 +151,7 @@ class Category {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\Model\CatalogObject $catalog_object the catalog object
+	 * @param \Square\Models\CatalogObject $catalog_object the catalog object
 	 * @return int|null the category ID, if found
 	 */
 	public static function import_or_update( $catalog_object ) {

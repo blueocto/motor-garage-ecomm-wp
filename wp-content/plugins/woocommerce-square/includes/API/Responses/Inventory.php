@@ -23,8 +23,7 @@
 
 namespace WooCommerce\Square\API\Responses;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\BatchRetrieveInventoryCountsResponse;
+use Square\Models\BatchRetrieveInventoryCountsResponse;
 use WooCommerce\Square\API\Response;
 
 defined( 'ABSPATH' ) || exit;
@@ -42,7 +41,7 @@ class Inventory extends Response {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @return \SquareConnect\Model\InventoryCount[] array of inventory count objects
+	 * @return \Square\Models\InventoryCount[] array of inventory count objects
 	 */
 	public function get_counts() {
 

@@ -22,8 +22,7 @@
  */
 
 namespace WooCommerce\Square\API;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use \WooCommerce\Square\Framework\Api\API_Response;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -32,12 +31,9 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.0.0
  */
-class Response implements Framework\SV_WC_API_Response {
-
-
+class Response implements API_Response {
 	/** @var mixed raw response data */
 	protected $raw_response_data;
-
 
 	/**
 	 * Constructs the response object.
@@ -73,8 +69,13 @@ class Response implements Framework\SV_WC_API_Response {
 	 * @return \stdClass[]
 	 */
 	public function get_errors() {
+		if ( is_array( $this->raw_response_data ) && count( $this->raw_response_data ) > 0 ) {
+			if ( $this->raw_response_data[0] instanceof \Square\Models\Error ) {
+				return $this->raw_response_data;
+			}
+		}
 
-		return ! empty( $this->raw_response_data->errors ) && is_array( $this->raw_response_data->errors ) ? $this->raw_response_data->errors : array();
+		return array();
 	}
 
 
@@ -95,13 +96,12 @@ class Response implements Framework\SV_WC_API_Response {
 	 * Determines if the API response contains a particular error code.
 	 *
 	 * @since 2.1.6
-	 *
+	 * @param $error \Square\Models\Error
 	 * @return bool
 	 */
 	public function has_error_code( $error_code ) {
-
 		foreach ( $this->get_errors() as $error ) {
-			if ( $error_code === $error->code ) {
+			if ( $error_code === $error->getCode() ) {
 				return true;
 			}
 		}
@@ -117,8 +117,15 @@ class Response implements Framework\SV_WC_API_Response {
 	 * @return string
 	 */
 	public function to_string() {
+		$response_data = $this->get_data();
 
-		return is_callable( array( $this->get_data(), '__toString' ) ) ? $this->get_data() : '';
+		if ( is_callable( array( $response_data, '__toString' ) ) ) {
+			return $this->get_data();
+		} else if ( is_callable( array( $response_data, 'jsonSerialize' ) ) ) {
+			return wp_json_encode( $response_data, JSON_PRETTY_PRINT );
+		}
+
+		return '';
 	}
 
 

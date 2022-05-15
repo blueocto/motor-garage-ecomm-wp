@@ -1,29 +1,17 @@
 <?php
 /**
- * WooCommerce Square
+ * Sync Completed Email class
  *
- * This source file is subject to the GNU General Public License v3.0
- * that is bundled with this package in the file license.txt.
- * It is also available through the world-wide-web at this URL:
- * http://www.gnu.org/licenses/gpl-3.0.html
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@woocommerce.com so we can send you a copy immediately.
+ * Contains class that adds functionality to send out emails
+ * whenever sync is completed.
  *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade WooCommerce Square to newer
- * versions in the future. If you wish to customize WooCommerce Square for your
- * needs please refer to https://docs.woocommerce.com/document/woocommerce-square/
- *
- * @author    WooCommerce
- * @copyright Copyright: (c) 2019, Automattic, Inc.
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
+ * @package WooCommerce Square
+ * @since 2.0.0
  */
 
 namespace WooCommerce\Square\Emails;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\Plugin_Compatibility;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -226,7 +214,7 @@ class Sync_Completed extends Base_Email {
 		);
 
 		// TODO update handling when WooCommerce 3.2 is the minimum required version {FN 2019-05-03}
-		if ( Framework\SV_WC_Plugin_Compatibility::is_wc_version_gte( '3.2' ) ) {
+		if ( Plugin_Compatibility::is_wc_version_gte( '3.2' ) ) {
 			foreach ( $email_merge_tags as $find => $replace ) {
 				$this->placeholders[ '{' . $find . '}' ] = $replace;
 			}

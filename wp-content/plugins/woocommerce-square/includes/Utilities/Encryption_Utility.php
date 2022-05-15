@@ -22,10 +22,9 @@
  */
 
 namespace WooCommerce\Square\Utilities;
+use WooCommerce_Square_Loader;
 
 defined( 'ABSPATH' ) || exit;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 
 /**
  * The encryption utility class.
@@ -53,7 +52,7 @@ class Encryption_Utility {
 
 		// bail entirely if openssl isn't available
 		if ( ! self::is_encryption_supported() ) {
-			wc_doing_it_wrong( __CLASS__, __( 'Encryption is not supported on this site.', 'woocommerce-square' ), Framework\SV_WC_Plugin::VERSION );
+			wc_doing_it_wrong( __CLASS__, __( 'Encryption is not supported on this site.', 'woocommerce-square' ), WooCommerce_Square_Loader::FRAMEWORK_VERSION );
 			return;
 		}
 
@@ -75,7 +74,7 @@ class Encryption_Utility {
 					$this->cipher_method
 				);
 
-				wc_doing_it_wrong( __CLASS__, $message, Framework\SV_WC_Plugin::VERSION );
+				wc_doing_it_wrong( __CLASS__, $message, WooCommerce_Square_Loader::FRAMEWORK_VERSION );
 			}
 		}
 	}
@@ -89,21 +88,21 @@ class Encryption_Utility {
 	 * @param string|array $data data to encrypt
 	 * @param string $key encryption key
 	 * @return string
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	public function encrypt_data( $data, $key = '' ) {
 
 		// sanity check to ensure encryption can happen
 		if ( ! $this->get_cipher_method() ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'No encryption method available', 'woocommerce-square' ) );
+			throw new \Exception( __( 'No encryption method available', 'woocommerce-square' ) );
 		}
 
 		if ( empty( $data ) || ( ! is_string( $data ) && ! is_array( $data ) ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Data must be a non-empty string or array', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Data must be a non-empty string or array', 'woocommerce-square' ) );
 		}
 
 		if ( ! is_string( $key ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Encryption key must be a string', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Encryption key must be a string', 'woocommerce-square' ) );
 		}
 
 		// default to the WP salt
@@ -115,7 +114,7 @@ class Encryption_Utility {
 
 		// bail if a strong vector wasn't generated
 		if ( false === $vector || false === $crypto_strong ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Could not generate encryption vector.', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Could not generate encryption vector.', 'woocommerce-square' ) );
 		}
 
 		$encrypted_data = openssl_encrypt( json_encode( $data ), $this->get_cipher_method(), $key, 0, $vector );
@@ -132,21 +131,21 @@ class Encryption_Utility {
 	 * @param string $data data to decrypt
 	 * @param string $key decryption key
 	 * @return string|array
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	public function decrypt_data( $data, $key = '' ) {
 
 		// sanity check to ensure decryption can happen
 		if ( ! $this->get_cipher_method() ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'No decryption method available', 'woocommerce-square' ) );
+			throw new \Exception( __( 'No decryption method available', 'woocommerce-square' ) );
 		}
 
 		if ( empty( $data ) || ! is_string( $data ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Data must be a non-empty string', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Data must be a non-empty string', 'woocommerce-square' ) );
 		}
 
 		if ( ! is_string( $key ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Encryption key must be a string', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Encryption key must be a string', 'woocommerce-square' ) );
 		}
 
 		// default to the WP salt

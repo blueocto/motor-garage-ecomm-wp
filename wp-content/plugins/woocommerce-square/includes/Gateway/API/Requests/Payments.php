@@ -25,8 +25,7 @@ namespace WooCommerce\Square\Gateway\API\Requests;
 
 defined( 'ABSPATH' ) || exit;
 
-use SquareConnect\Api\PaymentsApi;
-use SquareConnect\Model as SquareModel;
+use WooCommerce\Square\Framework\Square_Helper;
 use WooCommerce\Square\Utilities;
 
 /**
@@ -44,11 +43,11 @@ class Payments extends \WooCommerce\Square\API\Request {
 	 *
 	 * @since 2.2.0
 	 * @param string $location_id location ID
-	 * @param \SquareConnect\ApiClient $api_client the API client
+	 * @param \Square\SquareClient $api_client the API client
 	 */
 	public function __construct( $location_id, $api_client ) {
 		$this->location_id = $location_id;
-		$this->square_api  = new PaymentsApi( $api_client );
+		$this->square_api  = $api_client->getPaymentsApi();
 	}
 
 	/**
@@ -70,12 +69,13 @@ class Payments extends \WooCommerce\Square\API\Request {
 	 * @param bool $capture whether to immediately capture the charge
 	 */
 	public function set_charge_data( \WC_Order $order, $capture = true ) {
-
 		$this->square_api_method = 'createPayment';
-		$this->square_request    = new SquareModel\CreatePaymentRequest();
+		$this->square_request    = new \Square\Models\CreatePaymentRequest(
+			! empty( $order->payment->token ) ? $order->payment->token : $order->payment->nonce,
+			wc_square()->get_idempotency_key( $order->unique_transaction_ref, false ),
+			Utilities\Money_Utility::amount_to_money( $order->payment_total, $order->get_currency() )
+		);
 
-		$this->square_request->setIdempotencyKey( wc_square()->get_idempotency_key( $order->unique_transaction_ref, false ) );
-		$this->square_request->setAmountMoney( Utilities\Money_Utility::amount_to_money( $order->payment_total, $order->get_currency() ) );
 		$this->square_request->setReferenceId( $order->get_order_number() );
 
 		/**
@@ -88,7 +88,7 @@ class Payments extends \WooCommerce\Square\API\Request {
 		 */
 		$description = (string) apply_filters( 'wc_square_payment_order_note', $order->description, $order );
 
-		$this->square_request->setNote( Utilities\String_Utility::truncate( $description, 500 ) );
+		$this->square_request->setNote( Square_Helper::str_truncate( $description, 500 ) );
 
 		$this->square_request->setAutocomplete( $capture );
 
@@ -108,7 +108,7 @@ class Payments extends \WooCommerce\Square\API\Request {
 			$this->square_request->setLocationId( $this->location_id );
 		}
 
-		$billing_address = new SquareModel\Address();
+		$billing_address = new \Square\Models\Address();
 		$billing_address->setFirstName( $order->get_billing_first_name() );
 		$billing_address->setLastName( $order->get_billing_last_name() );
 		$billing_address->setOrganization( $order->get_billing_company() );
@@ -123,7 +123,7 @@ class Payments extends \WooCommerce\Square\API\Request {
 
 		if ( $order->get_shipping_address_1( 'edit' ) || $order->get_shipping_address_2( 'edit' ) ) {
 
-			$shipping_address = new SquareModel\Address();
+			$shipping_address = new \Square\Models\Address();
 			$shipping_address->setFirstName( $order->get_shipping_first_name() );
 			$shipping_address->setLastName( $order->get_shipping_last_name() );
 			$shipping_address->setAddressLine1( $order->get_shipping_address_1() );
@@ -157,7 +157,9 @@ class Payments extends \WooCommerce\Square\API\Request {
 	 */
 	public function set_capture_data( \WC_Order $order ) {
 		$this->square_api_method = 'completePayment';
-		$this->square_api_args   = array( $order->capture->trans_id );
+		$body = new \Square\Models\CompletePaymentRequest();
+		$body->setVersionToken( null );
+		$this->square_api_args = array( $order->capture->trans_id, $body );
 	}
 
 

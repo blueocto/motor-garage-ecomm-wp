@@ -23,7 +23,7 @@
 
 namespace WooCommerce\Square\Emails;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\Square_Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -106,7 +106,7 @@ class Base_Email extends \WC_Email {
 		}
 
 		// add a recipient field
-		$form_fields = Framework\SV_WC_Helper::array_insert_after(
+		$form_fields = Square_Helper::array_insert_after(
 			$form_fields,
 			isset( $form_fields['enabled'] ) ? 'enabled' : key( $form_fields ),
 			array(

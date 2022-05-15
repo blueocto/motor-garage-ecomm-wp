@@ -23,11 +23,9 @@
 
 namespace WooCommerce\Square\Handlers\Product;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\CatalogObject;
+use Square\Models\CatalogObject;
 
 class Woo_SOR extends \WooCommerce\Square\Handlers\Product {
-
 
 	/**
 	 * Updates a Square catalog item with a WooCommerce product's data.
@@ -37,20 +35,16 @@ class Woo_SOR extends \WooCommerce\Square\Handlers\Product {
 	 * @param CatalogObject $catalog_object Square SDK catalog object
 	 * @param \WC_Product $product WooCommerce product
 	 * @return CatalogObject
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	public static function update_catalog_item( CatalogObject $catalog_object, \WC_Product $product ) {
 
 		if ( 'ITEM' !== $catalog_object->getType() || ! $catalog_object->getItemData() ) {
-			throw new Framework\SV_WC_Plugin_Exception( 'Type of $catalog_object must be an ITEM' );
+			throw new \Exception( 'Type of $catalog_object must be an ITEM' );
 		}
 
 		// ensure the product meta is persisted
 		self::update_product( $product, $catalog_object );
-
-		if ( ! $catalog_object->getId() ) {
-			$catalog_object->setId( self::get_square_item_id( $product ) );
-		}
 
 		$is_delete = 'trash' === $product->get_status();
 
@@ -125,15 +119,13 @@ class Woo_SOR extends \WooCommerce\Square\Handlers\Product {
 				}
 
 				$variation_object = new CatalogObject(
-					array(
-						'type'                => 'ITEM_VARIATION',
-						'item_variation_data' => new \SquareConnect\Model\CatalogItemVariation(
-							array(
-								'item_id' => $catalog_object->getId(),
-							)
-						),
-					)
+					'ITEM_VARIATION',
+					self::get_square_item_variation_id( $product_variation )
 				);
+
+				$catalog_item_variation = new \Square\Models\CatalogItemVariation();
+				$catalog_item_variation->setItemId( $catalog_object->getId() );
+				$variation_object->setItemVariationData( $catalog_item_variation );
 
 				$catalog_variations[] = self::update_catalog_variation( $variation_object, $product_variation );
 			}
@@ -146,15 +138,13 @@ class Woo_SOR extends \WooCommerce\Square\Handlers\Product {
 			} else {
 
 				$variation_object = new CatalogObject(
-					array(
-						'type'                => 'ITEM_VARIATION',
-						'item_variation_data' => new \SquareConnect\Model\CatalogItemVariation(
-							array(
-								'item_id' => $catalog_object->getId(),
-							)
-						),
-					)
+					'ITEM_VARIATION',
+					self::get_square_item_variation_id( $product )
 				);
+
+				$catalog_item_variation = new \Square\Models\CatalogItemVariation();
+				$catalog_item_variation->setItemId( $catalog_object->getId() );
+				$variation_object->setItemVariationData( $catalog_item_variation );
 			}
 
 			$catalog_variations = array( self::update_catalog_variation( $variation_object, $product ) );
@@ -186,20 +176,16 @@ class Woo_SOR extends \WooCommerce\Square\Handlers\Product {
 	 * @param CatalogObject $catalog_object Square SDK catalog object
 	 * @param \WC_Product $product WooCommerce product
 	 * @return CatalogObject
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	public static function update_catalog_variation( CatalogObject $catalog_object, \WC_Product $product ) {
 
 		if ( 'ITEM_VARIATION' !== $catalog_object->getType() || ! $catalog_object->getItemVariationData() ) {
-			throw new Framework\SV_WC_Plugin_Exception( 'Type of $catalog_object must be an ITEM_VARIATION' );
+			throw new \Exception( 'Type of $catalog_object must be an ITEM_VARIATION' );
 		}
 
 		// ensure the variation meta is persisted
 		self::update_variation( $product, $catalog_object );
-
-		if ( ! $catalog_object->getId() ) {
-			$catalog_object->setId( self::get_square_item_variation_id( $product ) );
-		}
 
 		if ( ! $catalog_object->getVersion() ) {
 			$catalog_object->setVersion( self::get_square_variation_version( $product ) );

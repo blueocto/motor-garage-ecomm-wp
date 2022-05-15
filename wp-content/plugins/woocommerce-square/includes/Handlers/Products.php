@@ -24,8 +24,6 @@
 namespace WooCommerce\Square\Handlers;
 
 defined( 'ABSPATH' ) || exit;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square\Handlers\Product;
 use WooCommerce\Square\Sync\Records;
 use WooCommerce\Square;
@@ -423,7 +421,7 @@ class Products {
 
 		if ( ! defined( 'DOING_SQUARE_SYNC' ) && ! empty( $this->products_to_sync ) && wc_square()->get_settings_handler()->is_system_of_record_woocommerce() ) {
 
-			wc_square()->get_sync_handler()->start_manual_sync( true, $this->products_to_sync );
+			wc_square()->get_sync_handler()->start_manual_sync( $this->products_to_sync );
 		}
 	}
 
@@ -600,7 +598,7 @@ class Products {
 				} else {
 					wc_square()->get_api()->remove_inventory( $square_id, $change );
 				}
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				wc_square()->log( 'Could not adjust Square inventory for ' . $product->get_formatted_name() . '. ' . $exception->getMessage() );
 

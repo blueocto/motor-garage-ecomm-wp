@@ -23,8 +23,6 @@
 
 namespace WooCommerce\Square\Sync;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -40,7 +38,6 @@ class Job {
 
 	/** @var \stdClass background job object */
 	protected $job;
-
 
 	/**
 	 * Synchronization job constructor.
@@ -58,7 +55,6 @@ class Job {
 		$this->job = $job;
 	}
 
-
 	/**
 	 * Gets an attribute from the underlying job object.
 	 *
@@ -69,7 +65,6 @@ class Job {
 	 * @return mixed
 	 */
 	protected function get_attr( $attr_name, $default_value = null ) {
-
 		return isset( $this->job->$attr_name ) ? $this->job->$attr_name : $default_value;
 	}
 
@@ -156,7 +151,6 @@ class Job {
 	 * @return \stdClass the job object
 	 */
 	protected function complete() {
-
 		return $this->job = wc_square()->get_background_job_handler()->complete_job( $this->job );
 	}
 
@@ -203,21 +197,4 @@ class Job {
 
 		return 'square' === $this->get_attr( 'system_of_record' );
 	}
-
-
-	/**
-	 * Checks if a sensible time has been exceeded for this request.
-	 *
-	 * Convenience method for accessing the background job handler.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return bool
-	 */
-	protected function is_time_exceeded() {
-
-		return wc_square()->get_background_job_handler()->is_time_exceeded();
-	}
-
-
 }

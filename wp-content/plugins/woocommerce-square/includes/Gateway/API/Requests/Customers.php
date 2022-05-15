@@ -22,12 +22,9 @@
  */
 
 namespace WooCommerce\Square\Gateway\API\Requests;
+use WooCommerce\Square\API;
 
 defined( 'ABSPATH' ) || exit;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model as SquareModel;
-use WooCommerce\Square\API;
 
 /**
  * The customers API request class.
@@ -52,7 +49,7 @@ class Customers extends API\Requests\Customers {
 		try {
 
 			if ( ! $order->get_user_id() ) {
-				throw new Framework\SV_WC_Plugin_Exception( 'No user account' );
+				throw new \Exception( 'No user account' );
 			}
 
 			$customer = new \WC_Customer( $order->get_user_id() );
@@ -64,7 +61,7 @@ class Customers extends API\Requests\Customers {
 			$email = $order->get_billing_email();
 		}
 
-		$customer_request = new SquareModel\CreateCustomerRequest();
+		$customer_request = new \Square\Models\CreateCustomerRequest();
 		$customer_request->setGivenName( $order->get_billing_first_name() );
 		$customer_request->setFamilyName( $order->get_billing_last_name() );
 		$customer_request->setCompanyName( $order->get_billing_company() );
@@ -75,7 +72,7 @@ class Customers extends API\Requests\Customers {
 			$customer_request->setReferenceId( (string) $order->get_user_id() );
 		}
 
-		$customer_request->setAddress( $this->get_address_from_order( $order ) );
+		$customer_request->setAddress( self::get_address_from_order( $order ) );
 
 		$this->square_request = $customer_request;
 
@@ -84,68 +81,17 @@ class Customers extends API\Requests\Customers {
 		);
 	}
 
-
-	/**
-	 * Sets the data for creating a new customer card.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param \WC_Order $order order object
-	 */
-	public function set_create_card_data( \WC_Order $order ) {
-
-		$this->square_api_method = 'createCustomerCard';
-
-		$request = new SquareModel\CreateCustomerCardRequest();
-
-		$request->setCardNonce( $order->payment->nonce );
-		$request->setBillingAddress( $this->get_address_from_order( $order ) );
-		$request->setCardholderName( $order->get_formatted_billing_full_name() );
-
-		// 3DS / SCA verification token (from JS)
-		if ( ! empty( $order->payment->verification_token ) ) {
-			$request->setVerificationToken( $order->payment->verification_token );
-		}
-
-		$this->square_request = $request;
-
-		$this->square_api_args = array(
-			$order->customer_id,
-			$this->square_request,
-		);
-	}
-
-
-	/**
-	 * Sets the data for deleting an existing card.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param string $customer_id Square customer ID
-	 * @param string $card_id Square card ID
-	 */
-	public function set_delete_card_data( $customer_id, $card_id ) {
-
-		$this->square_api_method = 'deleteCustomerCard';
-
-		$this->square_api_args = array(
-			$customer_id,
-			$card_id,
-		);
-	}
-
-
 	/**
 	 * Gets a billing address model from a WC order.
 	 *
 	 * @since 2.0.0
 	 *
 	 * @param \WC_Order $order order object
-	 * @return SquareModel\Address
+	 * @return \Square\Models\Address
 	 */
-	protected function get_address_from_order( \WC_Order $order ) {
+	public static function get_address_from_order( \WC_Order $order ) {
 
-		$address = new SquareModel\Address();
+		$address = new \Square\Models\Address();
 		$address->setFirstName( $order->get_billing_first_name() );
 		$address->setLastName( $order->get_billing_last_name() );
 		$address->setOrganization( $order->get_billing_company() );

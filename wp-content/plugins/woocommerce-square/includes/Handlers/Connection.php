@@ -22,12 +22,10 @@
  */
 
 namespace WooCommerce\Square\Handlers;
+use Square\Models\ListCustomersResponse;
+use WooCommerce\Square;
 
 defined( 'ABSPATH' ) || exit;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\ListCustomersResponse;
-use WooCommerce\Square;
 
 /**
  * The admin connection handler.
@@ -272,19 +270,19 @@ class Connection {
 
 			// handle HTTP errors
 			if ( is_wp_error( $response ) ) {
-				throw new Framework\SV_WC_Plugin_Exception( $response->get_error_message() );
+				throw new \Exception( $response->get_error_message() );
 			}
 
 			$response = new Square\API\Responses\Connection_Refresh_Response( wp_remote_retrieve_body( $response ) );
 
 			// check for errors in the response
 			if ( $response->has_error() ) {
-				throw new Framework\SV_WC_Plugin_Exception( $response->get_error_message() );
+				throw new \Exception( $response->get_error_message() );
 			}
 
 			// ensure an access token, just in case
 			if ( ! $response->get_token() ) {
-				throw new Framework\SV_WC_Plugin_Exception( 'Access token missing from the response' );
+				throw new \Exception( 'Access token missing from the response' );
 			}
 
 			// store the new token
@@ -298,7 +296,7 @@ class Connection {
 
 			// in case this option was set
 			delete_option( 'wc_' . $this->get_plugin()->get_id() . '_refresh_failed' );
-		} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+		} catch ( \Exception $exception ) {
 
 			$this->get_plugin()->log( 'Unable to refresh connection: ' . $exception->getMessage() );
 
@@ -346,7 +344,7 @@ class Connection {
 					$this->schedule_customer_index( $response->get_data()->getCursor() );
 				}
 			}
-		} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+		} catch ( \Exception $exception ) {
 
 		}
 	}

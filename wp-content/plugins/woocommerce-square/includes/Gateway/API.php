@@ -25,8 +25,7 @@ namespace WooCommerce\Square\Gateway;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\Order;
+use Square\Models\Order;
 
 /**
  * The base Square gateway API class.
@@ -69,7 +68,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order order object
 	 * @return \WooCommerce\Square\API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function credit_card_authorization( \WC_Order $order ) {
 
@@ -90,7 +89,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order order object
 	 * @return \WooCommerce\Square\API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function credit_card_charge( \WC_Order $order ) {
 
@@ -111,7 +110,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order order object
 	 * @return \WooCommerce\Square\API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function credit_card_capture( \WC_Order $order ) {
 
@@ -139,7 +138,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order order object
 	 * @return \WooCommerce\Square\API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function refund( \WC_Order $order ) {
 
@@ -167,7 +166,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order order object
 	 * @return \WooCommerce\Square\API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function void( \WC_Order $order ) {
 
@@ -195,7 +194,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order the order object
 	 * @return API\Responses\Create_Customer_Card|API\Responses\Create_Customer
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function tokenize_payment_method( \WC_Order $order ) {
 
@@ -234,11 +233,11 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order the order object
 	 * @return API\Responses\Create_Customer_Card
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function create_customer_card( \WC_Order $order ) {
 
-		$request = new API\Requests\Customers( $this->client );
+		$request = new API\Requests\Card( $this->client );
 
 		$request->set_create_card_data( $order );
 
@@ -255,7 +254,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param \WC_Order $order order object
 	 * @return API\Responses\Create_Customer
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function create_customer( \WC_Order $order ) {
 
@@ -276,7 +275,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param string $customer_id unique customer id
 	 * @return API\Responses\Get_Customer
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function get_tokenized_payment_methods( $customer_id ) {
 
@@ -298,13 +297,13 @@ class API extends \WooCommerce\Square\API {
 	 * @param string $token the payment method token
 	 * @param string $customer_id unique customer id
 	 * @return API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function remove_tokenized_payment_method( $token, $customer_id ) {
 
-		$request = new API\Requests\Customers( $this->client );
+		$request = new API\Requests\Card( $this->client );
 
-		$request->set_delete_card_data( $customer_id, $token );
+		$request->set_delete_card_data( $token );
 
 		$this->set_response_handler( API\Response::class );
 
@@ -320,7 +319,7 @@ class API extends \WooCommerce\Square\API {
 	 * @param string $location_id location ID
 	 * @param \WC_Order $order
 	 * @return Order
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function create_order( $location_id, \WC_Order $order ) {
 
@@ -346,7 +345,7 @@ class API extends \WooCommerce\Square\API {
 	 * @param int $version Current 'version' value of Square order
 	 * @param int $amount Amount of adjustment in smallest unit
 	 * @return Order
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function adjust_order( $location_id, \WC_Order $order, $version, $amount ) {
 
@@ -373,7 +372,7 @@ class API extends \WooCommerce\Square\API {
 	 * @param string $transaction_id transaction ID
 	 * @param string $location_id location ID
 	 * @return API\Responses\Charge
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function get_transaction( $transaction_id, $location_id = '' ) {
 
@@ -398,7 +397,7 @@ class API extends \WooCommerce\Square\API {
 	 *
 	 * @param string $payment_id transaction ID
 	 * @return API\Responses\Create_Payment
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function get_payment( $payment_id ) {
 
@@ -418,7 +417,7 @@ class API extends \WooCommerce\Square\API {
 	 * @since 2.0.0
 	 *
 	 * @return bool
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function do_post_parse_response_validation() {
 
@@ -450,7 +449,7 @@ class API extends \WooCommerce\Square\API {
 	/**
 	 * Determines if this API supports updating tokenized payment methods.
 	 *
-	 * @see SV_WC_Payment_Gateway_API::update_tokenized_payment_method()
+	 * @see Payment_Gateway_API::update_tokenized_payment_method()
 	 *
 	 * @since 2.0.0
 	 *

@@ -26,7 +26,7 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentResult;
 use Automattic\WooCommerce\Blocks\Payments\PaymentContext;
 use Automattic\WooCommerce\Blocks\Package;
 use WooCommerce\Square\Plugin;
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\PaymentGateway\Payment_Gateway_Helper;
 
 class Blocks_Handler extends AbstractPaymentMethodType {
 
@@ -193,7 +193,7 @@ class Blocks_Handler extends AbstractPaymentMethodType {
 		);
 
 		$enabled_card_types = is_array( $this->get_gateway()->get_card_types() ) ? $this->get_gateway()->get_card_types() : array();
-		$enabled_card_types = array_map( array( Framework\SV_WC_Payment_Gateway_Helper::class, 'normalize_card_type' ), $enabled_card_types );
+		$enabled_card_types = array_map( array( Payment_Gateway_Helper::class, 'normalize_card_type' ), $enabled_card_types );
 
 		foreach ( $enabled_card_types as $card_type ) {
 			if ( ! empty( $square_card_types[ $card_type ] ) ) {

@@ -23,9 +23,6 @@
 
 namespace WooCommerce\Square\API\Requests;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model as SquareModel;
-use SquareConnect\Api\InventoryApi;
 use WooCommerce\Square\API\Request;
 
 defined( 'ABSPATH' ) || exit;
@@ -43,11 +40,10 @@ class Inventory extends Request {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\ApiClient $api_client the API client
+	 * @param \Square\SquareClient $api_client the API client
 	 */
 	public function __construct( $api_client ) {
-
-		$this->square_api = new InventoryApi( $api_client );
+		$this->square_api = $api_client->getInventoryApi();
 	}
 
 
@@ -60,21 +56,16 @@ class Inventory extends Request {
 	 * @since 2.0.0
 	 *
 	 * @param string $idempotency_key a UUID for this request
-	 * @param SquareModel\InventoryChange[] $changes array of inventory changes to be made
+	 * @param \Square\Models\InventoryChange[] $changes array of inventory changes to be made
 	 * @param bool $ignore_unchanged_counts whether the current physical count should be ignored if the quantity is unchanged since the last physical count
 	 */
 	public function set_batch_change_inventory_data( $idempotency_key, $changes, $ignore_unchanged_counts = true ) {
 
+		$body = new \Square\Models\BatchChangeInventoryRequest( $idempotency_key );
+		$body->setChanges( $changes );
+		$body->setIgnoreUnchangedCounts( (bool) $ignore_unchanged_counts );
 		$this->square_api_method = 'batchChangeInventory';
-		$this->square_api_args   = array(
-			new SquareModel\BatchChangeInventoryRequest(
-				array(
-					'idempotency_key'         => $idempotency_key,
-					'changes'                 => $changes,
-					'ignore_unchanged_counts' => (bool) $ignore_unchanged_counts,
-				)
-			),
-		);
+		$this->square_api_args   = array( $body );
 	}
 
 
@@ -109,9 +100,17 @@ class Inventory extends Request {
 
 		// apply defaults and remove any keys that aren't recognized
 		$args = array_intersect_key( wp_parse_args( $args, $defaults ), $defaults );
+		$body = new \Square\Models\BatchRetrieveInventoryChangesRequest();
+		$body->setCatalogObjectIds( $args['catalog_object_ids'] );
+		$body->setLocationIds( $args['location_ids'] );
+		$body->setTypes( $args['types'] );
+		$body->setStates( $args['states'] );
+		$body->setUpdatedAfter( $args['updated_after'] );
+		$body->setUpdatedBefore( $args['updated_before'] );
+		$body->setCursor( $args['cursor'] );
 
 		$this->square_api_method = 'batchRetrieveInventoryChanges';
-		$this->square_api_args   = array( new SquareModel\BatchRetrieveInventoryChangesRequest( $args ) );
+		$this->square_api_args   = array( $body );
 	}
 
 
@@ -140,9 +139,13 @@ class Inventory extends Request {
 
 		// apply defaults and remove any keys that aren't recognized
 		$args = array_intersect_key( wp_parse_args( $args, $defaults ), $defaults );
-
+		$body = new \Square\Models\BatchRetrieveInventoryCountsRequest();
+		$body->setCatalogObjectIds( $args['catalog_object_ids'] );
+		$body->setLocationIds( $args['location_ids'] );
+		$body->setUpdatedAfter( $args['updated_after'] );
+		$body->setCursor( $args['cursor'] );
 		$this->square_api_method = 'batchRetrieveInventoryCounts';
-		$this->square_api_args   = array( new SquareModel\BatchRetrieveInventoryCountsRequest( $args ) );
+		$this->square_api_args   = array( $body );
 	}
 
 
@@ -175,8 +178,15 @@ class Inventory extends Request {
 	 */
 	public function set_retrieve_inventory_changes_data( $catalog_object_id ) {
 
-		$this->square_api_method = 'retrieveInventoryChanges';
-		$this->square_api_args   = array( $catalog_object_id );
+		/**
+		 * `retrieveInventoryChanges` is deprecated.
+		 * Using `batchRetrieveInventoryChanges` instead.
+		 */
+		$this->square_api_method = 'batchRetrieveInventoryChanges';
+		$body = new \Square\Models\BatchRetrieveInventoryChangesRequest();
+		$body->setCatalogObjectIds( [ $catalog_object_id ] );
+
+		$this->square_api_args = array( $body );
 	}
 
 
@@ -189,9 +199,9 @@ class Inventory extends Request {
 	 * @since 2.0.0
 	 *
 	 * @param string $catalog_object_id the CatalogObject ID to retrieve
-	 * @param string[] $location_ids location IDs
+	 * @param string $location_ids location IDs
 	 */
-	public function set_retrieve_inventory_count_data( $catalog_object_id, array $location_ids = array() ) {
+	public function set_retrieve_inventory_count_data( $catalog_object_id, string $location_ids = '' ) {
 
 		$this->square_api_method = 'retrieveInventoryCount';
 		$this->square_api_args   = array( $catalog_object_id, $location_ids );

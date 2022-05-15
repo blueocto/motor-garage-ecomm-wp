@@ -23,10 +23,11 @@
 
 namespace WooCommerce\Square;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect;
+use WooCommerce\Square\Framework\Api\Base;
 use WooCommerce\Square\API\Requests;
 use WooCommerce\Square\API\Responses;
+use Square\SquareClient;
+use Square\Environment;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -35,7 +36,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.0.0
  */
-class API extends Framework\SV_WC_API_Base {
+class API extends Base {
 
 
 	/** catalog request type */
@@ -45,7 +46,7 @@ class API extends Framework\SV_WC_API_Base {
 	const REQUEST_TYPE_INVENTORY = 'inventory';
 
 
-	/** @var SquareConnect\ApiClient Square API client instance */
+	/** @var \Square\SquareClient Square API client instance */
 	protected $client;
 
 
@@ -58,15 +59,10 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param bool   $is_sandbox   If sandbox access is desired
 	 */
 	public function __construct( $access_token, $is_sandbox = null ) {
-		$api_config = SquareConnect\Configuration::getDefaultConfiguration();
-		$api_config->setAccessToken( $access_token );
-
-		// Set sandbox URL if enabled.
-		if ( $is_sandbox ) {
-			$api_config->setHost( 'https://connect.squareupsandbox.com' );
-		}
-
-		$this->client = new SquareConnect\ApiClient( $api_config );
+		$this->client = new SquareClient( [
+			'accessToken' => $access_token,
+			'environment' => $is_sandbox ? Environment::SANDBOX : Environment::PRODUCTION,
+		] );
 	}
 
 
@@ -80,7 +76,7 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @param string[] $object_ids array of square catalog object IDs
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function batch_delete_catalog_objects( array $object_ids ) {
 
@@ -99,7 +95,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string[] $object_ids array of square catalog object IDs
 	 * @param bool $include_related_objects whether or not to include related objects in the response
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function batch_retrieve_catalog_objects( array $object_ids, $include_related_objects = false ) {
 
@@ -118,7 +114,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $idempotency_key a UUID for this request
 	 * @param array $batches an array of batches to upsert
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function batch_upsert_catalog_objects( $idempotency_key, array $batches ) {
 
@@ -134,7 +130,7 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @since 2.0.0
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function catalog_info() {
 
@@ -152,7 +148,7 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @param string $object_id Square catalog object ID
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function delete_catalog_object( $object_id ) {
 
@@ -171,7 +167,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $cursor the cursor to list from
 	 * @param string[] $types the item types to filter by
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function list_catalog( $cursor = '', $types = array() ) {
 
@@ -190,7 +186,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $object_id the Square catalog object ID
 	 * @param bool $include_related_objects whether or not to include related objects (such as categories)
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function retrieve_catalog_object( $object_id, $include_related_objects = false ) {
 
@@ -208,7 +204,7 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @param array $args see Catalog::set_search_catalog_objects_data() for list of args
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function search_catalog_objects( $args = array() ) {
 
@@ -228,7 +224,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string[] $modifier_lists_to_enable (optional) modifier list IDs to enable
 	 * @param string[] $modifier_lists_to_disable (optional) modifier list IDs to disable
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function update_item_modifier_lists( array $item_ids, array $modifier_lists_to_enable = array(), array $modifier_lists_to_disable = array() ) {
 
@@ -248,7 +244,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string[] $taxes_to_enable (optional) tax IDs to enable
 	 * @param string[] $taxes_to_disable (optional) tax IDs to disable
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function update_item_taxes( array $item_ids, array $taxes_to_enable = array(), array $taxes_to_disable = array() ) {
 
@@ -265,9 +261,9 @@ class API extends Framework\SV_WC_API_Base {
 	 * @since 2.0.0
 	 *
 	 * @param string $idempotency_key UUID for this request
-	 * @param SquareConnect\Model\CatalogObject $object the object to upsert
+	 * @param \Square\Models\CatalogObject $object the object to upsert
 	 * @return Responses\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function upsert_catalog_object( $idempotency_key, $object ) {
 
@@ -289,12 +285,12 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $square_item_id
 	 * @param string $caption optional image caption
 	 * @return string
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function create_image( $image_path, $square_item_id = '', $caption = '' ) {
 
 		if ( ! is_readable( $image_path ) ) {
-			throw new Framework\SV_WC_API_Exception( 'Image file is not readable' );
+			throw new \Exception( 'Image file is not readable' );
 		}
 
 		$image = file_get_contents( $image_path );
@@ -335,7 +331,7 @@ class API extends Framework\SV_WC_API_Base {
 		$body .= $image . "\r\n";
 		$body .= '--boundary--';
 
-		$url = $this->client->getConfig()->getHost() . '/v2/catalog/images';
+		$url = $this->client->getBaseUri() . '/v2/catalog/images';
 
 		$response = wp_remote_post(
 			$url,
@@ -346,14 +342,14 @@ class API extends Framework\SV_WC_API_Base {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			throw new Framework\SV_WC_API_Exception( $response->get_error_message() );
+			throw new \Exception( $response->get_error_message() );
 		}
 
 		$body = wp_remote_retrieve_body( $response );
 		$body = json_decode( $body, true );
 
 		if ( ! is_array( $body ) ) {
-			throw new Framework\SV_WC_API_Exception( 'Response was malformed' );
+			throw new \Exception( 'Response was malformed' );
 		}
 
 		if ( ! empty( $body['errors'] ) || empty( $body['image']['id'] ) ) {
@@ -364,7 +360,7 @@ class API extends Framework\SV_WC_API_Base {
 				$message = 'Unknown error';
 			}
 
-			throw new Framework\SV_WC_API_Exception( $message );
+			throw new \Exception( $message );
 		}
 
 		return $body['image']['id'];
@@ -382,7 +378,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $square_id Square object ID
 	 * @param int $amount amount of inventory to add
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function add_inventory_from_refund( $square_id, $amount ) {
 
@@ -399,7 +395,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param int $amount amount of inventory to add
 	 * @param string $from_state the API state the inventory is coming from
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function add_inventory( $square_id, $amount, $from_state = 'NONE' ) {
 
@@ -415,7 +411,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $square_id Square object ID
 	 * @param int $amount amount of inventory to remove
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function remove_inventory( $square_id, $amount ) {
 
@@ -433,26 +429,24 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $from_state the API state the inventory is coming from
 	 * @param string $to_state the API state the inventory is changing to
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function adjust_inventory( $square_id, $amount, $from_state, $to_state ) {
 
 		$date = new \DateTime();
 
-		$change = new SquareConnect\Model\InventoryChange();
+		$change = new \Square\Models\InventoryChange();
 		$change->setType( 'ADJUSTMENT' );
-		$change->setAdjustment(
-			new SquareConnect\Model\InventoryAdjustment(
-				array(
-					'catalog_object_id' => $square_id,
-					'location_id'       => $this->get_plugin()->get_settings_handler()->get_location_id(),
-					'quantity'          => (string) absint( $amount ),
-					'from_state'        => $from_state,
-					'to_state'          => $to_state,
-					'occurred_at'       => $date->format( DATE_ATOM ),
-				)
-			)
-		);
+
+		$inventory_adjustment = new \Square\Models\InventoryAdjustment();
+		$inventory_adjustment->setCatalogObjectId( $square_id );
+		$inventory_adjustment->setLocationId( $this->get_plugin()->get_settings_handler()->get_location_id() );
+		$inventory_adjustment->setQuantity( (string) absint( $amount ) );
+		$inventory_adjustment->setFromState( $from_state );
+		$inventory_adjustment->setToState( $to_state );
+		$inventory_adjustment->setOccurredAt( $date->format( DATE_ATOM ) );
+
+		$change->setAdjustment( $inventory_adjustment );
 
 		return $this->batch_change_inventory(
 			uniqid( '', false ),
@@ -469,10 +463,10 @@ class API extends Framework\SV_WC_API_Base {
 	 * @since 2.0.0
 	 *
 	 * @param string $idempotency_key UUID for this request
-	 * @param SquareConnect\Model\InventoryChange[] $changes array of Inventory Changes
+	 * @param \Square\Models\InventoryChange[] $changes array of Inventory Changes
 	 * @param bool $ignore_unchanged_counts whether the current physical count should be ignored if the quantity is unchanged since the last physical count
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function batch_change_inventory( $idempotency_key, $changes, $ignore_unchanged_counts = true ) {
 
@@ -491,7 +485,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param array $args see Requests\Inventory::set_batch_retrieve_inventory_changes_data() for accepted arguments
 	 *
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function batch_retrieve_inventory_changes( array $args = array() ) {
 
@@ -510,7 +504,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param array $args see Requests\Inventory::set_batch_retrieve_inventory_counts_data() for accepted arguments
 	 *
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function batch_retrieve_inventory_counts( array $args = array() ) {
 
@@ -529,7 +523,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $adjustment_id the InventoryAdjustment ID to retrieve
 	 *
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function retrieve_inventory_adjustment( $adjustment_id ) {
 
@@ -548,7 +542,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $catalog_object_id the CatalogObject ID to retrieve
 	 *
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function retrieve_inventory_changes( $catalog_object_id ) {
 
@@ -566,12 +560,12 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @param string $catalog_object_id the CatalogObject ID to retrieve
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function retrieve_inventory_count( $catalog_object_id ) {
 
 		$request = $this->get_inventory_request();
-		$request->set_retrieve_inventory_count_data( $catalog_object_id, array( $this->get_plugin()->get_settings_handler()->get_location_id() ) );
+		$request->set_retrieve_inventory_count_data( $catalog_object_id, $this->get_plugin()->get_settings_handler()->get_location_id() );
 
 		return $this->perform_request( $request );
 	}
@@ -585,7 +579,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param string $physical_count_id the InventoryPhysicalCount ID to retrieve
 	 *
 	 * @return Responses\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function retrieve_inventory_physical_count( $physical_count_id ) {
 
@@ -604,8 +598,8 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @return SquareConnect\Model\Location[]
-	 * @throws Framework\SV_WC_API_Exception
+	 * @return \Square\Models\Location[]
+	 * @throws \Exception
 	 */
 	public function get_locations() {
 
@@ -632,7 +626,7 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @param string $cursor pagination cursor
 	 * @return API\Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	public function get_customers( $cursor = '' ) {
 
@@ -655,7 +649,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @since 2.0.0
 	 *
 	 * @return Requests\Catalog
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function get_catalog_request() {
 
@@ -669,7 +663,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @since 2.0.0
 	 *
 	 * @return Requests\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function get_inventory_request() {
 
@@ -684,7 +678,7 @@ class API extends Framework\SV_WC_API_Base {
 	 *
 	 * @param string $type desired request type
 	 * @return Requests\Catalog|Requests\Inventory
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function get_new_request( $type = '' ) {
 
@@ -701,7 +695,7 @@ class API extends Framework\SV_WC_API_Base {
 				break;
 
 			default:
-				throw new Framework\SV_WC_API_Exception( 'Invalid request type.' );
+				throw new \Exception( 'Invalid request type.' );
 		}
 
 		$this->set_response_handler( $response_handler );
@@ -713,13 +707,13 @@ class API extends Framework\SV_WC_API_Base {
 	/**
 	 * Performs an API request.
 	 *
-	 * @see Framework\SV_WC_API_Base::perform_request()
+	 * @see Base::perform_request()
 	 *
 	 * @since 2.0.0
 	 *
 	 * @param API\Request $request request object
-	 * @return Framework\SV_WC_API_Response
-	 * @throws Framework\SV_WC_API_Exception
+	 * @return API_Response
+	 * @throws \Exception
 	 */
 	protected function perform_request( $request ) {
 
@@ -754,7 +748,7 @@ class API extends Framework\SV_WC_API_Base {
 			// parse & validate response
 			$response = $this->handle_response( $response );
 
-		} catch ( Framework\SV_WC_API_Exception $e ) {
+		} catch ( \Exception $e ) {
 
 			// alert other actors that a request has been made
 			$this->broadcast_request();
@@ -772,14 +766,10 @@ class API extends Framework\SV_WC_API_Base {
 	 * @since 2.0.0
 	 *
 	 * @param array|\WP_Error $response response data
-	 * @throws Framework\SV_WC_API_Exception
-	 * @return Framework\SV_WC_API_Response|object request class instance that implements SV_WC_API_Request
+	 * @throws \Exception
+	 * @return API_Response|object request class instance that implements API_Request
 	 */
 	protected function handle_response( $response ) {
-
-		// allow child classes to validate response prior to parsing
-		$this->do_pre_parse_response_validation();
-
 		// parse the response body and tie it to the request
 		$this->response = $this->get_parsed_response( $this->raw_response_body );
 
@@ -801,7 +791,7 @@ class API extends Framework\SV_WC_API_Base {
 	 * @since 2.0.0
 	 *
 	 * @return bool
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function do_post_parse_response_validation() {
 
@@ -840,7 +830,7 @@ class API extends Framework\SV_WC_API_Base {
 		}
 
 		// At this point we could not validate the response and assume a failed attempt.
-		throw new Framework\SV_WC_API_Exception( implode( ' | ', $errors ) );
+		throw new \Exception( implode( ' | ', $errors ) );
 	}
 
 	/**
@@ -851,31 +841,26 @@ class API extends Framework\SV_WC_API_Base {
 	 * @param Object $square_api the square API class instance
 	 * @param string $method the class method to call
 	 * @param array $args the args to send with the method call
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function do_square_request( $square_api, $method, $args ) {
 
 		if ( ! is_callable( array( $square_api, $method ) ) ) {
-			throw new Framework\SV_WC_API_Exception( 'Invalid API method' );
+			throw new \Exception( 'Invalid API method' );
 		}
 
-		try {
+		// perform the request
+		$response = call_user_func_array( array( $square_api, $method ), $args );
 
-			// perform the request
-			$response = call_user_func_array( array( $square_api, $method ), $args );
+		if ( $response instanceof \Square\Http\ApiResponse ) {
+			$this->response_code    = $response->getStatusCode();
+			$this->response_headers = $response->getHeaders();
 
-			if ( is_array( $response ) && $this->request->get_with_http_info() ) {
-				$this->response_code     = isset( $response[1] ) ? (int) $response[1] : 400;
-				$this->response_headers  = isset( $response[2] ) ? (array) $response[2] : array();
-				$this->raw_response_body = isset( $response[0] ) ? $response[0] : array();
+			if ( $response->isSuccess() ) {
+				$this->raw_response_body = $response->getResult();
 			} else {
-				$this->raw_response_body = $response;
+				$this->raw_response_body = $response->getErrors();
 			}
-		} catch ( SquareConnect\ApiException $exception ) {
-
-			$this->response_code     = $exception->getCode();
-			$this->response_headers  = $exception->getResponseHeaders();
-			$this->raw_response_body = $exception->getResponseBody();
 		}
 	}
 

@@ -23,8 +23,6 @@
 
 namespace WooCommerce\Square\Emails;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 defined( 'ABSPATH' ) || exit;
 
 /**

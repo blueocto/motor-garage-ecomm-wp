@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WooCommerce Square
- * Version: 2.9.1
+ * Version: 3.0.1
  * Plugin URI: https://woocommerce.com/products/square/
  * Description: Adds ability to sync inventory between WooCommerce and Square POS. In addition, you can also make purchases through the Square payment gateway.
  * Author: WooCommerce
@@ -9,7 +9,7 @@
  * Text Domain: woocommerce-square
  * Domain Path: /i18n/languages/
  *
- * Copyright: © 2020 WooCommerce
+ * Copyright: © 2022 WooCommerce
  *
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -25,7 +25,15 @@
 
 defined( 'ABSPATH' ) || exit;
 
-require_once( plugin_dir_path( __FILE__ ) . 'vendor/prospress/action-scheduler/action-scheduler.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'vendor/woocommerce/action-scheduler/action-scheduler.php' );
+
+if ( ! defined( 'WC_SQUARE_PLUGIN_URL' ) ) {
+	define( 'WC_SQUARE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
+
+if ( ! defined( 'WC_SQUARE_PLUGIN_PATH' ) ) {
+	define( 'WC_SQUARE_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+}
 
 /**
  * The plugin loader class.
@@ -36,7 +44,7 @@ class WooCommerce_Square_Loader {
 
 
 	/** minimum PHP version required by this plugin */
-	const MINIMUM_PHP_VERSION = '5.6.0';
+	const MINIMUM_PHP_VERSION = '7.2.0';
 
 	/** minimum WordPress version required by this plugin */
 	const MINIMUM_WP_VERSION = '4.6';
@@ -44,7 +52,10 @@ class WooCommerce_Square_Loader {
 	/** minimum WooCommerce version required by this plugin */
 	const MINIMUM_WC_VERSION = '3.0';
 
-	/** SkyVerge plugin framework version used by this plugin */
+	/**
+	 * SkyVerge plugin framework version used by this plugin
+	 * Constant is left as it is for legacy purposes.
+	 **/
 	const FRAMEWORK_VERSION = '5.4.0';
 
 	/** the plugin name, for displaying notices */
@@ -135,14 +146,8 @@ class WooCommerce_Square_Loader {
 	 * @since 2.0.0
 	 */
 	protected function load_framework() {
-
-		if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\' . $this->get_framework_version_namespace() . '\\SV_WC_Plugin' ) ) {
-			require_once( plugin_dir_path( __FILE__ ) . 'vendor/skyverge/wc-plugin-framework/woocommerce/class-sv-wc-plugin.php' );
-		}
-
-		if ( ! class_exists( '\\SkyVerge\\WooCommerce\\PluginFramework\\' . $this->get_framework_version_namespace() . '\\SV_WC_Payment_Gateway_Plugin' ) ) {
-			require_once( plugin_dir_path( __FILE__ ) . 'vendor/skyverge/wc-plugin-framework/woocommerce/payment-gateway/class-sv-wc-payment-gateway-plugin.php' );
-		}
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/Framework/Plugin.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/Framework/PaymentGateway/Payment_Gateway_Plugin.php' );
 	}
 
 
@@ -241,19 +246,6 @@ class WooCommerce_Square_Loader {
 					'</a>',
 					'<a href="' . esc_url( 'https://downloads.wordpress.org/plugin/woocommerce.' . self::MINIMUM_WC_VERSION . '.zip' ) . '">',
 					'</a>'
-				)
-			);
-		}
-
-		if ( $this->plugins_compatible() ) {
-			wc_square()->get_admin_notice_handler()->add_admin_notice(
-				sprintf(
-					esc_html__( "Note that our next WooCommerce Square release will be a major update (v3.0.0) that will include bumping the minimum PHP support from 5.6 to 7.1 and migrating Square's SDK from v2.2 to v15.0.0. This will allow us to provide significant enhancements into the future and while we fully test all releases, please allow yourself some time and space to similarly test the update before applying it to your live sites.", 'woocommerce-square' )
-				),
-				'wc-square-v3-upgrade-info',
-				array(
-					'notice_class' => 'notice-info',
-					'dismissible'  => true,
 				)
 			);
 		}

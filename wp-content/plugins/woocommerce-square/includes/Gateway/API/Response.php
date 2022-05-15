@@ -25,10 +25,10 @@ namespace WooCommerce\Square\Gateway\API;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
+use WooCommerce\Square\Framework\PaymentGateway\Api\Payment_Gateway_API_Response;
 use WooCommerce\Square\Gateway;
 
-class Response extends \WooCommerce\Square\API\Response implements Framework\SV_WC_Payment_Gateway_API_Response {
+class Response extends \WooCommerce\Square\API\Response implements Payment_Gateway_API_Response {
 
 
 	/**
@@ -86,7 +86,7 @@ class Response extends \WooCommerce\Square\API\Response implements Framework\SV_
 
 		foreach ( $this->get_errors() as $error ) {
 
-			$message = $error->detail;
+			$message = $error->getDetail();
 			break;
 		}
 
@@ -107,7 +107,7 @@ class Response extends \WooCommerce\Square\API\Response implements Framework\SV_
 
 		foreach ( $this->get_errors() as $error ) {
 
-			$code = $error->code;
+			$code = $error->getCode();
 			break;
 		}
 

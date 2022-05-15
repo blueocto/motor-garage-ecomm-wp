@@ -22,16 +22,13 @@
  */
 
 namespace WooCommerce\Square\Sync;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\BatchRetrieveInventoryCountsResponse;
-use SquareConnect\Model\BatchUpsertCatalogObjectsResponse;
-use SquareConnect\Model\BatchRetrieveCatalogObjectsResponse;
-use SquareConnect\Model\CatalogObject;
-use SquareConnect\Model\CatalogObjectBatch;
-use SquareConnect\Model\SearchCatalogObjectsResponse;
-use SquareConnect\Model\CatalogInfoResponse;
-use SquareConnect\ObjectSerializer;
+use Square\Models\BatchRetrieveInventoryCountsResponse;
+use Square\Models\BatchUpsertCatalogObjectsResponse;
+use Square\Models\BatchRetrieveCatalogObjectsResponse;
+use Square\Models\CatalogObject;
+use Square\Models\SearchCatalogObjectsResponse;
+use Square\Models\CatalogInfoResponse;
+use \Square\ApiHelper;
 use WooCommerce\Square\Handlers\Category;
 use WooCommerce\Square\Handlers\Product;
 
@@ -62,7 +59,6 @@ class Manual_Synchronization extends Stepped_Job {
 	 * @since 2.0.0
 	 */
 	protected function validate_products() {
-
 		$product_ids = $this->get_attr( 'product_ids' );
 
 		$products_query = array(
@@ -104,7 +100,7 @@ class Manual_Synchronization extends Stepped_Job {
 				$this->set_attr( 'max_objects_per_batch', $limits->getBatchUpsertMaxObjectsPerBatch() );
 				$this->set_attr( 'max_objects_total', $limits->getBatchUpsertMaxTotalObjects() );
 			}
-		} catch ( Framework\SV_WC_Plugin_Exception $exception ) { // no need to handle errors here
+		} catch ( \Exception $exception ) { // no need to handle errors here
 		}
 
 		$this->complete_step( 'update_limits' );
@@ -131,7 +127,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function refresh_category_mappings() {
 
@@ -194,7 +190,7 @@ class Manual_Synchronization extends Stepped_Job {
 			}
 
 			if ( ! $response->get_data() instanceof BatchRetrieveCatalogObjectsResponse ) {
-				throw new Framework\SV_WC_API_Exception( 'Could not fetch category data from Square. Response data is missing' );
+				throw new \Exception( 'Could not fetch category data from Square. Response data is missing' );
 			}
 
 			// handle response
@@ -258,7 +254,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function query_unmapped_categories() {
 
@@ -322,7 +318,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_API_Exception
+	 * @throws \Exception
 	 */
 	protected function upsert_categories() {
 
@@ -349,19 +345,18 @@ class Manual_Synchronization extends Stepped_Job {
 
 			$reverse_map[ $square_id ] = $category_id;
 
-			$catalog_object_data = array(
-				'type'          => 'CATEGORY',
-				'id'            => $square_id,
-				'category_data' => array(
-					'name' => wp_specialchars_decode( $category->name ), // names are stored encoded in the database
-				),
-			);
+			$catalog_category = new \Square\Models\CatalogCategory();
+			$catalog_category->setName( wp_specialchars_decode( $category->name ) );
+
+
+			$catalog_object = new \Square\Models\CatalogObject( 'CATEGORY', $square_id );
+			$catalog_object->setCategoryData( $catalog_category );
 
 			if ( 0 < $square_version ) {
-				$catalog_object_data['version'] = $square_version;
+				$catalog_object->setVersion( $square_version );
 			}
 
-			$batches[] = new \SquareConnect\Model\CatalogObjectBatch( array( 'objects' => array( new \SquareConnect\Model\CatalogObject( $catalog_object_data ) ) ) );
+			$batches[] = new \Square\Models\CatalogObjectBatch( array( $catalog_object ) );
 		}
 
 		foreach ( array_chunk( $batches, $this->get_max_objects_per_upsert() ) as $batch ) {
@@ -369,7 +364,7 @@ class Manual_Synchronization extends Stepped_Job {
 			$result          = wc_square()->get_api()->batch_upsert_catalog_objects( $idempotency_key, $batch );
 
 			if ( ! $result->get_data() instanceof BatchUpsertCatalogObjectsResponse ) {
-				throw new Framework\SV_WC_API_Exception( 'Response data is invalid' );
+				throw new \Exception( 'Response data is invalid' );
 			}
 
 			$id_mappings = $result->get_data()->getIdMappings(); // new entries to Square will return in the ID Mapping.
@@ -400,161 +395,12 @@ class Manual_Synchronization extends Stepped_Job {
 		$this->complete_step( 'upsert_categories' );
 	}
 
-
-	/**
-	 * Prepares a set of products that already have a Square ID set and are found in the catalog.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
-	 */
-	protected function prepare_matched_products_for_upsert() {
-
-		$product_ids_to_prepare = $this->get_attr( 'product_ids_to_prepare', $this->get_attr( 'validated_product_ids', array() ) );
-		$in_progress            = $this->get_attr( 'in_progress_prepare_matched_products_for_upsert', array() );
-
-		if ( empty( $product_ids_to_prepare ) ) {
-			$this->complete_step( 'prepare_matched_products_for_upsert' );
-			return;
-		}
-
-		if ( isset( $in_progress['product_ids'] ) && ! empty( $in_progress['product_ids'] ) ) {
-			$product_ids = $in_progress['product_ids'];
-		} elseif ( count( $product_ids_to_prepare ) > $this->get_max_objects_to_retrieve() ) {
-			$product_ids = array_slice( $product_ids_to_prepare, 0, $this->get_max_objects_to_retrieve() );
-		} else {
-			$product_ids = $product_ids_to_prepare;
-		}
-
-		$in_progress['product_ids'] = $product_ids;
-
-		$products_map = Product::get_square_meta( $product_ids, 'square_item_id' );
-		$square_ids   = array_keys( $products_map );
-
-		// none of the products have square IDs - move to the next batch
-		if ( empty( $square_ids ) ) {
-			$this->set_attr( 'product_ids_to_prepare', array_diff( $product_ids_to_prepare, $product_ids ) );
-			return;
-		}
-
-		if ( $this->is_time_exceeded() ) {
-			wc_square()->log( 'Time exceeded preparing matched products for upsert' );
-			$this->set_attr( 'in_progress_prepare_matched_products_for_upsert', $in_progress );
-			return;
-		}
-
-		$response = null;
-
-		// attempt to restore the response from the in-progress data
-		if ( isset( $in_progress['api_response'] ) ) {
-
-			try {
-
-				$objects      = array();
-				$api_response = json_decode( $in_progress['api_response'], true );
-
-				if ( isset( $api_response['objects'] ) ) {
-					foreach ( $api_response['objects'] as $object ) {
-						$objects[] = new CatalogObject( $object );
-					}
-				}
-
-				$response = new \SquareConnect\Model\BatchRetrieveCatalogObjectsResponse( array( 'objects' => $objects ) );
-
-			} catch ( \Exception $e ) {
-			}
-		}
-
-		if ( null === $response ) {
-
-			$api_response = wc_square()->get_api()->batch_retrieve_catalog_objects( $square_ids );
-
-			if ( ! $api_response->get_data() instanceof BatchRetrieveCatalogObjectsResponse ) {
-				throw new Framework\SV_WC_API_Exception( 'Response data is missing' );
-			}
-
-			$in_progress['api_response'] = json_encode( json_decode( $api_response->get_data() . '', true ) ); // convert the response to a string and un-pretty-print it
-			$response                    = $api_response->get_data();
-		}
-
-		if ( $this->is_time_exceeded() ) {
-			$this->set_attr( 'in_progress_prepare_matched_products_for_upsert', $in_progress );
-			return;
-		}
-
-		$catalog_objects = isset( $in_progress['catalog_objects'] ) ? $in_progress['catalog_objects'] : array();
-
-		if ( $response && $response_objects = $response->getObjects() ) {
-
-			foreach ( $response_objects as $index => $catalog_object ) {
-
-				if ( $this->is_time_exceeded() ) {
-
-					$response->setObjects( $response_objects );
-					$in_progress['api_response']    = json_encode( json_decode( $response . '', true ) );
-					$in_progress['catalog_objects'] = $catalog_objects;
-
-					$this->set_attr( 'in_progress_prepare_matched_products_for_upsert', $in_progress );
-					return;
-				}
-
-				if ( ! empty( $products_map[ $catalog_object->getId() ]['product_id'] ) ) {
-
-					$product_id = $products_map[ $catalog_object->getId() ]['product_id'];
-
-					$catalog_objects[ $product_id ] = json_encode( json_decode( $catalog_object . '', true ) ); // convert the object to a string
-				}
-
-				unset( $response_objects[ $index ] );
-			}
-		}
-
-		$matched_products_to_upsert = $this->get_attr( 'matched_products_to_upsert', array() );
-
-		$this->set_attr( 'matched_products_to_upsert', $matched_products_to_upsert + $catalog_objects );
-		$this->set_attr( 'product_ids_to_prepare', array_diff( $product_ids_to_prepare, $product_ids ) );
-		$this->set_attr( 'in_progress_prepare_matched_products_for_upsert', array() );
-	}
-
-
-	/**
-	 * Upserts matched products that have been updated with Woo data to Square.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
-	 */
-	protected function upsert_matched_products() {
-
-		$matched_products_to_upsert = $this->get_attr( 'matched_products_to_upsert', array() );
-
-		if ( empty( $matched_products_to_upsert ) ) {
-
-			$this->complete_step( 'upsert_matched_products' );
-			return;
-		}
-
-		// this method ends early in case of timeouts
-		$result = $this->upsert_catalog_objects( $matched_products_to_upsert );
-
-		if ( isset( $result['processed'] ) ) {
-
-			$processed_product_ids = $this->get_attr( 'processed_product_ids', array() );
-
-			$this->set_attr( 'processed_product_ids', array_merge( $processed_product_ids, $result['processed'] ) );
-
-			$matched_products_to_upsert = array_diff_key( $matched_products_to_upsert, array_flip( $result['processed'] ) );
-			$this->set_attr( 'matched_products_to_upsert', $matched_products_to_upsert );
-		}
-	}
-
-
 	/**
 	 * Updates a set of products that already have a Square ID set and are found in the catalog.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function update_matched_products() {
 
@@ -593,7 +439,7 @@ class Manual_Synchronization extends Stepped_Job {
 		$response = wc_square()->get_api()->batch_retrieve_catalog_objects( $square_ids );
 
 		if ( ! $response->get_data() instanceof BatchRetrieveCatalogObjectsResponse ) {
-			throw new Framework\SV_WC_API_Exception( 'Response data is missing' );
+			throw new \Exception( 'Response data is missing' );
 		}
 
 		$catalog_objects = array();
@@ -629,7 +475,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function search_matched_products() {
 
@@ -654,18 +500,10 @@ class Manual_Synchronization extends Stepped_Job {
 			return;
 		}
 
-		// at this point nothing has been done, so nothing to save
-		if ( $this->is_time_exceeded() ) {
-			wc_square()->log( 'Time exceeded (search_matched_products)' );
-			return;
-		}
-
 		$products_map = Product::get_square_meta( $product_ids, 'square_item_id' );
 
 		if ( ! empty( $in_progress['unprocessed_search_response'] ) ) {
-
-			$search_response = ObjectSerializer::deserialize( json_decode( $in_progress['unprocessed_search_response'], false ), SearchCatalogObjectsResponse::class );
-
+			$search_response = ApiHelper::deserialize( $in_progress['unprocessed_search_response'] );
 		} else {
 
 			$response = wc_square()->get_api()->search_catalog_objects(
@@ -678,11 +516,11 @@ class Manual_Synchronization extends Stepped_Job {
 
 			$search_response = $response->get_data();
 
-			$in_progress['unprocessed_search_response'] = json_encode( json_decode( $search_response . '', true ) );
+			$in_progress['unprocessed_search_response'] = wp_json_encode( $search_response, JSON_PRETTY_PRINT );
 		}
 
 		if ( ! $search_response instanceof SearchCatalogObjectsResponse ) {
-			throw new Framework\SV_WC_API_Exception( 'Response data is missing' );
+			throw new \Exception( 'Response data is missing' );
 		}
 
 		$catalog_objects           = $search_response->getObjects() ?: array();
@@ -694,14 +532,6 @@ class Manual_Synchronization extends Stepped_Job {
 			wc_square()->log( 'Searching through ' . count( $catalog_objects ) . ' catalog objects' );
 
 			foreach ( $catalog_objects as $catalog_object ) {
-
-				if ( $this->is_time_exceeded() ) {
-
-					$this->set_attr( 'in_progress_search_matched_products', $in_progress );
-					wc_square()->log( 'Time exceeded (search_matched_products)' );
-
-					return;
-				}
 
 				$remote_object_id = $catalog_object->getId();
 
@@ -730,7 +560,7 @@ class Manual_Synchronization extends Stepped_Job {
 						}
 					}
 
-					$catalog_objects_to_update[ $product_id ] = json_encode( json_decode( $catalog_object . '', true ) );
+					$catalog_objects_to_update[ $product_id ] = wp_json_encode( $catalog_object );
 
 				} else {
 
@@ -767,7 +597,7 @@ class Manual_Synchronization extends Stepped_Job {
 					}
 
 					if ( $product_id && $matched_object ) {
-						$catalog_objects_to_update[ $product_id ] = json_encode( json_decode( $matched_object . '', true ) );
+						$catalog_objects_to_update[ $product_id ] = wp_json_encode( $matched_object, JSON_PRETTY_PRINT );
 					}
 				}
 
@@ -817,7 +647,7 @@ class Manual_Synchronization extends Stepped_Job {
 
 
 	/**
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function upsert_new_products() {
 
@@ -837,12 +667,10 @@ class Manual_Synchronization extends Stepped_Job {
 
 		foreach ( $product_ids as $product_id ) {
 
-			$catalog_objects[ $product_id ] = new CatalogObject(
-				array(
-					'type'      => 'ITEM',
-					'item_data' => new \SquareConnect\Model\CatalogItem(),
-				)
-			);
+			$catalog_item = new \Square\Models\CatalogItem();
+			$catalog_object = new CatalogObject( 'ITEM', Product::get_square_item_id( $product_id ) );
+			$catalog_object->setItemData( $catalog_item );
+			$catalog_objects[ $product_id ] = $catalog_object;
 		}
 
 		$result = $this->upsert_catalog_objects( $catalog_objects );
@@ -877,7 +705,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @param array $objects list of catalog objects to update, as $product_id => CatalogItem
 	 * @return array
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function upsert_catalog_objects( array $objects ) {
 
@@ -916,25 +744,13 @@ class Manual_Synchronization extends Stepped_Job {
 				$total_object_count = $in_progress['total_object_count'];
 				$batches            = array_map(
 					static function ( $batch_data ) {
-						return ObjectSerializer::deserialize( json_decode( $batch_data, false ), CatalogObjectBatch::class );
+						return ApiHelper::deserialize( $batch_data );
 					},
 					$in_progress['batches']
 				);
 			}
 
 			foreach ( $objects as $product_id => $object ) {
-
-				if ( $this->is_time_exceeded() ) {
-
-					$in_progress['staged_product_ids'] = $staged_product_ids;
-					$in_progress['total_object_count'] = $total_object_count;
-					$in_progress['batches']            = array_map( 'strval', $batches );
-
-					$this->set_attr( 'in_progress_upsert_catalog_objects', $in_progress );
-					wc_square()->log( 'Time exceeded (upsert_catalog_objects)' );
-
-					return $result;
-				}
 
 				if ( in_array( $product_id, $staged_product_ids, true ) ) {
 					continue;
@@ -964,7 +780,7 @@ class Manual_Synchronization extends Stepped_Job {
 		$upsert_response = null;
 
 		if ( null !== $in_progress['unprocessed_upsert_response'] ) {
-			$upsert_response = ObjectSerializer::deserialize( json_decode( $in_progress['unprocessed_upsert_response'], false ), BatchUpsertCatalogObjectsResponse::class );
+			$upsert_response = ApiHelper::deserialize( $in_progress['unprocessed_upsert_response'] );
 		}
 
 		if ( ! $upsert_response instanceof BatchUpsertCatalogObjectsResponse ) {
@@ -976,22 +792,14 @@ class Manual_Synchronization extends Stepped_Job {
 			$upsert_response = $response->get_data();
 
 			if ( ! $upsert_response instanceof BatchUpsertCatalogObjectsResponse ) {
-				throw new Framework\SV_WC_API_Exception( 'API response data is missing' );
+				throw new \Exception( 'API response data is missing' );
 			}
 
 			$duration = number_format( microtime( true ) - $start, 2 );
 
 			wc_square()->log( 'Upserted ' . count( $upsert_response->getObjects() ) . ' objects in ' . $duration . 's' );
 
-			$in_progress['unprocessed_upsert_response'] = $response->get_data() . '';
-		}
-
-		if ( $this->is_time_exceeded() ) {
-
-			$this->set_attr( 'in_progress_upsert_catalog_objects', $in_progress );
-			wc_square()->log( 'Time exceeded (upsert_catalog_objects)' );
-
-			return $result;
+			$in_progress['unprocessed_upsert_response'] = wp_json_encode( $response, JSON_PRETTY_PRINT );
 		}
 
 		// update local square meta for newly upserted objects
@@ -1002,14 +810,6 @@ class Manual_Synchronization extends Stepped_Job {
 			$start = microtime( true );
 
 			foreach ( $upsert_response->getIdMappings() as $id_mapping ) {
-
-				if ( $this->is_time_exceeded() ) {
-
-					$this->set_attr( 'in_progress_upsert_catalog_objects', $in_progress );
-					wc_square()->log( 'Time exceeded (upsert_catalog_objects)' );
-
-					return $result;
-				}
 
 				$client_item_id = $id_mapping->getClientObjectId();
 				$remote_item_id = $id_mapping->getObjectId();
@@ -1045,14 +845,6 @@ class Manual_Synchronization extends Stepped_Job {
 
 		// loop through all returned objects and store their IDs to Woo products
 		foreach ( $upsert_response->getObjects() as $remote_catalog_item ) {
-
-			if ( $this->is_time_exceeded() ) {
-
-				$this->set_attr( 'in_progress_upsert_catalog_objects', $in_progress );
-				wc_square()->log( 'Time exceeded (upsert_catalog_objects)' );
-
-				return $result;
-			}
 
 			$remote_item_id = $remote_catalog_item->getId();
 
@@ -1095,14 +887,6 @@ class Manual_Synchronization extends Stepped_Job {
 						);
 					}
 				}
-			}
-
-			if ( $this->is_time_exceeded() ) {
-
-				$this->set_attr( 'in_progress_upsert_catalog_objects', $in_progress );
-				wc_square()->log( 'Time exceeded (upsert_catalog_objects)' );
-
-				return $result;
 			}
 
 			$local_image_id = $product->get_image_id();
@@ -1164,11 +948,11 @@ class Manual_Synchronization extends Stepped_Job {
 	 */
 	protected function convert_to_catalog_object( $object_data ) {
 
-		if ( is_string( $object_data ) ) {
-			$object_data = json_decode( $object_data, false );
+		if ( ! is_string( $object_data ) ) {
+			$object_data = wp_json_encode( $object_data );
 		}
 
-		$object = ObjectSerializer::deserialize( $object_data, CatalogObject::class );
+		$object = ApiHelper::deserialize( $object_data );
 
 		return $object instanceof CatalogObject ? $object : null;
 	}
@@ -1203,7 +987,7 @@ class Manual_Synchronization extends Stepped_Job {
 				$product->update_meta_data( '_square_uploaded_image_id', $local_image_id );
 				$product->save_meta_data();
 
-			} catch ( Framework\SV_WC_API_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				if ( wc_square()->get_settings_handler()->is_debug_enabled() ) {
 					wc_square()->log( 'Could not upload image for product #' . $product->get_id() . ': ' . $exception->getMessage() );
@@ -1218,7 +1002,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function push_inventory() {
 
@@ -1330,15 +1114,15 @@ class Manual_Synchronization extends Stepped_Job {
 
 				$response_data = $response->get_data();
 
-				$this->set_attr( 'catalog_objects_search_response_data', $response_data . '' );
+				$this->set_attr( 'catalog_objects_search_response_data', wp_json_encode( $response_data ) );
 
 			} else {
 
-				$response_data = ObjectSerializer::deserialize( json_decode( $response_data, false ), SearchCatalogObjectsResponse::class );
+				$response_data = ApiHelper::deserialize( $response_data );
 			}
 
 			if ( ! $response_data instanceof SearchCatalogObjectsResponse ) {
-				throw new Framework\SV_WC_API_Exception( 'API response data is missing' );
+				throw new \Exception( 'API response data is missing' );
 			}
 
 			$cursor = $response_data->getCursor();
@@ -1366,12 +1150,14 @@ class Manual_Synchronization extends Stepped_Job {
 
 		$pull_inventory_variation_ids = $this->get_attr( 'pull_inventory_variation_ids', array() );
 
-		/** @var \SquareConnect\Model\CatalogObject[] */
+		/** @var \Square\Models\CatalogObject[] */
 		$catalog_objects = $products_to_update = array();
 
-		wc_square()->log( 'Searching for products in ' . count( $response_data->getObjects() ) . ' Square objects' );
+		$catalog_objects = $response_data->getObjects() ?: array();
 
-		foreach ( $response_data->getObjects() as $object ) {
+		wc_square()->log( 'Searching for products in ' . count( $catalog_objects ) . ' Square objects' );
+
+		foreach ( $catalog_objects as $object ) {
 
 			$found_product = null;
 
@@ -1456,7 +1242,7 @@ class Manual_Synchronization extends Stepped_Job {
 
 				// if no Square object was found, log as a failure
 				if ( ! $square_object ) {
-					throw new Framework\SV_WC_Plugin_Exception( 'Product does not exist in the Square catalog' );
+					throw new \Exception( 'Product does not exist in the Square catalog' );
 				}
 
 				foreach ( $square_object->getItemData()->getVariations() as $variation ) {
@@ -1468,7 +1254,7 @@ class Manual_Synchronization extends Stepped_Job {
 				if ( ! $product->get_image_id() && $square_object->getImageId() ) {
 					Product::update_image_from_square( $product, $square_object->getImageId() );
 				}
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				$this->mark_failed_products( array( $product ) );
 			}
@@ -1489,7 +1275,7 @@ class Manual_Synchronization extends Stepped_Job {
 	 *
 	 * @since 2.0.2
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function pull_inventory() {
 
@@ -1510,7 +1296,7 @@ class Manual_Synchronization extends Stepped_Job {
 
 		// if a response was never cleared, we likely had a timeout
 		if ( null !== $in_progress['response_data'] ) {
-			$response_data = ObjectSerializer::deserialize( json_decode( $in_progress['response_data'], false ), BatchRetrieveInventoryCountsResponse::class );
+			$response_data = ApiHelper::deserialize( $in_progress['response_data'] );
 		}
 
 		// if the saved response was somehow corrupted, start over
@@ -1552,7 +1338,7 @@ class Manual_Synchronization extends Stepped_Job {
 				);
 
 				if ( ! $response->get_data() instanceof BatchRetrieveInventoryCountsResponse ) {
-					throw new Framework\SV_WC_Plugin_Exception( 'Response data missing or invalid' );
+					throw new \Exception( 'Response data missing or invalid' );
 				}
 
 				$response_data = $response->get_data();
@@ -1564,7 +1350,7 @@ class Manual_Synchronization extends Stepped_Job {
 					return;
 				}
 
-				$in_progress['response_data'] = $response_data . '';
+				$in_progress['response_data'] = wp_json_encode( $response_data, JSON_PRETTY_PRINT );
 
 				// Store the response counts to be processed later.
 				$response_counts = array_merge( $response_counts, $response_data->getCounts() );
@@ -1577,14 +1363,6 @@ class Manual_Synchronization extends Stepped_Job {
 
 			if ( in_array( $count->getCatalogObjectId(), $in_progress['processed_variation_ids'], false ) ) {
 				continue;
-			}
-
-			if ( $this->is_time_exceeded() ) {
-
-				$this->set_attr( 'in_progress_pull_inventory', $in_progress );
-
-				wc_square()->log( 'Time exceeded (pull_inventory)' );
-				return;
 			}
 
 			// Square can return multiple "types" of counts, WooCommerce only distinguishes whether a product is in stock or not

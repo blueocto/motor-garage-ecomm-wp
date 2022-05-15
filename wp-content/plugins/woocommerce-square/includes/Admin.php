@@ -183,7 +183,6 @@ class Admin {
 					'is_inventory_sync_enabled'         => $this->get_plugin()->get_settings_handler()->is_inventory_sync_enabled(),
 					'is_sandbox'                        => $this->get_plugin()->get_settings_handler()->is_sandbox(),
 					'existing_sync_job_id'              => $existing_sync_id,
-					'sync_in_background'                => $this->get_plugin()->get_sync_handler()->should_sync_in_background(),
 					'import_products_from_square'       => wp_create_nonce( 'import-products-from-square' ),
 					'sync_products_with_square'         => wp_create_nonce( 'sync-products-with-square' ),
 					'get_sync_with_square_status_nonce' => wp_create_nonce( 'get-sync-with-square-status' ),

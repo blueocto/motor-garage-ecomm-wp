@@ -23,8 +23,6 @@
 
 namespace WooCommerce\Square\Sync;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -114,7 +112,7 @@ abstract class Stepped_Job extends Job {
 				$this->$next_step();
 				$this->complete_step_cycle( $next_step );
 
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				$this->complete_step_cycle( $next_step, false, $exception->getMessage() );
 				$this->fail( $exception->getMessage() );

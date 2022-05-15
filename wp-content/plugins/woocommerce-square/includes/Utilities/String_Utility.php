@@ -33,13 +33,18 @@ defined( 'ABSPATH' ) || exit;
 class String_Utility {
 
 	/**
+	 * encoding used for mb_*() string functions
+	 **/
+	const MB_ENCODING = 'UTF-8';
+
+	/**
 	 * Truncates $string after a given $length if string is longer than
 	 * $length.
 	 *
 	 * The last characters will be replaced with the $omission string
 	 * for a total length not exceeding $length
 	 *
-	 * See SV_WC_Helper::str_truncate()
+	 * See Square_Helper::str_truncate()
 	 *
 	 * @since 2.2.0
 	 * @param string $string text to truncate
@@ -66,7 +71,7 @@ class String_Utility {
 	 * safely handle UTF-8. Note this only allows ASCII chars in the range
 	 * 33-126 (newlines/carriage returns are stripped)
 	 *
-	 * See SV_WC_Helper::str_to_ascii()
+	 * See Square_Helper::to_ascii()
 	 *
 	 * @since 2.2.0
 	 * @param string $string string to make ASCII
@@ -78,5 +83,85 @@ class String_Utility {
 
 		// strip ASCII chars 127 and higher
 		return filter_var( $string, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH );
+	}
+
+	/**
+	 * Returns true if the haystack string starts with needle
+	 *
+	 * Note: case-sensitive
+	 * 
+	 * See Square_Helper::str_starts_with()
+	 *
+	 * @since 2.2.0
+	 * @param string $haystack
+	 * @param string $needle
+	 * @return bool
+	 */
+	public static function str_starts_with( $haystack, $needle ) {
+
+		if ( self::multibyte_loaded() ) {
+
+			if ( '' === $needle ) {
+				return true;
+			}
+
+			return 0 === mb_strpos( $haystack, $needle, 0, self::MB_ENCODING );
+
+		} else {
+
+			$needle = self::to_ascii( $needle );
+
+			if ( '' === $needle ) {
+				return true;
+			}
+
+			return 0 === strpos( self::to_ascii( $haystack ), self::to_ascii( $needle ) );
+		}
+	}
+
+	/**
+	 * Returns true if the needle exists in haystack
+	 *
+	 * Note: case-sensitive
+	 *
+	 * See Square_Helper::str_exists()
+	 *
+	 * @since 2.2.0
+	 * @param string $haystack
+	 * @param string $needle
+	 * @return bool
+	 */
+	public static function str_exists( $haystack, $needle ) {
+
+		if ( self::multibyte_loaded() ) {
+
+			if ( '' === $needle ) {
+				return false;
+			}
+
+			return false !== mb_strpos( $haystack, $needle, 0, self::MB_ENCODING );
+
+		} else {
+
+			$needle = self::to_ascii( $needle );
+
+			if ( '' === $needle ) {
+				return false;
+			}
+
+			return false !== strpos( self::to_ascii( $haystack ), self::to_ascii( $needle ) );
+		}
+	}
+
+	/**
+	 * Helper method to check if the multibyte extension is loaded, which
+	 * indicates it's safe to use the mb_*() string methods
+	 *
+	 * @since 2.2.0
+	 * @return bool
+	 */
+	protected static function multibyte_loaded() {
+
+		return extension_loaded( 'mbstring' );
 	}
 }

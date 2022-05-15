@@ -20,12 +20,12 @@
 
 namespace WooCommerce\Square\Handlers;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use WooCommerce\Square\Sync\Interval_Polling;
+use WooCommerce\Square\Framework\Utilities\Background_Job_Handler;
 use WooCommerce\Square\Sync\Job;
+use WooCommerce\Square\Sync\Records;
+use WooCommerce\Square\Sync\Interval_Polling;
 use WooCommerce\Square\Sync\Manual_Synchronization;
 use WooCommerce\Square\Sync\Product_Import;
-use WooCommerce\Square\Sync\Records;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.0.0
  */
-class Background_Job extends Framework\SV_WP_Background_Job_Handler {
+class Background_Job extends Background_Job_Handler {
 
 
 	/**
@@ -57,21 +57,10 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 
 		parent::__construct();
 
-		$this->maybe_increase_time_limit();
-
 		add_action( "{$this->identifier}_job_complete", array( $this, 'job_complete' ) );
 		add_action( "{$this->identifier}_job_failed", array( $this, 'job_failed' ) );
-		add_filter( "{$this->identifier}_default_time_limit", array( $this, 'set_default_time_limit' ) );
-
-		// ensures the queue lock time never expires before our timeout does
-		add_filter(
-			"{$this->identifier}_queue_lock_time",
-			function( $lock_time ) {
-
-				return $this->set_default_time_limit( $lock_time ) + 10;
-
-			}
-		);
+		add_filter( 'woocommerce_debug_tools', array( $this, 'add_debug_tool' ) );
+		add_action( 'wc_square_job_runner', array( $this, 'handle' ) );
 	}
 
 
@@ -115,7 +104,7 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 	 *
 	 * @since 2.0.0
 	 */
-	protected function handle() {
+	public function handle() {
 
 		$this->lock_process();
 
@@ -132,12 +121,10 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 
 		// Start next job or complete process
 		if ( ! $this->is_queue_empty() ) {
-			$this->dispatch();
+			as_enqueue_async_action( 'wc_square_job_runner' );
 		} else {
 			$this->complete();
 		}
-
-		wp_die();
 	}
 
 
@@ -151,6 +138,10 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 	 * @return false|object|\stdClass
 	 */
 	public function process_job( $job, $items_per_batch = null ) {
+
+		if ( ! $job ) {
+			return;
+		}
 
 		// indicate that the job has started processing
 		if ( 'processing' !== $job->status ) {
@@ -230,6 +221,27 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 	 */
 	protected function process_item( $item, $job ) {}
 
+	/**
+	 * Adds some helpful debug tools.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $tools existing debug tools
+	 * @return array
+	 */
+	public function add_debug_tool( $tools ) {
+
+		// this key is not unique to the plugin to avoid duplicate tools
+		$tools['wc_square_clear_background_jobs'] = array(
+			'name'     => __( 'Clear Square Sync', 'woocommerce-square' ),
+			'button'   => __( 'Clear', 'woocommerce-square' ),
+			'desc'     => __( 'This tool will clear any ongoing Square product syncs.', 'woocommerce-square' ),
+			'callback' => array( $this, 'run_clear_background_jobs' ),
+		);
+
+		return $tools;
+	}
+
 
 	/**
 	 * Clear all background jobs of any status.
@@ -262,95 +274,6 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 		}
 	}
 
-
-	/**
-	 * Attempts to increase the script execution time limit to a filtered value -- defaults to 5 minutes.
-	 *
-	 * @since 2.0.0
-	 */
-	protected function maybe_increase_time_limit() {
-
-		/**
-		 * Filters the desired time limit for Square requests. Defaults to 5 minutes.
-		 *
-		 * @since 2.0.0
-		 *
-		 * @param int time limit
-		 */
-		$desired_time_limit = (int) apply_filters( 'wc_square_time_limit', 300 );
-		$server_time_limit  = (int) ini_get( 'max_execution_time' );
-
-		if ( $desired_time_limit > $server_time_limit ) {
-
-			\ActionScheduler_Compatibility::raise_time_limit( $desired_time_limit );
-		}
-	}
-
-
-	/**
-	 * Sets the default time limit to the server time limit minus a buffer,
-	 * to allow us to clean up a request that has exceeded the time limit.
-	 *
-	 * @internal
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param int $default_time_limit time limit (in seconds)
-	 * @return int
-	 */
-	public function set_default_time_limit( $default_time_limit ) {
-
-		$server_time_limit = (int) ini_get( 'max_execution_time' );
-		$time_limit_buffer = 10;
-
-		if ( isset( $server_time_limit ) && $time_limit_buffer < $server_time_limit ) {
-
-			$default_time_limit = $server_time_limit - $time_limit_buffer;
-		}
-
-		return $default_time_limit;
-	}
-
-
-	/**
-	 * Returns whether a sensible time has been exceeded for this request.
-	 *
-	 * Makes the internal time_exceeded() function publicly accessible.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @return bool
-	 */
-	public function is_time_exceeded() {
-
-		return $this->time_exceeded();
-	}
-
-
-	/**
-	 * Adds some helpful debug tools.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param array $tools existing debug tools
-	 * @return array
-	 */
-	public function add_debug_tool( $tools ) {
-
-		$tools = parent::add_debug_tool( $tools );
-
-		// this key is not unique to the plugin to avoid duplicate tools
-		$tools['wc_square_clear_background_jobs'] = array(
-			'name'     => __( 'Clear Square Sync', 'woocommerce-square' ),
-			'button'   => __( 'Clear', 'woocommerce-square' ),
-			'desc'     => __( 'This tool will clear any ongoing Square product syncs.', 'woocommerce-square' ),
-			'callback' => array( $this, 'run_clear_background_jobs' ),
-		);
-
-		return $tools;
-	}
-
-
 	/**
 	 * Runs the "Clear Square Sync" tool.
 	 *
@@ -365,28 +288,5 @@ class Background_Job extends Framework\SV_WP_Background_Job_Handler {
 		$this->debug_message = esc_html__( 'Success! You can now sync your products.', 'woocommerce-square' );
 
 		return true;
-	}
-
-	/**
-	 * Tests the background handler's connection.
-	 *
-	 * Override of SV_WP_Background_Job_Handler::test_connection().
-	 *
-	 * SV's Framework version of this function doesn't set sslverify to false for local requests.
-	 * WP considers 'local' to be one to `localhost` or to the same host as the site itself.
-	 *
-	 * This sslverify is handled in SV_WP_Async_Request::dispatch(), but wasn't handled in the test connection.
-	 *
-	 * @see SV_WP_Background_Job_Handler::test_connection()
-	 * @return bool
-	 */
-	public function test_connection() {
-		$test_url = add_query_arg( 'action', "{$this->identifier}_test", admin_url( 'admin-ajax.php' ) );
-		$result   = wp_remote_get( $test_url, array( 'sslverify' => apply_filters( 'https_local_ssl_verify', false ) ) );
-		$body     = ! is_wp_error( $result ) ? wp_remote_retrieve_body( $result ) : null;
-
-		// some servers may add a UTF8-BOM at the beginning of the response body, so we check if our test
-		// string is included in the body, as an equal check would produce a false negative test result
-		return $body && Framework\SV_WC_Helper::str_exists( $body, '[TEST_LOOPBACK]' );
 	}
 }

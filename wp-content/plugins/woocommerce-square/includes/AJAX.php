@@ -25,9 +25,7 @@ namespace WooCommerce\Square;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
 use WooCommerce\Square\Handlers\Product;
-use WooCommerce\Square\Handlers\Sync;
 use WooCommerce\Square\Sync\Records;
 
 /**
@@ -63,41 +61,6 @@ class AJAX {
 		add_action( 'wp_ajax_wc_square_get_sync_with_square_status', array( $this, 'get_sync_with_square_job_status' ) );
 	}
 
-
-	/**
-	 * Checks if a product is set to be synced with Square.
-	 *
-	 * @internal
-	 *
-	 * @since 2.0.0
-	 *
-	 * @deprecated 2.1.6
-	 */
-	public function is_product_synced_with_square() {
-		_deprecated_function( 'is_product_synced_with_square', '2.1.6', 'get_quick_edit_product_details' );
-
-		check_ajax_referer( 'is-product-synced-with-square', 'security' );
-
-		if ( isset( $_POST['product_id'] ) && ( $product = wc_get_product( $_POST['product_id'] ) ) ) {
-
-			if ( $product->is_type( 'variable' ) && $product->has_child() ) {
-				if ( Product::has_multiple_variation_attributes( $product ) ) {
-					wp_send_json_error( 'multiple_attributes' );
-				} elseif ( ! Product::has_sku( $product ) ) {
-					wp_send_json_error( 'missing_variation_sku' );
-				}
-			} else {
-				if ( ! Product::has_sku( $product ) ) {
-					wp_send_json_error( 'missing_sku' );
-				}
-			}
-			wp_send_json_success( Product::is_synced_with_square( $product ) ? 'yes' : 'no' );
-		}
-
-		wp_send_json_error( 'invalid_product' );
-	}
-
-
 	/**
 	 * Fetches product stock data from Square.
 	 *
@@ -119,7 +82,7 @@ class AJAX {
 
 				wp_send_json_success( $product->get_stock_quantity() );
 
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				/* translators: Placeholders: %1$s = error message, %2$s = help text */
 				wp_send_json_error( sprintf( __( 'Unable to fetch inventory: %1$s. %2$s', 'woocommerce-square' ), $exception->getMessage(), $fix_error ) );
@@ -142,7 +105,7 @@ class AJAX {
 
 		check_ajax_referer( 'import-products-from-square', 'security' );
 
-		$started = wc_square()->get_sync_handler()->start_product_import( ! empty( $_POST['dispatch'] ), ( ! empty( $_POST['update_during_import'] ) && 'true' === $_POST['update_during_import'] ) );
+		$started = wc_square()->get_sync_handler()->start_product_import( ( ! empty( $_POST['update_during_import'] ) && 'true' === $_POST['update_during_import'] ) );
 
 		if ( ! $started ) {
 			wp_send_json_error( __( 'Could not start import. Please try again.', 'woocommerce-square' ) );
@@ -163,7 +126,7 @@ class AJAX {
 
 		check_ajax_referer( 'sync-products-with-square', 'security' );
 
-		$started = wc_square()->get_sync_handler()->start_manual_sync( ! empty( $_POST['dispatch'] ) );
+		$started = wc_square()->get_sync_handler()->start_manual_sync();
 
 		if ( ! $started ) {
 			wp_send_json_error();

@@ -22,10 +22,6 @@
  */
 
 namespace WooCommerce\Square\API\Requests;
-
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model as SquareModel;
-use SquareConnect\Api\LocationsApi;
 use WooCommerce\Square\API\Request;
 
 defined( 'ABSPATH' ) || exit;
@@ -43,11 +39,10 @@ class Locations extends Request {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\ApiClient $api_client the API client
+	 * @param \Square\SquareClient $api_client the API client
 	 */
 	public function __construct( $api_client ) {
-
-		$this->square_api = new LocationsApi( $api_client );
+		$this->square_api = $api_client->getLocationsApi();
 	}
 
 

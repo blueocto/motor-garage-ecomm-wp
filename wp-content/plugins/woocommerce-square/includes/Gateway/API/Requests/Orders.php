@@ -21,10 +21,8 @@ namespace WooCommerce\Square\Gateway\API\Requests;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Api\OrdersApi;
-use SquareConnect\Model as SquareModel;
 use WooCommerce\Square\API;
+use WooCommerce\Square\Framework\Square_Helper;
 use WooCommerce\Square\Handlers\Product;
 use WooCommerce\Square\Utilities\Money_Utility;
 
@@ -41,11 +39,10 @@ class Orders extends API\Request {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\ApiClient $api_client the API client
+	 * @param \Square\SquareClient $api_client the API client
 	 */
 	public function __construct( $api_client ) {
-
-		$this->square_api = new OrdersApi( $api_client );
+		$this->square_api = $api_client->getOrdersApi();
 	}
 
 
@@ -60,9 +57,9 @@ class Orders extends API\Request {
 	public function set_create_order_data( $location_id, \WC_Order $order ) {
 
 		$this->square_api_method = 'createOrder';
-		$this->square_request    = new SquareModel\CreateOrderRequest();
+		$this->square_request    = new \Square\Models\CreateOrderRequest();
 
-		$order_model = new SquareModel\Order();
+		$order_model = new \Square\Models\Order( $location_id );
 		$order_model->setReferenceId( $order->get_order_number() );
 
 		if ( ! empty( $order->square_customer_id ) ) {
@@ -76,28 +73,19 @@ class Orders extends API\Request {
 		$order_model->setTaxes( array_values( $taxes ) );
 
 		if ( $order->get_discount_total() ) {
+			$order_line_item_discount = new \Square\Models\OrderLineItemDiscount();
+			$order_line_item_discount->setName( __( 'Discount', 'woocommerce-square' ) );
+			$order_line_item_discount->setType( 'FIXED_AMOUNT' );
+			$order_line_item_discount->setAmountMoney( Money_Utility::amount_to_money( $order->get_discount_total(), $order->get_currency() ) );
+			$order_line_item_discount->setScope( 'ORDER' );
 
-			$order_model->setDiscounts(
-				array(
-					new SquareModel\OrderLineItemDiscount(
-						array(
-							'name'         => __( 'Discount', 'woocommerce-square' ),
-							'type'         => 'FIXED_AMOUNT',
-							'amount_money' => Money_Utility::amount_to_money( $order->get_discount_total(), $order->get_currency() ),
-							'scope'        => 'ORDER',
-						)
-					),
-				)
-			);
+			$order_model->setDiscounts( array( $order_line_item_discount ) );
 		}
 
 		$this->square_request->setIdempotencyKey( wc_square()->get_idempotency_key( $order->unique_transaction_ref ) );
 		$this->square_request->setOrder( $order_model );
 
-		$this->square_api_args = array(
-			$location_id,
-			$this->square_request,
-		);
+		$this->square_api_args = array( $this->square_request );
 	}
 
 
@@ -183,17 +171,16 @@ class Orders extends API\Request {
 	 *
 	 * @param \WC_Order $order
 	 * @param \WC_Order_Item[] $line_items
-	 * @param SquareModel\OrderLineItemTax[] $taxes
-	 * @return SquareModel\OrderLineItem[]
+	 * @param \Square\Models\OrderLineItemTax[] $taxes
+	 * @return \Square\Models\OrderLineItem[]
 	 */
 	protected function get_api_line_items( \WC_Order $order, $line_items, $taxes ) {
 
 		$api_line_items = array();
 
 		foreach ( $line_items as $item ) {
-
-			$line_item  = new SquareModel\OrderLineItem();
 			$is_product = $item instanceof \WC_Order_Item_Product;
+			$line_item  = new \Square\Models\OrderLineItem( $is_product ? (string) $item->get_quantity() : (string) 1 );
 
 			$line_item->setQuantity( $is_product ? (string) $item->get_quantity() : (string) 1 );
 			$line_item->setBasePriceMoney( Money_Utility::amount_to_money( $is_product ? $order->get_item_subtotal( $item ) : $item->get_total(), $order->get_currency() ) );
@@ -221,23 +208,20 @@ class Orders extends API\Request {
 	 * @since 2.0.0
 	 *
 	 * @param \WC_Order $order
-	 * @return SquareModel\OrderLineItemTax[]
+	 * @return \Square\Models\OrderLineItemTax[]
 	 */
 	protected function get_order_taxes( \WC_Order $order ) {
 
 		$taxes = array();
 
 		foreach ( $order->get_taxes() as $tax ) {
-			$tax_item = new SquareModel\OrderLineItemTax(
-				array(
-					'uid'   => uniqid(),
-					'name'  => $tax->get_name(),
-					'type'  => 'ADDITIVE',
-					'scope' => 'LINE_ITEM',
-				)
-			);
+			$tax_item = new \Square\Models\OrderLineItemTax();
+			$tax_item->setUid( uniqid() );
+			$tax_item->setName( $tax->get_name() );
+			$tax_item->setType( 'ADDITIVE' );
+			$tax_item->setScope( 'LINE_ITEM' );
 
-			$tax_item->setPercentage( Framework\SV_WC_Helper::number_format( (float) $tax->get_rate_percent() ) );
+			$tax_item->setPercentage( Square_Helper::number_format( (float) $tax->get_rate_percent() ) );
 
 			$taxes[ $tax->get_rate_id() ] = $tax_item;
 		}
@@ -251,9 +235,9 @@ class Orders extends API\Request {
 	 *
 	 * @since 2.0.4
 	 *
-	 * @param SquareModel\OrderLineItemTax[] $taxes
+	 * @param \Square\Models\OrderLineItemTax[] $taxes
 	 * @param WC_Order_Item $line_item
-	 * @return SquareModel\OrderLineItemAppliedTax[] $taxes
+	 * @return \Square\Models\OrderLineItemAppliedTax[] $taxes
 	 */
 	protected function apply_taxes( $taxes, $line_item ) {
 
@@ -266,11 +250,7 @@ class Orders extends API\Request {
 		$applied_taxes = array();
 
 		foreach ( $tax_ids as $tax_id ) {
-			$applied_taxes[] = new SquareModel\OrderLineItemAppliedTax(
-				array(
-					'tax_uid' => $taxes[ $tax_id ]->getUid(),
-				)
-			);
+			$applied_taxes[] = new \Square\Models\OrderLineItemAppliedTax( $taxes[ $tax_id ]->getUid() );
 		};
 
 		return $applied_taxes;
@@ -290,33 +270,26 @@ class Orders extends API\Request {
 	public function add_line_item_order_data( $location_id, \WC_Order $order, $version, $amount ) {
 
 		$this->square_api_method = 'updateOrder';
-		$this->square_request    = new SquareModel\UpdateOrderRequest();
+		$this->square_request    = new \Square\Models\UpdateOrderRequest();
 
-		$order_model = new SquareModel\Order();
+		$order_model = new \Square\Models\Order( $location_id );
 		$order_model->setVersion( $version );
 
-		$order_model->setLineItems(
-			array(
-				new SquareModel\OrderLineItem(
-					array(
-						'name'             => __( 'Adjustment', 'woocommerce-square' ),
-						'quantity'         => (string) 1,
-						'base_price_money' => new SquareModel\Money(
-							array(
-								'amount'   => $amount,
-								'currency' => $order->get_currency(),
-							)
-						),
-					)
-				),
-			)
-		);
+		$line_item = new \Square\Models\OrderLineItem( (string) 1 );
+		$line_item->setName( __( 'Adjustment', 'woocommerce-square' ) );
+		$line_item->setQuantity( (string) 1 );
+
+		$money_object = new \Square\Models\Money();
+		$money_object->setAmount( $amount );
+		$money_object->setCurrency( $order->get_currency() );
+
+		$line_item->setBasePriceMoney( $money_object );
+		$order_model->setLineItems( array( $line_item ) );
 
 		$this->square_request->setIdempotencyKey( wc_square()->get_idempotency_key( $order->unique_transaction_ref ) . $version );
 		$this->square_request->setOrder( $order_model );
 
 		$this->square_api_args = array(
-			$location_id,
 			$order->square_order_id,
 			$this->square_request,
 		);
@@ -336,34 +309,28 @@ class Orders extends API\Request {
 	public function add_discount_order_data( $location_id, \WC_Order $order, $version, $amount ) {
 
 		$this->square_api_method = 'updateOrder';
-		$this->square_request    = new SquareModel\UpdateOrderRequest();
+		$this->square_request    = new \Square\Models\UpdateOrderRequest();
 
-		$order_model = new SquareModel\Order();
+		$order_model = new \Square\Models\Order( $location_id );
 		$order_model->setVersion( $version );
 
-		$order_model->setDiscounts(
-			array(
-				new SquareModel\OrderLineItemDiscount(
-					array(
-						'name'         => __( 'Adjustment', 'woocommerce-square' ),
-						'type'         => 'FIXED_AMOUNT',
-						'amount_money' => new SquareModel\Money(
-							array(
-								'amount'   => $amount,
-								'currency' => $order->get_currency(),
-							)
-						),
-						'scope'        => 'ORDER',
-					)
-				),
-			)
-		);
+		$order_line_item_discount = new \Square\Models\OrderLineItemDiscount();
+		$order_line_item_discount->setName( __( 'Adjustment', 'woocommerce-square' ) );
+		$order_line_item_discount->setType( 'FIXED_AMOUNT' );
+
+		$money_object = new \Square\Models\Money();
+		$money_object->setAmount( $amount );
+		$money_object->setCurrency( $order->get_currency() );
+
+		$order_line_item_discount->setAmountMoney( $money_object );
+		$order_line_item_discount->setScope( 'ORDER' );
+
+		$order_model->setDiscounts( array( $order_line_item_discount ) );
 
 		$this->square_request->setIdempotencyKey( wc_square()->get_idempotency_key( $order->unique_transaction_ref ) . $version );
 		$this->square_request->setOrder( $order_model );
 
 		$this->square_api_args = array(
-			$location_id,
 			$order->square_order_id,
 			$this->square_request,
 		);

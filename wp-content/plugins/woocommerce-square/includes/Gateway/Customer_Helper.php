@@ -22,8 +22,6 @@ namespace WooCommerce\Square\Gateway;
 
 defined( 'ABSPATH' ) || exit;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-
 class Customer_Helper {
 
 
@@ -32,7 +30,7 @@ class Customer_Helper {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\Model\Customer[] $customers Square API customers
+	 * @param \Square\Models\Customer[] $customers Square API customers
 	 */
 	public static function add_customers( array $customers ) {
 		global $wpdb;
@@ -45,7 +43,7 @@ class Customer_Helper {
 		foreach ( $customers as $customer ) {
 
 			// skip any bad data
-			if ( ! $customer instanceof \SquareConnect\Model\Customer ) {
+			if ( ! $customer instanceof \Square\Models\Customer ) {
 				continue;
 			}
 

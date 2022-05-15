@@ -23,11 +23,9 @@
 
 namespace WooCommerce\Square\Sync;
 
-use SkyVerge\WooCommerce\PluginFramework\v5_4_0 as Framework;
-use SquareConnect\Model\SearchCatalogObjectsResponse;
+use Square\Models\SearchCatalogObjectsResponse;
 use WooCommerce\Square\Handlers\Category;
 use WooCommerce\Square\Handlers\Product;
-use WooCommerce\Square\Sync\Records\Record;
 use WooCommerce\Square\Utilities\Money_Utility;
 
 defined( 'ABSPATH' ) || exit;
@@ -82,7 +80,7 @@ class Product_Import extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function import_products() {
 
@@ -102,7 +100,7 @@ class Product_Import extends Stepped_Job {
 		);
 
 		if ( ! $response->get_data() instanceof SearchCatalogObjectsResponse ) {
-			throw new Framework\SV_WC_API_Exception( 'API response data is invalid' );
+			throw new \Exception( 'API response data is invalid' );
 		}
 
 		$related_objects = $response->get_data()->getRelatedObjects();
@@ -118,15 +116,8 @@ class Product_Import extends Stepped_Job {
 		}
 
 		$catalog_objects = $response->get_data()->getObjects();
-		$time_exceeded   = false;
 
 		foreach ( $catalog_objects as $catalog_object_index => $catalog_object ) {
-
-			if ( $this->is_time_exceeded() ) {
-
-				$time_exceeded = true;
-				break;
-			}
 
 			// validate permissions
 			if ( ! current_user_can( 'publish_products' ) ) {
@@ -135,7 +126,7 @@ class Product_Import extends Stepped_Job {
 			}
 
 			// validate Square Catalog object (API data)
-			if ( ! $catalog_object instanceof \SquareConnect\Model\CatalogObject || ! $catalog_object->getItemData() instanceof \SquareConnect\Model\CatalogItem ) {
+			if ( ! $catalog_object instanceof \Square\Models\CatalogObject || ! $catalog_object->getItemData() instanceof \Square\Models\CatalogItem ) {
 				$this->record_error( 'Invalid data' );
 				continue;
 			}
@@ -190,7 +181,7 @@ class Product_Import extends Stepped_Job {
 			 * @since 2.0.0
 			 *
 			 * @param array $data product data
-			 * @param \SquareConnect\Model\CatalogObject $catalog_object the catalog object from the Square API
+			 * @param \Square\Models\CatalogObject $catalog_object the catalog object from the Square API
 			 * @param Product_Import $this import class instance
 			 */
 			$data = apply_filters( 'woocommerce_square_create_product_data', $data, $catalog_object, $this );
@@ -218,22 +209,14 @@ class Product_Import extends Stepped_Job {
 			}
 		}
 
-		if ( $time_exceeded ) {
+		wc_square()->log( 'Imported New Products Count: ' . count( $imported_product_ids ) );
+		wc_square()->log( 'Updated Products Count: ' . count( $updated_product_ids ) );
 
-			wc_square()->log( '[Time Exceeded] Imported New Products Count: ' . count( $imported_product_ids ) );
+		$cursor = $response->get_data()->getCursor();
+		$this->set_attr( 'fetch_products_cursor', $cursor );
 
-		} else {
-
-			wc_square()->log( 'Imported New Products Count: ' . count( $imported_product_ids ) );
-			wc_square()->log( 'Updated Products Count: ' . count( $updated_product_ids ) );
-
-			$cursor = $response->get_data()->getCursor();
-			$this->set_attr( 'fetch_products_cursor', $cursor );
-
-			if ( ! $cursor ) {
-
-				$this->complete_step( 'import_products' );
-			}
+		if ( ! $cursor ) {
+			$this->complete_step( 'import_products' );
 		}
 
 		$this->set_attr( 'skipped_products', $skipped_products );
@@ -247,7 +230,7 @@ class Product_Import extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function import_inventory() {
 
@@ -260,12 +243,12 @@ class Product_Import extends Stepped_Job {
 		);
 
 		if ( ! $search_result->get_data() instanceof SearchCatalogObjectsResponse ) {
-			throw new Framework\SV_WC_API_Exception( 'API response data is invalid' );
+			throw new \Exception( 'API response data is invalid' );
 		}
 
 		$cursor        = $search_result->get_data()->getCursor();
 		$variation_ids = array_map(
-			static function( \SquareConnect\Model\CatalogObject $catalog_object ) {
+			static function( \Square\Models\CatalogObject $catalog_object ) {
 				return $catalog_object->getId();
 			},
 			$search_result->get_data()->getObjects()
@@ -307,7 +290,7 @@ class Product_Import extends Stepped_Job {
 	 *
 	 * @since 2.2.0
 	 *
-	 * @param \SquareConnect\Model\CatalogObject $catalog_object the catalog object
+	 * @param \Square\Models\CatalogObject $catalog_object the catalog object
 	 * @return bool
 	 */
 	private function item_variation_has_missing_sku( $catalog_object ) {
@@ -390,7 +373,7 @@ class Product_Import extends Stepped_Job {
 
 			// clear cache/transients
 			wc_delete_product_transients( $product_id );
-		} catch ( Framework\SV_WC_Plugin_Exception $e ) {
+		} catch ( \Exception $e ) {
 			// remove the product when creation fails
 			if ( ! empty( $product_id ) ) {
 				$this->clear_product( $product_id );
@@ -440,7 +423,7 @@ class Product_Import extends Stepped_Job {
 			$wpdb->query( 'COMMIT' );
 
 			wc_delete_product_transients( $product_id );
-		} catch ( Framework\SV_WC_Plugin_Exception $e ) {
+		} catch ( \Exception $e ) {
 			// undo any updated data when updating fails
 			$wpdb->query( 'ROLLBACK' );
 			$product_id = 0;
@@ -498,10 +481,10 @@ class Product_Import extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\Model\CatalogObject $catalog_object the catalog object
+	 * @param \Square\Models\CatalogObject $catalog_object the catalog object
 	 * @param WC_Product|null $product
 	 * @return array|null
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function extract_product_data( $catalog_object, $product = null ) {
 
@@ -534,7 +517,7 @@ class Product_Import extends Stepped_Job {
 			foreach ( $variations as $variation ) {
 
 				// sanity check for valid API data
-				if ( ! $variation instanceof \SquareConnect\Model\CatalogObject || ! $variation->getItemVariationData() instanceof \SquareConnect\Model\CatalogItemVariation ) {
+				if ( ! $variation instanceof \Square\Models\CatalogObject || ! $variation->getItemVariationData() instanceof \Square\Models\CatalogItemVariation ) {
 					continue;
 				}
 
@@ -552,7 +535,7 @@ class Product_Import extends Stepped_Job {
 
 					$data['variations'][] = $this->extract_square_item_variation_data( $variation );
 
-				} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+				} catch ( \Exception $exception ) {
 
 					// alert for failed variation imports
 					Records::set_record(
@@ -598,7 +581,7 @@ class Product_Import extends Stepped_Job {
 				$data['square_meta']['item_variation_id']      = ! empty( $variation['square_meta']['item_variation_id'] ) ? $variation['square_meta']['item_variation_id'] : null;
 				$data['square_meta']['item_variation_version'] = ! empty( $variation['square_meta']['item_variation_version'] ) ? $variation['square_meta']['item_variation_version'] : null;
 
-			} catch ( Framework\SV_WC_Plugin_Exception $exception ) {
+			} catch ( \Exception $exception ) {
 
 				Records::set_record(
 					array(
@@ -625,20 +608,20 @@ class Product_Import extends Stepped_Job {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param \SquareConnect\Model\CatalogObject $variation the variation object
+	 * @param \Square\Models\CatalogObject $variation the variation object
 	 * @return array
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function extract_square_item_variation_data( $variation ) {
 
 		$variation_data = $variation->getItemVariationData();
 
 		if ( 'VARIABLE_PRICING' === $variation_data->getPricingType() ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Items with variable pricing cannot be imported.', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Items with variable pricing cannot be imported.', 'woocommerce-square' ) );
 		}
 
 		if ( in_array( $variation_data->getSku(), array( '', null ) ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( __( 'Variations with missing SKUs cannot be imported.', 'woocommerce-square' ) );
+			throw new \Exception( __( 'Variations with missing SKUs cannot be imported.', 'woocommerce-square' ) );
 		}
 
 		$data = array(
@@ -681,7 +664,7 @@ class Product_Import extends Stepped_Job {
 	 * @param int $product_id the product ID
 	 * @param array $data the product data
 	 * @return bool
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function save_product_meta( $product_id, $data ) {
 
@@ -731,7 +714,7 @@ class Product_Import extends Stepped_Job {
 
 					} else {
 
-						throw new Framework\SV_WC_Plugin_Exception( __( 'The SKU already exists on another product', 'woocommerce-square' ) );
+						throw new \Exception( __( 'The SKU already exists on another product', 'woocommerce-square' ) );
 					}
 				} else {
 					update_post_meta( $product_id, '_sku', '' );
@@ -902,7 +885,7 @@ class Product_Import extends Stepped_Job {
 	 * @param int $product_id the product ID
 	 * @param array $data the product data, including a 'variations' key
 	 * @return bool
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function save_variations( $product_id, $data ) {
 		global $wpdb;
@@ -985,7 +968,7 @@ class Product_Import extends Stepped_Job {
 			// stop if we don't have a variation ID
 			if ( is_wp_error( $variation_id ) ) {
 
-				throw new Framework\SV_WC_Plugin_Exception( $variation_id->get_error_message() );
+				throw new \Exception( $variation_id->get_error_message() );
 			}
 
 			// SKU
@@ -1008,7 +991,7 @@ class Product_Import extends Stepped_Job {
 
 						} else {
 
-							throw new Framework\SV_WC_Plugin_Exception( __( 'The SKU already exists on another product', 'woocommerce-square' ) );
+							throw new \Exception( __( 'The SKU already exists on another product', 'woocommerce-square' ) );
 						}
 					} else {
 
@@ -1296,19 +1279,19 @@ class Product_Import extends Stepped_Job {
 	 *
 	 * @param array $data New product data
 	 * @return int
-	 * @throws Framework\SV_WC_Plugin_Exception
+	 * @throws \Exception
 	 */
 	protected function create_product_from_square_data( $data = array() ) {
 		// validate title field
 		if ( ! isset( $data['title'] ) ) {
 			/* translators: Placeholders: %s - missing parameter name */
-			throw new Framework\SV_WC_Plugin_Exception( sprintf( __( 'Missing parameter %s', 'woocommerce-square' ), 'title' ) );
+			throw new \Exception( sprintf( __( 'Missing parameter %s', 'woocommerce-square' ), 'title' ) );
 		}
 
 		// validate type
 		if ( ! array_key_exists( wc_clean( $data['type'] ), wc_get_product_types() ) ) {
 			/* translators: Placeholders: %s - comma separated list of valid product types */
-			throw new Framework\SV_WC_Plugin_Exception( sprintf( __( 'Invalid product type - the product type must be any of these: %s', 'woocommerce-square' ), implode( ', ', array_keys( wc_get_product_types() ) ) ) );
+			throw new \Exception( sprintf( __( 'Invalid product type - the product type must be any of these: %s', 'woocommerce-square' ), implode( ', ', array_keys( wc_get_product_types() ) ) ) );
 		}
 
 		// set description
@@ -1335,7 +1318,7 @@ class Product_Import extends Stepped_Job {
 		$product_id = wp_insert_post( $new_product, true );
 
 		if ( is_wp_error( $product_id ) ) {
-			throw new Framework\SV_WC_Plugin_Exception( $product_id->get_error_message() );
+			throw new \Exception( $product_id->get_error_message() );
 		}
 
 		return $product_id;
@@ -1347,11 +1330,11 @@ class Product_Import extends Stepped_Job {
 	 * @since 2.2.0
 	 *
 	 * @param string $error Error message to record
-	 * @param \SquareConnect\Model\CatalogObject|array|null $catalog_item the catalog object or data
+	 * @param \Square\Models\CatalogObject|array|null $catalog_item the catalog object or data
 	 * @param string $context Context for whether the error occurred during import or update
 	 */
 	protected function record_error( $error, $catalog_item = null, $context = 'import' ) {
-		if ( $catalog_item && $catalog_item instanceof \SquareConnect\Model\CatalogObject && $catalog_item->getItemData() instanceof \SquareConnect\Model\CatalogItem ) {
+		if ( $catalog_item && $catalog_item instanceof \Square\Models\CatalogObject && $catalog_item->getItemData() instanceof \Square\Models\CatalogItem ) {
 			$item_name = $catalog_item->getItemData()->getName();
 		} elseif ( is_array( $catalog_item ) && ! empty( $catalog_item['title'] ) ) {
 			$item_name = $catalog_item['title'];
