@@ -1,5 +1,11 @@
 <?php get_header(); ?>
 
+<section>
+	
+</section>
+
+<?php /* ?>
+
 <main id="main" class="main">
 
 	<?php if ( have_posts() ) : ?>
@@ -14,5 +20,7 @@
 
 	<?php endif; // End have_posts() check. ?>
 </main>
+
+<?php */ ?>
 
 <?php get_footer();

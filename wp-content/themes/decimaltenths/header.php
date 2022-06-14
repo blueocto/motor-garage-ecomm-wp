@@ -33,7 +33,44 @@
 <!-- Google Tag Manager (noscript) here... -->
 
 <header class="header" role="banner">
-	{HEADER}
+	<p class="logo">
+		<a href="#">Decimal Tenths</a>
+	</p>
+	
+	<p class="a11y-skip"><a href="#main">Skip to Content</a></p>
+
+	<div id="site-navigation" class="header--inner">
+	<?php /* Menu trigger for small devices */ ?>	
+		<div class="menu-button-container">
+			<button id="primary-mobile-menu" class="menu-button-trigger" aria-controls="primary-menu-list" aria-expanded="false">
+				<span class="dropdown-icon open">
+					<?php get_template_part( 'template-parts/svg/icon-menu' ); ?>
+					<?php esc_html_e( 'Menu', 'blueocto-2022' ); ?>
+				</span>
+				<span class="dropdown-icon close">
+					<?php get_template_part( 'template-parts/svg/icon-close' ); ?>
+					<?php esc_html_e( 'Close', 'blueocto-2022' ); ?>
+				</span>
+			</button>
+		</div>
+	</div>
+
+	<nav class="primary-nav">
+		<ul class="primary-menu">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Services</a></li>
+			<li><a href="#">VAG</a></li>
+			<li><a href="#">Shop</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</nav>
+
+	<div class="header--shop-links">
+		<p><a href="#">Cart</a></p>
+		<p><a href="">Account</a></p>
+		<p><a href="">Search</a></p>
+	</div>
 </header>
 
 <div class="bo-content">
