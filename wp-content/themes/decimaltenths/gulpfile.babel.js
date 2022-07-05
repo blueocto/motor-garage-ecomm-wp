@@ -98,7 +98,7 @@ const copyVendor = () => {
 const watchForChanges = () => {
 	browserSync.init({
 		proxy: {
-			target: "https://blueocto.test/",
+			target: "https://decimal.test/",
 		},
 	});
 	watch("src/scss/**/*.scss", css);
