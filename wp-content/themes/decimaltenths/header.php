@@ -42,7 +42,7 @@
 	<p class="a11y-skip"><a href="#main">Skip to Content</a></p>
 
 	<div id="site-navigation" class="header--inner">
-	<?php /* Menu trigger for small devices */ ?>	
+		<?php /* Menu trigger for small devices */ ?>	
 		<div class="menu-button-container">
 			<button id="primary-mobile-menu" class="menu-button-trigger" aria-controls="primary-menu-list" aria-expanded="false">
 				<span class="dropdown-icon open">
@@ -55,27 +55,24 @@
 				</span>
 			</button>
 		</div>
+
+		<nav class="primary-nav">
+			<ul class="menu primary-menu">
+				<li class="menu-item"><a href="#">Home</a></li>
+				<li class="menu-item"><a href="#">Services</a></li>
+				<li class="menu-item"><a href="#">VAG</a></li>
+				<li class="menu-item"><a href="#">Shop</a></li>
+				<li class="menu-item"><a href="#">About</a></li>
+				<li class="menu-item"><a href="#">Contact</a></li>
+			</ul>
+		</nav>
 	</div>
 
-	<nav class="primary-nav">
-		<ul class="primary-menu">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Services</a></li>
-			<li><a href="#">VAG</a></li>
-			<li><a href="#">Shop</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Contact</a></li>
-		</ul>
-	</nav>
-
 	<div class="header--shop-links">
-		<p><a href="#">Cart</a></p>
-		<p><a href="">Account</a></p>
-		<p><a href="">Search</a></p>
+		<p class="menu-item"><a href="#">Cart</a></p>
+		<p class="menu-item"><a href="">Account</a></p>
+		<p class="menu-item"><a href="">Search</a></p>
 	</div>
 </header>
 
 <div class="bo-content">
-
-<h1>This is a heading</h1>
-<p>This is body copy</p>

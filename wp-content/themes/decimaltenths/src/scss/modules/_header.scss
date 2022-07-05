@@ -9,13 +9,10 @@
 // Global logo style
 .logo {
 	display: block;
-	width: rem-calc(68px);
-	height: rem-calc(68px);
-
-	@include breakpoint(large) {
-		width: rem-calc(90px);
-		height: rem-calc(90px);
-	}
+	margin-bottom: 0;
+	width: rem-calc(170px);
+	height: rem-calc(47px);
+	outline: 1px dashed blue;
 
 	a {
 		display: block;
@@ -23,74 +20,37 @@
 }
 
 .header {
-	position: relative;
-	z-index: 1;
-	padding-left: $large-spacing;
-	min-height: rem-calc(116px);
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	outline: 1px dashed #f0f;
 
-	@include breakpoint(large) {
-		display: flex;
-		flex-flow: row wrap;
-		justify-content: space-between;
-		align-items: center;
+	.logo {}
 
-		@include row();
-		padding-top: rem-calc(58px);
-		padding-bottom: rem-calc(90px);
-		padding-right: $small-spacing;
+	// groups everything to appear in mobile menu
+	.header--inner {
+		background-color: var(--brand-l-grey);
+		outline: 1px dashed orange;
 	}
 
-	.logo {
-		color: var(--brand-mid-blue);
+	// primary menu on mobile and desktop
+	.primary-menu {}
 
-		@include breakpoint(medium down) {
-			position: relative;
-			z-index: 100;
-			top: $medium-spacing;
-			left: $medium-spacing;
-		}
-	}
+	.header--shop-links {
+		outline: 1px dashed green;
 
-	.social-links {
-		margin-bottom: $medium-spacing;
-	}
-
-	.copyright {
-		text-align: center;
-		font-size: rem-calc(14px);
-
-		span:last-child {
-			display: block;
-		}
-	}
-}
-
-// When the offCanvas is open...
-.primary-navigation-open {
-	.logo {
-		left: 0;
-		color: var(--brand-light-blue);
-		background-color: var(--brand-dark-blue);
-		border-radius: 50%;
-
-		a {
+		.menu-item {
+			display: inline-block;
+			margin-bottom: 0;
 			padding: $small-spacing;
+			font-size: rem-calc(15px);
+
+			a {
+				display: block;
+			}
 		}
 	}
 
-	.soc {
-		&:hover,
-		&:focus {
-			color: white;
-		}
-	}
-}
-
-.header--inner {
-	@include breakpoint(large) {
-		.social-links,
-		.copyright {
-			display: none;
-		}
-	}
+	// remove later
+	margin-bottom: 100px;
 }

@@ -113,14 +113,11 @@ $offMenuWidth: 100vw;
 
 	.menu-item {
 		display: block;
-		font-size: rem-calc(40);
-		line-height: 1.4;
-		font-weight: $medium;
+		padding: $small-spacing;
+		font-size: rem-calc(15px);
 
 		@include breakpoint(large) {
 			display: inline-block;
-			margin-right: $xlarge-spacing;
-			font-size: rem-calc(24);
 		}
 
 		&:last-of-type {
@@ -129,12 +126,10 @@ $offMenuWidth: 100vw;
 
 		a {
 			display: inline-block;
-			color: var(--brand-mid-blue);
 
 			&:hover,
 			&:focus {
-				color: var(--brand-light-blue);
-				border-bottom-color: inherit;
+				
 			}
 		}
 	}
@@ -143,18 +138,18 @@ $offMenuWidth: 100vw;
 .primary-navigation-open {
 	.primary--menu {
 		a {
-			color: var(--brand-light-blue);
+			// color: var(--brand-light-blue);
 
 			&:hover,
 			&:focus {
-				color: white;
+				// color: white;
 			}
 		}
 	}
 }
 
 .primary--menu {
-	margin-bottom: $xlarge-spacing;
+	// margin-bottom: $xlarge-spacing;
 
 	.menu-item-has-children {
 		position: relative;
@@ -189,16 +184,13 @@ $offMenuWidth: 100vw;
 		background-color: transparent;
 		border: 0;
 		cursor: pointer;
-
-		@include breakpoint(large) {
-		}
 	}
 
 	.sub-menu {
 		margin: 0;
 		padding: $medium-spacing;
 		width: 100%;
-		border: 1px solid var(--brand-highlight);
+		// border: 1px solid var(--brand-highlight);
 		border-radius: 5px;
 
 		@include breakpoint(large) {
