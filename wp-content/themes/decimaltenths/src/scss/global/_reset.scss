@@ -1,0 +1,62 @@
+// ==============================================
+// Reset
+// ==============================================
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+	background-repeat: no-repeat;
+}
+
+::before,
+::after {
+	text-decoration: inherit;
+	vertical-align: inherit;
+}
+
+:where(body) {
+	block-size: -moz-available;
+	block-size: -webkit-fill-available;
+	block-size: stretch;
+	margin: 0;
+}
+
+:where(svg, img) {
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
+}
+
+figure {
+	margin: 0 auto rem-calc(20px);
+}
+
+p {
+	margin-top: 0;
+}
+
+// pre {
+// 	padding: 0 $large-spacing $xlarge-spacing;
+// }
+
+// code {
+// 	white-space: pre-wrap;
+// }
+
+// body {
+// 	background-color: yellow;
+
+// 	@include breakpoint(medium) {
+// 		background-color: orange;
+// 	}
+
+// 	@include breakpoint(large) {
+// 		background-color: blue;
+// 	}
+
+// 	@include breakpoint(xlarge) {
+// 		background-color: green;
+// 	}
+// }

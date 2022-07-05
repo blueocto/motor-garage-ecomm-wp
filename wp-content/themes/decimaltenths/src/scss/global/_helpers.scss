@@ -1,0 +1,62 @@
+// ==============================================
+// Helper classes
+// ==============================================
+
+// Accessibility - show for screenreaders, not visually
+.visuallyhidden,
+.screen-reader-text {
+	@extend %show-for-sr;
+}
+
+.picture {
+	@extend %picture;
+
+	img {
+		@extend %picture-child;
+	}
+}
+
+.edit-link {
+	background-color: #097eb0; //blueocto blue
+	border-radius: 3px;
+
+	.post-edit-link {
+		display: inline-block;
+		color: white;
+		padding: $small-spacing;
+	}
+}
+
+/* contain work posts where it is a laptop photo
+these are displayed globally */
+
+.type-single-work {
+	.wp-block-post-featured-image,
+	.excerpt--picture {
+		@extend %picture;
+		height: 300px;
+
+		img {
+			@extend %picture-child;
+			top: 50%;
+			transform: translateY(-50%);
+			height: 100% !important; // why WP do you keep applying a fixed height? dick
+			object-fit: contain;
+		}
+	}
+}
+
+.wp-block-post.type-post {
+	.wp-block-post-featured-image {
+		a {
+			@extend %picture;
+			display: block;
+			height: 300px !important;
+			overflow: hidden;
+
+			img {
+				@extend %picture-child;
+			}
+		}
+	}
+}

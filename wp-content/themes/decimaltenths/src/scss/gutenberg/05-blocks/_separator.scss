@@ -1,0 +1,47 @@
+// From block-library
+// ==============================================
+.wp-block-separator {
+	border-top: 1px solid currentColor;
+	border-bottom: 1px solid currentColor;
+}
+.wp-block-separator.is-style-wide {
+	border-bottom-width: 1px;
+}
+.wp-block-separator.is-style-dots {
+	background: none !important;
+	border: none;
+	text-align: center;
+	line-height: 1;
+	height: auto;
+}
+.wp-block-separator.is-style-dots::before {
+	content: "···";
+	color: currentColor;
+	font-size: 1.5em;
+	letter-spacing: 2em;
+	/*rtl:ignore*/
+	padding-left: 2em;
+	font-family: serif;
+}
+.wp-block-separator {
+	border: none;
+	border-bottom: 8px solid currentColor;
+	margin-left: 0;
+}
+
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+	width: 130px;
+}
+.wp-block-separator.has-background:not(.is-style-dots) {
+	border-bottom: none;
+	height: 1px;
+}
+.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots) {
+	height: 8px;
+}
+
+// placeholder container, so we can control the max-width
+.hr-rule {
+	margin-top: rem-calc(40) !important; //end node
+	margin-bottom: rem-calc(60) !important; //end node
+}

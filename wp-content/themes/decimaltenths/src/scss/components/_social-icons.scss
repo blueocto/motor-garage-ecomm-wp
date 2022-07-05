@@ -1,0 +1,19 @@
+// ==============================================
+// Social Icons
+// ==============================================
+
+.social-links {
+	.soc {
+		display: inline-block;
+		vertical-align: middle;
+		width: 50px;
+		height: 50px;
+		text-align: center;
+
+		.svg {
+			max-width: 30px;
+			height: auto;
+			max-height: 30px;
+		}
+	}
+}

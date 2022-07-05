@@ -1,0 +1,96 @@
+// ==============================================
+// Header
+// ==============================================
+
+.a11y-skip {
+	@extend %show-for-sr;
+}
+
+// Global logo style
+.logo {
+	display: block;
+	width: rem-calc(68px);
+	height: rem-calc(68px);
+
+	@include breakpoint(large) {
+		width: rem-calc(90px);
+		height: rem-calc(90px);
+	}
+
+	a {
+		display: block;
+	}
+}
+
+.header {
+	position: relative;
+	z-index: 1;
+	padding-left: $large-spacing;
+	min-height: rem-calc(116px);
+
+	@include breakpoint(large) {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: center;
+
+		@include row();
+		padding-top: rem-calc(58px);
+		padding-bottom: rem-calc(90px);
+		padding-right: $small-spacing;
+	}
+
+	.logo {
+		color: var(--brand-mid-blue);
+
+		@include breakpoint(medium down) {
+			position: relative;
+			z-index: 100;
+			top: $medium-spacing;
+			left: $medium-spacing;
+		}
+	}
+
+	.social-links {
+		margin-bottom: $medium-spacing;
+	}
+
+	.copyright {
+		text-align: center;
+		font-size: rem-calc(14px);
+
+		span:last-child {
+			display: block;
+		}
+	}
+}
+
+// When the offCanvas is open...
+.primary-navigation-open {
+	.logo {
+		left: 0;
+		color: var(--brand-light-blue);
+		background-color: var(--brand-dark-blue);
+		border-radius: 50%;
+
+		a {
+			padding: $small-spacing;
+		}
+	}
+
+	.soc {
+		&:hover,
+		&:focus {
+			color: white;
+		}
+	}
+}
+
+.header--inner {
+	@include breakpoint(large) {
+		.social-links,
+		.copyright {
+			display: none;
+		}
+	}
+}

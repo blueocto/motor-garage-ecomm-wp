@@ -1,0 +1,183 @@
+// ==============================================
+// Extends
+// ==============================================
+
+// Makes an element visually hidden, but still accessible to keyboards and assistive devices.
+%show-for-sr {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	clip-path: inset(50%);
+	border: 0;
+
+	&:focus {
+		padding: 15px 23px 14px;
+		width: auto;
+		width: auto;
+		clip: auto !important;
+		border-radius: 3px;
+	}
+}
+
+@mixin show-for-sr() {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	clip-path: inset(50%);
+	border: 0;
+
+	&:focus {
+		padding: 15px 23px 14px;
+		width: auto;
+		width: auto;
+		clip: auto !important;
+		border-radius: 3px;
+	}
+}
+
+// to use when inside breakpoint
+@mixin row() {
+	// max-width: var(--grid-width);
+	max-width: var(--responsive--alignwide-width);
+	margin-right: auto;
+	margin-left: auto;
+	display: flex;
+	flex-flow: row wrap;
+}
+
+%row {
+	// max-width: var(--grid-width);
+	max-width: var(--responsive--alignwide-width);
+	margin-right: auto;
+	margin-left: auto;
+	display: flex;
+	flex-flow: row wrap;
+}
+
+// to use when inside breakpoint
+@mixin column() {
+	flex: 1 1 0px;
+	padding-right: $small-spacing;
+	padding-left: $small-spacing;
+	min-width: 0;
+
+	@include breakpoint(large) {
+		padding-right: $medium-spacing;
+		padding-left: $medium-spacing;
+	}
+}
+
+%column {
+	flex: 1 1 0px;
+	padding-right: $small-spacing;
+	padding-left: $small-spacing;
+	min-width: 0;
+
+	@include breakpoint(large) {
+		padding-right: $medium-spacing;
+		padding-left: $medium-spacing;
+	}
+}
+
+// Typography scale at 1.285
+%h1 {
+	font-size: var(--size-l-4);
+
+	@include breakpoint(large) {
+		font-size: var(--size-l-6);
+	}
+}
+
+%h2 {
+	font-size: var(--size-l-3);
+
+	@include breakpoint(large) {
+		font-size: var(--size-l-5);
+	}
+}
+
+%h3 {
+	font-size: var(--size-l-2);
+
+	@include breakpoint(large) {
+		font-size: var(--size-l-4);
+	}
+}
+
+%h4 {
+	font-size: var(--size-l-1);
+
+	@include breakpoint(large) {
+		font-size: var(--size-l-3);
+	}
+}
+
+%h5 {
+	font-size: var(--size-s-0);
+
+	@include breakpoint(large) {
+		font-size: var(--size-l-2);
+	}
+}
+
+%h6 {
+	font-size: var(--size-s-1);
+
+	@include breakpoint(large) {
+		font-size: var(--size-l-1);
+	}
+}
+
+%p {
+	font-size: rem-calc(17px);
+}
+
+%a {
+	line-height: inherit;
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+	background-color: transparent;
+	transition: all 0.3s ease-in-out;
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+%a-styled {
+	padding-bottom: 1px;
+	color: var(--brand-mid-blue--dark-10);
+	border-bottom: 2px solid;
+
+	&:hover,
+	&:focus {
+		color: var(--brand-mid-blue);
+		border-bottom-color: transparent;
+	}
+}
+
+%picture {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+%picture-child {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+}

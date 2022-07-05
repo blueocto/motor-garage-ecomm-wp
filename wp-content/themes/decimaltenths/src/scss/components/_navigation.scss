@@ -1,0 +1,243 @@
+// ==============================================
+// Navigation
+// ==============================================
+
+// OffCanvas
+// =================================
+
+$offMenuWidth: 100vw;
+
+// Menu trigger to open/close off-canvas
+.menu-button-container {
+	position: absolute;
+	top: 24px;
+	right: calc(-100% + 20px);
+
+	@include breakpoint(large) {
+		display: none;
+	}
+}
+
+.menu-button-trigger {
+	padding: 0;
+	width: 50px;
+	height: 50px;
+	color: var(--brand-mid-blue);
+	font-size: rem-calc(13px);
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
+	border: 0;
+	cursor: pointer;
+	background-color: transparent;
+
+	&:hover,
+	&:focus {
+		background-color: var(--grey-30);
+	}
+
+	.svg {
+		max-width: 16px;
+	}
+
+	&[aria-expanded="false"] {
+		.open {
+			display: block;
+		}
+		.close {
+			display: none;
+		}
+	}
+
+	&[aria-expanded="true"] {
+		.open {
+			display: none;
+		}
+		.close {
+			display: block;
+		}
+	}
+}
+
+// Entire container is off-canvas
+.header--inner {
+	@include breakpoint(medium down) {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: $offMenuWidth;
+		min-height: 100vh;
+		transition: all 0.3s ease-in-out;
+		padding: rem-calc(115px 15px 15px);
+		transform: translate3d(-$offMenuWidth, 0, 0);
+		background-color: transparent;
+		z-index: 0;
+	}
+
+	@include breakpoint(large) {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+	}
+}
+
+// when opened, class applied to the body
+.primary-navigation-open {
+	.header--inner {
+		@include breakpoint(medium down) {
+			color: var(--brand-light-blue);
+			background-color: var(--brand-dark-blue);
+			transform: translate3d(0, 0, 0);
+			z-index: 99;
+			overflow-y: scroll;
+		}
+	}
+
+	.menu-button-container {
+		right: 20px;
+	}
+
+	.menu-button-trigger {
+		color: var(--brand-light-blue);
+	}
+}
+
+// Global menu styles
+// =================================
+
+// UL
+.menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	.menu-item {
+		display: block;
+		font-size: rem-calc(40);
+		line-height: 1.4;
+		font-weight: $medium;
+
+		@include breakpoint(large) {
+			display: inline-block;
+			margin-right: $xlarge-spacing;
+			font-size: rem-calc(24);
+		}
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+
+		a {
+			display: inline-block;
+			color: var(--brand-mid-blue);
+
+			&:hover,
+			&:focus {
+				color: var(--brand-light-blue);
+				border-bottom-color: inherit;
+			}
+		}
+	}
+}
+
+.primary-navigation-open {
+	.primary--menu {
+		a {
+			color: var(--brand-light-blue);
+
+			&:hover,
+			&:focus {
+				color: white;
+			}
+		}
+	}
+}
+
+.primary--menu {
+	margin-bottom: $xlarge-spacing;
+
+	.menu-item-has-children {
+		position: relative;
+
+		.sub-menu-toggle[aria-expanded="false"] {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2355a5e2' d='M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z'/%3E%3C/svg%3E");
+			background-position: 10px center;
+
+			+ .sub-menu {
+				display: none;
+			}
+		}
+
+		.sub-menu-toggle[aria-expanded="true"] {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2355a5e2' d='M416 352c-8.188 0-16.38-3.125-22.62-9.375L224 173.3l-169.4 169.4c-12.5 12.5-32.75 12.5-45.25 0s-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25C432.4 348.9 424.2 352 416 352z'/%3E%3C/svg%3E");
+			background-position: 10px center;
+
+			+ .sub-menu {
+				display: block;
+			}
+		}
+	}
+
+	// toggle the submenu
+	.sub-menu-toggle {
+		position: relative;
+		right: 0;
+		display: inline-block;
+		vertical-align: middle;
+		width: 40px;
+		height: 20px;
+		background-color: transparent;
+		border: 0;
+		cursor: pointer;
+
+		@include breakpoint(large) {
+		}
+	}
+
+	.sub-menu {
+		margin: 0;
+		padding: $medium-spacing;
+		width: 100%;
+		border: 1px solid var(--brand-highlight);
+		border-radius: 5px;
+
+		@include breakpoint(large) {
+			position: absolute;
+			left: 50%;
+			top: 100%;
+			min-width: 300px;
+			max-width: 400px;
+			transform: translateX(-50%);
+			background-color: white;
+			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+			transition: all 0.5s ease;
+			z-index: 88888;
+		}
+
+		@include breakpoint(xlarge) {
+			min-width: max-content;
+			max-width: unset;
+		}
+
+		.sub-menu {
+			border: none;
+		}
+
+		.menu-item {
+			display: block;
+			padding-bottom: $medium-spacing;
+
+			@include breakpoint(medium down) {
+				font-size: rem-calc(24);
+			}
+		}
+
+		// Sub-menu items om wide screens.
+		@include breakpoint(medium down) {
+			// For nested sub-menus, don't duplicate the padding
+			> .menu-item > .sub-menu {
+				padding: 0;
+			}
+		}
+	}
+}
