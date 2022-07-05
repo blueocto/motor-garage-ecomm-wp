@@ -54,11 +54,7 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 
 			/* Enqueue our Theme scripts */
 
-			// wp_enqueue_script( 'theme-nav', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array( '' ), '', true );
-			
-			// wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array( 'jquery' ), '', true );
-
-			// wp_enqueue_script( 'theme-menu', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'primary-navigation.js' ), '', '', true );
+			wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array(), '', false );
 
 
 			//*====*//
