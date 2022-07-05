@@ -58,9 +58,9 @@
 		<?php octopress_primary_nav(); ?>
 
 		<div class="header--shop-links">
-			<p class="menu-item"><a href="#">Cart {ico}</a></p>
-			<p class="menu-item"><a href="">Account {ico}</a></p>
-			<p class="menu-item"><a href="">Search {ico}</a></p>
+			<p class="menu-item"><a href="/basket/">Cart <?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?></a></p>
+			<p class="menu-item"><a href="/my-account/">Account <?php get_template_part( 'template-parts/svg/user-light' ); ?></a></p>
+			<p class="menu-item"><a href="">Search <?php get_template_part( 'template-parts/svg/magnifying-glass-light' ); ?></a></p>
 		</div>
 
 	</div>

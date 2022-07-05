@@ -12,7 +12,6 @@
 	margin-bottom: 0;
 	width: rem-calc(170px);
 	height: rem-calc(47px);
-	outline: 1px dashed blue;
 
 	a {
 		display: block;
@@ -23,41 +22,50 @@
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
-	outline: 1px dashed #f0f;
+	padding: $small-spacing;
+	background-color: black;
 
-	.logo {}
+	.logo {
+		margin-right: $large-spacing;
+	}
 
 	// groups everything to appear in mobile menu
 	.header--inner {
-		background-color: var(--brand-l-grey);
-		outline: 1px dashed orange;
+		flex-grow: 1;
 	}
 
-	// primary menu on mobile and desktop
-	.primary-menu {}
-
 	.header--shop-links {
-		outline: 1px dashed green;
+		margin-left: auto;
+		align-self: flex-end;
 
 		.menu-item {
 			display: block;
 			margin-bottom: 0;
 			padding: $small-spacing;
+			color: white;
+			font-weight: $semi-bold;
 			font-size: rem-calc(16px);
 			text-transform: uppercase;
-			font-weight: $semi-bold;
 			letter-spacing: 0.01em;
 
 			@include breakpoint(large) {
+				position: relative;
+				top: -1px;
 				display: inline-block;
+				padding-left: $large-spacing;
 			}
 
 			a {
 				display: block;
 			}
+
+			.svg {
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 10px;
+				width: 16px;
+				fill: var(--brand-green);
+			}
 		}
 	}
-
-	// remove later
-	margin-bottom: 100px;
 }
