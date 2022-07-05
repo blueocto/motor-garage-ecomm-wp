@@ -730,9 +730,9 @@ class Payment_Gateway_Apple_Pay {
 
 		if ( ! $this->api instanceof ApplePayApi\Payment_Gateway_Apple_Pay_API ) {
 
-			require_once( $this->get_plugin()->get_payment_gateway_framework_path() . '/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-api.php');
-			require_once( $this->get_plugin()->get_payment_gateway_framework_path() . '/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-api-request.php');
-			require_once( $this->get_plugin()->get_payment_gateway_framework_path() . '/apple-pay/api/class-sv-wc-payment-gateway-apple-pay-api-response.php');
+			require_once( $this->get_plugin()->get_payment_gateway_framework_path() . '/ApplePay/Api/Payment_Gateway_Apple_Pay_Api.php' );
+			require_once( $this->get_plugin()->get_payment_gateway_framework_path() . '/ApplePay/Api/Payment_Gateway_Apple_Pay_Api_Request.php' );
+			require_once( $this->get_plugin()->get_payment_gateway_framework_path() . '/ApplePay/Api/Payment_Gateway_Apple_Pay_Api_Response.php' );
 
 			$this->api = new ApplePayApi\Payment_Gateway_Apple_Pay_API( $this->get_processing_gateway() );
 		}

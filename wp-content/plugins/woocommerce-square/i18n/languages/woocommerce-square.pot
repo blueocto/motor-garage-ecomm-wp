@@ -2,10 +2,10 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Square 3.0.1\n"
+"Project-Id-Version: WooCommerce Square 3.1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-square\n"
-"POT-Creation-Date: 2022-05-09 06:03:13+00:00\n"
+"POT-Creation-Date: 2022-06-09 01:29:29+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,7 +69,7 @@ msgid "Stock must be fetched from Square before editing stock quantity"
 msgstr ""
 
 #: includes/Admin/Privacy.php:43 includes/Admin/Settings_Page.php:54
-#: includes/Gateway.php:82 includes/Settings.php:221 includes/Settings.php:755
+#: includes/Gateway.php:82 includes/Settings.php:221 includes/Settings.php:762
 msgid "Square"
 msgstr ""
 
@@ -105,8 +105,7 @@ msgstr ""
 msgid "Close modal window"
 msgstr ""
 
-#: includes/Admin/Settings_Page.php:179
-#. translators: Placeholders: %1$s - <strong>, %2%s - </strong>
+#: includes/Admin/Settings_Page.php:178
 msgid ""
 "You are about to import all new products, variations and categories from "
 "Square. This will create a new product in WooCommerce for every product "
@@ -114,11 +113,11 @@ msgid ""
 "imports, these will be ignored in the import."
 msgstr ""
 
-#: includes/Admin/Settings_Page.php:181
+#: includes/Admin/Settings_Page.php:180
 msgid "Do you wish to import existing product updates from Square?"
 msgstr ""
 
-#: includes/Admin/Settings_Page.php:183
+#: includes/Admin/Settings_Page.php:182
 #. translators: Placeholders: %1$s - <a> tag linking to WooCommerce Square
 #. docs, %2%s - closing </a> tag
 msgid ""
@@ -126,18 +125,18 @@ msgid ""
 "information from Square. %1$sView Documentation%2$s."
 msgstr ""
 
-#: includes/Admin/Settings_Page.php:184
+#: includes/Admin/Settings_Page.php:183
 msgid "Update existing products during import."
 msgstr ""
 
-#: includes/Admin/Settings_Page.php:188 includes/Admin/Sync_Page.php:392
+#: includes/Admin/Settings_Page.php:187 includes/Admin/Sync_Page.php:392
 #: includes/Framework/PaymentGateway/Admin/views/html-order-partial-capture.php:41
 #: includes/Framework/PaymentGateway/Payment_Gateway_My_Payment_Methods.php:203
 #: vendor/woocommerce/action-scheduler/classes/ActionScheduler_ListTable.php:133
 msgid "Cancel"
 msgstr ""
 
-#: includes/Admin/Settings_Page.php:189 includes/Settings.php:242
+#: includes/Admin/Settings_Page.php:188 includes/Settings.php:242
 msgid "Import Products"
 msgstr ""
 
@@ -434,11 +433,11 @@ msgstr ""
 msgid "The sync job has failed. Check sync records, or %s."
 msgstr ""
 
-#: includes/Framework/Lifecycle.php:303 includes/Lifecycle.php:183
+#: includes/Framework/Lifecycle.php:303 includes/Lifecycle.php:184
 msgid "Awesome"
 msgstr ""
 
-#: includes/Framework/Lifecycle.php:304 includes/Lifecycle.php:186
+#: includes/Framework/Lifecycle.php:304 includes/Lifecycle.php:187
 msgid "Fantastic"
 msgstr ""
 
@@ -446,7 +445,7 @@ msgstr ""
 msgid "Cowabunga"
 msgstr ""
 
-#: includes/Framework/Lifecycle.php:306 includes/Lifecycle.php:184
+#: includes/Framework/Lifecycle.php:306 includes/Lifecycle.php:185
 msgid "Congratulations"
 msgstr ""
 
@@ -454,7 +453,7 @@ msgstr ""
 msgid "Hot dog"
 msgstr ""
 
-#: includes/Framework/Lifecycle.php:314 includes/Lifecycle.php:193
+#: includes/Framework/Lifecycle.php:314 includes/Lifecycle.php:194
 #. translators: Placeholders: %1$s - plugin name, %2$s - <a> tag, %3$s - </a>
 #. tag, %4$s - <a> tag, %5$s - </a> tag
 msgid ""
@@ -834,17 +833,17 @@ msgstr ""
 
 #: includes/Framework/PaymentGateway/ApplePay/Payment_Gateway_Apple_Pay.php:541
 #: includes/Gateway/API/Requests/Orders.php:77
-#: includes/Gateway/Digital_Wallet.php:426
+#: includes/Gateway/Digital_Wallet.php:427
 msgid "Discount"
 msgstr ""
 
 #: includes/Framework/PaymentGateway/ApplePay/Payment_Gateway_Apple_Pay.php:551
-#: includes/Gateway/Digital_Wallet.php:410
+#: includes/Gateway/Digital_Wallet.php:411
 msgid "Shipping"
 msgstr ""
 
 #: includes/Framework/PaymentGateway/ApplePay/Payment_Gateway_Apple_Pay.php:561
-#: includes/Gateway/Digital_Wallet.php:434
+#: includes/Gateway/Digital_Wallet.php:435
 msgid "Fees"
 msgstr ""
 
@@ -1084,7 +1083,7 @@ msgstr ""
 #: includes/Framework/PaymentGateway/Integrations/Payment_Gateway_Integration_Subscriptions.php:353
 #: includes/Framework/PaymentGateway/Payment_Gateway.php:2523
 #: includes/Gateway/Blocks_Handler.php:137
-#: includes/Gateway/Digital_Wallet.php:208
+#: includes/Gateway/Digital_Wallet.php:209
 #: includes/Gateway/Payment_Form.php:238 includes/Gateway.php:251
 msgid "An error occurred, please try again or try an alternate form of payment."
 msgstr ""
@@ -1920,7 +1919,7 @@ msgid ""
 "version of WooCommerce Blocks or WooCommerce to fix these issues."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:114
+#: includes/Gateway/Digital_Wallet.php:115
 #. Translators: %1$s: expected location of apple pay verification file, %2$s:
 #. opening href tag with link to Square documentation, %3$s: closing href tag
 msgid ""
@@ -1929,7 +1928,7 @@ msgid ""
 "information, please read our documentation on %2$sSetting up Apple Pay%3$s."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:130
+#: includes/Gateway/Digital_Wallet.php:131
 #. Translators: %1$s: opening bold tags, %2$s: closing strong/bold tags, %3$s:
 #. expected location of apple pay verification file, %4$s: opening href tag
 #. with link to Square documentation, %5$s: closing href tag
@@ -1939,51 +1938,51 @@ msgid ""
 "logs%2$s to find out what caused the registration to fail."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:177
+#: includes/Gateway/Digital_Wallet.php:178
 msgid "OR"
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:279
+#: includes/Gateway/Digital_Wallet.php:280
 #. translators: product ID
 msgid "Product with the ID (%d) cannot be found."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:295
+#: includes/Gateway/Digital_Wallet.php:296
 #. translators: 1: product name 2: quantity in stock
 msgid ""
 "You cannot add that amount of \"%1$s\"; to the cart because there is not "
 "enough stock (%2$s remaining)."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:300
+#: includes/Gateway/Digital_Wallet.php:301
 #. translators: 1: product name
 msgid "You cannot purchase \"%1$s\" because it is currently not available."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:322
-#: includes/Gateway/Digital_Wallet.php:418
+#: includes/Gateway/Digital_Wallet.php:323
+#: includes/Gateway/Digital_Wallet.php:419
 msgid "Tax"
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:357
+#: includes/Gateway/Digital_Wallet.php:358
 msgid "This payment method cannot be used for multiple shipments."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:368
+#: includes/Gateway/Digital_Wallet.php:369
 #: vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler_Store.php:378
 msgid "Pending"
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:469
+#: includes/Gateway/Digital_Wallet.php:470
 #. translators: Context (product, cart, checkout or page)
 msgid "Empty payment request data for %s."
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:663
+#: includes/Gateway/Digital_Wallet.php:734
 msgid "Empty cart"
 msgstr ""
 
-#: includes/Gateway/Digital_Wallet.php:797
+#: includes/Gateway/Digital_Wallet.php:868
 msgid "Unable to verify domain with Apple Pay - missing access token."
 msgstr ""
 
@@ -2199,7 +2198,7 @@ msgid_plural "Updated data for %d products."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Lifecycle.php:185
+#: includes/Lifecycle.php:186
 msgid "Great"
 msgstr ""
 
@@ -2441,8 +2440,14 @@ msgstr ""
 msgid "Please choose a location"
 msgstr ""
 
-#: includes/Settings.php:353
+#: includes/Settings.php:357
 msgid "Import all products from Square"
+msgstr ""
+
+#: includes/Settings.php:359
+msgid ""
+"You have made changes to the settings. Please save the changes to enable "
+"the button."
 msgstr ""
 
 #: includes/Sync/Interval_Polling.php:98
@@ -3234,6 +3239,29 @@ msgstr[1] ""
 #. translators: 1: source action ID 2: source store class 3: destination action
 #. ID 4: destination store class
 msgid "Migrated action with ID %1$d in %2$s to ID %3$d in %4$s"
+msgstr ""
+
+#: woocommerce-square.php:349
+#. translators: plugin name
+msgid ""
+"<strong>All features in %1$s have been disabled</strong> due to unsupported "
+"settings:<br>"
+msgstr ""
+
+#: woocommerce-square.php:357
+#. translators: minimum PHP version, current PHP version
+msgid ""
+"&bull;&nbsp;<strong>Invalid PHP version: </strong>The minimum PHP version "
+"required is %1$s. You are running %2$s.<br>"
+msgstr ""
+
+#: woocommerce-square.php:366
+#. translators: link to documentation
+msgid ""
+"&bull;&nbsp;<strong>Invalid OPcache config: </strong><a href=\"%s\" "
+"target=\"_blank\">Please ensure the <code>save_comments</code> PHP option "
+"is enabled.</a> You may need to contact your hosting provider to change "
+"caching options."
 msgstr ""
 
 #. Plugin URI of the plugin/theme

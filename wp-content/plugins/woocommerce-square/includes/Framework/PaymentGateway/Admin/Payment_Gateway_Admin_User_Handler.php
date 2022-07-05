@@ -82,7 +82,7 @@ class Payment_Gateway_Admin_User_Handler {
 		$section_title       = $this->get_title();
 		$section_description = $this->get_description();
 
-		include( $this->get_plugin()->get_payment_gateway_framework_path() . '/admin/views/html-user-profile-section.php' );
+		include( $this->get_plugin()->get_payment_gateway_framework_path() . '/Admin/views/html-user-profile-section.php' );
 	}
 
 
@@ -122,7 +122,7 @@ class Payment_Gateway_Admin_User_Handler {
 			$name  = $field['name'];
 			$value = $field['value'];
 
-			include( $this->get_plugin()->get_payment_gateway_framework_path() . '/admin/views/html-user-profile-field-customer-id.php' );
+			include( $this->get_plugin()->get_payment_gateway_framework_path() . '/Admin/views/html-user-profile-field-customer-id.php' );
 		}
 	}
 

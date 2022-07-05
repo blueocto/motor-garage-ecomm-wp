@@ -175,8 +175,7 @@ class Settings_Page extends \WC_Settings_Page {
 							</button>
 						</header>
 						<article>
-							<?php /* translators: Placeholders: %1$s - <strong>, %2%s - </strong> */ ?>
-							<p><?php printf( esc_html__( 'You are about to import all new products, variations and categories from Square. This will create a new product in WooCommerce for every product retrieved from Square. If you have products in the trash from the previous imports, these will be ignored in the import.', 'woocommerce-square' ), '<strong>', '</strong>' ); ?></p>
+							<p><?php esc_html_e( 'You are about to import all new products, variations and categories from Square. This will create a new product in WooCommerce for every product retrieved from Square. If you have products in the trash from the previous imports, these will be ignored in the import.', 'woocommerce-square' ); ?></p>
 							<hr>
 							<h4><?php esc_html_e( 'Do you wish to import existing product updates from Square?', 'woocommerce-square' ); ?></h4>
 							<?php /* translators: Placeholders: %1$s - <a> tag linking to WooCommerce Square docs, %2%s - closing </a> tag */ ?>
@@ -196,6 +195,4 @@ class Settings_Page extends \WC_Settings_Page {
 		</script>
 		<?php
 	}
-
-
 }

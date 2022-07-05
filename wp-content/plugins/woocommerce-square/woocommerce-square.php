@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WooCommerce Square
- * Version: 3.0.1
+ * Version: 3.1.0
  * Plugin URI: https://woocommerce.com/products/square/
  * Description: Adds ability to sync inventory between WooCommerce and Square POS. In addition, you can also make purchases through the Square payment gateway.
  * Author: WooCommerce
@@ -20,12 +20,12 @@
  *
  * WC requires at least: 3.0
  * WC tested up to: 6.3
- * Tested up to: 5.9
+ * Tested up to: 6.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
-require_once( plugin_dir_path( __FILE__ ) . 'vendor/woocommerce/action-scheduler/action-scheduler.php' );
+require_once plugin_dir_path( __FILE__ ) . 'vendor/woocommerce/action-scheduler/action-scheduler.php';
 
 if ( ! defined( 'WC_SQUARE_PLUGIN_URL' ) ) {
 	define( 'WC_SQUARE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -59,7 +59,7 @@ class WooCommerce_Square_Loader {
 	const FRAMEWORK_VERSION = '5.4.0';
 
 	/** the plugin name, for displaying notices */
-	const PLUGIN_NAME = 'WooCommerce Square';
+	const PLUGIN_NAME = 'Square for WooCommerce';
 
 
 	/** @var WooCommerce_Square_Loader single instance of this class */
@@ -75,20 +75,14 @@ class WooCommerce_Square_Loader {
 	 * @since 2.0.0
 	 */
 	protected function __construct() {
-
-		register_activation_hook( __FILE__, array( $this, 'activation_check' ) );
-
-		add_action( 'admin_init', array( $this, 'check_environment' ) );
 		add_action( 'admin_init', array( $this, 'add_plugin_notices' ) );
-
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
 
-		// if the environment check fails, initialize the plugin
+		// if the environment check fails, don't initialize the plugin.
 		if ( $this->is_environment_compatible() ) {
 			add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
+			add_action( 'woocommerce_blocks_payment_method_type_registration', array( $this, 'register_payment_method_block_integrations' ), 5, 1 );
 		}
-
-		add_action( 'woocommerce_blocks_payment_method_type_registration', array( $this, 'register_payment_method_block_integrations' ), 5, 1 );
 	}
 
 
@@ -99,6 +93,7 @@ class WooCommerce_Square_Loader {
 	 */
 	public function __clone() {
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		_doing_it_wrong( __FUNCTION__, sprintf( 'You cannot clone instances of %s.', get_class( $this ) ), '2.0.0' );
 	}
 
@@ -110,6 +105,7 @@ class WooCommerce_Square_Loader {
 	 */
 	public function __wakeup() {
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		_doing_it_wrong( __FUNCTION__, sprintf( 'You cannot unserialize instances of %s.', get_class( $this ) ), '2.0.0' );
 	}
 
@@ -128,12 +124,12 @@ class WooCommerce_Square_Loader {
 		$this->load_framework();
 
 		// autoload plugin and vendor files
-		$loader = require_once( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
+		$loader = require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 		// register plugin namespace with autoloader
 		$loader->addPsr4( 'WooCommerce\\Square\\', __DIR__ . '/includes' );
 
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/Functions.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'includes/Functions.php';
 
 		// fire it up!
 		wc_square();
@@ -146,8 +142,8 @@ class WooCommerce_Square_Loader {
 	 * @since 2.0.0
 	 */
 	protected function load_framework() {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/Framework/Plugin.php' );
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/Framework/PaymentGateway/Payment_Gateway_Plugin.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'includes/Framework/Plugin.php';
+		require_once plugin_dir_path( __FILE__ ) . 'includes/Framework/PaymentGateway/Payment_Gateway_Plugin.php';
 	}
 
 
@@ -175,40 +171,6 @@ class WooCommerce_Square_Loader {
 
 		return self::FRAMEWORK_VERSION;
 	}
-
-
-	/**
-	 * Checks the server environment and other factors and deactivates plugins as necessary.
-	 *
-	 * Based on http://wptavern.com/how-to-prevent-wordpress-plugins-from-activating-on-sites-with-incompatible-hosting-environments
-	 *
-	 * @since 2.0.0
-	 */
-	public function activation_check() {
-
-		if ( ! $this->is_environment_compatible() ) {
-
-			$this->deactivate_plugin();
-
-			wp_die( self::PLUGIN_NAME . ' could not be activated. ' . $this->get_environment_message() );
-		}
-	}
-
-	/**
-	 * Checks the environment on loading WordPress, just in case the environment changes after activation.
-	 *
-	 * @since 2.0.0
-	 */
-	public function check_environment() {
-
-		if ( ! $this->is_environment_compatible() && is_plugin_active( plugin_basename( __FILE__ ) ) ) {
-
-			$this->deactivate_plugin();
-
-			$this->add_admin_notice( 'bad_environment', 'error', self::PLUGIN_NAME . ' has been deactivated. ' . $this->get_environment_message() );
-		}
-	}
-
 
 	/**
 	 * Adds notices for out-of-date WordPress and/or WooCommerce versions.
@@ -308,7 +270,9 @@ class WooCommerce_Square_Loader {
 
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['activate'] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			unset( $_GET['activate'] );
 		}
 	}
@@ -344,7 +308,20 @@ class WooCommerce_Square_Loader {
 			?>
 			<div class="<?php echo esc_attr( $notice['class'] ); ?>">
 				<p>
-					<?php echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ); ?>
+					<?php
+						echo wp_kses(
+							$notice['message'],
+							array(
+								'a'      => array(
+									'href'   => array(),
+									'target' => array(),
+								),
+								'code'   => array(),
+								'strong' => array(),
+								'br'     => array(),
+							)
+						);
+					?>
 				</p>
 			</div>
 			<?php
@@ -361,26 +338,72 @@ class WooCommerce_Square_Loader {
 	 *
 	 * @return bool
 	 */
-	protected function is_environment_compatible() {
+	public function is_environment_compatible() {
+		$is_php_valid            = $this->is_php_version_valid();
+		$is_opcache_config_valid = $this->is_opcache_save_message_enabled();
+		$error_message           = '';
 
-		return version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '>=' );
+		if ( ! $is_php_valid || ! $is_opcache_config_valid ) {
+			$error_message .= sprintf(
+				// translators: plugin name
+				esc_html__( '<strong>All features in %1$s have been disabled</strong> due to unsupported settings:<br>', 'woocommerce-square' ),
+				self::PLUGIN_NAME
+			);
+		}
+
+		if ( ! $is_php_valid ) {
+			$error_message .= sprintf(
+				// translators: minimum PHP version, current PHP version
+				esc_html__( '&bull;&nbsp;<strong>Invalid PHP version: </strong>The minimum PHP version required is %1$s. You are running %2$s.<br>', 'woocommerce-square' ),
+				self::MINIMUM_PHP_VERSION,
+				PHP_VERSION
+			);
+		}
+
+		if ( ! $is_opcache_config_valid ) {
+			$error_message .= sprintf(
+				// translators: link to documentation
+				esc_html__( '&bull;&nbsp;<strong>Invalid OPcache config: </strong><a href="%s" target="_blank">Please ensure the <code>save_comments</code> PHP option is enabled.</a> You may need to contact your hosting provider to change caching options.', 'woocommerce-square' ),
+				'https://woocommerce.com/document/woocommerce-square/#section-43'
+			);
+		}
+
+		if ( ! empty( $error_message ) ) {
+			$this->add_admin_notice(
+				'bad_environment',
+				'error',
+				$error_message
+			);
+		}
+
+		return $is_php_valid && $is_opcache_config_valid;
 	}
-
 
 	/**
-	 * Gets the message for display when the environment is incompatible with this plugin.
+	 * Returns true if opcache.save_comments is enabled.
 	 *
-	 * @since 2.0.0
+	 * @since 3.0.2
 	 *
-	 * @return string
+	 * @return boolean
 	 */
-	protected function get_environment_message() {
+	protected function is_opcache_save_message_enabled() {
+		$zend_optimizer_plus = extension_loaded( 'Zend Optimizer+' ) && '0' === ( ini_get( 'zend_optimizerplus.save_comments' ) || '0' === ini_get( 'opcache.save_comments' ) );
+		$zend_opcache        = extension_loaded( 'Zend OPcache' ) && '0' === ini_get( 'opcache.save_comments' );
 
-		$message = sprintf( 'The minimum PHP version required for this plugin is %1$s. You are running %2$s.', self::MINIMUM_PHP_VERSION, PHP_VERSION );
-
-		return $message;
+		return ! ( $zend_optimizer_plus || $zend_opcache );
 	}
 
+	/**
+	 * Returns true if the PHP version of the environment
+	 * meets the requirement.
+	 *
+	 * @since 3.0.2
+	 *
+	 * @return boolean
+	 */
+	protected function is_php_version_valid() {
+		return version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '>=' );
+	}
 
 	/**
 	 * Register the Square Credit Card checkout block integration class

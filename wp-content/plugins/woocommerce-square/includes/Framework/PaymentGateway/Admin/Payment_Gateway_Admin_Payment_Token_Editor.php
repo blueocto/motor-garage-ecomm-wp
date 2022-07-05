@@ -101,7 +101,7 @@ class Payment_Gateway_Admin_Payment_Token_Editor {
 		$columns = $this->get_columns();
 		$actions = $this->get_actions();
 
-		include( $this->get_gateway()->get_plugin()->get_payment_gateway_framework_path() . '/admin/views/html-user-payment-token-editor.php' );
+		include( $this->get_gateway()->get_plugin()->get_payment_gateway_framework_path() . '/Admin/views/html-user-payment-token-editor.php' );
 	}
 
 
@@ -124,7 +124,7 @@ class Payment_Gateway_Admin_Payment_Token_Editor {
 
 		foreach ( $tokens as $token ) {
 
-			include( $this->get_gateway()->get_plugin()->get_payment_gateway_framework_path() . '/admin/views/html-user-payment-token-editor-token.php' );
+			include( $this->get_gateway()->get_plugin()->get_payment_gateway_framework_path() . '/Admin/views/html-user-payment-token-editor-token.php' );
 
 			$index++;
 		}
@@ -195,7 +195,7 @@ class Payment_Gateway_Admin_Payment_Token_Editor {
 
 			ob_start();
 
-			include( $this->get_gateway()->get_plugin()->get_payment_gateway_framework_path() . '/admin/views/html-user-payment-token-editor-token.php' );
+			include( $this->get_gateway()->get_plugin()->get_payment_gateway_framework_path() . '/Admin/views/html-user-payment-token-editor-token.php' );
 
 			$html = ob_get_clean();
 

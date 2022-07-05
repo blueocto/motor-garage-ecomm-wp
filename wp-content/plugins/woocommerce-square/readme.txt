@@ -2,9 +2,9 @@
 Contributors: woocommerce, automattic, royho, woothemes, bor0, mattdallan, menakas, chickenn00dle, jorgeatorres, jamesgallan, achyuthajoy
 Tags: credit card, square, woocommerce, inventory sync
 Requires at least: 4.6
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.2
-Stable tag: 3.0.1
+Stable tag: 3.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -71,8 +71,23 @@ If you get stuck, you can ask for help in the [Plugin Forum](https://wordpress.o
 2. The payment gateway settings.
 
 == Changelog ==
+= 3.1.0 - 2022-06-09 =
+* Fix - Hide shipping options in Google Pay form for virtual products. #800
+* Fix - State-specific tax calculation when using Google Pay. #778
+* Add - Validation that Business Location or SOR is set and Square settings are saved before enabling Import Products button. #463
+
+= 3.0.3 - 2022-06-01 =
+* Fix - Customer Token Editor wasn't loading for some stores after updating to Square 3.0.0. #799
+* Fix - No such file or directory warnings on case-sensitive filesystems. #799
+* Dev - Bump compatibility to WP 6.0. #812
+
+= 3.0.2 - 2022-05-17 =
+* Fix - Prevent fatal error caused by stale transient (cached location data from previous Square API). #788
+* Fix - Disable all plugin features if server requirements are not met, to prevent fatal errors. #793
+
 = 3.0.1 - 2022-05-09 =
 * Fix - Checkout stuck processing when using a card that doesn't require a postal code. #782
+* Dev - Update minimum PHP version requirement to 7.2. #787
 
 = 3.0.0 - 2022-05-04 =
 * New - Upgrade the payment form on checkout to use the latest Square Web Payments SDK. PR#668

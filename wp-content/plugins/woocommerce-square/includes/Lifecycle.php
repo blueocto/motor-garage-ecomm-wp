@@ -54,6 +54,7 @@ class Lifecycle extends \WooCommerce\Square\Framework\Lifecycle {
 			'2.1.5',
 			'2.2.0',
 			'2.3.0',
+			'3.0.2',
 		);
 	}
 
@@ -230,6 +231,17 @@ class Lifecycle extends \WooCommerce\Square\Framework\Lifecycle {
 		}
 
 		update_option( 'woocommerce_square_credit_card_settings', $gateway_settings );
+	}
+
+	/**
+	 * Deletes the transient that holds locations data.
+	 *
+	 * @see https://github.com/woocommerce/woocommerce-square/issues/786#issuecomment-1121388650
+	 *
+	 * @since 3.0.2
+	 */
+	protected function upgrade_to_3_0_2() {
+		delete_transient( 'wc_square_locations' );
 	}
 
 	/**

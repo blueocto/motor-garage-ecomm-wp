@@ -342,16 +342,21 @@ class Settings extends \WC_Settings_API {
 	 */
 	public function generate_import_products_html( $id, $field ) {
 
+		$is_location_set = (bool)$this->get_location_id();
+		$is_sor_set      = (bool)$this->get_system_of_record_name();
+		$display         = $is_location_set && $is_sor_set ? '' : 'display: none';
+
 		ob_start();
 		?>
-		<tr valign="top">
+		<tr valign="top" style="<?php echo esc_attr( $display ); ?>">
 			<th scope="row" class="titledesc">
 				<label for="<?php echo esc_attr( $id ); ?>"><?php echo wp_kses_post( $field['title'] ); ?> <?php echo $this->get_tooltip_html( $field ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 			</th>
 			<td class="forminp">
-				<a href='#' class='button js-import-square-products'>
+				<a id="wc_square_import_products" href='#' class='button js-import-square-products <?php echo ( ! $this->get_location_id() ? 'disabled' : '' ); ?>'>
 					<?php echo esc_html__( 'Import all products from Square', 'woocommerce-square' ); ?>
 				</a>
+				<p class="description wc_square_save_changes_message" style="display: none;"><?php esc_html_e( 'You have made changes to the settings. Please save the changes to enable the button.', 'woocommerce-square' ); ?></p>
 			</td>
 		</tr>
 		<?php
@@ -685,10 +690,12 @@ class Settings extends \WC_Settings_API {
 			return $this->locations;
 		}
 
+		$locations_transient_key = 'wc_square_locations_' . $this->get_plugin()->get_version();
+
 		// don't always need to refetch when not on Settings screen.
 		if ( ! $this->is_admin_settings_screen() ) {
 
-			$this->locations = get_transient( 'wc_square_locations' );
+			$this->locations = get_transient( $locations_transient_key );
 		}
 
 		if ( ! is_array( $this->locations ) && did_action( 'wc_square_initialized' ) ) {
@@ -699,7 +706,7 @@ class Settings extends \WC_Settings_API {
 
 				// cache the locations returned so they can be used elsewhere.
 				$this->locations = $this->get_plugin()->get_api( $this->get_access_token(), $this->is_sandbox() )->get_locations();
-				set_transient( 'wc_square_locations', $this->locations, HOUR_IN_SECONDS );
+				set_transient( $locations_transient_key, $this->locations, HOUR_IN_SECONDS );
 
 				// check the returned IDs against what's currently configured.
 				$stored_location_id = $this->get_location_id();

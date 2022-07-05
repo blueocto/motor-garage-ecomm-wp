@@ -791,7 +791,7 @@ abstract class Payment_Gateway_Plugin extends Plugin {
 
 			$environment = $gateway->get_environment_name();
 
-			include( $this->get_payment_gateway_framework_path() . '/admin/views/html-admin-gateway-status.php' );
+			include( $this->get_payment_gateway_framework_path() . '/Admin/views/html-admin-gateway-status.php' );
 		}
 	}
 

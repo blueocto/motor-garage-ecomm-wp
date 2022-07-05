@@ -65,6 +65,7 @@ class Digital_Wallet {
 
 		// Calculate the value of option `wc_square_apple_pay_enabled` which is not stored in the DB for WC Admin inbox notifications
 		add_filter( 'pre_option_wc_square_apple_pay_enabled', array( $this, 'get_option_is_apple_pay_enabled' ), 10, 1 );
+		add_filter( 'woocommerce_checkout_posted_data', array( $this, 'filter_posted_data' ) );
 	}
 
 	/**
@@ -325,7 +326,7 @@ class Digital_Wallet {
 			);
 		}
 
-		$data['requestShippingContact'] = true;
+		$data['requestShippingContact'] = $product->needs_shipping();
 		$data['lineItems']              = $items;
 
 		return $this->build_payment_request( $amount, $data );
@@ -345,7 +346,7 @@ class Digital_Wallet {
 		$data = wp_parse_args(
 			$data,
 			array(
-				'requestShippingContact' => wc_shipping_enabled() && isset( WC()->cart ) && WC()->cart->needs_shipping(),
+				'requestShippingContact' => isset( WC()->cart ) && WC()->cart->needs_shipping(),
 				'requestEmailAddress'    => true,
 				'requestBillingContact'  => true,
 				'countryCode'            => substr( get_option( 'woocommerce_default_country' ), 0, 2 ),
@@ -573,6 +574,37 @@ class Digital_Wallet {
 	}
 
 	/**
+	 * Returns location's state code by state name.
+	 *
+	 * @param string $country_code The country's 2 letter ISO 3166-1 alpha-2 code.
+	 * @param string $state_name   The full name of the state that is to be search for its code.
+	 *
+	 * @return string|null
+	 */
+	public static function get_state_code_by_name( $country_code = '', $state_name = '' ) {
+		if ( empty( $country_code ) || empty( $state_name ) ) {
+			return null;
+		}
+
+		$states = WC()->countries->get_states( $country_code );
+
+		/**
+		 * Return the state code if $state_name already contains a valid state code.
+		 */
+		if ( isset( $states[ $state_name ] ) ) {
+			return $state_name;
+		}
+
+		foreach ( $states as $code => $name ) {
+			if ( $name === $state_name ) {
+				return $code;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Recalculate shipping methods and cart totals and send the updated information
 	 * data as a square payment request json object.
 	 *
@@ -586,58 +618,70 @@ class Digital_Wallet {
 		$shipping_address = array();
 		$payment_request  = array();
 
-		if ( ! empty( $_POST['shipping_contact'] ) ) {
-			$shipping_address = wp_parse_args(
-				wc_clean( wp_unslash( $_POST['shipping_contact'] ) ),
-				array(
-					'countryCode' => null,
-					'state'       => null,
-					'city'        => null,
-					'postalCode'  => null,
-					'address'     => null,
-					'address_2'   => null,
-				)
-			);
+		if ( WC()->cart->needs_shipping() ) {
+			if ( ! empty( $_POST['shipping_contact'] ) ) {
+				$shipping_address = wp_parse_args(
+					wc_clean( wp_unslash( $_POST['shipping_contact'] ) ),
+					array(
+						'countryCode' => null,
+						'state'       => null,
+						'city'        => null,
+						'postalCode'  => null,
+						'address'     => null,
+						'address_2'   => null,
+					)
+				);
 
-			$this->calculate_shipping( $shipping_address );
-
-			$packages = WC()->shipping->get_packages();
-
-			if ( ! empty( $packages ) ) {
-				foreach ( $packages[0]['rates'] as $method ) {
-					$payment_request['shippingOptions'][] = array(
-						'id'     => $method->id,
-						'label'  => $method->get_label(),
-						'amount' => number_format( $method->cost, 2, '.', '' ),
-					);
-				}
-			}
-
-			// sort the shippingOptions so that the default/chosen shipping method is the first option so that it's displayed first in the Apple Pay/Google Pay window
-			if ( isset( $payment_request['shippingOptions'][0] ) ) {
-				if ( isset( $chosen_methods[0] ) ) {
-					$chosen_method_id         = $chosen_methods[0];
-					$compare_shipping_options = function ( $a, $b ) use ( $chosen_method_id ) {
-						if ( $a['id'] === $chosen_method_id ) {
-							return -1;
-						}
-
-						if ( $b['id'] === $chosen_method_id ) {
-							return 1;
-						}
-
-						return 0;
-					};
-
-					usort( $payment_request['shippingOptions'], $compare_shipping_options );
+				/**
+				 * WooCommerce requires state code but for few countries, Google Pay
+				 * returns the state's full name instead of the state code.
+				 *
+				 * The following line converts state name to code.
+				 */
+				if ( isset( $shipping_address['countryCode'] ) && isset( $shipping_address['state'] ) ) {
+					$shipping_address['state'] = self::get_state_code_by_name( $shipping_address['countryCode'], $shipping_address['state'] );
 				}
 
-				$first_shipping_method_id = $payment_request['shippingOptions'][0]['id'];
-				$this->update_shipping_method( array( $first_shipping_method_id ) );
+				$this->calculate_shipping( $shipping_address );
+
+				$packages = WC()->shipping->get_packages();
+
+				if ( ! empty( $packages ) ) {
+					foreach ( $packages[0]['rates'] as $method ) {
+						$payment_request['shippingOptions'][] = array(
+							'id'     => $method->id,
+							'label'  => $method->get_label(),
+							'amount' => number_format( $method->cost, 2, '.', '' ),
+						);
+					}
+				}
+
+				// sort the shippingOptions so that the default/chosen shipping method is the first option so that it's displayed first in the Apple Pay/Google Pay window
+				if ( isset( $payment_request['shippingOptions'][0] ) ) {
+					if ( isset( $chosen_methods[0] ) ) {
+						$chosen_method_id         = $chosen_methods[0];
+						$compare_shipping_options = function ( $a, $b ) use ( $chosen_method_id ) {
+							if ( $a['id'] === $chosen_method_id ) {
+								return -1;
+							}
+
+							if ( $b['id'] === $chosen_method_id ) {
+								return 1;
+							}
+
+							return 0;
+						};
+
+						usort( $payment_request['shippingOptions'], $compare_shipping_options );
+					}
+
+					$first_shipping_method_id = $payment_request['shippingOptions'][0]['id'];
+					$this->update_shipping_method( array( $first_shipping_method_id ) );
+				}
+			} elseif ( ! empty( $_POST['shipping_option'] ) ) {
+				$chosen_methods = array( wc_clean( wp_unslash( $_POST['shipping_option'] ) ) );
+				$this->update_shipping_method( $chosen_methods );
 			}
-		} elseif ( ! empty( $_POST['shipping_option'] ) ) {
-			$chosen_methods = array( wc_clean( wp_unslash( $_POST['shipping_option'] ) ) );
-			$this->update_shipping_method( $chosen_methods );
 		}
 
 		WC()->cart->calculate_totals();
@@ -650,6 +694,33 @@ class Digital_Wallet {
 		);
 
 		wp_send_json_success( $payment_request );
+	}
+
+	/**
+	 * Filters the post data just before checkout.
+	 *
+	 * WooCommerce requires the state code but Google Pay returns
+	 * the full name of the state. We filter the post data to convert
+	 * the full state name into its equivalent state code.
+	 *
+	 * @param array $posted_data The $_POST data submitted at checkout.
+	 *
+	 * @return array
+	 */
+	public function filter_posted_data( $posted_data ) {
+		if ( isset( $posted_data['payment_method'] ) && 'square_credit_card' !== $posted_data['payment_method'] ) {
+			return $posted_data;
+		}
+
+		if ( isset( $posted_data['shipping_country'] ) && isset( $posted_data['shipping_state'] ) ) {
+			$posted_data['shipping_state'] = self::get_state_code_by_name( $posted_data['shipping_country'], $posted_data['shipping_state'] );
+		}
+
+		if ( isset( $posted_data['billing_country'] ) && isset( $posted_data['billing_state'] ) ) {
+			$posted_data['billing_state'] = self::get_state_code_by_name( $posted_data['billing_country'], $posted_data['billing_state'] );
+		}
+
+		return $posted_data;
 	}
 
 	/**
