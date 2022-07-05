@@ -35,9 +35,8 @@
 <!-- Google Tag Manager (noscript) here... -->
 
 <header class="header" role="banner">
-	<p class="logo">
-		<a href="#">Decimal Tenths</a>
-	</p>
+	
+	<?php get_template_part( 'template-parts/site-logo' ); ?>
 	
 	<p class="a11y-skip"><a href="#main">Skip to Content</a></p>
 
@@ -46,11 +45,11 @@
 		<div class="menu-button-container">
 			<button id="primary-mobile-menu" class="menu-button-trigger" aria-controls="primary-menu-list" aria-expanded="false">
 				<span class="dropdown-icon open">
-					<?php get_template_part( 'template-parts/svg/icon-menu' ); ?>
+					<?php get_template_part( 'template-parts/svg/bars-light' ); ?>
 					<?php esc_html_e( 'Menu', 'blueocto-2022' ); ?>
 				</span>
 				<span class="dropdown-icon close">
-					<?php get_template_part( 'template-parts/svg/icon-close' ); ?>
+					<?php get_template_part( 'template-parts/svg/xmark-light' ); ?>
 					<?php esc_html_e( 'Close', 'blueocto-2022' ); ?>
 				</span>
 			</button>
@@ -58,12 +57,12 @@
 
 		<?php octopress_primary_nav(); ?>
 
-	</div>
+		<div class="header--shop-links">
+			<p class="menu-item"><a href="#">Cart {ico}</a></p>
+			<p class="menu-item"><a href="">Account {ico}</a></p>
+			<p class="menu-item"><a href="">Search {ico}</a></p>
+		</div>
 
-	<div class="header--shop-links">
-		<p class="menu-item"><a href="#">Cart</a></p>
-		<p class="menu-item"><a href="">Account</a></p>
-		<p class="menu-item"><a href="">Search</a></p>
 	</div>
 </header>
 
