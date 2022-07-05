@@ -9,9 +9,9 @@
 	
 	<?php //get_template_part( 'template-parts/head-icons' ); ?>
 
-	<!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
-	<!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-	<!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"> -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;1,600&display=swap" rel="stylesheet">
 
 	<?php /* Critical CSS */ ?>
 	<style type="text/css">
