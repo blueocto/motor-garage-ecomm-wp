@@ -76,3 +76,6 @@
 </header>
 
 <div class="bo-content">
+
+<h1>This is a heading</h1>
+<p>This is body copy</p>

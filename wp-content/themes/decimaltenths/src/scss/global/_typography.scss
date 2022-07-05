@@ -24,8 +24,9 @@ h6,
 .h6 {
 	margin-top: 0;
 	// margin-bottom: var(--global--spacing-vertical);
-	font-style: normal;
-	font-weight: $semi-bold;
+	font-style: italic;
+	font-weight: $xtra-bold;
+	font-family: $heading-font;
 	line-height: 1.2;
 	color: inherit;
 	text-rendering: optimizeLegibility;

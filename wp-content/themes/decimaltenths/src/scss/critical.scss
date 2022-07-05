@@ -7,12 +7,12 @@
 @import "global/variables";
 @import "global/reset";
 @import "global/root-vars";
-// @import "global/extends";
+@import "global/extends";
 
 // Global
 // @import "global/helpers";
 // @import "global/fonts";
-// @import "global/typography";
+@import "global/typography";
 
 // Components
 // @import "components/navigation";
