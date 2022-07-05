@@ -20,8 +20,8 @@ require_once( 'library/enqueue-scripts.php' );
 require_once( 'library/theme-support.php' );
 
 /** Register all navigation menus */
-// require_once( 'library/navigation.php' );
-// require_once( 'library/primary-navigation.php' );
+require_once( 'library/navigation.php' );
+require_once( 'library/primary-navigation.php' );
 
 /** Custom Gutenberg Colors */
 // require_once( 'library/colour-palette.php' );

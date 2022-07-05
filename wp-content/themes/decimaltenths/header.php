@@ -56,16 +56,8 @@
 			</button>
 		</div>
 
-		<nav class="primary-nav">
-			<ul class="menu primary-menu">
-				<li class="menu-item"><a href="#">Home</a></li>
-				<li class="menu-item"><a href="#">Services</a></li>
-				<li class="menu-item"><a href="#">VAG</a></li>
-				<li class="menu-item"><a href="#">Shop</a></li>
-				<li class="menu-item"><a href="#">About</a></li>
-				<li class="menu-item"><a href="#">Contact</a></li>
-			</ul>
-		</nav>
+		<?php octopress_primary_nav(); ?>
+
 	</div>
 
 	<div class="header--shop-links">
