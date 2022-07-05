@@ -33,7 +33,16 @@ class FrmForm {
 		$options['after_html']  = isset( $values['options']['after_html'] ) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html( 'after' );
 		$options['submit_html'] = isset( $values['options']['submit_html'] ) ? $values['options']['submit_html'] : FrmFormsHelper::get_default_html( 'submit' );
 
-		$options               = apply_filters( 'frm_form_options_before_update', $options, $values );
+		/**
+		 * Allows modifying form options before updating or creating.
+		 *
+		 * @since 5.4 Add the third param.
+		 *
+		 * @param array $options Form options.
+		 * @param array $values  Form data.
+		 * @param bool  $update  Is form updating or creating. It's `true` if is updating.
+		 */
+		$options               = apply_filters( 'frm_form_options_before_update', $options, $values, false );
 		$options               = self::maybe_filter_form_options( $options );
 		$new_values['options'] = serialize( $options );
 
@@ -132,6 +141,81 @@ class FrmForm {
 			global $wpdb;
 			$wpdb->update( $wpdb->prefix . 'frm_forms', array( 'options' => maybe_serialize( $new_opts ) ), array( 'id' => $form_id ) );
 		}
+
+		self::switch_field_ids_in_fields( $form_id );
+	}
+
+	/**
+	 * Switches field ID in fields.
+	 *
+	 * @since 5.3
+	 *
+	 * @param int $form_id Form ID.
+	 */
+	private static function switch_field_ids_in_fields( $form_id ) {
+		global $wpdb;
+
+		// Keys of fields that you want to check to replace field ID.
+		$keys     = array( 'default_value', 'field_options' );
+		$sql_cols = 'fi.id';
+		foreach ( $keys as $key ) {
+			$sql_cols .= ( ',fi.' . $key );
+		}
+
+		$fields = FrmDb::get_results(
+			"{$wpdb->prefix}frm_fields AS fi LEFT OUTER JOIN {$wpdb->prefix}frm_forms AS fr ON fi.form_id = fr.id",
+			array(
+				'or'                => 1,
+				'fi.form_id'        => $form_id,
+				'fr.parent_form_id' => $form_id,
+			),
+			$sql_cols
+		);
+
+		if ( ! $fields || ! is_array( $fields ) ) {
+			return;
+		}
+
+		foreach ( $fields as $field ) {
+			self::switch_field_ids_in_field( (array) $field );
+		}
+	}
+
+	/**
+	 * Switches field ID in a field.
+	 *
+	 * @since 5.3
+	 *
+	 * @param array $field Field array.
+	 */
+	private static function switch_field_ids_in_field( $field ) {
+		$new_values = array();
+		foreach ( $field as $key => $value ) {
+			if ( 'id' === $key || ! $value ) {
+				continue;
+			}
+
+			if ( ! is_string( $value ) && ! is_array( $value ) ) {
+				continue;
+			}
+
+			if ( 'field_options' === $key ) {
+				// Need to loop through field_options to prevent breaking serialized string when length changed.
+				FrmAppHelper::unserialize_or_decode( $value );
+				$new_val = FrmFieldsHelper::switch_field_ids( $value );
+				$new_val = serialize( $new_val );
+			} else {
+				$new_val = FrmFieldsHelper::switch_field_ids( $value );
+			}
+
+			if ( $new_val !== $value ) {
+				$new_values[ $key ] = $new_val;
+			}
+		}
+
+		if ( ! empty( $new_values ) ) {
+			FrmField::update( $field['id'], $new_values );
+		}
 	}
 
 	/**
@@ -206,7 +290,16 @@ class FrmForm {
 			$values['options']['success_url'] = $options['success_url'];
 		}
 
-		$options               = apply_filters( 'frm_form_options_before_update', $options, $values );
+		/**
+		 * Allows modifying form options before updating or creating.
+		 *
+		 * @since 5.4 Added the third param.
+		 *
+		 * @param array $options Form options.
+		 * @param array $values  Form data.
+		 * @param bool  $update  Is form updating or creating. It's `true` if is updating.
+		 */
+		$options               = apply_filters( 'frm_form_options_before_update', $options, $values, true );
 		$options               = self::maybe_filter_form_options( $options );
 		$new_values['options'] = serialize( $options );
 

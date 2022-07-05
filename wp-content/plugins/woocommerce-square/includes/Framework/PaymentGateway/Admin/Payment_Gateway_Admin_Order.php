@@ -287,7 +287,7 @@ class Payment_Gateway_Admin_Order {
 		$total_captured      = $gateway->get_order_meta( $order, 'capture_total' );
 		$remaining_total     = Square_Helper::number_format( (float) $order->get_total() - (float) $total_captured );
 
-		include( $this->get_plugin()->get_payment_gateway_framework_path() . '/admin/views/html-order-partial-capture.php' );
+		include( $this->get_plugin()->get_payment_gateway_framework_path() . '/Admin/views/html-order-partial-capture.php' );
 	}
 
 

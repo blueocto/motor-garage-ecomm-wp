@@ -43,7 +43,7 @@ class Plugin extends Payment_Gateway_Plugin {
 
 
 	/** plugin version number */
-	const VERSION = '3.0.1';
+	const VERSION = '3.1.0';
 
 	/** plugin ID */
 	const PLUGIN_ID = 'square';
