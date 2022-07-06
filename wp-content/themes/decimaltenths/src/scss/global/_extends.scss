@@ -45,8 +45,7 @@
 
 // to use when inside breakpoint
 @mixin row() {
-	// max-width: var(--grid-width);
-	max-width: var(--responsive--alignwide-width);
+	max-width: $global-width;
 	margin-right: auto;
 	margin-left: auto;
 	display: flex;
@@ -54,8 +53,7 @@
 }
 
 %row {
-	// max-width: var(--grid-width);
-	max-width: var(--responsive--alignwide-width);
+	max-width: $global-width;
 	margin-right: auto;
 	margin-left: auto;
 	display: flex;

@@ -4,7 +4,7 @@
 
 .row {
 	@extend %row;
-	// outline: 1px dashed #f0f;
+	outline: 1px dashed #f0f;
 }
 
 // .row .row {
@@ -74,7 +74,7 @@
 .column,
 .columns {
 	@extend %column;
-	// outline: 1px dashed cyan;
+	outline: 1px dashed cyan;
 }
 
 // @include breakpoint(medium) {
@@ -347,10 +347,10 @@
 	// 	margin-left: 33.33333%;
 	// }
 
-	// .medium-6 {
-	// 	flex: 0 0 50%;
-	// 	max-width: 50%;
-	// }
+	.medium-6 {
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
 
 	// .medium-offset-5 {
 	// 	margin-left: 41.66667%;

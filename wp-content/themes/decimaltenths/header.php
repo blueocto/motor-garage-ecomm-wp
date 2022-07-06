@@ -64,6 +64,6 @@
 		</div>
 
 	</div>
-</header>
+</header><!-- // header -->
 
 <div class="bo-content">

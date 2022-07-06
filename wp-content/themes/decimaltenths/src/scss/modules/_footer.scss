@@ -3,173 +3,39 @@
 // ==============================================
 
 .footer {
-	padding: $xlarge-spacing;
+	margin-top: 100px;
+	padding: $large-spacing $small-spacing;
 	color: white;
-	background-color: var(--brand-dark-blue);
+	text-align: center;
+	background-color: black;
+}
 
-	@include breakpoint(large) {
-		padding: rem-calc(70px 15px 30px);
-	}
-
-	@include breakpoint(xlarge) {
-		padding-top: rem-calc(92px);
-		padding-bottom: rem-calc(92px);
-	}
-
-	.column {
-		padding: 0;
-	}
-
-	.column:first-child {
-		@include breakpoint(medium down) {
-			border-bottom: 1px solid var(--brand-light-blue);
-		}
-
-		@include breakpoint(large) {
-			border-right: 1px solid var(--brand-light-blue);
-		}
-	}
-
-	@include breakpoint(large) {
-		.column:first-child {
-			padding-right: rem-calc(60px);
-		}
-
-		.column:last-child {
-			padding-left: rem-calc(60px);
-		}
-
-		.row {
-			padding-top: rem-calc(122px);
-		}
-	}
-
-	@include breakpoint(xlarge) {
-		.column:last-child {
-			padding-left: rem-calc(100px);
-		}
-	}
+.footer--summary {
+	justify-content: center;
 
 	.logo {
-		color: var(--brand-light-blue);
-
-		@include breakpoint(large) {
-			position: absolute;
-			left: 50%;
-			transform: translateX(-50%);
-			background-color: var(--brand-dark-blue);
-		}
+		margin: 0 auto $large-spacing;
 	}
 
-	.site--tel,
-	.site--email {
-		font-size: rem-calc(24px);
-
-		@include breakpoint(large) {
-			font-size: rem-calc(32px);
-		}
-
-		a {
-			text-decoration: underline;
-
-			&:hover,
-			&:focus {
-				color: var(--brand-light-blue);
-				text-decoration: none;
-			}
-		}
+	.footer--desc {
+		margin: 0 auto;
+		max-width: $global-width;
 	}
 
-	.social-links {
-		.soc {
+	.footer--social {}
+}
+
+.footer--end {
+
+	@include breakpoint(medium) {
+		.copyright {
 			text-align: left;
-			color: var(--brand-light-blue);
-
-			&:hover,
-			&:focus {
-				color: white;
-			}
-
-			@include breakpoint(medium down) {
-				width: 45px;
-				height: 45px;
-			}
 		}
 	}
 
-	.site-address {
-		font-size: rem-calc(14px);
-
-		strong {
-			font-size: rem-calc(18px);
-			font-weight: $semi-bold;
-			text-transform: lowercase;
-		}
-
-		@include breakpoint(large) {
-			font-size: rem-calc(16px);
-
-			strong {
-				font-size: rem-calc(24px);
-			}
-		}
-
-		a {
-			// @extend %a-styled;
-			padding-bottom: 1px;
-			color: white;
-			border-bottom: 2px solid;
-
-			&:hover,
-			&:focus {
-				color: var(--brand-light-blue);
-				border-bottom-color: transparent;
-			}
-		}
-	}
-
-	.footer-menu-container,
-	.wp-block-buttons {
-		margin-bottom: rem-calc(24);
-	}
-
-	.footer--menu {
-		@include breakpoint(medium down) {
-			padding-top: $xlarge-spacing;
-		}
-
-		.menu-item {
-			display: inline-block;
-			vertical-align: middle;
-			margin-right: $xlarge-spacing;
-
-			font-size: rem-calc(24px);
-			line-height: 1.7;
-
-			@include breakpoint(large) {
-				font-size: rem-calc(48px);
-			}
-
-			a {
-				color: white;
-
-				&:hover,
-				&:focus {
-					color: var(--brand-light-blue);
-				}
-			}
-		}
-
-		.sub-menu-toggle {
-			display: none;
-		}
-	}
-
-	.copyright {
-		font-size: rem-calc(14px);
-
-		@include breakpoint(large) {
-			font-size: rem-calc(16px);
+	@include breakpoint(medium) {
+		.credit {
+			text-align: right;
 		}
 	}
 }
