@@ -29,12 +29,6 @@ $offMenuWidth: 100vw;
 	border: 0;
 	cursor: pointer;
 	background-color: transparent;
-	// outline: 1px dashed red;
-
-	// &:hover,
-	// &:focus {
-	// 	background-color: var(--grey-50);
-	// }
 
 	.svg--bars {
 		max-width: 18px;
@@ -94,8 +88,6 @@ $offMenuWidth: 100vw;
 		background-color: black;
 
 		@include breakpoint(medium down) {
-			// color: var(--brand-light-blue);
-			// background-color: var(--brand-dark-blue);
 			transform: translate3d(0, 0, 0);
 			z-index: 99;
 			overflow-y: scroll;
@@ -120,7 +112,6 @@ $offMenuWidth: 100vw;
 		display: block;
 		padding: $small-spacing;
 		color: white;
-		font-weight: $semi-bold;
 		font-size: rem-calc(16px);
 		text-transform: uppercase;
 		letter-spacing: 0.01em;
@@ -128,8 +119,6 @@ $offMenuWidth: 100vw;
 		@include breakpoint(large) {
 			display: inline-block;
 			padding: 0;
-			padding-left: $small-spacing;
-			padding-right: $large-spacing;
 		}
 
 		&:last-of-type {
@@ -138,35 +127,31 @@ $offMenuWidth: 100vw;
 
 		a {
 			display: inline-block;
+			border-bottom: 1px solid transparent;
 
 			&:hover,
 			&:focus {
-				
-			}
-		}
-	}
-}
-
-.primary-navigation-open {
-	.primary--menu {
-		a {
-			// color: var(--brand-light-blue);
-
-			&:hover,
-			&:focus {
-				// color: white;
+				color: var(--brand-green);
+				border-bottom: 1px solid var(--brand-green);
 			}
 		}
 	}
 }
 
 .primary--menu {
-	// margin-bottom: $xlarge-spacing;
+
+	> .menu-item {
+
+		@include breakpoint(large) {
+			padding-right: $large-spacing;
+		}
+	}
 
 	.menu-item-has-children {
 		position: relative;
 		padding-right: 3px;
 
+		// toggle arrows up/down
 		.sub-menu-toggle[aria-expanded="false"] {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2343B143' d='M4.251 181.1C7.392 177.7 11.69 175.1 16 175.1c3.891 0 7.781 1.406 10.86 4.25l197.1 181.1l197.1-181.1c6.5-6 16.64-5.625 22.61 .9062c6 6.5 5.594 16.59-.8906 22.59l-208 192c-6.156 5.688-15.56 5.688-21.72 0l-208-192C-1.343 197.7-1.749 187.6 4.251 181.1z'/%3E%3C/svg%3E");
 			background-size: 15px auto;
@@ -176,13 +161,10 @@ $offMenuWidth: 100vw;
 				display: none;
 			}
 		}
-
 		.sub-menu-toggle[aria-expanded="true"] {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2343B143' d='M443.8 330.8C440.6 334.3 436.3 336 432 336c-3.891 0-7.781-1.406-10.86-4.25L224 149.8l-197.1 181.1c-6.5 6-16.64 5.625-22.61-.9062c-6-6.5-5.594-16.59 .8906-22.59l208-192c6.156-5.688 15.56-5.688 21.72 0l208 192C449.3 314.3 449.8 324.3 443.8 330.8z'/%3E%3C/svg%3E");
-
-			+ .sub-menu {
-				display: block;
-			}
+			background-size: 15px auto;
+			background-position: 10px center;
 		}
 	}
 
@@ -199,49 +181,64 @@ $offMenuWidth: 100vw;
 		cursor: pointer;
 	}
 
+	// styles for all sub-menu's
 	.sub-menu {
-		margin: 0;
-		padding: $medium-spacing;
-		width: 100%;
-		// border: 1px solid var(--brand-highlight);
-		border-radius: 5px;
-
-		@include breakpoint(large) {
-			position: absolute;
-			left: 50%;
-			top: 100%;
-			min-width: 300px;
-			max-width: 400px;
-			transform: translateX(-50%);
-			background-color: white;
-			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-			transition: all 0.5s ease;
-			z-index: 88888;
-		}
-
-		@include breakpoint(xlarge) {
-			min-width: max-content;
-			max-width: unset;
-		}
-
-		.sub-menu {
-			border: none;
-		}
+		padding: 0;
 
 		.menu-item {
 			display: block;
 			padding-bottom: $medium-spacing;
+			color: black;
+		}
+	}
 
-			@include breakpoint(medium down) {
-				font-size: rem-calc(24);
+	// make of car, e.g. Audi
+	// menu-item-has-children
+	.level-1 {
+
+		> .sub-menu {
+			margin: 0;
+			padding: $medium-spacing;
+			width: 100%;
+			border-radius: 5px;
+
+			@include breakpoint(large) {
+				position: absolute;
+				left: 0px;
+				top: 100%;
+
+				display: flex;
+				flex-flow: row wrap;
+				min-width: 300px;
+				width: max-content;
+				background-color: white;
+				box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+				transition: all 0.5s ease;
+				z-index: 88888;
+			}
+		}
+	}
+
+	// models of that car
+	// menu-item-has-children
+	.level-2 {
+		padding-left: $medium-spacing;
+		padding-right: $medium-spacing;
+
+		&.menu-item {
+			font-weight: $semi-bold;
+			text-align: center;
+
+			> a {
+				padding-bottom: $medium-spacing;
 			}
 		}
 
-		// Sub-menu items om wide screens.
-		@include breakpoint(medium down) {
-			// For nested sub-menus, don't duplicate the padding
-			> .menu-item > .sub-menu {
-				padding: 0;
+		> .sub-menu {
+			font-weight: $regular;
+			
+			.menu-item {
+				text-align: left;
 			}
 		}
 	}
