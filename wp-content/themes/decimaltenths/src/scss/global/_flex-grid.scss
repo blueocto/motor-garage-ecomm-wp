@@ -4,7 +4,6 @@
 
 .row {
 	@extend %row;
-	outline: 1px dashed #f0f;
 }
 
 // .row .row {
@@ -74,7 +73,6 @@
 .column,
 .columns {
 	@extend %column;
-	outline: 1px dashed cyan;
 }
 
 // @include breakpoint(medium) {
@@ -533,10 +531,10 @@
 	// 	margin-left: 16.66667%;
 	// }
 
-	.large-4 {
-		flex: 0 0 33.33333%;
-		max-width: 33.33333%;
-	}
+	// .large-4 {
+	// 	flex: 0 0 33.33333%;
+	// 	max-width: 33.33333%;
+	// }
 
 	// .large-offset-3 {
 	// 	margin-left: 25%;
@@ -551,10 +549,10 @@
 	// 	margin-left: 33.33333%;
 	// }
 
-	.large-6 {
-		flex: 0 0 50%;
-		max-width: 50%;
-	}
+	// .large-6 {
+	// 	flex: 0 0 50%;
+	// 	max-width: 50%;
+	// }
 
 	// .large-offset-5 {
 	// 	margin-left: 41.66667%;
@@ -747,19 +745,19 @@
 	// 		margin-left: 25%;
 	// 	}
 
-	.xlarge-5 {
-		flex: 0 0 41.66667%;
-		max-width: 41.66667%;
-	}
+	// .xlarge-5 {
+	// 	flex: 0 0 41.66667%;
+	// 	max-width: 41.66667%;
+	// }
 
 	// 	.xlarge-offset-4 {
 	// 		margin-left: 33.33333%;
 	// 	}
 
-	.xlarge-6 {
-		flex: 0 0 50%;
-		max-width: 50%;
-	}
+	// .xlarge-6 {
+	// 	flex: 0 0 50%;
+	// 	max-width: 50%;
+	// }
 
 	// 	.xlarge-offset-5 {
 	// 		margin-left: 41.66667%;
@@ -892,9 +890,9 @@
 	// 		max-width: 12.5%;
 	// 	}
 
-	.xlarge-expand {
-		flex: 1 1 0px;
-	}
+	// .xlarge-expand {
+	// 	flex: 1 1 0px;
+	// }
 
 	// .row.xlarge-unstack > .column, .row.xlarge-unstack > .columns {
 	// 	flex: 0 0 100%;

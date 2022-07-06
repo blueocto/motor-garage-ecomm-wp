@@ -4,10 +4,14 @@
 
 .footer {
 	margin-top: 100px;
-	padding: $large-spacing $small-spacing;
+	padding: rem-calc(60px) $medium-spacing;
 	color: white;
 	text-align: center;
 	background-color: black;
+
+	// @include breakpoint(large) {
+	// 	padding: rem-calc(60px) $medium-spacing;
+	// }
 }
 
 .footer--summary {
@@ -16,16 +20,64 @@
 	.logo {
 		margin: 0 auto $large-spacing;
 	}
+}
 
-	.footer--desc {
-		margin: 0 auto;
-		max-width: $global-width;
+.footer--desc {
+	margin: 0 auto $large-spacing;
+	font-size: rem-calc(14px);
+	max-width: 70ch;
+
+	a {
+		@extend %a-styled;
+	}
+}
+
+.footer--social {
+
+	.soc {
+		display: inline-block;
+		margin: 0 5px;
+		padding-top: 9px;
+		width: 50px;
+		height: 50px;
+		background-color: var(--brand-d-grey);
+		border-radius: 50%;
 	}
 
-	.footer--social {}
+	.svg {
+		max-width: 32px;
+		max-height: 32px;
+		fill: #ffffff;
+		transition: all 0.3s;
+	}
+
+	.svg--facebook {
+
+		&:hover,
+		&:focus {
+			fill: #4267B2;
+		}
+	}
+
+	.svg--youtube {
+
+		&:hover,
+		&:focus {
+			fill: #FF0000;
+		}
+	}
 }
 
 .footer--end {
+
+	.copyright, 
+	.credit {
+		font-size: rem-calc(14px);
+
+		a {
+			@extend %a-styled;
+		}
+	}
 
 	@include breakpoint(medium) {
 		.copyright {

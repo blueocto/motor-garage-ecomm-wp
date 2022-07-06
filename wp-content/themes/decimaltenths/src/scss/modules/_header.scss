@@ -22,8 +22,12 @@
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
-	padding: $small-spacing;
+	padding: $large-spacing $medium-spacing;
 	background-color: black;
+
+	@include breakpoint(xlarge) {
+		padding: rem-calc(26px 50px);
+	}
 
 	.logo {
 		margin-right: $large-spacing;

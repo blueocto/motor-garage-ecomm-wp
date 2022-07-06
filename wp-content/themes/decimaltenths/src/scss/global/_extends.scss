@@ -144,7 +144,7 @@
 	text-decoration: none;
 	cursor: pointer;
 	background-color: transparent;
-	transition: all 0.3s ease-in-out;
+	transition: all 0.3s;
 
 	&:hover,
 	&:focus {
@@ -154,12 +154,12 @@
 
 %a-styled {
 	padding-bottom: 1px;
-	color: var(--brand-mid-blue--dark-10);
-	border-bottom: 2px solid;
+	color: var(--brand-green);
+	border-bottom: 1px solid;
 
 	&:hover,
 	&:focus {
-		color: var(--brand-mid-blue);
+		// color: var(--brand-mid-blue);
 		border-bottom-color: transparent;
 	}
 }

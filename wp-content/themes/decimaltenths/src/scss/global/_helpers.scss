@@ -27,26 +27,22 @@
 	}
 }
 
-body {
-	background-color: red;
+// body {
+// 	background-color: red;
 
-	@include breakpoint(medium) {
-		background-color: orange;
-	}
+// 	@include breakpoint(medium) {
+// 		background-color: orange;
+// 	}
 
-	@include breakpoint(large) {
-		background-color: yellow;
-	}
+// 	@include breakpoint(large) {
+// 		background-color: yellow;
+// 	}
 
-	@include breakpoint(xlarge) {
-		background-color: blue;
-	}
+// 	@include breakpoint(xlarge) {
+// 		background-color: blue;
+// 	}
 
-	@include breakpoint(xxlarge) {
-		background-color: green;
-	}
-
-	@include breakpoint(xxxlarge) {
-		background-color: purple;
-	}
-}
+// 	@include breakpoint(xxlarge) {
+// 		background-color: green;
+// 	}
+// }
