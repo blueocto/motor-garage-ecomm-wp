@@ -2,103 +2,6 @@
 // Navigation
 // ==============================================
 
-// OffCanvas
-// =================================
-
-$offMenuWidth: 100vw;
-
-// Menu trigger to open/close off-canvas
-.menu-button-container {
-	position: absolute;
-	top: 20px;
-	right: calc(-100% + 10px);
-
-	@include breakpoint(large) {
-		display: none;
-	}
-}
-
-.menu-button-trigger {
-	padding: 0;
-	width: 45px;
-	height: 45px;
-	color: var(--brand-green);
-	font-size: rem-calc(13px);
-	text-transform: uppercase;
-	letter-spacing: 0.01em;
-	border: 0;
-	cursor: pointer;
-	background-color: transparent;
-
-	.svg--bars {
-		max-width: 18px;
-		fill: var(--brand-green);
-	}
-
-	.svg--xmark {
-		max-width: 16px;
-		fill: var(--brand-green);
-	}
-
-	&[aria-expanded="false"] {
-		.open {
-			display: block;
-		}
-		.close {
-			display: none;
-		}
-	}
-
-	&[aria-expanded="true"] {
-		.open {
-			display: none;
-		}
-		.close {
-			display: block;
-		}
-	}
-}
-
-// Entire container is off-canvas
-.header--inner {
-	@include breakpoint(medium down) {
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: $offMenuWidth;
-		min-height: 100vh;
-		transition: all 0.3s ease-in-out;
-		padding: rem-calc(50px 15px 15px);
-		transform: translate3d(-$offMenuWidth, 0, 0);
-		background-color: transparent;
-		z-index: 0;
-	}
-
-	@include breakpoint(large) {
-		display: flex;
-		flex-flow: row wrap;
-		align-items: center;
-	}
-}
-
-// when opened, class applied to the body
-.primary-navigation-open {
-	.header--inner {
-		background-color: black;
-
-		@include breakpoint(medium down) {
-			transform: translate3d(0, 0, 0);
-			z-index: 99;
-			overflow-y: scroll;
-		}
-	}
-
-	.menu-button-container {
-		right: 10px;
-	}
-}
-
 // Global menu styles
 // =================================
 
@@ -183,12 +86,22 @@ $offMenuWidth: 100vw;
 
 	// styles for all sub-menu's
 	.sub-menu {
-		padding: 0;
+		padding: $medium-spacing;
+		background-color: white;
+		border-radius: 5px;
+
+		@include breakpoint(large) {
+			display: none;
+			position: absolute;
+			left: 0px;
+			top: 100%;
+		}
 
 		.menu-item {
 			display: block;
 			padding-bottom: $medium-spacing;
 			color: black;
+			cursor: pointer;
 		}
 	}
 
@@ -198,20 +111,14 @@ $offMenuWidth: 100vw;
 
 		> .sub-menu {
 			margin: 0;
-			padding: $medium-spacing;
 			width: 100%;
-			border-radius: 5px;
 
 			@include breakpoint(large) {
-				position: absolute;
-				left: 0px;
-				top: 100%;
-
 				display: flex;
 				flex-flow: row wrap;
 				min-width: 300px;
 				width: max-content;
-				background-color: white;
+				
 				box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 				transition: all 0.5s ease;
 				z-index: 88888;
