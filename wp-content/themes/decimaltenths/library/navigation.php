@@ -40,10 +40,11 @@ if ( ! function_exists( 'octopress_shopbycar_nav' ) ) {
 	function octopress_shopbycar_nav() {
 		wp_nav_menu(
 			array(
-				'theme_location'  => 'shopbycar-nav',
-				'menu_class'      => 'menu shopbycar--menu',
-				'container_class' => 'shopbycar-menu-container',
-				'items_wrap'      => '<ul id="shopbycar-menu-list" class="%2$s">%3$s</ul>',
+				'theme_location'  => 'shop-by-car',
+				'menu_class'      => 'sub-menu',
+				'container'       => false,
+				// 'container_class' => false,
+				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
 				'fallback_cb'     => false,
 			)
 		);
@@ -57,10 +58,11 @@ if ( ! function_exists( 'octopress_shopbypart_nav' ) ) {
 	function octopress_shopbypart_nav() {
 		wp_nav_menu(
 			array(
-				'theme_location'  => 'shopbypart-nav',
-				'menu_class'      => 'menu shopbypart--menu',
-				'container_class' => 'shopbypart-menu-container',
-				'items_wrap'      => '<ul id="shopbypart-menu-list" class="%2$s">%3$s</ul>',
+				'theme_location'  => 'shop-by-part',
+				'menu_class'      => 'sub-menu',
+				'container'       => false,
+				// 'container_class' => false,
+				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
 				'fallback_cb'     => false,
 			)
 		);
