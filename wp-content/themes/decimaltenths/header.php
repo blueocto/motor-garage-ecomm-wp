@@ -55,7 +55,34 @@
 			</button>
 		</div>
 
-		<?php octopress_primary_nav(); ?>
+		<?php //octopress_primary_nav(); ?>
+		<ul id="primary-menu-list" class="menu primary--menu">
+			<li id="menu-item-157770" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6749 current_page_item menu-item-157770">
+				<a href="https://decimal.blueocto.dev/" aria-current="page">Home</a>
+			</li>
+			<?php /* START Shop By Car */ ?>
+			<li id="menu-item-157805" class="level-1 menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-157805"><a href="#">Shop By Car</a><button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
+				<ul class="sub-menu">
+					<?php octopress_shopbycar_nav(); ?>
+				</ul>
+			</li>
+			<?php /* END Shop By Car */ ?>
+			<?php /* START Shop By Part */ ?>
+			<li id="menu-item-157806" class="level-1 menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-157806"><a href="#">Shop By Part</a><button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
+				<ul class="sub-menu">
+					<?php octopress_shopbypart_nav(); ?>
+				</ul>
+			</li>
+			<?php /* END Shop By Car */ ?>
+			<li id="menu-item-157771" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-157771">
+				<a href="https://decimal.blueocto.dev/about-us/">About Us</a>
+			</li>
+			<li id="menu-item-157773" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-157773">
+				<a href="https://decimal.blueocto.dev/contact-us/">Contact Us</a>
+			</li>
+		</ul>
+
+
 
 		<div class="header--shop-links">
 			<p class="menu-item"><a href="/basket/">Cart <?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?></a></p>
