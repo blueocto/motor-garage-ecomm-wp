@@ -56,6 +56,8 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 
 			wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array(), '', false );
 
+			wp_enqueue_script( 'theme-menu', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'primary-navigation.js' ), '', '', false );
+
 
 			//*====*//
 
