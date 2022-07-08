@@ -50,6 +50,7 @@
 	margin-left: auto;
 	display: flex;
 	flex-flow: row wrap;
+	outline: 1px dashed red;
 }
 
 %row {
@@ -58,6 +59,7 @@
 	margin-left: auto;
 	display: flex;
 	flex-flow: row wrap;
+	outline: 1px dashed red;
 }
 
 // to use when inside breakpoint
@@ -66,6 +68,7 @@
 	padding-right: $small-spacing;
 	padding-left: $small-spacing;
 	min-width: 0;
+	outline: 1px dashed cyan;
 
 	@include breakpoint(large) {
 		padding-right: $medium-spacing;
@@ -78,6 +81,7 @@
 	padding-right: $small-spacing;
 	padding-left: $small-spacing;
 	min-width: 0;
+	outline: 1px dashed cyan;
 
 	@include breakpoint(large) {
 		padding-right: $medium-spacing;
@@ -87,7 +91,7 @@
 
 // Typography scale at 1.285
 %h1 {
-	font-size: var(--size-l-4);
+	font-size: var(--size-l-5);
 
 	@include breakpoint(large) {
 		font-size: var(--size-l-6);
@@ -95,7 +99,7 @@
 }
 
 %h2 {
-	font-size: var(--size-l-3);
+	font-size: var(--size-l-4);
 
 	@include breakpoint(large) {
 		font-size: var(--size-l-5);
@@ -103,7 +107,7 @@
 }
 
 %h3 {
-	font-size: var(--size-l-2);
+	font-size: var(--size-l-3);
 
 	@include breakpoint(large) {
 		font-size: var(--size-l-4);
@@ -111,7 +115,7 @@
 }
 
 %h4 {
-	font-size: var(--size-l-1);
+	font-size: var(--size-l-2);
 
 	@include breakpoint(large) {
 		font-size: var(--size-l-3);
@@ -119,7 +123,7 @@
 }
 
 %h5 {
-	font-size: var(--size-s-0);
+	font-size: var(--size-l-1);
 
 	@include breakpoint(large) {
 		font-size: var(--size-l-2);
@@ -127,7 +131,7 @@
 }
 
 %h6 {
-	font-size: var(--size-s-1);
+	font-size: var(--size-s-0);
 
 	@include breakpoint(large) {
 		font-size: var(--size-l-1);
@@ -135,7 +139,7 @@
 }
 
 %p {
-	font-size: rem-calc(17px);
+	font-size: rem-calc(16px);
 }
 
 %a {
