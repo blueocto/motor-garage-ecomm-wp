@@ -74,7 +74,7 @@ function twentytwentyoneSubmenuPosition( li ) {
  */
 function twentytwentyoneExpandSubMenu( el ) { // jshint ignore:line
 	// Close other expanded items.
-	el.closest( 'div' ).querySelectorAll( '.sub-menu-toggle' ).forEach( function( button ) {
+	el.querySelectorAll( '.sub-menu-toggle' ).forEach( function( button ) {
 		if ( button !== el ) {
 			button.setAttribute( 'aria-expanded', 'false' );
 		}
