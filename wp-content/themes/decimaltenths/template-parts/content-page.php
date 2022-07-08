@@ -15,11 +15,11 @@
 			</picture>
 		</header>
 		<?php } ?>
-		<div class="entry-header--title">
-			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-		</div>
-
 	<?php */ ?>
+	
+	<div class="entry-header--title">
+		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+	</div>
 
 	<div class="entry-content">
 		<?php the_content(); ?>
