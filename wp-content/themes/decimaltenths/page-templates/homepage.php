@@ -21,9 +21,9 @@ get_header(); ?>
         </div>
     </section>
 
-    <section>
-        <p>Search by car</p>
-        <form>
+    <section class="search-by-car-form">
+        <h5 class="sbcf--text">Search by car</h5>
+        <form class="sbcf--form">
             <select>
                 <option value="">--Choose Your Manufacturer--</option>
                 <option value="">Audi</option>
@@ -38,7 +38,7 @@ get_header(); ?>
                 <option value="">Golf</option>
                 <option value="">Yeti</option>
             </select>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Search" class="ico-search">
         </form>
     </section>
 

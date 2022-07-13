@@ -1,0 +1,49 @@
+// ==============================================
+// Bar/strip for searching by car, form
+// ==============================================
+
+.search-by-car-form {
+    padding-top: rem-calc(40);
+    padding-bottom: rem-calc(40);
+    text-align: center;
+    background-color: black;
+
+    .sbcf--text {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 0;
+        padding: rem-calc(10px 25px 10px 25px);
+        color: white;
+        letter-spacing: 0.06em;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: block;
+            width: rem-calc(16);
+            height: 100%;
+            background-color: var(--brand-green);
+            clip-path: polygon(72% 0%, 100% 0%, 28% 100%, 0% 100%);
+        }
+    }
+
+    .sbcf--form {
+        display: inline-block;
+        width: 70%;
+
+        select {
+            display: inline-block;
+            margin-right: rem-calc(20);
+            padding: rem-calc(0 50px 0 30px);
+            width: 37%;
+            border: 1px solid var(--brand-green);
+            clip-path: polygon(3% 0%, 100% 0%, 97% 100%, 0% 100%);
+        }
+
+        [type="submit"] {
+            display: inline-block;
+        }
+    }
+}
