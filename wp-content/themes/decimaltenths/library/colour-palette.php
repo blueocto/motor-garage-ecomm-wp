@@ -40,11 +40,11 @@ add_theme_support( 'editor-color-palette', array(
 		'slug'  => 'bo-off-white',
 		'color'	=> '#f5f5f5',
 	),
-	array(
-		'name'  => __( 'White', 'textdomain' ),
-		'slug'  => 'bo-white',
-		'color'	=> '#FFFFFF',
-	),
+	// array(
+	// 	'name'  => __( 'White', 'textdomain' ),
+	// 	'slug'  => 'bo-white',
+	// 	'color'	=> '#FFFFFF',
+	// ),
 	array(
 		'name'  => __( 'Brand Green', 'textdomain' ),
 		'slug'  => 'brand-green',
