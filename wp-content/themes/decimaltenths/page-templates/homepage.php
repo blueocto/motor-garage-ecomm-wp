@@ -10,6 +10,7 @@ get_header(); ?>
 
     <?php //get_template_part( 'template-parts/search-by-car' ); ?>
 
+    <?php /* ?>
     <section>
         <h2><span>Shop our</span> Latest Products</h2>
         <div class="row">
@@ -47,7 +48,9 @@ get_header(); ?>
             </div>
         </div>
     </section>
+    <?php */ ?>
 
+    <?php /* ?>
     <section>
         <div class="row">
             <div class="column large-fifth">
@@ -82,7 +85,9 @@ get_header(); ?>
             </div>
         </div>
     </section>
+    <?php */ ?>
 
+    <?php /* ?>
     <section class="row">
         <div class="column small-12">
             <h2><span>Engine Services</span> Custom Tuning</h2>
@@ -90,7 +95,9 @@ get_header(); ?>
             <p><a class="btn btn-outline" href="#">Discover</a></p>
         </div>
     </section>
+    <?php */ ?>
 
+    <?php /* ?>
     <section>
         <h2><span>Check out our</span> YouTube Channel&hellip;</h2>
         <div class="row">
@@ -150,7 +157,9 @@ get_header(); ?>
             </div>
         </div>
     </section>
+    <?php */ ?>
 
+    <?php /* ?>
     <section class="row">
         <div class="column small-12">
             <h2>Testimonials</h2>
@@ -160,7 +169,9 @@ get_header(); ?>
             <p><strong><em>Jake Smith, Durham</em></strong></p>
         </div>
     </section>
+    <?php */ ?>
 
+    <?php /* ?>
     <section>
         <div class="row">
             <div class="column small-12 large-6">
@@ -170,13 +181,14 @@ get_header(); ?>
                 <p>Great Products, Great Prices, Great Banter…. Aye…. First two anyway.</p>
                 <p>Fancy a trip out?… Low on Coffee?… Visit us at:</p>
                 <p><strong>Decimal Tenths, Unit 8, Imperial Business Park, Factory Road, Blaydon On Tyne, NE21 5SA</strong></p>
-                <p><a class="btn" href="#">Send a message</p>
+                <p><a class="btn" href="#">Send a message</a></p>
             </div>
             <div class="column small-12 large-6">
                 <p>{img}</p>
             </div>
         </div>
     </section>
+    <?php */ ?>
 
 	<?php if ( have_posts() ) : ?>
 	
