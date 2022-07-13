@@ -5,19 +5,35 @@
 .hero-intro {
 
     .row {
-        height: 80vh;
+        @include breakpoint(large) {
+            height: 80vh;
+        }
     }
 
     .hero-intro--image {
-        flex: 1 1 0px;
+        height: 40vh;
         background: url('../img/green-car-angle-bg.jpg') right center no-repeat;
         background-size: cover;
+
+        @include breakpoint(medium down) {
+            margin-bottom: 1em;
+        }
+
+        @include breakpoint(large) {
+            flex: 1 1 0px;
+        }
     }
 
     .hero-intro--content {
-        display: flex;
-        flex-flow: row wrap;
-        align-content: center;
+        @include breakpoint(medium down) {
+            padding-bottom: $large-spacing;
+        }
+
+        @include breakpoint(large) {
+            display: flex;
+            flex-flow: row wrap;
+            align-content: center;
+        }
     }
 
     .small-h {

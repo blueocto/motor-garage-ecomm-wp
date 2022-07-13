@@ -80,8 +80,8 @@ get_header(); ?>
         </div>
     </section>
 
-    <section style="display:flex;" class="column">
-        <!-- <div class="row"> -->
+    <section>
+        <div class="row">
             <div class="column large-fifth">
                 <p>{ico}</p>
                 <h3>Servicing</h3>
@@ -112,7 +112,7 @@ get_header(); ?>
                 <p>Lorem ipsum dolor sit amet porti elit consectetur adipisc elit imi surabitur vestibulum rhindus.</p>
                 <p><a href="#">Discover</a></p>
             </div>
-        <!-- </div> -->
+        </div>
     </section>
 
     <section class="row">
@@ -174,7 +174,7 @@ get_header(); ?>
             <div class="column small-12 large-expand">
                 <p>{ico}</p>
                 <h4>Decimal Tenths</h4>
-                <p><strong>8.1k Subscribers &bull; 112 Videos &bull; 642k Views</p>
+                <p><strong>8.1k Subscribers &bull; 112 Videos &bull; 642k Views</strong></p>
                 <p><em>Track Cars, Engine Builds, Witty Banter&hellip; OK mybe not the last one&hellip;</p>
             </div>
             <div class="column small-12">
