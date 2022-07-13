@@ -107,10 +107,10 @@ endif;
 
 
 /* For the admin */
-// if ( ! function_exists( 'octopress_admin_styles' ) ) :
-// 	function octopress_admin_styles() {
-// 		wp_register_style( 'blueocto-admin', get_stylesheet_directory_uri() . '/dist/css/blueocto-admin-styles.css' );
-// 		wp_enqueue_style( 'blueocto-admin' );
-// 	}
-// 	add_action( 'admin_enqueue_scripts', 'octopress_admin_styles' );
-// endif;
+if ( ! function_exists( 'octopress_admin_styles' ) ) :
+	function octopress_admin_styles() {
+		wp_register_style( 'blueocto-admin', get_stylesheet_directory_uri() . '/dist/css/blueocto-admin-styles.css' );
+		wp_enqueue_style( 'blueocto-admin' );
+	}
+	add_action( 'admin_enqueue_scripts', 'octopress_admin_styles' );
+endif;

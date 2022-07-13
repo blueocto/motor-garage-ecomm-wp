@@ -35,16 +35,4 @@
             align-content: center;
         }
     }
-
-    .small-h {
-        display: block;
-        margin-bottom: 11px;
-        color: var(--brand-green);
-        font-style: normal;
-        font-weight: $semi-bold;
-        font-size: rem-calc(14);
-        font-family: $brand-font;
-        text-transform: uppercase;
-        letter-spacing: 0.13em;
-    }
 }
