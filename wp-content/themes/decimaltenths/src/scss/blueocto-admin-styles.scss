@@ -95,19 +95,19 @@
 // Custom helper 'tabs' for blocks in Editor
 // ==================================================
 
-// .block-library-spacer__resize-container {
-// 	position: relative;
-// 	background-color: lavender;
+.block-library-spacer__resize-container {
+	position: relative;
+	background-color: lavender;
 
-// 	&::after {
-// 		position: absolute;
-// 		top: 0;
-// 		right: 0;
-// 		content: "spacer";
-// 		padding: 5px;
-// 		color: black;
-// 	}
-// }
+	&::after {
+		position: absolute;
+		top: 0;
+		right: 0;
+		content: "spacer";
+		padding: 5px;
+		color: black;
+	}
+}
 
 // .edit-post-visual-editor__post-title-wrapper {
 // 	position: relative;
