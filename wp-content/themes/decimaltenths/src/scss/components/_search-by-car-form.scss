@@ -3,18 +3,26 @@
 // ==============================================
 
 .search-by-car-form {
-    padding-top: rem-calc(40);
-    padding-bottom: rem-calc(40);
+    padding: $large-spacing $small-spacing $xxlarge-spacing;
     text-align: center;
     background-color: black;
+
+    @include breakpoint(large) {
+        padding-top: $xxlarge-spacing;
+        padding-bottom: $xxlarge-spacing;
+    }
 
     .sbcf--text {
         position: relative;
         display: inline-block;
-        margin-bottom: 0;
-        padding: rem-calc(10px 25px 10px 25px);
+        margin-bottom: $large-spacing;
+        padding: rem-calc(10px 25px);
         color: white;
         letter-spacing: 0.06em;
+
+        @include breakpoint(large) {
+            margin-bottom: 0;
+        }
 
         &::before {
             content: '';
@@ -30,20 +38,35 @@
     }
 
     .sbcf--form {
-        display: inline-block;
-        width: 70%;
+        width: 100%;
 
-        select {
+        @include breakpoint(large) {
             display: inline-block;
-            margin-right: rem-calc(20);
-            padding: rem-calc(0 50px 0 30px);
-            width: 37%;
-            border: 1px solid var(--brand-green);
-            clip-path: polygon(3% 0%, 100% 0%, 97% 100%, 0% 100%);
+            width: 70%;
         }
 
-        [type="submit"] {
-            display: inline-block;
+        select {
+            display: block;
+            padding: rem-calc(0 50px 0 30px);
+            width: 100%;
+            border: 1px solid var(--brand-green);
+            clip-path: polygon(3% 0%, 100% 0%, 97% 100%, 0% 100%);
+
+            @include breakpoint(medium down) {
+                margin-bottom: $large-spacing;
+            }
+
+            @include breakpoint(large) {
+                display: inline-block;
+                margin-right: rem-calc(20);
+                width: 37%;
+            }
+        }
+
+        @include breakpoint(large) {
+            [type="submit"] {
+                display: inline-block;
+            }
         }
     }
 }
