@@ -24,7 +24,7 @@ require_once( 'library/navigation.php' );
 require_once( 'library/primary-navigation.php' );
 
 /** Custom Gutenberg Colors */
-// require_once( 'library/colour-palette.php' );
+require_once( 'library/colour-palette.php' );
 
 /** ACF Blocks */
 // require_once( 'library/acf-blocks.php' );
