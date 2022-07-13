@@ -1,0 +1,34 @@
+// ==============================================
+// Hero Intro
+// ==============================================
+
+.hero-intro {
+
+    .row {
+        height: 80vh;
+    }
+
+    .hero-intro--image {
+        flex: 1 1 0px;
+        background: url('../img/green-car-angle-bg.jpg') right center no-repeat;
+        background-size: cover;
+    }
+
+    .hero-intro--content {
+        display: flex;
+        flex-flow: row wrap;
+        align-content: center;
+    }
+
+    .small-h {
+        display: block;
+        margin-bottom: 11px;
+        color: var(--brand-green);
+        font-style: normal;
+        font-weight: $semi-bold;
+        font-size: rem-calc(14);
+        font-family: $brand-font;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+    }
+}

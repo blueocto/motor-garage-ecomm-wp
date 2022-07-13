@@ -44,9 +44,9 @@
 // 	margin-left: 0;
 // }
 
-// .row.expanded {
-// 	max-width: none;
-// }
+.row.expanded {
+	max-width: none;
+}
 
 // .row.expanded .row {
 // 	margin-right: auto;
@@ -545,10 +545,10 @@
 	// 	margin-left: 25%;
 	// }
 
-	// .large-5 {
-	// 	flex: 0 0 41.66667%;
-	// 	max-width: 41.66667%;
-	// }
+	.large-5 {
+		flex: 0 0 41.66667%;
+		max-width: 41.66667%;
+	}
 
 	// .large-offset-4 {
 	// 	margin-left: 33.33333%;
@@ -563,10 +563,10 @@
 	// 	margin-left: 41.66667%;
 	// }
 
-	// .large-7 {
-	// 	flex: 0 0 58.33333%;
-	// 	max-width: 58.33333%;
-	// }
+	.large-7 {
+		flex: 0 0 58.33333%;
+		max-width: 58.33333%;
+	}
 
 	// .large-offset-6 {
 	// 	margin-left: 50%;

@@ -14,12 +14,9 @@
 
 // Components
 @import "components/navigation";
-// @import "components/breadcrumbs";
-// @import "components/circle-ctas";
-// @import "components/hero";
-// @import "components/social-icons";
-// @import "components/search-form";
+@import "components/buttons";
 
 // Modules
+@import "modules/hero-intro";
 @import "modules/footer";
-// @import "modules/block-newsletter";
+
