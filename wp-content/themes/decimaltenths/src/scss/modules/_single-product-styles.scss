@@ -1,0 +1,49 @@
+// ==============================================
+// Single Product
+// single-product.php
+// ==============================================
+
+// Styles
+// ==============================================
+
+.woocommerce-breadcrumb {
+    // background-color: #FFF9C4;
+
+    @include breakpoint(large) {
+        max-width: 60%;
+    }
+}
+
+.woocommerce-notices-wrapper {
+    // background-color: #FFCCBC;
+
+    @include breakpoint(large) {
+        margin-left: auto;
+        text-align: right;
+        max-width: 40%;
+    }
+}
+
+.single-product .type-product {
+    margin-top: rem-calc(50);
+    // background-color: #FFECB3;
+
+    .woocommerce-product-gallery, 
+    .woocommerce-product-gallery--with-images, 
+    .woocommerce-product-gallery--columns-4 {
+        // background-color: #D7CCC8;
+    }
+
+    .single-product-description {
+        padding: $small-spacing;
+        // background-color: #FFE0B2;
+    }
+
+    .entry-summary {
+        margin-bottom: rem-calc(30);
+    }
+}
+
+.related.products {
+    // background-color: #F0F4C3;
+}

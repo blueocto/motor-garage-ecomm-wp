@@ -1,0 +1,146 @@
+// ==============================================
+// Single Product
+// single-product.php
+// ==============================================
+
+// CSS Grid
+// ==============================================
+
+.single-product .woo-container {
+	@include breakpoint(large) {
+		display: grid;
+		grid-template-columns:
+			minmax($small-spacing, 1.5vw)
+			97vw
+			minmax($small-spacing, 1.5vw);
+		grid-template-rows:
+			auto
+			auto
+			auto
+			auto;
+		gap: 0px;
+		grid-template-areas:
+			". 					single-bread-notices 	."
+			". 					single-product 			."
+			"related-products 	related-products 		related-products"
+			"upsells 			upsells 				upsells";
+	}
+
+	@media screen and (min-width: 1370px) {
+		grid-template-columns:
+			minmax($small-spacing, 16.666%)
+			1fr
+			minmax($small-spacing, 16.666%);
+	}
+
+	.woocommerce-breadcrumb {
+		@include breakpoint(large) {
+			grid-area: single-bread-notices;
+		}
+	}
+
+	.woocommerce-notices-wrapper {
+		@include breakpoint(large) {
+			grid-area: single-bread-notices;
+		}
+	}
+
+	> .product {
+		@include breakpoint(large) {
+			grid-area: single-product;
+			margin-left: auto;
+			margin-right: auto;
+			width: $global-width;
+		}
+	}
+
+	.related.products {
+		@include breakpoint(large) {
+			// grid-area: related-products;
+			grid-area: upsells;
+		}
+	}
+
+	.upsells {
+		@include breakpoint(large) {
+			// grid-area: upsells;
+			grid-area: related-products;
+		}
+	}
+}
+
+// CSS Sub Grid - split the page into Gallery and content
+// =======================================================
+
+.single-product .woo-container {
+	> .product {
+		@include breakpoint(large) {
+			display: grid;
+			grid-template-columns: 48vw 2vw 47vw;
+			grid-template-rows: auto;
+			gap: 0px;
+			grid-template-areas: "product-gallery . product-description";
+		}
+
+		@media screen and (min-width: 1370px) {
+			grid-template-columns:
+				minmax($small-spacing, 664px)
+				1fr
+				minmax($small-spacing, 606px);
+		}
+
+		.woocommerce-product-gallery {
+			@include breakpoint(large) {
+				grid-area: product-gallery;
+			}
+		}
+
+		.single-product-description {
+			@include breakpoint(large) {
+				grid-area: product-description;
+			}
+		}
+	}
+}
+
+// CSS Sub Grid - Product content
+// ==============================================
+
+
+
+
+// .single-product-description {
+// 	display: grid;
+// 	grid-template-columns: auto;
+// 	grid-template-rows: auto auto auto auto auto;
+// 	gap: 0px;
+// 	grid-template-areas:
+// 		"product-intro"
+// 		"size-guide"
+// 		"product-accordion"
+// 		"product-meta"
+// 		"product-share";
+
+// 	.entry-summary {
+// 		grid-area: product-intro;
+// 	}
+
+// 	.size-guides {
+// 		grid-area: size-guide;
+// 		margin-bottom: rem-calc(50px);
+// 	}
+
+// 	.accordion-container {
+// 		grid-area: product-accordion;
+// 		margin-bottom: rem-calc(50px);
+// 	}
+
+// 	.product_meta {
+// 		grid-area: product-meta;
+// 		margin-bottom: rem-calc(50px);
+// 	}
+
+// 	.social-sharing-links {
+// 		grid-area: product-share;
+// 	}
+// }
