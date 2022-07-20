@@ -6,9 +6,9 @@
 function woocommerce_support() {
 
 	/* In versions 3.3+, the gallery is off by default for WooCommerce compatible themes unless they declare support for it (below) */
-	// add_theme_support( 'wc-product-gallery-zoom' ); //jQuery Zoom
-	// add_theme_support( 'wc-product-gallery-lightbox' ); //Photoswipe
-	// add_theme_support( 'wc-product-gallery-slider' ); //Flexslider
+	add_theme_support( 'wc-product-gallery-zoom' ); //jQuery Zoom
+	add_theme_support( 'wc-product-gallery-lightbox' ); //Photoswipe
+	add_theme_support( 'wc-product-gallery-slider' ); //Flexslider
 
 	add_theme_support( 
 		'woocommerce', array(
@@ -19,19 +19,19 @@ function woocommerce_support() {
 			/* 'thumbnails' for archive pages
 			* also known as 'woocommerce_thumbnail' or 'shop_catalog'
 			*/
-			'thumbnail_image_width' => 762, 
+			'thumbnail_image_width' => 320, 
 			
 			/** 
 			* change the size of thumbnails on single product, as cannot be set in Admin
 			* also known as 'woocommerce_gallery_thumbnail' or 'shop_thumbnail'
 			*/
-			'gallery_thumbnail_image_width' => 156, 
+			'gallery_thumbnail_image_width' => 192, 
 			
 			/**
 			* full size image
 			* also known as 'woocommerce_single' or 'shop_single'
 			*/
-			'single_image_width' => 664,
+			'single_image_width' => 768,
 		)
 	);
 	// update_option( 'woocommerce_thumbnail_cropping', 'uncropped' ); 
