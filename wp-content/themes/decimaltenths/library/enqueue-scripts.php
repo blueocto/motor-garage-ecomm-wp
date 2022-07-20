@@ -52,9 +52,10 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 			/* We don't need oEmbed */
 			wp_deregister_script('wp-embed'); 
 
+
 			/* Enqueue our Theme scripts */
 
-			// wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array(), '', false );
+			wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array('jquery'), '', false );
 
 			wp_enqueue_script( 'theme-menu', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'primary-navigation.js' ), '', '', false );
 
@@ -82,6 +83,21 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 			if ( is_single() ) {
 
 				// wp_enqueue_style( 'theme-single', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'single.css' ), array(), '', 'all' );
+			}
+
+			if ( is_cart() || is_checkout() ) {
+
+				wp_enqueue_style( 'theme-checkout', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'checkout.css' ), array(), '', 'all' );
+			}
+
+			if ( is_product() ) {
+
+				wp_enqueue_style( 'theme-product', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'product.css' ), array(), '', 'all' );
+			}
+
+			if ( is_product_category() || is_shop()  || is_archive() ) {
+
+				wp_enqueue_style( 'proquip-category', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'category.css' ), array(), '', 'all' );
 			}
 		}
 	}
