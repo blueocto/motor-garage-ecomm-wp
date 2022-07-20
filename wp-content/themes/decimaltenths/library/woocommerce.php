@@ -83,38 +83,6 @@ function change_woo_wrapper_end() {
 	echo '</section>';
 }
 
-
-/**
-* Move the location of the sidebar
-*/
-// remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
-// add_action( 'woocommerce_after_shop_loop', 'woocommerce_get_sidebar', 8);
-
-
-/**
-* Move the location of the product meta
-*/
-// remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
-// add_action( 'woocommerce_after_single_product_summary', 'custom_woocommerce_template_single_meta', 8);
-// function custom_woocommerce_template_single_meta() {
-// 	get_template_part( 'template-parts/content-single-meta' );
-// }
-
-
-/**
-* Move the location of the related products
-*/
-// remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
-// add_action( 'woocommerce_after_single_product', 'woocommerce_output_related_products', 8);
-
-
-/**
-* Move the location of the upsells products
-*/
-// remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
-// add_action( 'woocommerce_after_single_product', 'woocommerce_upsell_display', 8);
-
-
 /**
  * Display category image on category archive
  * Ref: @link https://docs.woocommerce.com/document/woocommerce-display-category-image-on-category-archive/
@@ -134,30 +102,43 @@ function woocommerce_category_image() {
 }
 
 
+// ===============================================================
+// Layout (so you dont need to copy templates from Woo)
+// ===============================================================
+
 /**
- * Change several of the breadcrumb defaults
- */
-// add_filter( 'woocommerce_breadcrumb_defaults', 'blueocto_woo_breadcrumb', 1 );
-// function blueocto_woo_breadcrumb() {
-//     return array(
-//             'delimiter'   => '<li class="sep"></li>',
-//             'wrap_before' => '<nav class="woocommerce-breadcrumb" itemprop="breadcrumb"><ul class="breadcrumbs">',
-//             'wrap_after'  => '</ul></nav>',
-//             'before'      => '<li class="bread-item">',
-//             'after'       => '</li>',
-//             'home'        => _x( 'Home', 'breadcrumb', 'woocommerce' ),
-//         );
-// }
+* Move the location of the sidebar
+*/
+remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
+add_action( 'woocommerce_after_shop_loop', 'woocommerce_get_sidebar', 8);
+
+/**
+* Move the location of the product meta
+*/
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+add_action( 'woocommerce_after_single_product_summary', 'custom_woocommerce_template_single_meta', 8);
+function custom_woocommerce_template_single_meta() {
+	get_template_part( 'template-parts/content-single-meta' );
+}
+
+/**
+* Move the location of the related products
+*/
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+add_action( 'woocommerce_after_single_product', 'woocommerce_output_related_products', 8);
 
 
-/* Update WooCommerce Flexslider options */
-// add_filter( 'woocommerce_single_product_carousel_options', 'ud_update_woo_flexslider_options' );
-// function ud_update_woo_flexslider_options( $options ) {
-//     $options['directionNav'] = true;
-//     return $options;
-// }
+/**
+* Move the location of the upsells products
+*/
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
+add_action( 'woocommerce_after_single_product', 'woocommerce_upsell_display', 8);
 
-/** Disable All WooCommerce Styles and Scripts Except Shop Pages */
+
+// ===============================================================
+// Disable All WooCommerce Styles and Scripts Except Shop Pages
+// ===============================================================
+
 function dequeue_woocommerce_styles_scripts() {
 	/* first check that WC exists to prevent fatal errors */
 	if ( function_exists( 'is_woocommerce' ) ) {
