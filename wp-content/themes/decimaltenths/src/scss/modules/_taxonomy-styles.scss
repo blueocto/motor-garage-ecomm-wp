@@ -1,0 +1,79 @@
+// ==============================================
+// Taxonomy
+// taxonomy-product-cat.php
+// ==============================================
+
+// Styles
+// ==============================================
+
+.woocommerce-breadcrumb {
+    margin-top: $small-spacing;
+    margin-bottom: $small-spacing;
+    padding-left: $small-spacing;
+    padding-right: $small-spacing;
+    // background-color: #FFCDD2;
+}
+
+.woocommerce-products-header {
+    background-color: var(--brand-light-grey); // #D1C4E9;
+
+    .taxonomy-head-wrap {
+        display: flex;
+        flex-flow: row wrap;
+        align-content: center;
+    }
+}
+
+.woocommerce-products-header__title, 
+.page-title {
+    padding: $small-spacing;
+    // background-color: #F8BBD0;
+}
+
+.term-description {
+    padding: $small-spacing;
+    // background-color: #C5CAE9;
+}
+
+.woo-picture {
+    // background-color: #E1BEE7;
+}
+
+.woocommerce-notices-wrapper {
+    // background-color: #BBDEFB;
+}
+
+// "showing 1-2 of xx results"
+.woocommerce-result-count {
+    padding: $small-spacing;
+    // background-color: #C8E6C9;
+}
+
+// "Sort by popularity"
+.woocommerce-ordering {
+    padding: $small-spacing;
+    // background-color: #B3E5FC;
+}
+
+.archive .woo-container {
+    
+    // UL
+    > .products {
+        // background-color: #B2EBF2;
+    }
+
+    // when no products in category..
+    .woocommerce-info {
+        // background-color: #F0F4C3;
+    }
+}
+
+.shop-sidebar {
+    padding: $small-spacing;
+    background-color: var(--brand-light-grey); //#DCEDC8;
+}
+
+.woocommerce-pagination {
+    margin-bottom: rem-calc(50);
+    // background-color: #B2DFDB;
+}

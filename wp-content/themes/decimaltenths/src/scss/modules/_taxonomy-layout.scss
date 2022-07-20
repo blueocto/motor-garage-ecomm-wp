@@ -1,0 +1,190 @@
+// ==============================================
+// Taxonomy
+// taxonomy-product-cat.php
+// ==============================================
+
+// To move pagination further up on mobile devices...
+
+.archive .woo-container {
+	// Perf loading, ref: https://web.dev/content-visibility/
+	> *:not(.woocommerce-breadcrumb, header) {
+		content-visibility: auto;
+	}
+
+	@include breakpoint(medium down) {
+		display: flex;
+		flex-flow: column wrap;
+
+		.woocommerce-breadcrumb {
+			order: 0;
+		}
+
+		.woocommerce-products-header {
+			order: 1;
+		}
+
+		.woocommerce-notices-wrapper {
+			order: 2;
+		}
+
+		// "showing 1-2 of xx results"
+		.woocommerce-result-count {
+			order: 3;
+		}
+
+		// "Sort by popularity"
+		.woocommerce-ordering {
+			order: 3;
+		}
+
+		> .products {
+			order: 4;
+		}
+
+		.shop-sidebar {
+			order: 6;
+		}
+
+		// moved
+		.woocommerce-pagination {
+			order: 5;
+		}
+	}
+}
+
+// CSS Grid
+// ==============================================
+
+.archive .woo-container {
+	@include breakpoint(large) {
+		display: grid;
+		gap: 0;
+		grid-template-columns:
+			$small-spacing
+			minmax(16.666%, 25%)
+			minmax(16.666%, 25%)
+			minmax(16.666%, 25%)
+			minmax(16.666%, 25%)
+			$small-spacing;
+		grid-template-rows: auto auto auto auto auto auto;
+		grid-template-areas:
+			". 			tax-bread 			tax-bread 			tax-notice 			tax-notice 			."
+			"tax-head 	tax-head 			tax-head 			tax-head 			tax-head 			tax-head"
+			".			tax-result-count	tax-result-count	tax-ordering		tax-ordering		."
+			". 			tax-sidebar 		tax-content 		tax-content 		tax-content 		."
+			". 			woo-pagination 		woo-pagination 		woo-pagination 		woo-pagination 		."
+			". 			recently-viewed 	recently-viewed		recently-viewed		recently-viewed		.";
+	}
+
+	@include breakpoint(xxlarge) {
+		grid-template-columns:
+			minmax($small-spacing, 16.666%)
+			minmax(16.666%, 342px)
+			minmax(16.666%, 342px)
+			minmax(16.666%, 342px)
+			minmax(16.666%, 342px)
+			minmax($small-spacing, 16.666%);
+		grid-template-rows: auto auto auto auto auto auto;
+	}
+}
+
+.woocommerce-breadcrumb {
+	@include breakpoint(large) {
+		grid-area: tax-bread;
+	}
+}
+
+.woocommerce-products-header {
+	@include breakpoint(large) {
+		grid-area: tax-head;
+		gap: 0;
+		
+		display: grid;
+		grid-template-columns:
+			$small-spacing
+			minmax(40%, 342.5px) //25%
+			minmax(60%, 342.5px) //25%
+			$small-spacing;
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			". taxonomy-head-wrap tax-image ."
+			". taxonomy-head-wrap tax-image ."
+	}
+}
+
+// .page-title {
+// 	@include breakpoint(large) {
+// 		grid-area: taxonomy-head-wrap;
+// 	}
+// }
+
+// .term-description {
+// 	@include breakpoint(large) {
+// 		grid-area: taxonomy-head-wrap;
+// 	}
+// }
+
+.taxonomy-head-wrap {
+	@include breakpoint(large) {
+		grid-area: taxonomy-head-wrap;
+	}
+}
+
+.woo-picture {
+	@include breakpoint(large) {
+		grid-area: tax-image;
+	}
+}
+
+.woocommerce-notices-wrapper {
+	@include breakpoint(large) {
+		grid-area: tax-notice;
+	}
+}
+
+.woocommerce-result-count {
+	@include breakpoint(large) {
+		grid-area: tax-result-count;
+	}
+}
+
+.woocommerce-ordering {
+	@include breakpoint(large) {
+		grid-area: tax-ordering;
+	}
+}
+
+.archive .woo-container {
+
+	// UL
+	> .products {
+		@include breakpoint(large) {
+			grid-area: tax-content;
+		}
+	}
+
+	// when no products in category..
+	.woocommerce-info {
+		@include breakpoint(large) {
+			grid-area: woo-pagination;
+		}
+	}
+}
+
+.shop-sidebar {
+	@include breakpoint(large) {
+		grid-area: tax-sidebar;
+	}
+}
+
+.woocommerce-pagination {
+	@include breakpoint(large) {
+		grid-area: woo-pagination;
+	}
+}
+
+// .recently-viewed {
+// 	@include breakpoint(large) {
+// 		grid-area: recently-viewed;
+// 	}
+// }
