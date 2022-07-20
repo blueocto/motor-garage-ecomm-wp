@@ -97,7 +97,7 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 
 			if ( is_product_category() || is_shop()  || is_archive() ) {
 
-				wp_enqueue_style( 'proquip-category', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'category.css' ), array(), '', 'all' );
+				wp_enqueue_style( 'theme-category', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'category.css' ), array(), '', 'all' );
 			}
 		}
 	}
