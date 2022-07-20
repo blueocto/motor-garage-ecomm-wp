@@ -106,7 +106,12 @@ class FrmApplicationsController {
 
 		$unlocked_templates = array();
 		$locked_templates   = array();
-		foreach ( $applications as $application ) {
+		foreach ( $applications as $key => $application ) {
+			if ( ! is_numeric( $key ) ) {
+				// Skip "error" or any other non-numeric key.
+				continue;
+			}
+
 			if ( ! empty( $application['url'] ) ) {
 				$unlocked_templates[] = $application;
 			} else {
@@ -199,6 +204,7 @@ class FrmApplicationsController {
 	 * @return void
 	 */
 	public static function render_applications_header( $title, $context ) {
+		FrmAppHelper::print_admin_banner( true );
 		require self::get_view_path() . 'header.php';
 	}
 }

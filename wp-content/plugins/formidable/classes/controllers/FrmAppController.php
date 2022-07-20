@@ -366,11 +366,6 @@ class FrmAppController {
 		remove_action( 'frm_after_settings', 'FrmSettingsController::settings_cta' );
 		remove_action( 'frm_add_form_style_tab_options', 'FrmFormsController::add_form_style_tab_options' );
 		remove_action( 'frm_after_field_options', 'FrmFormsController::logic_tip' );
-
-		if ( is_callable( 'FrmProAddonsController::renewal_message' ) ) {
-			// These functions moved to Pro in 4.09.01
-			remove_action( 'frm_page_footer', 'FrmAppHelper::renewal_message' );
-		}
 	}
 
 	/**
@@ -432,6 +427,10 @@ class FrmAppController {
 	 * @since 2.0.1
 	 */
 	public static function admin_init() {
+		if ( FrmAppHelper::is_admin_page( 'formidable' ) && 'duplicate' === FrmAppHelper::get_param( 'frm_action' ) ) {
+			FrmFormsController::duplicate();
+		}
+
 		new FrmPersonalData(); // register personal data hooks
 
 		if ( ! FrmAppHelper::doing_ajax() && self::needs_update() ) {

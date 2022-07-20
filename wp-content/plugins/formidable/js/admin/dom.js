@@ -1,5 +1,3 @@
-let frmDom;
-
 ( function() {
 	/** globals frmGlobal */
 
@@ -268,7 +266,13 @@ let frmDom;
 					if ( this.value === '' || this.nextElementSibling.value < 1 ) {
 						jQuery( this ).autocomplete( 'search', this.value );
 					}
-				});
+				})
+				.data('ui-autocomplete')._renderItem = function( ul, item ) {
+					return jQuery( '<li>' )
+					.attr( 'aria-label', item.label )
+					.append( jQuery( '<div>' ).text( item.label ) )
+					.appendTo( ul );
+				};
 			}
 		},
 
@@ -530,5 +534,5 @@ let frmDom;
 		element.appendChild( child );
 	}
 
-	frmDom = { tag, div, span, a, img, svg, setAttributes, modal, ajax, bootstrap, autocomplete, search, util };
+	window.frmDom = { tag, div, span, a, img, svg, setAttributes, modal, ajax, bootstrap, autocomplete, search, util };
 }() );

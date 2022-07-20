@@ -232,16 +232,27 @@ class FrmFormsController {
 
 	public static function duplicate() {
 		FrmAppHelper::permission_check( 'frm_edit_forms' );
+		$nonce = FrmAppHelper::simple_get( '_wpnonce' );
+
+		if ( ! wp_verify_nonce( $nonce ) ) {
+			$frm_settings = FrmAppHelper::get_settings();
+			wp_die( esc_html( $frm_settings->admin_permission ) );
+		}
 
 		$params  = FrmForm::list_page_params();
 		$form    = FrmForm::duplicate( $params['id'], $params['template'], true );
-		$message = $params['template'] ? __( 'Form template was Successfully Created', 'formidable' ) : __( 'Form was Successfully Copied', 'formidable' );
+		$url     = admin_url( 'admin.php?page=formidable' );
+		$message = 'form_duplicate_error';
 
 		if ( $form ) {
-			return self::get_edit_vars( $form, array(), $message, true );
+			$url = admin_url( 'admin.php?page=formidable&frm_action=edit&id=' . absint( $form ) );
+			$message = 'form_duplicated';
 		}
 
-		self::display_forms_list( $params, __( 'There was a problem creating the new template.', 'formidable' ) );
+		$url .= '&message=' . $message;
+
+		wp_safe_redirect( $url );
+		exit();
 	}
 
 	/**
@@ -626,7 +637,7 @@ class FrmFormsController {
 			}
 
 			$response = array(
-				'redirect' => admin_url( 'admin.php?page=formidable&frm_action=duplicate&id=' . $new_form_id ),
+				'redirect' => admin_url( 'admin.php?page=formidable&frm_action=duplicate&id=' . $new_form_id ) . '&_wpnonce=' . wp_create_nonce(),
 			);
 		}
 
@@ -882,6 +893,8 @@ class FrmFormsController {
 
 	/**
 	 * Get data from api before rendering it so that we can flag the modal as expired
+	 *
+	 * @return void
 	 */
 	public static function before_list_templates() {
 		global $frm_templates;
@@ -904,6 +917,9 @@ class FrmFormsController {
 		$frm_license_type = $license_type;
 	}
 
+	/**
+	 * @return void
+	 */
 	public static function list_templates() {
 		global $frm_templates;
 		global $frm_license_type;
@@ -989,7 +1005,7 @@ class FrmFormsController {
 				'name'        => $template->name,
 				'key'         => $template->form_key,
 				'description' => $template->description,
-				'url'         => admin_url( 'admin.php?page=formidable&frm_action=duplicate&id=' . absint( $template->id ) ),
+				'url'         => wp_nonce_url( admin_url( 'admin.php?page=formidable&frm_action=duplicate&id=' . absint( $template->id ) ) ),
 				'released'    => $template->created_at,
 				'installed'   => 1,
 			);
@@ -1043,6 +1059,8 @@ class FrmFormsController {
 			$message = __( 'Template was successfully updated.', 'formidable' );
 		}
 
+		self::maybe_update_form_builder_message( $message );
+
 		$all_templates = FrmForm::getAll( array( 'is_template' => 1 ), 'name' );
 		$has_fields    = isset( $values['fields'] ) && ! empty( $values['fields'] );
 
@@ -1050,6 +1068,12 @@ class FrmFormsController {
 			wp_die();
 		} else {
 			require( FrmAppHelper::plugin_path() . '/classes/views/frm-forms/edit.php' );
+		}
+	}
+
+	public static function maybe_update_form_builder_message( &$message ) {
+		if ( 'form_duplicated' === FrmAppHelper::simple_get( 'message' ) ) {
+			$message = __( 'Form was Successfully Copied', 'formidable' );
 		}
 	}
 
@@ -1126,22 +1150,24 @@ class FrmFormsController {
 				'icon'     => 'frm_icon_font frm_mail_bulk_icon',
 			),
 			'permissions' => array(
-				'name'     => __( 'Form Permissions', 'formidable' ),
-				'icon'     => 'frm_icon_font frm_lock_icon',
-				'html_class' => 'frm_show_upgrade frm_noallow',
-				'data'     => array(
-					'medium'  => 'permissions',
-					'upgrade' => __( 'Form Permissions', 'formidable' ),
-					'message' => __( 'Allow editing, protect forms and files, limit entries, and save drafts. Upgrade to get form and entry permissions.', 'formidable' ),
+				'name'       => __( 'Form Permissions', 'formidable' ),
+				'icon'       => 'frm_icon_font frm_lock_icon',
+				'html_class' => 'frm_show_upgrade_tab frm_noallow',
+				'data'       => array(
+					'medium'     => 'permissions',
+					'upgrade'    => __( 'Form Permissions', 'formidable' ),
+					'message'    => __( 'Allow editing, protect forms and files, limit entries, and save drafts. Upgrade to get form and entry permissions.', 'formidable' ),
+					'screenshot' => 'permissions.png',
 				),
 			),
 			'scheduling' => array(
-				'name'     => __( 'Form Scheduling', 'formidable' ),
-				'icon'     => 'frm_icon_font frm_calendar_icon',
-				'html_class' => 'frm_show_upgrade frm_noallow',
-				'data'     => array(
-					'medium'  => 'scheduling',
-					'upgrade' => __( 'Form scheduling settings', 'formidable' ),
+				'name'       => __( 'Form Scheduling', 'formidable' ),
+				'icon'       => 'frm_icon_font frm_calendar_icon',
+				'html_class' => 'frm_show_upgrade_tab frm_noallow',
+				'data'       => array(
+					'medium'     => 'scheduling',
+					'upgrade'    => __( 'Form scheduling settings', 'formidable' ),
+					'screenshot' => 'scheduling.png',
 				),
 			),
 			'buttons'     => array(
@@ -1153,18 +1179,19 @@ class FrmFormsController {
 			'landing'     => array(
 				'name'       => __( 'Form Landing Page', 'formidable' ),
 				'icon'       => 'frm_icon_font frm_file_text_icon',
-				'html_class' => 'frm_show_upgrade frm_noallow',
+				'html_class' => 'frm_show_upgrade_tab frm_noallow',
 				'data'       => FrmAppHelper::get_landing_page_upgrade_data_params(),
 			),
 			'chat'        => array(
 				'name'       => __( 'Conversational Forms', 'formidable' ),
 				'icon'       => 'frm_icon_font frm_chat_forms_icon',
-				'html_class' => 'frm_show_upgrade frm_noallow',
+				'html_class' => 'frm_show_upgrade_tab frm_noallow',
 				'data'       => FrmAppHelper::get_upgrade_data_params(
 					'chat',
 					array(
-						'upgrade'  => __( 'Conversational Forms', 'formidable' ),
-						'message'  => __( 'Ask one question at a time for automated conversations.', 'formidable' ),
+						'upgrade'    => __( 'Conversational Forms', 'formidable' ),
+						'message'    => __( 'Ask one question at a time for automated conversations.', 'formidable' ),
+						'screenshot' => 'chat.png',
 					)
 				),
 			),
@@ -1588,7 +1615,6 @@ class FrmFormsController {
 			case 'create':
 			case 'edit':
 			case 'update':
-			case 'duplicate':
 			case 'trash':
 			case 'untrash':
 			case 'destroy':
@@ -1618,7 +1644,14 @@ class FrmFormsController {
 					return;
 				}
 
+				$message = FrmAppHelper::get_param( 'message' );
+				if ( 'form_duplicate_error' === $message ) {
+					self::display_forms_list( array(), '', array( __( 'There was a problem duplicating the form', 'formidable' ) ) );
+					return;
+				}
+
 				self::display_forms_list();
+
 				return;
 		}
 	}

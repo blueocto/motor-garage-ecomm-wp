@@ -3,9 +3,9 @@ Plugin Name: Formidable Forms - Contact Form, Survey & Quiz Forms Plugin for Wor
 Contributors: formidableforms, sswells, srwells
 Tags: forms, contact form, form builder, survey, free, form maker, form creator, paypal form, paypal, stripe, stripe form, aweber, aweber form, getresponse, getresponse form, calculator, price calculator, quote form, contact button, form manager, Akismet, payment form, survey form, donation form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form, constant contact, mailpoet, active campaign, salesforce, hubspot, campaign monitor, quiz builder, quiz, feedback form, mailchimp form
 Requires at least: 5.2
-Tested up to: 6.0
+Tested up to: 6.0.1
 Requires PHP: 5.6
-Stable tag: 5.4
+Stable tag: 5.4.2
 
 The most advanced WordPress forms plugin. Go beyond contact forms with our drag & drop form builder for surveys, quizzes, and more.
 
@@ -438,6 +438,23 @@ Using our Zapier integration, you can easily connect Formidable with over 1000+ 
 See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zapier Integrations</a>.
 
 == Changelog ==
+= 5.4.2 =
+* New: Autocomplete dropdowns in the back end will now include an aria-label on the options to avoid accessibility issues with screen readers only reading ID values.
+* New: A redirect will now happen after a form is duplicated to avoid issues with multiple duplicate actions on page refresh.
+* New: Added additional styling for repeaters in tables shown in email actions to show indentation for the repeated data.
+* New: Added a Save and Reload button that appears after installing a required add on when clicking a field with missing requirements from the form builder.
+* Fix: The aria-describedby attribute will now be ordered intentionally so errors get first priority by default. Checks have been added to avoid duplicate ids appearing in aria-describedby attributes as well.
+* Fix: A few issues with label position settings were introduced with last update that are now fixed. Labels were appearing when the "none" label position setting was set.
+* Fix: Automation settings were appearing for action types that don't support automation when the Form Action Automation add on wasn't active.
+* Fix: Fixed a caching conflict that would cause back end pages to break on some servers with an frmDom is not defined console error.
+* Fix: Labels were appearing overlapped over input fields when previewed from the style manager for styles with the inline label position setting.
+* Updated the icon for Zapier.
+
+= 5.4.1 =
+* New: Fields using the "Placeholder inside the field" Label Position setting will now use an animated label that moves to the top of the field when focused.
+* New: Added a new frm_after_destroy_entry filter that can be used to update caching after a Formidable entry is deleted.
+* Fix: An unexpected empty broken application template was appearing for expired licenses.
+
 = 5.4 =
 * New: Added a new frm_new_form_values filter for customizing the default values of new forms.
 * New: Added a new frm_ajax_loaded_field event for listening for loaded fields loaded via AJAX on long forms in the form builder.
@@ -446,15 +463,5 @@ See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zap
 * Fix: Placeholder text was appearing more transparent in Firefox than in other browsers and has been updated for consistency.
 * Fix: Prevent a conflict that was causing the new Form modal to appear on some websites as a blank box without any content.
 * Updated the icon for Constant Contact.
-
-= 5.3.2 =
-* New: RGB and RGBA color values will now be fixed automatically on save if incomplete to avoid broken CSS.
-
-= 5.3.1 =
-* New: Unlocked application templates now appear at the top of the list of templates.
-* New: Improved the responsiveness of the cards on the Application dashboard page.
-* Fix: Prevent a conflict with All in One SEO that was preventing CSS from loading at all when the only on applicable pages setting is selected.
-* Fix: An unexpected add new button was appearing on a few pages and has been removed.
-* Fix: Prevent a fatal error in PHP8 that happens on sites with an unexpected empty string gmt_offset option set.
 
 <a href="https://raw.githubusercontent.com/Strategy11/formidable-forms/master/changelog.txt">See changelog for all versions</a>
