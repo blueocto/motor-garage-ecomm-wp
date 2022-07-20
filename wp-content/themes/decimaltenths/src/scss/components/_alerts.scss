@@ -1,0 +1,100 @@
+// ==============================================
+// Alerts
+// ==============================================
+
+// Configuration variables
+// Type name | color scheme
+$alert-types: (
+	error    : $alert-error,
+	warning  : $alert-warning,
+	success  : $alert-success,
+	info     : $alert-info,
+	tip      : $alert-tip
+) !default;
+
+// Mixin for dynamic values
+// Extending the placeholder
+@mixin alert($color) {
+	@extend %alert;
+	color: $color;
+	background-color: $color;
+	border-color: darken($color, 10%);
+}
+
+// Loop doing all the dumping
+@each $type, $color in $alert-types {
+	.alert-#{$type} {
+		@include alert($color);
+	}
+}
+
+
+// WooCommerce Alerts
+// ==============================================
+
+.woocommerce-message,
+.woocommerce-Message,
+.woocommerce-notice,
+.woocommerce-info,
+.woocommerce-error {
+	@extend %alert;
+	margin: $small-spacing;
+	width: auto;
+
+	&[role="alert"] {
+		@extend %success;
+	}
+
+	.button {
+		@include breakpoint(small only) {
+			display: block;
+			margin-bottom: $small-spacing;
+		}
+
+		@include breakpoint(medium) {
+			margin-right: $small-spacing;
+		}
+	}
+
+	&::before {
+		position: relative;
+		top: 0;
+		left: 0;
+		padding-right: $small-spacing;
+		color: white;
+	}
+}
+
+.woocommerce-info {
+	@extend %info;
+}
+
+.woocommerce-error {
+	text-align: left;
+
+	&[role="alert"] {
+		@extend %error;
+	}
+
+	li {
+
+		&::before {
+			color: darken($alert-error, 20%) !important;
+		}
+	}
+}
+
+.woocommerce-store-notice {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	
+	@extend %alert;
+	@extend %info;
+
+	.woocommerce-store-notice__dismiss-link {
+		text-decoration: underline;
+	}
+}

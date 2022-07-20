@@ -26,8 +26,14 @@ $xlarge-spacing: rem-calc(30px);
 $xxlarge-spacing: rem-calc(40px);
 $xxxlarge-spacing: rem-calc(50px);
 
-// Misc
-// $required: #b71c1c;
+// Alerts ~ Notices
+
+$alert-tip: #cce5ff; // blue
+$alert-success: #d4edda; // green
+$alert-error: #f8d7da; // red
+$alert-warning: #fff3cd; // yellow
+$alert-info: #d1ecf1; // teal
+
 
 // SCALING PADDING or MARGINS
 // ==============================================

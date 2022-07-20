@@ -202,3 +202,42 @@
         background-color: $brand-green-dark;
     }
 }
+
+// Alerts and Errors
+
+%alert {
+	display: inline-block;
+	margin-bottom: $large-spacing;
+	padding: $small-spacing; 
+	width: 100%;
+	text-align: center;
+	color: black;
+	font-weight: bold;
+	border-radius: 3px;
+	border: 1px solid;
+}
+
+%tip {
+	background-color: $alert-tip;
+	border-color: darken($alert-tip, 10%);
+}
+
+%success {
+	background-color: $alert-success;
+	border-color: darken($alert-success, 10%);
+}
+
+%error {
+	background-color: $alert-error;
+	border-color: darken($alert-error, 10%);
+}
+
+%warning {
+	background-color: $alert-warning;
+	border-color: darken($alert-warning, 10%);
+}
+
+%info {
+	background-color: $alert-info;
+	border-color: darken($alert-info, 10%);
+}
