@@ -1,0 +1,21 @@
+// ==============================================
+// Related Products (single product view)
+// ==============================================
+
+.related.products {
+    margin-top: rem-calc(50);
+    padding: $small-spacing;
+
+    > h2 {
+        text-align: center;
+    }
+
+    // UL
+    .products {
+        @extend %row;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+}
+
