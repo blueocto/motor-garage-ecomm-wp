@@ -10,7 +10,7 @@
     // background-color: #FFF9C4;
 
     @include breakpoint(large) {
-        max-width: 60%;
+        max-width: 50%;
     }
 }
 
@@ -20,7 +20,7 @@
     @include breakpoint(large) {
         margin-left: auto;
         text-align: right;
-        max-width: 40%;
+        max-width: 50%;
     }
 }
 
