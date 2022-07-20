@@ -6,9 +6,9 @@ get_header(); ?>
 
 <main id="main" class="main">
 
-    <?php //get_template_part( 'template-parts/hero-intro' ); ?>
+    <?php get_template_part( 'template-parts/hero-intro' ); ?>
 
-    <?php //get_template_part( 'template-parts/search-by-car' ); ?>
+    <?php get_template_part( 'template-parts/search-by-car' ); ?>
 
     <?php /* ?>
     <section>

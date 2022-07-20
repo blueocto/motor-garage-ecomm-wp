@@ -11,7 +11,8 @@
     }
 
     .hero-intro--image {
-        height: 40vh;
+        min-height: 40vh;
+        height: 100%;
         background: url('../img/green-car-angle-bg.jpg') right center no-repeat;
         background-size: cover;
 
