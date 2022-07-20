@@ -1,0 +1,60 @@
+﻿.resp-accordion {
+    cursor: pointer;
+    display: none;
+}
+
+.resp-tabs-container .resp-tab-content {
+    padding: 15px;
+}
+
+.resp-accordion {
+    position: relative;
+    margin: 0px;
+}
+
+.resp-arrow {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 20px solid #c1c1c1;
+}
+
+.resp-tab-active span.resp-arrow {
+    border: none;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 20px solid #9B9797;
+}
+
+/*-----------Accordion styles-----------*/
+
+
+/* Here your can change the breakpoint to set the accordion, when screen resolution changed */
+.resp-tabs-list {
+    display: none;
+}
+
+.resp-accordion {
+    display: block;
+}
+
+.resp-vtabs .resp-tabs-container {
+    border: none;
+    float: none;
+    width: 100%;
+    min-height: initial;
+    clear: none;
+}
+    
+.resp-accordion-closed {
+    display: none !important;
+}
+
+.resp-tab-content-active h2 {
+    display: none;
+}
