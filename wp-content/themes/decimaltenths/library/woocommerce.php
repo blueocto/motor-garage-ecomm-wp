@@ -188,8 +188,8 @@ function dequeue_woocommerce_styles_scripts() {
 			# Styles
 				// wp_deregister_style( 'wc-blocks-vendors-style' );
 				// wp_deregister_style( 'wc-blocks-style' );
-				// wp_deregister_style( 'woocommerce-layout' );
-				// wp_deregister_style( 'woocommerce-smallscreen' );
+				wp_deregister_style( 'woocommerce-layout' );
+				wp_deregister_style( 'woocommerce-smallscreen' );
 				wp_deregister_style( 'woocommerce-general' );
 				// wp_deregister_style( 'woocommerce_prettyPhoto_css' );
 				// wp_deregister_style( 'jquery-selectBox' );
