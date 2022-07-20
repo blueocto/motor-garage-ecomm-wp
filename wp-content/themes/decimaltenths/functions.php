@@ -31,3 +31,6 @@ require_once( 'library/colour-palette.php' );
 
 /* Custom pagination */
 // require_once( 'library/pagination.php' );
+
+/** WooCommerce */
+require_once( 'library/woocommerce.php' );
