@@ -1,0 +1,132 @@
+// ==============================================
+// WooCommerce /checkout/
+// ==============================================
+
+.woocommerce-checkout {
+
+	.woocommerce {
+		display: flex;
+		flex-flow: row wrap;
+
+		.column {
+			// small-12
+			flex: 0 0 100%;
+			max-width: 100%;
+
+			@include breakpoint(large) {
+				flex: 0 0 50%;
+				max-width: 50%;
+			}
+		}
+	}
+}
+
+// expanding panels... grouped by Jquery
+
+.woocommerce-form-login-toggle {
+	@extend %alert;
+	@extend %info;
+	margin-bottom: $small-spacing;
+
+	a {
+		color: darken($alert-info, 50%);
+	}
+}
+
+.woocommerce-form-login {
+	@extend %alert;
+	@extend %info;
+	margin-bottom: $large-spacing;
+	text-align: left;
+}
+
+.woocommerce-form-coupon-toggle {
+	@extend %alert;
+	@extend %tip;
+	margin-bottom: $small-spacing;
+
+	a {
+		color: darken($alert-tip, 50%);
+	}
+}
+
+.woocommerce-form-coupon {
+	@extend %alert;
+	@extend %tip;
+	margin-bottom: $large-spacing;
+	text-align: left;
+}
+
+
+// form
+[name="checkout"] {
+	display: flex;
+	flex-flow: row wrap;
+	padding-top: $xxlarge-spacing;
+	// small-12
+	flex: 0 0 100%;
+	max-width: 100%;
+
+	> * {
+		@include column();
+		// small-12
+		flex: 0 0 100%;
+		max-width: 100%;
+
+		@include breakpoint(large) {
+			flex: 0 0 50%;
+			max-width: 50%;
+		}
+	}
+
+	h3 {
+		position: relative;
+		display: inline-block;
+		margin-bottom: $large-spacing;
+		// font-weight: 400;
+
+		&::after {
+			content: '';
+			position: relative;
+			display: block;
+			bottom: 0;
+			width: 80%;
+			height: 4px;
+			background-color: green;
+		}
+	}
+}
+
+.woocommerce-checkout-review-order-table {
+
+	.cart-subtotal {
+
+		th, td {
+			color: black;
+			background-color: var(--brand-l-grey);
+		}
+	}
+}
+
+.woocommerce-checkout-payment {
+	margin-bottom: $xxlarge-spacing;
+	padding: $small-spacing;
+	border: 2px solid var(--brand-l-grey);
+
+	.wc_payment_methods {
+		list-style: none;
+		margin: 0 !important;
+		padding: 0 !important;
+
+		li {
+			padding: $small-spacing;
+			border-bottom: 1px solid var(--brand-l-grey);
+		}
+	}
+
+	.place-order {
+		padding: $small-spacing;
+	}
+}
+
+

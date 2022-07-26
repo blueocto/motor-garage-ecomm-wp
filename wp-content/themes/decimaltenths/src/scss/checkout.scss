@@ -1,0 +1,20 @@
+@charset 'utf-8';
+
+// Custom styles:
+// Add your scss files below to structure your project styles
+
+// Foundation Utils
+@import "foundation/util/util";
+
+
+// Global
+@import "global/variables";
+@import "global/extends";
+
+@import "components/alerts";
+// @import "components/cross-sells";
+// @import "components/quantity";
+// @import "components/order-received";
+
+@import "modules/woo-cart";
+@import "modules/woo-checkout";

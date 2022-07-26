@@ -1,0 +1,144 @@
+// ==============================================
+// WooCommerce /cart/
+// ==============================================
+
+.woocommerce-cart,
+.woocommerce-checkout {
+
+	.woocommerce {
+		max-width: var(--grid-width);
+		margin-right: auto;
+		margin-left: auto;
+		padding-right: $small-spacing;
+		padding-left: $small-spacing;
+		padding-bottom: var(--section-padding);
+	}
+}
+
+.woocommerce-cart-form__cart-item {
+
+	@include breakpoint(medium down) {
+
+		.product-name,
+		.product-price,
+		.product-quantity,
+		.product-subtotal {
+
+			&::before {
+				content: attr(data-title) ": ";
+				font-weight: 700;
+				float: left;
+			}
+		}
+	}
+
+
+	// TD
+	.product-thumbnail {
+
+		a {
+			display: inline-block;
+			vertical-align: middle;
+
+			.attachment-woocommerce_thumbnail {
+				width: 100px;
+			}
+		}
+	}
+
+	.quantity {
+		justify-content: flex-end;
+	}
+}
+
+.woocommerce-cart-form__contents {
+
+	@include breakpoint(medium down) {
+		thead {
+			display: none;
+		}
+	}
+
+	.actions {
+
+		.coupon {
+			display: inline-block;
+			vertical-align: top;
+			margin-bottom: $medium-spacing;
+			width: 100%;
+			
+			@include breakpoint(large) {
+				margin-bottom: 0;
+				max-width: 320px;
+			}
+
+			input,
+			[name="apply_coupon"] {
+				width: 100% !important;
+			}
+
+			[name="apply_coupon"] {
+				color: black;
+				background-color: green;
+				border: 1px solid darkgreen;
+
+				&:hover,
+				&:focus {
+					background-color: darken(green, 5%);
+				}
+			}
+		}
+
+		[name="update_cart"] {
+			display: inline-block;
+			vertical-align: top;			
+
+			@include breakpoint(medium down) {
+				width: 100%;
+			}
+
+			@include breakpoint(large) {
+				float: right;
+				margin-left: auto;
+			}
+		}
+	}
+}
+
+.cart-collaterals {
+	display: flex;
+	flex-flow: column wrap;
+
+	.cross-sells {
+		order: 1;
+	}
+
+	.cart_totals {
+		order: 0;
+	}
+}
+
+.cart_totals {
+	padding: var(--section-padding) 0;
+
+	> h2 {
+		@extend %h3;
+		position: relative;
+		display: inline-block;
+		margin-bottom: $large-spacing;
+		padding: 0 $small-spacing;
+		// font-weight: 400;
+
+		&::after {
+			content: '';
+			position: relative;
+			display: block;
+			bottom: 0;
+			width: 80%;
+			height: 4px;
+			background-color: green;
+		}
+	}
+}
+
+
