@@ -7,10 +7,12 @@
  *
  */
 // Don't load directly
+use SmashBalloon\YouTubeFeed\Feed_Locator;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-$locator_summary = SBY_Feed_Locator::summary();
+$locator_summary = Feed_Locator::summary();
 $database_settings = sby_get_database_settings();
 ?>
 <div class="sby-feed-locator-summary-wrap">
@@ -39,9 +41,9 @@ $database_settings = sby_get_database_settings();
 							$shortcode_atts = is_array( $shortcode_atts ) ? $shortcode_atts : array();
 
 							if ( class_exists( 'SBY_Settings_Pro' ) ) {
-								$settings_obj = new SBY_Settings_Pro( $shortcode_atts, $database_settings );
+								$settings_obj = new \SmashBalloon\YouTubeFeed\Pro\SBY_Settings_Pro( $shortcode_atts, $database_settings );
 							} else {
-								$settings_obj = new SBY_Settings( $shortcode_atts, $database_settings );
+								$settings_obj = new \SmashBalloon\YouTubeFeed\SBY_Settings( $shortcode_atts, $database_settings );
 							}
 							$settings = $settings_obj->get_settings();
 							$settings_obj->set_feed_type_and_terms();
@@ -50,7 +52,7 @@ $database_settings = sby_get_database_settings();
 							//$comma_separated = implode(', ', array() );
 							$display = $comma_separated;
 							if ( strlen( $comma_separated ) > 31 ) {
-								$display = '<span class="sby-condensed-wrap">' . esc_html( substr( $comma_separated, 0, 30 ) ) . '<a class="sby-locator-more" href="JavaScript:void(0);">...</a></span>';
+								$display = '<span class="sby-condensed-wrap">' . substr( $comma_separated, 0, 30 ) . '<a class="sby-locator-more" href="JavaScript:void(0);">...</a></span>';
 								$comma_separated = '<span class="sby-full-wrap">' . esc_html( $comma_separated ) . '</span>';
 							} else {
 								$comma_separated = '';

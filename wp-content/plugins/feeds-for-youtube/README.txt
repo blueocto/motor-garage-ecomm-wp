@@ -4,8 +4,8 @@ Contributors: smashballoon, craig-at-smash-balloon
 Support Website: http://smashballoon/youtube-feed/
 Tags: YouTube, YouTube feed, YouTube widget, YouTube channel, YouTube gallery
 Requires at least: 3.4
-Tested up to: 5.9
-Stable tag: 1.4.5
+Tested up to: 6.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,11 +59,11 @@ We plan on releasing a [Pro version](http://smashballoon.com/youtube-feed/?utm_s
 
 One of our main priorities has always been to make our plugins as easy as possible to setup and use. Once you've installed the "Feeds for YouTube" plugin there are only a few steps to get up and running:
 
-* 1) Click the "Log in to YouTube and connect an account" button on the "Feeds for YouTube" plugin settings page. This will prompt you to log into your Google account to authorize the plugin.
-* 2) Once you've connected your account, save the plugin settings.
-* 3) Then simply copy and paste the `[youtube-feed]` shortcode onto any page, post, or widget where you want your feed to be displayed.
+* 1) Follow the simple steps after clicking "Add New".
+* 2) Once you've connected an account or added an API key, build your feed with our customizer
+* 3) Then simply copy and paste the `[youtube-feed feed=1]` shortcode onto any page, post, or widget where you want your feed to be displayed.
 
-That's it!  You can then customize the feed as needed using the settings on the plugin "Customize" page.
+That's it!  You can return to the settings page to edit any feed.
 
 For full step-by-step setup directions with screenshots, see [here](https://smashballoon.com/youtube-feed/free/ "YouTube Feed Free Setup Doc").
 
@@ -77,8 +77,8 @@ To find out more about the team, see [here](https://smashballoon.com/about/ "Tea
 1. Install the plugin either via the WordPress plugin directory, or by uploading the files to your web server (in the /wp-content/plugins/ directory).
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Navigate to the 'Feeds for YouTube' settings page to configure your YouTube gallery.
-4. Use the shortcode [youtube-feed] in your page, post or widget to display your YouTube feed.
-5. You can display multiple channels with different configurations by specifying the necessary parameters directly in the shortcode: [youtube-feed channel=smashballoon].
+4. Use the shortcode [youtube-feed feed=1] in your page, post or widget to display your YouTube feed.
+5. You can display multiple feeds with different configurations by specifying the necessary parameters directly in the shortcode: [youtube-feed feed=2].
 
 For simple step-by-step directions on how to set up the plugin please refer to our [setup guide](http://smashballoon.com/youtube-feed/free/?utm_source=wordpress&utm_campaign=sby 'Feeds for YouTube setup guide').
 
@@ -96,15 +96,13 @@ The Feeds for YouTube plugin is brand new and so we're currently working on impr
 
 5) Enter a channel name to display videos from.
 
-6) Navigate to the Customize and Style pages to customize your feed.
+6) Continue to the feed customizer page to customize your feed.
 
-7) Once you've customized your feed, click on the "Display Your Feed" tab for directions on how to display your YouTube feed (or multiple feeds).
+7) Once you've customized your feed, embed it using the "Embed" button found at the top of the customizer.
 
-8) Copy the [youtube-feed] shortcode and paste it into any page, post or widget where you want the YouTube feed to appear.
+8) Alternatively, copy the [youtube-feed feed=1] shortcode and paste it into any page, post or widget where you want the YouTube feed to appear.
 
-9) You can paste the [youtube-feed] shortcode directly into your page editor.
-
-10) You can use the default WordPress 'Text' widget to display your feed in a sidebar or other widget area.
+9) You can use the default WordPress 'Text' widget to display your feed in a sidebar or other widget area.
 
 11) View your website to see your feed(s) in all their glory!
 
@@ -112,11 +110,11 @@ The Feeds for YouTube plugin is brand new and so we're currently working on impr
 
 = Can I display multiple YouTube feeds on my site or on the same page? =
 
-Yep. You can display multiple feeds by using our built-in shortcode options, for example: `[youtube-feed channel="smashballoon" num=3]`.
+Yep. You can display multiple feeds by creating them with the customizer and adding the feed ID to a shortcode.
 
 = How do I embed a YouTube gallery directly into a WordPress page template? =
 
-You can embed a gallery directly into a template file by using the WordPress [do_shortcode](http://codex.wordpress.org/Function_Reference/do_shortcode) function: `<?php echo do_shortcode('[youtube-feed]'); ?>`.
+You can embed a gallery directly into a template file by using the WordPress [do_shortcode](http://codex.wordpress.org/Function_Reference/do_shortcode) function: `<?php echo do_shortcode('[youtube-feed feed=1]'); ?>`.
 
 = Will the plugin work with W3 Total Cache or other caching plugins? =
 
@@ -156,15 +154,27 @@ By default, the plugin retrieves new videos for your YouTube gallery once every 
 
 == Screenshots ==
 
-1. By default the plugin inherits styles from your theme
-2. Display multiple feeds and customize each one
-3. When using the "grid" layout, videos open and play in a lightbox
-4. Feeds for YouTube Settings pages
-5. Built in customization settings make customizing your feed easy
-6. Use handy shortcode options to customize individual feeds
-7. To display a YouTube feed just copy and paste the [youtube-feed] shortcode into a widget or page
+1. Display multiple feeds and customize each one
+2. Manage your feeds using our handy feed customizer
+3. Powerful features and settings
+4. Feeds fit any screen size without customization needed
+5. Several attractive display types to fit your use case
+6. Embed your feed using a shortcode you can copy and paste after you are done creating
 
 == Changelog ==
+= 2.0 =
+* Important: Minimum supported WordPress version has been raised from 3.5 to 4.1.
+* New: Our biggest update ever! We've completely redesigned the plugin settings from head to toe to make it easier to create, manage, and customize your YouTube feeds.
+* New: All your feeds are now displayed in one place on the "All Feeds" page. This shows a list of any existing (legacy) feeds and any new ones that you create.
+* New: Easily edit individual feed settings for new feeds instead of cumbersome shortcode options.
+* New: It's now much easier to create feeds. Just click "Add New", select your feed type, connect your account, and you're done!
+* New: Brand new feed customizer. We've completely redesigned feed customization from the ground up, reorganizing the settings to make them easier to find.
+* New: Live Feed Preview. You can now see changes you make to your feeds in real time, right in the settings page. Easily preview them on desktop, tablet, and mobile sizes.
+* New: Color Scheme option. It's now easier than ever to change colors across your feed without needing to adjust individual color settings. Just set a color scheme to effortlessly change colors across your entire feed.
+* New: You can now change the number of columns in your feed across desktop and mobile.
+* New: Easily import and export feed settings to make it simple to move feeds across sites.
+* New: Added a new custom text header option, so you can now add custom text to the header for your feed.
+
 = 1.4.5 =
 * Fix: The play button was still visible in the lightbox during video playback after a user had granted GDPR cookie consent.
 * Fix: SSL is now always verified when making API requests to YouTube's API.

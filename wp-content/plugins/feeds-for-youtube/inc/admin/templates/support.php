@@ -1,8 +1,10 @@
-<h3><?php _e( 'Need help?', $text_domain ); ?></h3>
+<h3><?php use SmashBalloon\YouTubeFeed\Feed_Locator;
+
+	_e( 'Need help?', $text_domain ); ?></h3>
 
 <p><?php echo sby_admin_icon( 'life-ring', 'sbspf_small_svg' ); ?>&nbsp; <?php _e( 'Check out our ', $text_domain ); ?><a href="<?php echo esc_url( $setup_url ); ?>" target="_blank"><?php _e( 'setup directions', $text_domain ); ?></a> <?php _e( 'for a step-by-step guide on how to setup and use the plugin', $text_domain ); ?>.</p>
 
-<p><?php echo sby_admin_icon( 'envelope', 'sbspf_small_svg' ); ?>&nbsp; <?php _e( 'Have a problem? Submit a ', $text_domain ); ?><a href="<?php echo esc_url( SBY_SUPPORT_URL ); ?>" target="_blank"><?php _e( 'support ticket', $text_domain ); ?></a> <?php _e( 'on our website', $text_domain ); ?>.  <?php _e( 'Please include your <b>System Info</b> below with all support requests.', $text_domain  ); ?></p>
+<p><?php echo sby_admin_icon( 'envelope', 'sbspf_small_svg' ); ?>&nbsp; <?php _e( 'Have a problem? Submit a ', $text_domain ); ?><a href="<?php echo esc_url( $setup_url ); ?>" target="_blank"><?php _e( 'support ticket', $text_domain ); ?></a> <?php _e( 'on our website', $text_domain ); ?>.  <?php _e( 'Please include your <b>System Info</b> below with all support requests.', $text_domain  ); ?></p>
 
 <br />
 <h3><?php _e('System Info', $text_domain ); ?> &nbsp; <span style="color: #666; font-size: 11px; font-weight: normal;"><?php _e( 'Click the text below to select all', $text_domain ); ?></span></h3>
@@ -37,46 +39,26 @@ foreach ( $plugins as $plugin_path => $plugin ) {
 <?php
 $options = get_option( $this->get_option_name(), array() );
 foreach ( $options as $key => $val ) {
-    if ( $key !== 'connected_accounts' ) {
-	    if ( is_array( $val ) ) {
-		    foreach ( $val as $key2 => $val2 ) {
-			    if ( is_array( $val2 ) ) {
-				    foreach ( $val2 as $key3 => $val3 ) {
-					    $label = $key . ':';
-					    $value = isset( $val3 ) ? esc_attr( $val3 ) : 'unset';
-					    echo str_pad( $label, 24 ) . $value ."\n";
-				    }
-			    } else {
-				    $label = $key . ':';
-				    $value = isset( $val2 ) ? esc_attr( $val2 ) : 'unset';
-				    echo str_pad( $label, 24 ) . $value ."\n";
-			    }
-		    }
-	    } else {
-		    $label = $key . ':';
-		    $value = isset( $val ) ? esc_attr( $val ) : 'unset';
-		    echo str_pad( $label, 24 ) . $value ."\n";
-	    }
-    }
-}
-?>
-
-## Connected Accounts: ##
-<?php
-foreach ( $options['connected_accounts'] as $account ) {
-	foreach ( $account as $key2 => $val2 ) {
-		if ( is_array( $val2 ) ) {
-			foreach ( $val2 as $key3 => $val3 ) {
-				$label = $key3 . ':';
-				$value = isset( $val3 ) ? esc_attr( $val3 ) : 'unset';
+	if ( is_array( $val ) ) {
+		foreach ( $val as $key2 => $val2 ) {
+			if ( is_array( $val2 ) ) {
+				foreach ( $val2 as $key3 => $val3 ) {
+					$label = $key3 . ':';
+					$value = isset( $val3 ) ? esc_attr( $val3 ) : 'unset';
+					echo str_pad( $label, 24 ) . $value ."\n";
+				}
+			} else {
+				$label = $key2 . ':';
+				$value = isset( $val2 ) ? esc_attr( $val2 ) : 'unset';
 				echo str_pad( $label, 24 ) . $value ."\n";
 			}
-		} else {
-			$label = $key2 . ':';
-			$value = isset( $val2 ) ? esc_attr( $val2 ) : 'unset';
-			echo str_pad( $label, 24 ) . $value ."\n";
 		}
+	} else {
+		$label = $key . ':';
+		$value = isset( $val ) ? esc_attr( $val ) : 'unset';
+		echo str_pad( $label, 24 ) . $value ."\n";
 	}
+
 }
 ?>
 
@@ -110,7 +92,7 @@ echo "\n";
 
 ## Location Summary: ##
 <?php
-$locator_summary = SBY_Feed_Locator::summary();
+$locator_summary = Feed_Locator::summary();
 $condensed_shortcode_atts = array( 'type', 'channel', 'id', 'live', 'search', 'playlist', 'layout', 'whitelist', 'includewords' );
 
 if ( ! empty( $locator_summary) ) {
@@ -141,7 +123,7 @@ global $sby_posts_manager;
 $errors = $sby_posts_manager->get_errors();
 if ( ! empty( $errors ) ) :
 	foreach ( $errors as $type => $error ) :
-		echo $type . ': ' . str_replace( array( '<p>', '<b>', '</p>', '</b>' ), ' ', wp_kses_post( $error[1] ) ) . "\n";
+		echo $type . ': ' . str_replace( array( '<p>', '<b>', '</p>', '</b>' ), ' ', $error[1] . ' ' . $error[2] ) . "\n";
 	endforeach;
 endif;
 ?>

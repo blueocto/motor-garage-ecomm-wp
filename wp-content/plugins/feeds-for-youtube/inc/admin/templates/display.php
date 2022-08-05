@@ -4,14 +4,14 @@
 
 <h3 style="padding-top: 10px;"><?php _e( 'Multiple Feeds', $text_domain ); ?></h3>
 <p><?php _e( "If you'd like to display multiple feeds then you can set different settings directly in the shortcode like so:", $text_domain ); ?>
-	</br><code>[<?php echo $slug; ?> channel=gopro num=9]</code></p>
+	</br><code>[<?php echo $slug; ?> user=gopro num=9]</code></p>
 <p><?php _e( "You can display as many different feeds as you like, on either the same page or on different pages, by just using the shortcode options below. For example:", $text_domain ); ?><br />
 	<code>[<?php echo $slug; ?>]</code><br />
-	<code>[<?php echo $slug; ?> channel="ANOTHER_CHANNEL"]</code><br />
+	<code>[<?php echo $slug; ?> type=playlist playlist="PLLLm1a2b3c4D6g7i8j9k_1a2b3c4D57i8j9k"]</code><br />
 	<code>[<?php echo $slug; ?> num=4 showheader=false]</code>
 </p>
 <p><?php _e( "See the table below for a full list of available shortcode options:", $text_domain ); ?></p>
-<p><span class="sbspf_table_key"></span><?php _e( "Pro version only", $text_domain ); ?></p>
+
 <table class="sbspf_shortcode_table">
 	<tbody>
 	<tr valign="top">
@@ -22,13 +22,8 @@
 
 	<?php foreach ( $this->display_your_feed_sections as $display_your_feed_section ) : ?>
 		<tr class="sbspf_table_header"><td colspan=3><?php echo $display_your_feed_section['label'] ?></td></tr>
-		<?php foreach ( $display_your_feed_section['settings'] as $setting ) :
-			$pro_only_class = '';
-            if ( in_array( $setting['key'], $this->pro_only, true ) ) {
-                $pro_only_class = ' class="sbspf_pro_only"';
-            }
-            ?>
-			<tr<?php echo $pro_only_class; ?>>
+		<?php foreach ( $display_your_feed_section['settings'] as $setting ) : ?>
+			<tr>
 				<td><?php echo $setting['key']; ?></td>
 				<td><?php echo $setting['description']; ?></td>
 				<td><code>[<?php echo $slug; ?> <?php echo $setting['key']; ?>="<?php echo str_replace('"', '', $setting['example'] ); ?>"]</code></td>
@@ -36,6 +31,24 @@
 		<?php endforeach; ?>
 
 	<?php endforeach; ?>
+
+    <tr class="sbspf_table_header"><td colspan=3><?php _e( 'Other', $text_domain ) ?></td></tr>
+    <tr>
+        <td>showpast</td>
+        <td><?php _e( 'Include past live streams if displaying a live stream feed.', $text_domain ) ?></td>
+        <td><code>[<?php echo $slug; ?> showpast="true"]</code></td>
+    </tr>
+    <tr>
+        <td>usecustomsearch</td>
+        <td><?php _e( 'Use a custom search instead of the default search type.', $text_domain ) ?></td>
+        <td><code>[<?php echo $slug; ?> usecustomsearch="true"]</code></td>
+    </tr>
+    <tr>
+        <td>customsearch</td>
+        <td><?php _e( 'Custom search query.', $text_domain ) ?></td>
+        <td><code>[<?php echo $slug; ?> customsearch="&q=gooseberry falls&order=viewCount"]</code></td>
+    </tr>
+
 
 	</tbody>
 </table>

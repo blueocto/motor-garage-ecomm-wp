@@ -1,9 +1,9 @@
 <h3><?php _e( 'Configure', $text_domain ); ?></h3>
 <div id="sbspf_config">
-	<?php
-	$notice_not_dismissed = sby_notice_not_dismissed( 'sby_connect_warning_notice' );
-	$warning_data_att = $notice_not_dismissed ? ' data-show-warning="1"' : '';
-	?>
+    <?php
+    $notice_not_dismissed = sby_notice_not_dismissed( 'sby_connect_warning_notice' );
+    $warning_data_att = $notice_not_dismissed ? ' data-show-warning="1"' : '';
+    ?>
     <a href="<?php echo $oauth_processor_url . admin_url( 'admin.php?page=' . esc_attr( $slug ) ); ?>" id="sbspf_get_token"<?php echo $warning_data_att; ?>><?php echo sby_icon( $slug, 'sbspf_small_svg' ); ?> <?php echo sprintf( __( 'Connect to %s to Create a Feed', $text_domain ), $social_network ); ?></a>
     <a class="sbspf_not_working" href="https://smashballoon.com/<?php echo esc_attr( $slug ); ?>/token/" target="_blank"><?php _e( "Button not working?", $text_domain ); ?></a>
 </div>
@@ -22,7 +22,7 @@
             </th>
             <td>
                 <input name="<?php echo $this->get_option_name(); ?>[api_key]" id="sby_api_key" type="text" value="<?php echo esc_attr( $api_key ); ?>" size="64" minlength="15" maxlength="200" />
-                <p class="sbspf_aside"><?php echo __( 'Entering an API key is <strong>optional</strong> but recommended. It allows the plugin to fetch older videos and prevents potential disruption in your feed. It only takes a few minutes: <a href="https://smashballoon.com/youtube-api-key/" target="_blank" rel="noopener">Get my API key.</a>', $text_domain ); ?></p>
+                <p class="sbspf_aside"><?php echo __( 'An API Key is needed for several features to work. It\'s free to create and it only takes a few minutes: <a href="https://smashballoon.com/youtube-api-key/" target="_blank" rel="noopener">Get my API key.</a>', $text_domain ); ?></p>
             </td>
         </tr>
 
@@ -40,3 +40,5 @@
         <hr>
 	<?php endforeach; ?>
 </form>
+
+<?php if ( empty( $api_key ) && sby_api_key_notice_not_dismissed() ) { include $this->get_path( 'modal' ); } ?>

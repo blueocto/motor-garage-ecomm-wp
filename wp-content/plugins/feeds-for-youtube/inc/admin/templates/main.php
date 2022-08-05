@@ -25,35 +25,33 @@ $tabs = $this->get_tabs();
 ?>
 
 <div id="sbspf_admin" class="wrap sbspf-admin sby_admin" data-sb-plugin="sbspf">
-	<?php
-	$lite_notice_dismissed = get_transient( 'youtube_feed_dismiss_lite' );
-
-	if ( ! $lite_notice_dismissed ) :
-		?>
-        <div id="sbspf-notice-bar" style="display:none">
-            <span class="sbspf-notice-bar-message"><?php _e( 'You\'re using Feeds for YouTube Lite. To unlock more features consider <a href="https://smashballoon.com/youtube-feed/?utm_source=WordPress&utm_campaign=youtubeliteplugin&utm_medium=notice-bar" target="_blank" rel="noopener noreferrer">upgrading to Pro</a>.', $text_domain ); ?></span>
-            <button type="button" class="dismiss" title="<?php _e( 'Dismiss this message.', $text_domain ); ?>" data-page="overview">
-            </button>
-        </div>
-	<?php endif; ?>
-
 	<?php do_action( 'sby_admin_overview_before_title' ); ?>
 
-	<h1><?php echo esc_html( $plugin_name ); ?></h1>
+    <h1><?php echo esc_html( $plugin_name ); ?></h1>
 
 	<!-- Display the tabs along with styling for the 'active' tab -->
 	<h2 class="nav-tab-wrapper">
 		<?php
 		$i = 1;
 		foreach ( $tabs as $tab ) :
+			$title = isset( $tab['numbered_tab'] ) && ! $tab['numbered_tab'] ? __( $tab['title'], $text_domain ) : $i . '. ' . __( $tab['title'], $text_domain );
             if ( ! isset( $tab['has_nav_tab'] ) ) :
-			$title = isset( $tab['numbered_tab'] ) && ! $tab['numbered_tab'] ? __( $tab['title'], 'feeds-for-youtube' ) : $i . '. ' . __( $tab['title'], 'feeds-for-youtube' );
-			?>
-			<a href="admin.php?page=<?php echo esc_attr( $slug ); ?>&tab=<?php echo esc_attr( $tab['slug'] ); ?>" class="nav-tab <?php if ( $active_tab === $tab['slug'] ){ echo 'nav-tab-active'; } ?>"><?php echo $title; ?></a>
-		<?php
+            ?>
+                <a href="admin.php?page=<?php echo esc_attr( $slug ); ?>&tab=<?php echo esc_attr( $tab['slug'] ); ?>" class="nav-tab <?php if ( $active_tab === $tab['slug'] ){ echo 'nav-tab-active'; } ?>"><?php echo $title; ?></a>
+            <?php
             $i ++;
             endif;
-		endforeach; ?>
+		endforeach;
+
+		if( is_plugin_active('social-wall/social-wall.php' ) ){ ?>
+			<a href="admin.php?page=youtube-feed-single-videos" class="nav-tab">Single Video Settings</a>
+			<a href="edit.php?post_type=sby_videos" class="nav-tab">All Videos</a>
+		<?php } else { ?>
+            <a href="?page=youtube-feed-sw" class="nav-tab"><?php _e('Create a Social Wall'); ?><span class="sbspf-alert-bubble">New</span></a>
+		<?php }
+
+		?>
+
 	</h2>
 	<?php
 	settings_errors();
@@ -63,7 +61,7 @@ $tabs = $this->get_tabs();
 	$next_step = $this->next_step();
 	if ( ! empty( $next_step ) ) : ?>
     <p class="sbspf_footer_help">
-        <?php echo sby_admin_icon( 'chevron-right', 'sbspf_small_svg' ) ; ?>&nbsp; <?php _e('Next Step', $text_domain ); ?>: <a href="?page=<?php echo esc_attr( $slug ); ?>&tab=<?php echo esc_attr( $next_step['next_tab'] ); ?>"><?php echo esc_html( __( $next_step['instructions'], 'feeds-for-youtube' ) ); ?></a>
+        <?php echo sby_admin_icon( 'chevron-right', 'sbspf_small_svg' ) ; ?>&nbsp; <?php _e('Next Step', $text_domain ); ?>: <a href="?page=<?php echo esc_attr( $slug ); ?>&tab=<?php echo esc_attr( $next_step['next_tab'] ); ?>"><?php echo esc_html( __( $next_step['instructions'], '$text_domain' ) ); ?></a>
     </p>
 	<?php endif; ?>
 
@@ -75,9 +73,6 @@ $tabs = $this->get_tabs();
 			<input type="text" value="[<?php echo $slug; ?>]" size="18" readonly="readonly" style="text-align: center;" onclick="this.focus();this.select()" title="<?php _e( 'To copy, click the field then press Ctrl + C (PC) or Cmd + C (Mac).', $text_domain ); ?>" /></p>
 		<p><?php _e( "Find out how to display <a href='?page=".$slug."&tab=display'>multiple feeds</a>.", $text_domain ); ?></p>
 	</div>
-
-    <a href="https://smashballoon.com/youtube-feed/?utm_source=plugin-free&utm_campaign=sby" target="_blank" class="sbspf-pro-notice"><img src="<?php echo SBY_PLUGIN_URL . 'img/pro.png' ?>" alt="Pro" /></a>
-
 
 </div>
 <div class="wp-clearfix"></div>

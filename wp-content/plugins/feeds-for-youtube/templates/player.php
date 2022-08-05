@@ -1,4 +1,13 @@
 <?php
+
+use SmashBalloon\YouTubeFeed\SBY_Display_Elements;
+use SmashBalloon\YouTubeFeed\SBY_Parse;
+
+// Don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
 $context = 'player';
 $post_id = SBY_Parse::get_post_id( $placeholder_post );
 $timestamp = SBY_Parse::get_timestamp( $placeholder_post );
@@ -11,8 +20,9 @@ $permalink = SBY_Parse::get_permalink( $placeholder_post );
 $img_alt                 = SBY_Parse::get_caption( $placeholder_post, __( 'Image for post' ) . ' ' . $post_id );
 $player_outer_wrap_style_attr = SBY_Display_Elements::get_style_att( 'player_outer_wrap', $settings );
 
+$player_attributes = SBY_Display_Elements::get_player_attributes( $settings );
 ?>
-<div id="sby_player_<?php echo esc_attr( $post_id ); ?>" class="sby_player_outer_wrap sby_player_item" <?php echo $player_outer_wrap_style_attr; ?>>
+<div id="sby_player_<?php echo esc_attr( $post_id ); ?>" class="sby_player_outer_wrap sby_player_item" <?php echo $player_outer_wrap_style_attr; echo $player_attributes; ?>>
     <div class="sby_video_thumbnail_wrap">
         <a class="sby_video_thumbnail sby_player_video_thumbnail" href="<?php echo esc_url( $permalink ); ?>" target="_blank" rel="noopener" data-full-res="<?php echo esc_url( $media_full_res ); ?>" data-img-src-set="<?php echo esc_attr( wp_json_encode( $media_all_sizes_json ) ); ?>" data-video-id="<?php echo esc_attr( $video_id ); ?>">
             <span class="sby-screenreader"><?php echo sprintf( __( 'YouTube Video %s', 'feeds-for-youtube' ), $post_id ); ?></span>
@@ -29,5 +39,4 @@ $player_outer_wrap_style_attr = SBY_Display_Elements::get_style_att( 'player_out
             <div class="sby_player"></div>
         </div>
     </div>
-
 </div>

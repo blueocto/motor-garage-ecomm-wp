@@ -33,13 +33,23 @@ var SBYAdminNotifications = window.SBYAdminNotifications || ( function( document
 	 * @type {object}
 	 */
 	var app = {
-
 		/**
 		 * Start the engine.
 		 *
 		 * @since 2.18
 		 */
 		init: function() {
+
+			//Re-init elements to get a fresh copy of those in memory for the React app.
+			el = {
+				$notifications:    $( '#sby-notifications' ),
+				$nextButton:       $( '#sby-notifications .navigation .next' ),
+				$prevButton:       $( '#sby-notifications .navigation .prev' ),
+				$adminBarCounter:  $( '#wp-admin-bar-wpforms-menu .sby-menu-notification-counter' ),
+				$adminBarMenuItem: $( '#wp-admin-bar-sby-notifications' ),
+
+			};
+
 			el.$notifications.find( '.messages a').each(function() {
 				if ($(this).attr('href').indexOf('dismiss=') > -1 ) {
 					$(this).addClass('button-dismiss');
@@ -47,6 +57,124 @@ var SBYAdminNotifications = window.SBYAdminNotifications || ( function( document
 			})
 
 			$( app.ready );
+		},
+
+		jqueryInit: function ($) {
+			$(document).on('click', '#renew-modal-btn', function() {
+				$('.sby-sb-modal').show();
+			});
+
+			$(document).on('click', '#sby-sb-close-modal', function() {
+				$('.sby-sb-modal').hide();
+			});
+
+			/**
+			 * Recheck the licensey key by sending AJAX request to the server
+			 *
+			 * @since 4.0
+			 */
+			$(document).on('click', "#sby-recheck-license-key", function() {
+				$(this).find('.spinner-icon').show();
+				let sbyLicenseNotice = $('#sby-license-notice');
+				$.ajax({
+					url: sby_admin.ajax_url,
+					data: {
+						action: 'sby_check_license',
+						sby_nonce: sby_admin.nonce
+					},
+					success: function(result){
+						$(this).find('.spinner-icon').hide();
+
+						if ( sbyLicenseNotice ) {
+							if ( result.success == true ) {
+								sbyLicenseNotice.removeClass('sby-license-expired-notice').addClass('sby-license-renewed-notice');
+							}
+							sbyLicenseNotice.html( result.data.content );
+						}
+					}
+				});
+			});
+
+			/**
+			 * Dismiss the renewed license notice
+			 *
+			 * @since 4.0
+			 */
+			$(document).on('click', "#sby-hide-notice", function() {
+				let sbyLicenseNotice = $('#sby-license-notice');
+				let sbyLicenseModal = $('.sby-sb-modal');
+				sbyLicenseNotice.remove();
+				sbyLicenseModal.remove();
+			});
+
+			/**
+			 * Dismiss the license notice on dashboard page
+			 *
+			 * @since 4.0
+			 */
+			$(document).on('click', "#sb-dismiss-notice", function() {
+				let sbyLicenseNotice = $('#sby-license-notice');
+				let sbyLicenseModal = $('.sby-sb-modal');
+				sbyLicenseNotice.remove();
+				sbyLicenseModal.remove();
+				$.ajax({
+					url: sby_admin.ajax_url,
+					data: {
+						action: 'sby_dismiss_license_notice',
+						sby_nonce: sby_admin.nonce
+					},
+					success: function(result){
+					}
+				});
+			});
+
+
+			$('body').on('click', '#sby_review_consent_yes', function(e) {
+				let reviewStep1 = $('.sby_review_notice_step_1, .sby_review_step1_notice');
+				let reviewStep2 = $('.sby_notice.sby_review_notice, .rn_step_2');
+
+				reviewStep1.hide();
+				reviewStep2.show();
+
+				$.ajax({
+					url : sby_admin.ajax_url,
+					type : 'post',
+					data : {
+						action : 'sby_review_notice_consent_update',
+						consent : 'yes',
+						sby_nonce: sby_admin.nonce,
+					},
+					success : function(data) {
+					}
+				}); // ajax call
+
+			});
+
+			$('body').on('click', '#sby_review_consent_no', function(e) {
+				let reviewStep1 = $('.sby_review_notice_step_1, #sby-notifications');
+				reviewStep1.hide();
+
+				$.ajax({
+					url : sby_admin.ajax_url,
+					type : 'post',
+					data : {
+						action : 'sby_review_notice_consent_update',
+						consent : 'no',
+						sby_nonce: sby_admin.nonce,
+					},
+					success : function(data) {
+					}
+				}); // ajax call
+
+			});
+
+			$(document).on('click', '#renew-modal-btn', function() {
+				$('.sby-sb-modal').show();
+			});
+
+			$(document).on('click', '#sby-sb-close-modal', function() {
+				$('.sby-sb-modal').hide();
+			});
 		},
 
 		/**
@@ -206,3 +334,5 @@ var SBYAdminNotifications = window.SBYAdminNotifications || ( function( document
 
 // Initialize.
 SBYAdminNotifications.init();
+
+jQuery(document).ready(SBYAdminNotifications.jqueryInit);
