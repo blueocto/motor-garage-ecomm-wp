@@ -106,7 +106,7 @@ a {
 
 	p,
 	li {
-		a:not(.btn) {
+		a:not(.btn):not(.page-numbers) {
 			@extend %a-styled;
 		}
 	}

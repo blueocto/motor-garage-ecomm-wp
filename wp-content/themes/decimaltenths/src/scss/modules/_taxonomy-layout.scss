@@ -95,21 +95,26 @@
 }
 
 .woocommerce-products-header {
+	
 	@include breakpoint(large) {
 		grid-area: tax-head;
 		gap: 0;
 		
-		display: grid;
-		grid-template-columns:
-			$small-spacing
-			minmax(40%, 342.5px) //25%
-			minmax(60%, 342.5px) //25%
-			$small-spacing;
-		grid-template-rows: auto auto;
-		grid-template-areas:
-			". taxonomy-head-wrap tax-image ."
-			". taxonomy-head-wrap tax-image ."
+		// display: grid;
+		// grid-template-columns:
+		// 	$small-spacing
+		// 	minmax(40%, 342.5px) //25%
+		// 	minmax(60%, 342.5px) //25%
+		// 	$small-spacing;
+		// grid-template-rows: auto auto;
+		// grid-template-areas:
+		// 	". taxonomy-head-wrap tax-image ."
+		// 	". taxonomy-head-wrap tax-image ."
 	}
+}
+
+.woocommerce-products-header__title.page-title {
+	display: none;
 }
 
 // .page-title {

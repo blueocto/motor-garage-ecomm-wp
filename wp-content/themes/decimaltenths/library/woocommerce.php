@@ -10,8 +10,8 @@ function woocommerce_support() {
 	add_theme_support( 'wc-product-gallery-lightbox' ); //Photoswipe
 	add_theme_support( 'wc-product-gallery-slider' ); //Flexslider
 
-	// add_theme_support( 
-		// 'woocommerce', array(
+	add_theme_support( 
+		'woocommerce', array(
 			/**
 			* Ref: https://docs.woocommerce.com/document/image-sizes-theme-developers/ 
 			*/
@@ -19,22 +19,22 @@ function woocommerce_support() {
 			/* 'thumbnails' for archive pages
 			* also known as 'woocommerce_thumbnail' or 'shop_catalog'
 			*/
-			// 'thumbnail_image_width' => 320, 
+			'thumbnail_image_width' => 307, 
 			
 			/** 
 			* change the size of thumbnails on single product, as cannot be set in Admin
 			* also known as 'woocommerce_gallery_thumbnail' or 'shop_thumbnail'
 			*/
-			// 'gallery_thumbnail_image_width' => 192, 
+			'gallery_thumbnail_image_width' => 123, 
 			
 			/**
 			* full size image
 			* also known as 'woocommerce_single' or 'shop_single'
 			*/
-			// 'single_image_width' => 768,
-		// )
-	// );
-	// update_option( 'woocommerce_thumbnail_cropping', 'uncropped' ); 
+			'single_image_width' => 700,
+		)
+	);
+	update_option( 'woocommerce_thumbnail_cropping', 'uncropped' ); 
 }
 add_action( 'after_setup_theme', 'woocommerce_support' );
 
