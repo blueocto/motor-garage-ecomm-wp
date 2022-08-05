@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Feeds for YouTube
-Plugin URI: https://smashballoon.com/youtube-feed
+Plugin URI: http://smashballoon.com/youtube-feed
 Description: The Feeds for YouTube plugin allows you to display customizable YouTube feeds from any YouTube channel.
-Version: 1.4.5
+Version: 2.0.0
 Author: Smash Balloon YouTube Team
-Author URI: https://smashballoon.com/
+Author URI: http://smashballoon.com/
 Text Domain: feeds-for-youtube
 */
 /*
@@ -23,41 +23,52 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+use Smashballoon\Customizer\Container;
+use Smashballoon\Customizer\PreviewProvider;
+use SmashBalloon\YouTubeFeed\Admin\SBY_Notifications;
+use SmashBalloon\YouTubeFeed\Admin\SBY_New_User;
+use SmashBalloon\YouTubeFeed\Admin\SBY_Tracking;
+use SmashBalloon\YouTubeFeed\Blocks\SBY_Blocks;
+use SmashBalloon\YouTubeFeed\Customizer\ShortcodePreviewProvider;
+use SmashBalloon\YouTubeFeed\Feed_Locator;
+use SmashBalloon\YouTubeFeed\SBY_CPT;
 
+use SmashBalloon\YouTubeFeed\SBY_Posts_Manager;
+use SmashBalloon\YouTubeFeed\Services\Admin\AdminServiceContainer;
+
+include 'bootstrap.php';
+
+
+// The ID of the product. Used for renewals
+$sby_download_id = 762236; // 762236, 762320, 762322
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'SBY_STORE_URL' ) ) {
+	define( 'SBY_STORE_URL', 'https://smashballoon.com/' );
+}
+if ( ! defined( 'SBY_PLUGIN_EDD_NAME' ) ) {
+	define( 'SBY_PLUGIN_EDD_NAME', 'YouTube Feed Pro Personal' );
+}
 if ( ! defined( 'SBYVER' ) ) {
-	define( 'SBYVER', '1.4.5' );
+	define( 'SBYVER', '2.0.0' );
 }
 if ( ! defined( 'SBY_DBVERSION' ) ) {
-	define( 'SBY_DBVERSION', '1.4' );
+	define( 'SBY_DBVERSION', '2.0' );
 }
-// Upload folder name for local image files for posts
-if ( ! defined( 'SBY_UPLOADS_NAME' ) ) {
-	define( 'SBY_UPLOADS_NAME', 'sby-local-media' );
+
+if ( ! defined( 'SBY_BUILDER_DIR' ) ) {
+	define( 'SBY_BUILDER_DIR', SBY_PLUGIN_DIR . 'admin/builder/' );
 }
-// Name of the database table that contains instagram posts
-if ( ! defined( 'SBY_ITEMS' ) ) {
-	define( 'SBY_ITEMS', 'sby_items' );
+if ( ! defined( 'SBY_BUILDER_URL' ) ) {
+	define( 'SBY_BUILDER_URL', SBY_PLUGIN_URL . 'admin/builder/' );
 }
-// Name of the database table that contains feed ids and the ids of posts
-if ( ! defined( 'SBY_ITEMS_FEEDS' ) ) {
-	define( 'SBY_ITEMS_FEEDS', 'sby_items_feeds' );
-}
-// Name of the database table that contains feed ids and the ids of posts
-if ( ! defined( 'SBY_CPT' ) ) {
-	define( 'SBY_CPT', 'sby_videos' );
-}
-// Plugin Folder Path.
-if ( ! defined( 'SBY_PLUGIN_DIR' ) ) {
-	define( 'SBY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-}
-// Plugin Folder URL.
-if ( ! defined( 'SBY_PLUGIN_URL' ) ) {
-	define( 'SBY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-}
-if ( ! defined( 'SBY_FEED_LOCATOR' ) ) {
-	define( 'SBY_FEED_LOCATOR', 'sby_feed_locator' );
-}
+
+// Setup customizer
+$customizer_container = Container::getInstance();
+$customizer_container->set( PreviewProvider::class, new ShortcodePreviewProvider());
+$customizer_container->set(\Smashballoon\Customizer\DB::class, new \SmashBalloon\YouTubeFeed\Customizer\DB());
+$customizer_container->set(\Smashballoon\Customizer\Config::class, new \SmashBalloon\YouTubeFeed\Customizer\Config());
+$customizer_container->set(\Smashballoon\Customizer\ProxyProvider::class, new \SmashBalloon\YouTubeFeed\Customizer\ProxyProvider());
 
 if ( function_exists( 'sby_init' ) ) {
 	wp_die( "Please deactivate Feeds for YouTube.<br /><br />Back to the WordPress <a href='".get_admin_url( null, 'plugins.php' )."'>Plugins page</a>." );
@@ -90,11 +101,20 @@ if ( function_exists( 'sby_init' ) ) {
 		if ( ! defined( 'SBY_MAX_RECORDS' ) ) {
 			define( 'SBY_MAX_RECORDS', 100 );
 		}
+		if ( ! defined( 'SBY_MAX_SINGLE_PAGE' ) ) {
+			define( 'SBY_MAX_SINGLE_PAGE', 50 );
+		}
 		if ( ! defined( 'SBY_TEXT_DOMAIN' ) ) {
 			define( 'SBY_TEXT_DOMAIN', 'feeds-for-youtube' );
 		}
 		if ( ! defined( 'SBY_SLUG' ) ) {
 			define( 'SBY_SLUG', 'youtube-feed' );
+		}
+		if ( ! defined( 'SBY_SEARCH_SLUG' ) ) {
+			define( 'SBY_SEARCH_SLUG', 'youtube-feed-search' );
+		}
+		if ( ! defined( 'SBY_SEARCH_NAME' ) ) {
+			define( 'SBY_SEARCH_NAME', 'sbys' );
 		}
 		if ( ! defined( 'SBY_PLUGIN_NAME' ) ) {
 			define( 'SBY_PLUGIN_NAME', __( 'Feeds for YouTube', SBY_TEXT_DOMAIN ) );
@@ -118,82 +138,59 @@ if ( function_exists( 'sby_init' ) ) {
 			define( 'SBY_DEMO_URL', 'https://smashballoon.com/youtube-feed/demo' );
 		}
 		if ( ! defined( 'SBY_PRO_LOGO' ) ) {
-			define( 'SBY_PRO_LOGO', SBY_PLUGIN_URL . '/img/smash-balloon-logo-small.png' );
+			define( 'SBY_PRO_LOGO', 'https://smashballoon.com/wp-content/themes/smashballoon/img/smash-balloon-logo-small.png' );
 		}
 
+		if ( ! defined( 'SBY_MENU_SLUG' ) ) {
+			define( 'SBY_MENU_SLUG', 'sby-feed-builder' );
+		}
+		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/sby-functions.php';
+
+		$container = new \SmashBalloon\YouTubeFeed\Services\ServiceContainer();
+		$container->register();
 		global $sby_settings;
 		$sby_settings = get_option( 'sby_settings', array() );
 		$sby_settings = wp_parse_args( $sby_settings, sby_settings_defaults() );
 
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-vars.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/sby-functions.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-api-connect.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-cron-update.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-display-elements.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-feed.php';
-		include_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-feed-locator.php';
-		include_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-gdpr-integrations.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-parse.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-posts-manager.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-rss-connect.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-settings.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-wp-post.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/widget.php';
-		require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/blocks/class-sby-blocks.php';
 
-		$sby_blocks = new SBY_Blocks();
+		$sby_blocks = new SBY_Blocks( \Smashballoon\Customizer\Feed_Builder::instance() );
 
 		if ( $sby_blocks->allow_load() ) {
 			$sby_blocks->load();
 		}
-
 		if ( is_admin() ) {
-			require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/admin/admin-functions.php';
-			require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/admin/class-sbspf-admin.php';
-			require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/admin/class-sby-admin.php';
+			require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/Admin/admin-functions.php';
 			sby_admin_init();
+
+			$admin_container = new AdminServiceContainer();
+			$admin_container->register();
 
 			if ( version_compare( PHP_VERSION,  '5.3.0' ) >= 0
 			     && version_compare( get_bloginfo('version'), '4.6' , '>' ) ) {
-				require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/admin/class-sby-notifications.php';
+				require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/Admin/SBY_Notifications.php';
 				$sby_notifications = new SBY_Notifications();
 				$sby_notifications->init();
 
-				require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/admin/class-sby-new-user.php';
-				$sby_notifications = new SBY_New_User();
-				$sby_notifications->init();
+				require_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/Admin/SBY_New_User.php';
+				$sby_new_user = new SBY_New_User();
+				$sby_new_user->init();
 			}
 		}
+
+		\SmashBalloon\YouTubeFeed\Container::getInstance()->get( SBY_Tracking::class);
+		\Smashballoon\Customizer\Feed_Builder::instance();
+		sby_builder_pro();
+
+		// Include upgrader hooks
+		$sby_upgrader = new \SmashBalloon\YouTubeFeed\Admin\SBY_Upgrader();
+		$sby_upgrader->hooks();
+
+		$sby_cpt = new SBY_CPT();
 
 		global $sby_posts_manager;
 		$sby_posts_manager = new SBY_Posts_Manager( 'sby', get_option( 'sby_errors', array() ), get_option( 'sby_ajax_status', array( 'tested' => false, 'successful' => false ) ) );
 	}
 	add_action( 'plugins_loaded', 'sby_init' );
-
-	function sby_register_cpt() {
-		register_post_type( SBY_CPT, array(
-			'label'           => SBY_SOCIAL_NETWORK,
-			'labels'          => array(
-				'name'          => SBY_SOCIAL_NETWORK . ' ' . __( 'Videos', SBY_TEXT_DOMAIN ),
-				'singular_name' => __( SBY_SOCIAL_NETWORK . ' ' . 'Video', SBY_TEXT_DOMAIN ),
-				'add_new' => __( 'Add New Video', SBY_TEXT_DOMAIN ),
-				'add_new_item' => __( 'Add New Video', SBY_TEXT_DOMAIN ),
-				'edit_item'          => __( 'Edit Video', SBY_TEXT_DOMAIN ),
-				'view_item'          => __( 'View Video', SBY_TEXT_DOMAIN ),
-				'all_items'          => __( 'All Videos', SBY_TEXT_DOMAIN ),
-			),
-			'public'          => false,
-			'show_ui'         => false,
-			'show_in_menu'    => false,
-			'query_var'       => false,
-			'rewrite'         => false,
-			'has_archive'     => false,
-			'hierarchical'    => false,
-			'supports'        => array( 'title', 'editor', 'thumbnail', 'excerpt', 'author' ) //'comments'
-		) );
-	}
-
-	add_action( 'init', 'sby_register_cpt' );
 
 	/**
 	 * Add the custom interval of 30 minutes for cron caching
@@ -229,7 +226,6 @@ if ( function_exists( 'sby_init' ) ) {
 	 */
 	function sby_activate( $network_wide ) {
 		include_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/sby-functions.php';
-
 		//Clear page caching plugins and autoptomize
 		if ( is_callable( 'sby_clear_page_caches' ) ) {
 			sby_clear_page_caches();
@@ -246,12 +242,9 @@ if ( function_exists( 'sby_init' ) ) {
 
 			wp_schedule_event( $six_am_local, 'sbyweekly', 'sby_notification_update' );
 		}
-
 		$sby_settings = get_option( 'sby_settings', array() );
 		if ( isset( $sby_settings['caching_type'] ) && $sby_settings['caching_type'] === 'background' ) {
-			require_once trailingslashit( plugin_dir_path( __FILE__ ) ) . 'inc/class-sby-cron-update.php';
-			require_once trailingslashit( plugin_dir_path( __FILE__ ) ) . 'inc/sby-functions.php';
-
+			require_once trailingslashit( plugin_dir_path( __FILE__ ) ) . 'inc/SBY_Cron_Updater.php';
 			SBY_Cron_Updater::start_cron_job( $sby_settings['cache_cron_interval'], $sby_settings['cache_cron_time'], $sby_settings['cache_cron_am_pm'] );
 		}
 
@@ -280,6 +273,41 @@ if ( function_exists( 'sby_init' ) ) {
 
 		global $wp_roles;
 		$wp_roles->add_cap( 'administrator', 'manage_youtube_feed_options' );
+		//sby_videos
+
+		//Delete all transients
+		global $wpdb;
+		$table_name = $wpdb->prefix . "options";
+		$wpdb->query( "
+        DELETE
+        FROM $table_name
+        WHERE `option_name` LIKE ('%\_transient\_sby\_%')
+        " );
+		$wpdb->query( "
+        DELETE
+        FROM $table_name
+        WHERE `option_name` LIKE ('%\_transient\_timeout\_sby\_%')
+        " );
+		$wpdb->query( "
+        DELETE
+        FROM $table_name
+        WHERE `option_name` LIKE ('%\_transient\_&sby\_%')
+        " );
+		$wpdb->query( "
+        DELETE
+        FROM $table_name
+        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sby\_%')
+        " );
+		$wpdb->query( "
+        DELETE
+        FROM $table_name
+        WHERE `option_name` LIKE ('%\_transient\_\$sby\_%')
+        " );
+		$wpdb->query( "
+        DELETE
+        FROM $table_name
+        WHERE `option_name` LIKE ('%\_transient\_timeout\_\$sby\_%')
+        " );
 	}
 	register_activation_hook( __FILE__, 'sby_activate' );
 
@@ -296,7 +324,6 @@ if ( function_exists( 'sby_init' ) ) {
 	}
 	register_deactivation_hook( __FILE__, 'sby_deactivate' );
 
-
 	/**
 	 * Compares previous plugin version and updates database related
 	 * items as needed
@@ -307,41 +334,6 @@ if ( function_exists( 'sby_init' ) ) {
 
 		$db_ver = get_option( 'sby_db_version', 0 );
 
-		if ( version_compare( $db_ver, '1.1', '<' ) ) {
-			$sby_statuses_option = get_option( 'sby_statuses', array() );
-
-			if ( ! isset( $sby_statuses_option['first_install'] ) ) {
-
-				$options_set = get_option( 'sby_settings', false );
-
-				if ( $options_set ) {
-					$sby_statuses_option['first_install'] = 'from_update';
-				} else {
-					$sby_statuses_option['first_install'] = time();
-				}
-
-				$sby_rating_notice_option = get_option( 'sby_rating_notice', false );
-
-				if ( $sby_rating_notice_option === 'dismissed' ) {
-					$sby_statuses_option['rating_notice_dismissed'] = time();
-				}
-
-				$sby_rating_notice_waiting = get_transient( 'feeds_for_youtube_rating_notice_waiting' );
-
-				if ( $sby_rating_notice_waiting === false
-				     && $sby_rating_notice_option === false ) {
-					$time = 2 * WEEK_IN_SECONDS;
-					set_transient( 'feeds_for_youtube_rating_notice_waiting', 'waiting', $time );
-					update_option( 'sby_rating_notice', 'pending', false );
-				}
-
-				update_option( 'sby_statuses', $sby_statuses_option, false );
-
-			}
-
-			update_option( 'sby_db_version', SBY_DBVERSION );
-		}
-
 		if ( version_compare( $db_ver, '1.2', '<' ) ) {
 			sby_add_caps();
 
@@ -349,6 +341,7 @@ if ( function_exists( 'sby_init' ) ) {
 		}
 
 		if ( version_compare( $db_ver, '1.3', '<' ) ) {
+
 			if ( ! wp_next_scheduled( 'sby_notification_update' ) ) {
 				$timestamp = strtotime( 'next monday' );
 				$timestamp = $timestamp + (3600 * 24 * 7);
@@ -356,209 +349,11 @@ if ( function_exists( 'sby_init' ) ) {
 
 				wp_schedule_event( $six_am_local, 'sbyweekly', 'sby_notification_update' );
 			}
-
-			update_option( 'sby_db_version', SBY_DBVERSION );
 		}
 
-		if ( version_compare( $db_ver, '1.4', '<' ) ) {
-			include_once trailingslashit( SBY_PLUGIN_DIR ) . 'inc/class-sby-feed-locator.php';
-
-			SBY_Feed_Locator::create_table();
-
-			update_option( 'sby_db_version', SBY_DBVERSION );
-		}
 
 	}
 	add_action( 'wp_loaded', 'sby_check_for_db_updates' );
-
-	function sby_add_caps() {
-		global $wp_roles;
-
-		$pto = get_post_type_object( SBY_CPT );
-
-		$admin_caps = array(
-			'edit_' . SBY_CPT,
-			'read_' . SBY_CPT,
-			'delete_' . SBY_CPT,
-			'edit_' . SBY_CPT,
-			'edit_others_' . SBY_CPT,
-			'publish_' . SBY_CPT,
-			'read_private_' . SBY_CPT,
-			'read',
-			'delete_' . SBY_CPT,
-			'delete_private_' . SBY_CPT,
-			'delete_published_' . SBY_CPT,
-			'delete_others_' . SBY_CPT,
-			'edit_private_' . SBY_CPT,
-			'edit_published_' . SBY_CPT,
-		);
-		$author_caps = array(
-			'edit_' . SBY_CPT,
-			'read_' . SBY_CPT,
-			'delete_' . SBY_CPT,
-			'edit_' . SBY_CPT,
-			'publish_' . SBY_CPT,
-			'read',
-			'delete_' . SBY_CPT,
-			'delete_published_' . SBY_CPT,
-			'edit_published_' . SBY_CPT,
-		);
-
-		if ( ! empty( $pto ) ) {
-			foreach ( array( 'administrator', 'editor' ) as $role_id ) {
-				foreach ( $admin_caps as $cap ) {
-					$wp_roles->add_cap( $role_id, $cap );
-				}
-			}
-			foreach ( $author_caps as $cap ) {
-				$wp_roles->add_cap( 'author', $cap );
-			}
-		}
-	}
-
-	/**
-	 * Deletes saved data for the plugin unless setting to preserve
-	 * settings is enabled
-	 *
-	 * @since  2.0 custom tables, custom images, and image directory deleted
-	 * @since  1.0
-	 */
-	function sby_uninstall() {
-		if ( ! current_user_can( 'activate_plugins' ) ) {
-			return;
-		}
-
-		//If the user is preserving the settings then don't delete them
-		$options                        = get_option( 'sby_settings' );
-		$preserve_settings = $options['preserve_settings'];
-		if ( $preserve_settings ) {
-			return;
-		}
-
-		//Settings
-		delete_option( 'sby_settings' );
-		delete_option( 'sby_ver' );
-		delete_option( 'sby_db_version' );
-		delete_option( 'sby_cron_report' );
-		delete_option( 'sby_errors' );
-		delete_option( 'sby_ajax_status' );
-		delete_option( 'sby_statuses' );
-		delete_option( 'sby_notifications' );
-		delete_option( 'sby_newuser_notifications' );
-
-		// Clear backup caches
-		global $wpdb;
-		$table_name = $wpdb->prefix . "options";
-		$wpdb->query( "
-	        DELETE
-	        FROM $table_name
-	        WHERE `option_name` LIKE ('%!sb\_%')
-        " );
-
-		//image resizing
-		$upload                 = wp_upload_dir();
-		$posts_table_name       = $wpdb->prefix . 'sby_items';
-		$feeds_posts_table_name = esc_sql( $wpdb->prefix . 'sby_items_feeds' );
-
-		$image_files = glob( trailingslashit( $upload['basedir'] ) . trailingslashit( 'sby-local-media' ) . '*' ); // get all file names
-		foreach ( $image_files as $file ) { // iterate files
-			if ( is_file( $file ) ) {
-				unlink( $file );
-			} // delete file
-		}
-
-		global $wp_filesystem;
-		$wp_filesystem->delete( trailingslashit( $upload['basedir'] ) . trailingslashit( 'sby-local-media' ) , true );
-		//Delete tables
-		$wpdb->query( "DROP TABLE IF EXISTS $posts_table_name" );
-		$wpdb->query( "DROP TABLE IF EXISTS $feeds_posts_table_name" );
-
-
-		global $wp_roles;
-		$wp_roles->remove_cap( 'administrator', 'manage_youtube_feed_options' );
-
-		$pto = get_post_type_object( 'sby_videos' );
-
-		$admin_caps = array(
-			'edit_sby_videos',
-			'read_sby_videos',
-			'delete_sby_videos',
-			'edit_sby_videos',
-			'edit_others_sby_videos',
-			'publish_sby_videos',
-			'read_private_sby_videos',
-			'read',
-			'delete_sby_videos',
-			'delete_private_sby_videos',
-			'delete_published_sby_videos',
-			'delete_others_sby_videos',
-			'edit_private_sby_videos',
-			'edit_published_sby_videos',
-		);
-		$author_caps = array(
-			'edit_sby_videos',
-			'read_sby_videos',
-			'delete_sby_videos',
-			'edit_sby_videos',
-			'publish_sby_videos',
-			'read',
-			'delete_sby_videos',
-			'delete_published_sby_videos',
-			'edit_published_sby_videos',
-		);
-
-		if ( ! empty( $pto ) ) {
-			foreach ( array( 'administrator', 'editor' ) as $role_id ) {
-				foreach ( $admin_caps as $cap ) {
-					$wp_roles->remove_cap( $role_id, $cap );
-				}
-			}
-			foreach ( $author_caps as $cap ) {
-				$wp_roles->remove_cap( 'author', $cap );
-			}
-		}
-
-		$admin_caps = array(
-			'edit_sby_video',
-			'read_sby_video',
-			'delete_sby_video',
-			'edit_sby_video',
-			'edit_others_sby_video',
-			'publish_sby_video',
-			'read_private_sby_video',
-			'read',
-			'delete_sby_video',
-			'delete_private_sby_video',
-			'delete_published_sby_video',
-			'delete_others_sby_video',
-			'edit_private_sby_video',
-			'edit_published_sby_video',
-		);
-		$author_caps = array(
-			'edit_sby_video',
-			'read_sby_video',
-			'delete_sby_video',
-			'edit_sby_video',
-			'publish_sby_video',
-			'read',
-			'delete_sby_video',
-			'delete_published_sby_video',
-			'edit_published_sby_video',
-		);
-
-		if ( ! empty( $pto ) ) {
-			foreach ( array( 'administrator', 'editor' ) as $role_id ) {
-				foreach ( $admin_caps as $cap ) {
-					$wp_roles->remove_cap( $role_id, $cap );
-				}
-			}
-			foreach ( $author_caps as $cap ) {
-				$wp_roles->remove_cap( 'author', $cap );
-			}
-		}
-	}
-
-	register_uninstall_hook( __FILE__, 'sby_uninstall' );
 
 	/**
 	 * Create database tables for sub-site if multisite
@@ -573,7 +368,7 @@ if ( function_exists( 'sby_init' ) ) {
 	 * @since  2.0
 	 */
 	function sby_on_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-		if ( is_plugin_active_for_network( 'youtube-feed/youtube-feed.php' ) ) {
+		if ( is_plugin_active_for_network( 'youtube-feed-pro/youtube-feed-pro.php' ) ) {
 			switch_to_blog( $blog_id );
 			restore_current_blog();
 		}
@@ -613,7 +408,6 @@ if ( function_exists( 'sby_init' ) ) {
 			'channel' => '',
 			'num' => 9,
 			'nummobile' => 9,
-			'minnum' => 9,
 			'widthresp' => true,
 			'class' => '',
 			'height' => '',
@@ -624,14 +418,21 @@ if ( function_exists( 'sby_init' ) ) {
 			'background' => '',
 			'headercolor' => '',
 			'subscribecolor' => '',
+			'subscribehovercolor' => '',
 			'subscribetextcolor' => '',
 			'buttoncolor' => '',
+			'buttonhovercolor' => '',
 			'buttontextcolor' => '',
 			'layout' => 'grid',
+			'feedtemplate' => 'default',
 			'playvideo' => 'automatically',
 			'sortby' => 'none',
 			'imageres' => 'auto',
 			'showheader' => true,
+			'headerstyle' => 'standard',
+			'customheadertext' => __( 'We are on YouTube', 'feeds-for-youtube' ),
+			'customheadersize' => 'small',
+			'customheadertextcolor' => '',
 			'showdescription' => true,
 			'showbutton' => true,
 			'headersize' => 'small',
@@ -653,28 +454,92 @@ if ( function_exists( 'sby_init' ) ) {
 			'enqueue_css_in_shortcode' => false,
 			'font_method' => 'svg',
 			'customtemplates' => false,
-			'gallerycols' => 3,
-			'gallerycolsmobile' => 2,
-			'gridcols' => 3,
-			'gridcolsmobile' => 2,
-			'include' => array( 'title', 'icon', 'user', 'views', 'date', 'countdown' ),
-			'hoverinclude' => array( 'description', 'stats' ),
+			'cols' => 3,
+			'colsmobile' => 2,
 			'playerratio' => '9:16',
 			'eagerload' => false,
+			'custom_css' => '',
+			'custom_js' => '',
 			'gdpr' => 'auto',
 			'disablecdn' => false,
 			'allowcookies' => false,
-			);
+
+			// pro only
+			'usecustomsearch' => false,
+			'headerchannel' => '',
+			'customsearch' => '',
+			'showpast' => true,
+			'showlikes' => true,
+			'carouselcols' => 3,
+			'carouselcolsmobile' => 2,
+			'carouselarrows' => true,
+			'carouselpag' => true,
+			'carouselautoplay' => false,
+			'infoposition' => 'below',
+			'include' => array( 'icon' ),
+			'hoverinclude' => array( 'title' ),
+			'descriptionlength' => 150,
+			'userelative' => true,
+			'dateformat' => '0',
+			'customdate' => '',
+			'showsubscribers' => false,
+			'enablelightbox' => true,
+			'subscriberstext' => __( 'subscribers', 'feeds-for-youtube' ),
+			'viewstext' => __( 'views', 'feeds-for-youtube' ),
+			'agotext' => __( 'ago', 'feeds-for-youtube' ),
+			'beforedatetext' => __( 'Streaming live', 'feeds-for-youtube' ),
+			'beforestreamtimetext' => __( 'Streaming live in', 'feeds-for-youtube' ),
+			'minutetext' => __( 'minute', 'feeds-for-youtube' ),
+			'minutestext' => __( 'minutes', 'feeds-for-youtube' ),
+			'hourstext' => __( 'hours', 'feeds-for-youtube' ),
+			'thousandstext' => __( 'K', 'feeds-for-youtube' ),
+			'millionstext' => __( 'M', 'feeds-for-youtube' ),
+			'watchnowtext' => __( 'Watch Now', 'feeds-for-youtube' ),
+			'cta' => 'related',
+			'colorpalette' => 'inherit',
+			'linktext' => __( 'Learn More', 'feeds-for-youtube' ),
+			'linkurl' => '',
+			'linkopentype' => 'same',
+			'linkcolor' => '',
+			'linktextcolor' => '',
+			'videocardstyle' => 'regular',
+			'videocardlayout' => 'vertical',
+			'custombgcolor1'            => '',
+			'customtextcolor1'          => '',
+			'customtextcolor2'          => '',
+			'customlinkcolor1'          => '',
+			'custombuttoncolor1'        => '',
+			'custombuttoncolor2'        => '',
+			'boxedbgcolor'        		=> '#ffffff',
+			'boxborderradius'        	=> '12',
+			'enableboxshadow'        	=> false,
+			'descriptiontextsize'		=> '13px',
+
+			// Video elements color
+			'playiconcolor'	        	=> '',
+			'videotitlecolor'        	=> '',
+			'videouserecolor'        	=> '',
+			'videoviewsecolor'        	=> '',
+			'videocountdowncolor'      	=> '',
+			'videostatscolor'	      	=> '',
+			'videodescriptioncolor'    	=> '',
+
+			//cron
+			'cache_cron_interval'      => '1hour',
+			'cache_cron_time'          => '1:00',
+			'cache_cron_am_pm'         => 'am'
+		);
 
 		return $defaults;
 	}
 
 	// Add a Settings link to the plugin on the Plugins page
-	$plugin_file = 'youtube-feed/youtube-feed.php';
+	$plugin_file = 'feeds-for-youtube/youtube-feed.php';
 	add_filter( "plugin_action_links_{$plugin_file}", 'sby_add_settings_link', 10, 2 );
 	function sby_add_settings_link( $links, $file ) {
-		$sby_settings_link = '<a href="' . admin_url( 'admin.php?page=youtube-feed' ) . '">' . __( 'Settings' ) . '</a>';
-		array_unshift( $links, $sby_settings_link );
+		$pro_link = '<a href="https://smashballoon.com/youtube-feed/demo/?utm_campaign=youtube-free&utm_source=plugins-page&utm_medium=upgrade-link" target="_blank" style="font-weight: bold; color: #1da867;">' . __( 'Try the Pro Demo', 'instagram-feed' ) . '</a>';
+		$sby_settings_link = '<a href="' . admin_url( 'admin.php?page=sby-feed-builder' ) . '">' . __( 'Settings' ) . '</a>';
+		array_unshift( $links, $pro_link, $sby_settings_link );
 		return $links;
 	}
 
@@ -684,3 +549,7 @@ if ( function_exists( 'sby_init' ) ) {
 	add_action( 'plugins_loaded', 'sby_text_domain' );
 }
 
+//BUILDER CODE
+function sby_builder_pro() {
+	return \Smashballoon\Customizer\Feed_Builder::instance();
+}

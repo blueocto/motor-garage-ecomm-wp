@@ -16,17 +16,16 @@ if ( ! $sby_preserve_settings ) {
 
 	// clean up options from the database
 	delete_option( 'sby_settings' );
-	delete_option( 'sby_channel_ids' );
-	delete_option( 'sby_channel_status' );
 	delete_option( 'sby_cron_report' );
 	delete_option( 'sby_errors' );
 	delete_option( 'sby_ajax_status' );
 	delete_option( 'sby_db_version' );
 	delete_option( 'sby_statuses' );
+
 	delete_option( 'sby_rating_notice' );
+	delete_option( 'sby_notifications' );
 	delete_option( 'sby_newuser_notifications' );
 	delete_option( 'sby_usage_tracking_config' );
-
 	// delete role
 	global $wp_roles;
 	$wp_roles->remove_cap( 'administrator', 'manage_youtube_feed_options' );
@@ -42,17 +41,15 @@ if ( ! $sby_preserve_settings ) {
 		$wpdb->query( "DELETE FROM $wpdb->posts WHERE post_type = 'sby_videos';" );
 	}
 
+	// delete the onboarding data
+	$wpdb->query( $wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE meta_key LIKE `%sby_onboarding%`") );
+
 	// delete transients and backup data
 	$table_name = $wpdb->prefix . "options";
 	$wpdb->query( "
         DELETE
         FROM $table_name
         WHERE `option_name` LIKE ('%\!sby\_%')
-        " );
-	$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%\~sby\_%')
         " );
 	$wpdb->query( "
         DELETE
@@ -87,14 +84,17 @@ if ( ! $sby_preserve_settings ) {
 
 	//delete image resizing related things
 	$posts_table_name       = $wpdb->prefix . 'sby_items';
-	$feeds_posts_table_name = esc_sql( $wpdb->prefix . 'sby_items_feeds' );
+	$feeds_posts_table_name = $wpdb->prefix . 'sby_items_feeds';
+	$locator_table_name = $wpdb->prefix . 'sby_feed_locator';
+	$feed_caches_table_name = $wpdb->prefix . 'sby_feed_caches';
+	$feeds_table_name = $wpdb->prefix . 'sby_feeds';
 
 	$upload                 = wp_upload_dir();
 	$wpdb->query( "DROP TABLE IF EXISTS $posts_table_name" );
 	$wpdb->query( "DROP TABLE IF EXISTS $feeds_posts_table_name" );
-
-	$locator_table_name = $wpdb->prefix . 'sby_feed_locator';
 	$wpdb->query( "DROP TABLE IF EXISTS $locator_table_name" );
+	$wpdb->query( "DROP TABLE IF EXISTS $feed_caches_table_name" );
+	$wpdb->query( "DROP TABLE IF EXISTS $feeds_table_name" );
 
 	$image_files = glob( trailingslashit( $upload['basedir'] ) . trailingslashit( 'sby-local-media' ) . '*' ); // get all file names
 	foreach ( $image_files as $file ) { // iterate files
@@ -106,6 +106,86 @@ if ( ! $sby_preserve_settings ) {
 	global $wp_filesystem;
 
 	$wp_filesystem->delete( trailingslashit( $upload['basedir'] ) . trailingslashit( 'sby-local-media' ) , true );
+
+	$pto = get_post_type_object( 'sby_videos' );
+
+	$admin_caps = array(
+		'edit_sby_videos',
+		'read_sby_videos',
+		'delete_sby_videos',
+		'edit_sby_videos',
+		'edit_others_sby_videos',
+		'publish_sby_videos',
+		'read_private_sby_videos',
+		'read',
+		'delete_sby_videos',
+		'delete_private_sby_videos',
+		'delete_published_sby_videos',
+		'delete_others_sby_videos',
+		'edit_private_sby_videos',
+		'edit_published_sby_videos',
+	);
+	$author_caps = array(
+		'edit_sby_videos',
+		'read_sby_videos',
+		'delete_sby_videos',
+		'edit_sby_videos',
+		'publish_sby_videos',
+		'read',
+		'delete_sby_videos',
+		'delete_published_sby_videos',
+		'edit_published_sby_videos',
+	);
+
+	if ( ! empty( $pto ) ) {
+		foreach ( array( 'administrator', 'editor' ) as $role_id ) {
+			foreach ( $admin_caps as $cap ) {
+				$wp_roles->remove_cap( $role_id, $cap );
+			}
+		}
+		foreach ( $author_caps as $cap ) {
+			$wp_roles->remove_cap( 'author', $cap );
+		}
+	}
+
+	$admin_caps = array(
+		'edit_sby_video',
+		'read_sby_video',
+		'delete_sby_video',
+		'edit_sby_video',
+		'edit_others_sby_video',
+		'publish_sby_video',
+		'read_private_sby_video',
+		'read',
+		'delete_sby_video',
+		'delete_private_sby_video',
+		'delete_published_sby_video',
+		'delete_others_sby_video',
+		'edit_private_sby_video',
+		'edit_published_sby_video',
+	);
+	$author_caps = array(
+		'edit_sby_video',
+		'read_sby_video',
+		'delete_sby_video',
+		'edit_sby_video',
+		'publish_sby_video',
+		'read',
+		'delete_sby_video',
+		'delete_published_sby_video',
+		'edit_published_sby_video',
+	);
+
+	if ( ! empty( $pto ) ) {
+		foreach ( array( 'administrator', 'editor' ) as $role_id ) {
+			foreach ( $admin_caps as $cap ) {
+				$wp_roles->remove_cap( $role_id, $cap );
+			}
+		}
+		foreach ( $author_caps as $cap ) {
+			$wp_roles->remove_cap( 'author', $cap );
+		}
+	}
 }
 
 
