@@ -8,18 +8,12 @@
 
 .woocommerce-products-header {
     margin-bottom: rem-calc(50);
-    background-color: var(--brand-light-grey); // #D1C4E9;
-
-    .taxonomy-head-wrap {
-        // display: flex;
-        // flex-flow: row wrap;
-        // align-content: center;
-    }
+    background-color: var(--brand-l-grey);
 }
 
 .shop-sidebar {
     padding: $small-spacing;
-    background-color: var(--brand-light-grey); //#DCEDC8;
+    background-color: var(--brand-l-grey);
 }
 
 .woocommerce-pagination {
