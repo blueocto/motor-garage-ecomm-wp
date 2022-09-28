@@ -36,7 +36,13 @@
 
 <header class="header" role="banner">
 	
-	<?php get_template_part( 'template-parts/site-logo' ); ?>
+	<?php //get_template_part( 'template-parts/site-logo' ); ?>
+	<p class="logo">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
+			<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>
+			<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-duotone.svg'; ?>" alt="Decimal Tenths logo" loading="eager" />
+		</a>
+	</p>
 	
 	<p class="a11y-skip"><a href="#main">Skip to Content</a></p>
 
