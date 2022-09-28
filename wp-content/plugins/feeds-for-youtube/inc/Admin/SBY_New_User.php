@@ -129,6 +129,7 @@ class SBY_New_User extends SBY_Notifications {
 		if ( sby_is_pro_version() ) {
 			$should_show_new_user_discount = false;
 		}
+
 		if ( isset( $notifications['review'] ) && $should_show_rating_notice ) {
 			return array( $notifications['review'] );
 		} elseif ( isset( $notifications['discount'] ) && $should_show_new_user_discount ) {

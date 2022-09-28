@@ -14,6 +14,9 @@ class AssetsService extends ServiceProvider {
 	}
 
 	public function enqueue_vue_assets() {
+		if ( ! sby_is_admin_page() ) {
+			return;
+		}
 		wp_enqueue_script(
 			'feed-builder-vue',
 			'https://cdn.jsdelivr.net/npm/vue@2.6.12',

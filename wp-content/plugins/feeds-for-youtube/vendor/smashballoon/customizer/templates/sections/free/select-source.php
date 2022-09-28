@@ -9,6 +9,9 @@
     </div>
     <div class="sbc-select-source-footer" v-if="sourcesScreenText[selectedFeed].footerText">
         <p v-html="sourcesScreenText[selectedFeed].footerText"></p>
-        <a :href="sourcesScreenText[selectedFeed].connectURL ? sourcesScreenText[selectedFeed].connectURL : ''" class="sbc-channel-connect-btn sbc-btn sbc-btn-blue" v-html="sourcesScreenText[selectedFeed].connect"></a>
+        <div class="sbc-select-source-footer-right">
+            <a :href="sourcesScreenText[selectedFeed].connectURL ? sourcesScreenText[selectedFeed].connectURL : ''" class="sbc-channel-connect-btn sbc-btn sbc-btn-grey" v-html="sourcesScreenText[selectedFeed].connect"></a>
+            <a class="sbc-feedflow-manual-connect" @click.prevent.default="showFeedSourceManualConnect()">Cannot Connect? Try connecting manually</a>
+        </div>
     </div>
 </div>

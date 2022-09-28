@@ -479,7 +479,7 @@ class SBY_Notifications {
 			'{lowerplatform}' => 'youtube',
 			'{review-url}' => 'https://wordpress.org/support/plugin/feeds-for-youtube/reviews/',
 			'{slug}' => 'feeds-for-youtube',
-			'{campaign}' => 'youtube-free'
+			'{campaign}' => sby_utm_campaign()
 		);
 
 		if ( sby_is_pro_version() ) {
@@ -602,7 +602,7 @@ class SBY_Notifications {
 				$step1_img_html = sprintf('<div class="bell"><img src="%s" alt="notice"></div>', $step1_img);
 
 				$review_consent = get_option( 'sby_review_consent' );
-				$sby_open_feedback_url = 'https://smashballoon.com/feedback/?plugin=youtube-free';
+				$sby_open_feedback_url = 'https://smashballoon.com/feedback/?plugin=' . sby_utm_campaign();
 				// step #1 for the review notice
 				if ( ! $review_consent ) {
 					$step1_btns = sprintf(
@@ -649,23 +649,20 @@ class SBY_Notifications {
 					( $type == 'review' ) ? 'rn_step_2' : ''
 				);
 			} else if ( $type == 'discount' ) {
-				if ( ! sby_is_pro() ) {
-					// Build the notification HTML for discount notice
-					$notifications_html .= sprintf(
-						'<div class="message%5$s %7$s" data-message-id="%4$s" %6$s>' . $image_html . '
-					<h3 class="title">%1$s</h3>
-					<p class="content">%2$s</p>
-					%3$s
+				// Notification HTML for other notices
+				$notifications_html .= sprintf(
+					'<div class="message%5$s" data-message-id="%4$s" %6$s>' . $image_html . '
+						<h3 class="title">%1$s</h3>
+						<p class="content">%2$s</p>
+						%3$s
 					</div>',
-						__( 'Exclusive offer - 60% off!', 'custom-twitter-feeds' ),
-						__( 'We don’t run promotions very often, but for a limited time we’re offering 60% Off our Pro version to all users of our free Custom Twitter Feeds.', 'custom-twitter-feeds' ),
-						$buttons_html,
-						! empty( $notification['id'] ) ? esc_attr( sanitize_text_field( $notification['id'] ) ) : 0,
-						$current_class,
-						( $notification['id'] == 'review' && ! empty( $review_step2_style ) ) ? $review_step2_style : '',
-						( $type == 'review' && ! $review_consent ) ? 'rn_step_2' : ''
-					);
-				}
+					! empty( $notification['title'] ) ?  $this->get_notice_title( $notification ) : '',
+					! empty( $notification['content'] ) ? $this->get_notice_content( $notification, $content_allowed_tags ) : '',
+					$buttons_html,
+					! empty( $notification['id'] ) ? esc_attr( sanitize_text_field( $notification['id'] ) ) : 0,
+					$current_class,
+					( $notification['id'] == 'review' && ! empty( $review_step2_style ) ) ? $review_step2_style : ''
+				);
 			} else {
 				// Notification HTML for other notices
 				$notifications_html .= sprintf(
@@ -720,6 +717,58 @@ class SBY_Notifications {
 		<?php
 	}
 
+	/**
+	 * SBY Get Notice Title depending on the notice type
+	 *
+	 * @since 2.0
+	 *
+	 * @param array $notification
+	 *
+	 * @return string $title
+	 */
+	public function get_notice_title( $notification ) {
+		$type = $notification['id'];
+		$title = '';
+
+		// Notice title depending on notice type
+		if ( $type == 'review' ) {
+			$title = __( 'Glad to hear you are enjoying it. Would you consider leaving a positive review?', 'feeds-for-youtube' );
+		} else if ( $type == 'discount' ) {
+			$title =  __( 'Exclusive Offer! 60% OFF', 'feeds-for-youtube' );
+		} else {
+			$title = $this->replace_merge_fields( $notification['title'], $notification );
+		}
+
+		return $title;
+	}
+
+	/**
+	 * SBY Get Notice Content depending on the notice type
+	 *
+	 * @since 2.0
+	 *
+	 * @param array $notification
+	 * @param array $content_allowed_tags
+	 *
+	 * @return string $content
+	 */
+	public function get_notice_content( $notification, $content_allowed_tags ) {
+		$type = $notification['id'];
+		$content = '';
+
+		// Notice content depending on notice type
+		if ( $type == 'review' ) {
+			$content = __( 'It really helps to support the plugin and help others to discover it too!', 'feeds-for-youtube' );
+		} else if ( $type == 'discount' ) {
+			$content =  __( 'We don’t run promotions very often, but for a limited time we’re offering 60% Off our Pro version to all users of our free YouTube Feed.', 'feeds-for-youtube' );
+		} else {
+			if ( ! empty( $notification['content'] ) ) {
+				$content = wp_kses( $this->replace_merge_fields( $notification['content'], $notification ), $content_allowed_tags );
+			}
+		}
+		return $content;
+	}
+	
 	/**
 	 * Dismiss notification via AJAX. If it's a new user message, also dismiss it
 	 * on all admin pages.

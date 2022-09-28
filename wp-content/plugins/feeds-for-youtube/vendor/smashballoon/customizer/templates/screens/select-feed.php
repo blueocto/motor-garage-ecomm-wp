@@ -3,6 +3,13 @@
 		<div class="sbc-feedtype-heading">
 			<h1 v-if="viewsActive.selectedFeedSection !== 'selectSource'">{{selectFeedTypeScreen.mainHeading}}</h1>
 			<h1 v-if="viewsActive.selectedFeedSection == 'selectSource'">{{selectFeedTypeScreen.addSource}}</h1>
+
+			<div class="sbc-btn sbc-slctf-nxt sbc-btn-ac sbc-btn-orange" @click.prevent.default="creationProcessNext()">
+				<span>{{genericText.next}}</span>
+				<svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M1.3332 0.00683594L0.158203 1.18184L3.97487 5.00684L0.158203 8.83184L1.3332 10.0068L6.3332 5.00684L1.3332 0.00683594Z" fill="white"/>
+				</svg>
+			</div>
 		</div>
 		<?php
 			$file_path = sby_is_pro() ? CUSTOMIZER_ABSPATH . 'templates/sections/' : CUSTOMIZER_ABSPATH . 'templates/sections/free/';

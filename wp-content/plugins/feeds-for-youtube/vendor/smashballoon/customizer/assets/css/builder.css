@@ -1283,6 +1283,9 @@ Social Links
 .sbc-select-source-footer-right .sbc-channel-connect-btn {
     width: 130px;
 }
+.sbc-select-source-footer-right .sbc-channel-connect-btn svg path {
+    fill: #D72C2C;
+}
 .sbc-select-source-footer .sbc-feedflow-manual-connect {
     font-weight: 600;
     font-size: 12px;
@@ -2595,7 +2598,7 @@ Controls Style
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
-.sb-control-elem-ctn[data-type="checkboxsection"] .sb-control-checkbox-ctn[data-disabled="true"] .sb-control-label {
+.sbc-builder-app:not([data-app-type="free"]) .sb-control-elem-ctn[data-type="checkboxsection"] .sb-control-checkbox-ctn[data-disabled="true"] .sb-control-label {
     color: #8C8F9A;
 }
 .sbc_hide_toggle .sb-control-checkbox{
