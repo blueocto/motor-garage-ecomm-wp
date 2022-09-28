@@ -15,6 +15,6 @@
             <option value="">Golf</option>
             <option value="">Yeti</option>
         </select>
-        <input type="submit" value="Search" class="ico-search">
+        <input type="submit" value="Search">
     </form>
 </section>

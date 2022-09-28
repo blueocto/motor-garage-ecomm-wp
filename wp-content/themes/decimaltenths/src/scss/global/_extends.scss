@@ -185,22 +185,22 @@
 
 %btn {
     display: inline-block;
-    padding: 13px 45px;
-    color: white;
-    font-style: italic;
-    font-weight: $semi-bold;
-    font-size: rem-calc(14);
-    font-family: $brand-font;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    background-color: var(--brand-green);
-    clip-path: polygon(7% 0%, 100% 0%, 93% 100%, 0% 100%);
-	cursor: pointer;
+    // padding: 13px 45px;
+    // color: white;
+    // font-style: italic;
+    // font-weight: $semi-bold;
+    // font-size: rem-calc(14);
+    // font-family: $brand-font;
+    // text-transform: uppercase;
+    // letter-spacing: 0.09em;
+    // background-color: var(--brand-green);
+    // clip-path: polygon(7% 0%, 100% 0%, 93% 100%, 0% 100%);
+	// cursor: pointer;
 
-    &:hover, &:focus {
-        color: white;
-        background-color: $brand-green-dark;
-    }
+    // &:hover, &:focus {
+    //     color: white;
+    //     background-color: $brand-green-dark;
+    // }
 }
 
 // Alerts and Errors

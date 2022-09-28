@@ -6,62 +6,6 @@ get_header(); ?>
 
 <main id="main" class="main">
 
-    <?php // get_template_part( 'template-parts/hero-intro' ); ?>
-
-    <style>
-        .hero--video {
-            position: relative;
-            width: 100%;
-            /* height: 100vh; */
-            height: 0;
-            padding-top: calc(1080 / 1920 * 100%);
-            overflow: hidden;
-        }
-.video-overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: var(--brand-green);
-mix-blend-mode: color;
-z-index: 2;
-}
-.html5-video {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: auto;
-z-index: 1;
-}
-.text-copy {
-position: absolute;
-top: 50%;
-left: 10%;
-transform: translateY(-50%);
-z-index: 3;
-padding: 20px;
-color: white;
-text-shadow: 1px 1px 1px #000;
-background-color: rgb(0 0 0 / 62%);
-}
-    </style>
-
-    <div class="hero--video">
-        <div class="video-overlay"></div>
-        <video class="html5-video" poster="" autoplay loop muted>
-            <source src="<?php echo get_stylesheet_directory_uri() . '/src/vendor/Spedometer.mp4'; ?>" type="video/mp4">
-
-            <!-- <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"> -->
-        </video>
-        <div class="text-copy">
-            <h1>Quality parts for your beloved</h1>
-            <h2>Audi, SEAT, VW and more...</h2>
-            <h3>Tune your motor to perfection</h3>
-            <p><a href="#" class="btn">Shop Now</a></p>
-        </div>
-    </div>
 
     <?php get_template_part( 'template-parts/search-by-car' ); ?>
 
