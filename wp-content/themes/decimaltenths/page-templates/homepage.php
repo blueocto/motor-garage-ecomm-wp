@@ -59,6 +59,12 @@ get_header(); ?>
     <video-feed>
         <h2>Latest Videos <a href="#">View All</a></h2>
         <p>[ Youtube Channel Feed ]</p>
+        <div class="row">
+            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
+            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
+            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
+            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
+        </div>
     </video-feed>
 
 	<?php /*if ( have_posts() ) : ?>

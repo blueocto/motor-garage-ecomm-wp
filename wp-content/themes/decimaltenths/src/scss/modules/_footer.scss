@@ -2,4 +2,39 @@
 // Footer
 // ==============================================
 
-.footer {}
+.footer {
+	padding-top: 114px;
+	background-color: var(--brand-neon-green);
+
+	.logo {
+		margin-left: auto;
+		max-width: 254px;
+	}
+
+	.column {
+		padding-top: 5px;
+		padding-right: 43px;
+		text-align: right;
+
+		&:first-of-type {
+			padding-top: 0;
+		}
+
+		h3 {
+			@extend %h5;
+			margin-bottom: 33px;
+			letter-spacing: 0.05em;
+		}
+	}
+
+	.footer--menu {
+		font-weight: $medium;
+		font-size: rem-calc(16);
+	}
+
+	footer-summary {}
+
+	.copyright {}
+
+	.credit {}
+}
