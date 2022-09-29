@@ -5,7 +5,6 @@
 get_header(); ?>
 
 <main id="main" class="main">
-
     <hero-car-filters>
         <hero-inner>
             <hero-content>
@@ -17,57 +16,69 @@ get_header(); ?>
     </hero-car-filters>
 
     <brand-logos>
-        <p>[ Affiliate logo's ]</p>
+        <div class="row column">[ Affiliate logo's ]</div>
     </brand-logos>
 
     <scrolling-products>
-        <h2>New In</h2>
-        <div>[ scrolling products - new feed ]</div>
+        <div class="row column">
+            <h2>New In</h2>
+        </div>
+        <div class="row column">
+            <p>[ scrolling products - new feed ]</p>
+        </div>
     </scrolling-products>
 
     <category-panels>
-        <h2>Browse our categories</h2>
-        <panel>
-            <h3>Engines</h3>
-            <p><a href="#">Browse</a></p>
-        </panel>
-        <panel>
-            <h3>Lorum</h3>
-            <p><a href="#">Browse</a></p>
-        </panel>
-        <panel>
-            <h3>Ipsum</h3>
-            <p><a href="#">Browse</a></p>
-        </panel>
-        <panel>
-            <h3>Hover</h3>
-            <p><a href="#">Browse</a></p>
-        </panel>
-        <panel>
-            <h3>Amet</h3>
-            <p><a href="#">Browse</a></p>
-        </panel>
+        <div class="row column">
+            <h2>Browse our categories</h2>
+        </div>
+        <div class="row column">
+            <panel>
+                <h3>Engines</h3>
+                <p><a href="#">Browse</a></p>
+            </panel>
+            <panel>
+                <h3>Lorum</h3>
+                <p><a href="#">Browse</a></p>
+            </panel>
+            <panel>
+                <h3>Ipsum</h3>
+                <p><a href="#">Browse</a></p>
+            </panel>
+            <panel>
+                <h3>Hover</h3>
+                <p><a href="#">Browse</a></p>
+            </panel>
+            <panel>
+                <h3>Amet</h3>
+                <p><a href="#">Browse</a></p>
+            </panel>
+        </div>
     </category-panels>
 
     <scrolling-products>
-        <h2>Popular</h2>
-        <div>[ scrolling products - popular ]</div>
+        <div class="row column">
+            <h2>Popular</h2>
+        </div>
+        <div class="row column">
+            <p>[ scrolling products - popular ]</p>
+        </div>
     </scrolling-products>
 
     <service-highlight>
-        <h2>Custom Tuning</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</p>
-        <p><a href="#">View services</a></p>
+        <div class="row column">
+            <h2>Custom Tuning</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</p>
+            <p><a href="#">View services</a></p>
+        </div>
     </service-highlight>
 
     <video-feed>
-        <h2>Latest Videos <a href="#">View All</a></h2>
-        <p>[ Youtube Channel Feed ]</p>
-        <div class="row">
-            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
-            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
-            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
-            <div class="column">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</div>
+        <div class="row column">
+            <h2>Latest Videos <a href="#">View All</a></h2>
+        </div>
+        <div class="row column">
+            <p>[ Youtube Channel Feed ]</p>
         </div>
     </video-feed>
 

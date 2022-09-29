@@ -3,21 +3,23 @@
 // ==============================================
 
 .search-by-car-form {
-    outline: 1px dashed cyan;
 
-    .sbcf--form {}
+    // .sbcf--form {}
 
     .form-row {
 
         &:last-of-type {
-            padding-top: 15px;
+            padding-top: $medium-spacing;
         }
     }
 
     select {
-        width: 60%;
         background-color: white;
         border: 0;
+
+        @include breakpoint(large) {
+            width: 60%;
+        }
     }
 
     [type="submit"] {

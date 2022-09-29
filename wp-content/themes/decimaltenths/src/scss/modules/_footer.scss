@@ -3,31 +3,49 @@
 // ==============================================
 
 .footer {
-	padding-top: 98px;
-	padding-bottom: 50px;
+	padding-top: rem-calc(50px);
+	padding-bottom: rem-calc(50px);
 	background-color: var(--brand-neon-green);
 
+	@include breakpoint(large) {
+		padding-top: rem-calc(100px);
+	}
+
 	.logo {
-		// margin-left: auto;
-		// max-width: 254px;
+		max-width: rem-calc(254px);
+
+		@include breakpoint(medium down) {
+			margin: 0 auto;
+		}
 	}
 
 	.row {
-		margin-bottom: 80px;
+		margin-bottom: rem-calc(50px);
+
+		@include breakpoint(large) {
+			margin-bottom: rem-calc(80px);
+		}
 	}
 
 	.column {
-		// padding-top: 5px;
-		// padding-right: 43px;
-		text-align: right;
+
+		@include breakpoint(medium down) {
+			// small-12
+			flex: 0 0 100%;
+			max-width: 100%;
+			margin-bottom: $xlarge-spacing;
+		}
+
+		@include breakpoint(large) {
+			text-align: right;
+		}
 
 		&:first-of-type {
-			padding-top: 0;
+			margin-bottom: rem-calc(50);
 		}
 
 		h3 {
-			@extend %h5;
-			margin-bottom: 28px;
+			margin-bottom: $xlarge-spacing;
 			letter-spacing: 0.05em;
 		}
 	}
@@ -37,7 +55,7 @@
 		font-size: rem-calc(16);
 
 		.menu-item {
-			padding-bottom: 4px;
+			padding-bottom: rem-calc(4);
 			text-transform: none;
 
 			a {
@@ -48,6 +66,7 @@
 
 	footer-summary {
 		@extend %row;
+		@extend %column;
 
 		p {
 			font-size: rem-calc(13);
@@ -56,12 +75,24 @@
 
 	.copyright,
 	.credit {
-		flex: 0 0 50%;
-		max-width: 50%;
+		flex: 0 0 100%;
+		max-width: 100%;
 		font-size: rem-calc(13);
+		text-align: center;
+
+		@include breakpoint(large) {
+			flex: 0 0 50%;
+			max-width: 50%;
+		}
 	}
 
-	.credit {
-		text-align: right;
+	@include breakpoint(large) {
+		.copyright {
+			text-align: left;
+		}
+
+		.credit {
+			text-align: right;
+		}
 	}
 }
