@@ -3,17 +3,22 @@
 // ==============================================
 
 .footer {
-	padding-top: 114px;
+	padding-top: 98px;
+	padding-bottom: 50px;
 	background-color: var(--brand-neon-green);
 
 	.logo {
-		margin-left: auto;
-		max-width: 254px;
+		// margin-left: auto;
+		// max-width: 254px;
+	}
+
+	.row {
+		margin-bottom: 80px;
 	}
 
 	.column {
-		padding-top: 5px;
-		padding-right: 43px;
+		// padding-top: 5px;
+		// padding-right: 43px;
 		text-align: right;
 
 		&:first-of-type {
@@ -22,7 +27,7 @@
 
 		h3 {
 			@extend %h5;
-			margin-bottom: 33px;
+			margin-bottom: 28px;
 			letter-spacing: 0.05em;
 		}
 	}
@@ -30,11 +35,33 @@
 	.footer--menu {
 		font-weight: $medium;
 		font-size: rem-calc(16);
+
+		.menu-item {
+			padding-bottom: 4px;
+			text-transform: none;
+
+			a {
+				color: black;
+			}
+		}
 	}
 
-	footer-summary {}
+	footer-summary {
+		@extend %row;
 
-	.copyright {}
+		p {
+			font-size: rem-calc(13);
+		}
+	}
 
-	.credit {}
+	.copyright,
+	.credit {
+		flex: 0 0 50%;
+		max-width: 50%;
+		font-size: rem-calc(13);
+	}
+
+	.credit {
+		text-align: right;
+	}
 }
