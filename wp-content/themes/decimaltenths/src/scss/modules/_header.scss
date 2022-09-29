@@ -22,6 +22,7 @@
 	align-items: center;
 	padding: $large-spacing $medium-spacing;
 	background-color: black;
+	border-bottom: 2px solid var(--brand-neon-green);
 
 	@include breakpoint(xlarge) {
 		padding: rem-calc(26px 49px);

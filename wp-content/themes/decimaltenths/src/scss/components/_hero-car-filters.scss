@@ -1,0 +1,51 @@
+// ==============================================
+// Hero - Car Filters
+// ==============================================
+
+hero-car-filters {
+    position: relative;
+    display: block;
+    background: black url('../img/green-car-bg.jpg') right center; 
+    background-size: cover;
+    outline: 1px dashed #f0f;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background: rgb(0,0,0); 
+        background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    hero-inner {
+        @extend %row;
+        position: relative;
+        padding-top: 119px;
+        padding-bottom: 50px;
+        padding-left: 52px;
+        z-index: 5;
+    }
+
+    hero-content {        
+        @extend %column;
+        max-width: 40%;
+        color: white;
+
+        outline: 1px dashed blue;
+    }
+
+    .hero--heading {
+        margin-bottom: 10px;
+        font-size: rem-calc(69);
+        line-height: 1.2;
+        letter-spacing: 0.05em;
+    }
+
+    .hero--subheading {
+        font-size: rem-calc(18);
+        line-height: rem-calc(34);
+    }
+}

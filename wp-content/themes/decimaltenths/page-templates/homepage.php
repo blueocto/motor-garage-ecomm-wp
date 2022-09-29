@@ -7,9 +7,13 @@ get_header(); ?>
 <main id="main" class="main">
 
     <hero-car-filters>
-        <h2>Quality Parts</h2>
-        <p>For your beloved Audi, SEAT, VW and more&hellip;</p>
-        <?php get_template_part( 'template-parts/search-by-car' ); ?>
+        <hero-inner>
+            <hero-content>
+                <h2 class="hero--heading">Quality Parts</h2>
+                <p class="hero--subheading">For your beloved Audi, SEAT, VW and more&hellip;</p>
+                <?php get_template_part( 'template-parts/search-by-car' ); ?>
+            </hero-content>
+        </hero-inner>
     </hero-car-filters>
 
     <brand-logos>
