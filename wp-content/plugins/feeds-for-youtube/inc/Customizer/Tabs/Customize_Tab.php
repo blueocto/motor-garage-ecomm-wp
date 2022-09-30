@@ -1296,6 +1296,7 @@ class Customize_Tab extends Tab {
 				'label' 	=> __( 'Call to Action', 'feeds-for-youtube' ),
 				'class'		=> 'sbc_hide_toggle',
 				'icon'        => 'calltoaction',
+				'checkExtensionPopup' => sby_is_pro() ? false : 'call_to_action',
 				'section' 	=> [
 					'id' 				=> 'lightbox_call_to_action',
 					'separator'			=> 'none',

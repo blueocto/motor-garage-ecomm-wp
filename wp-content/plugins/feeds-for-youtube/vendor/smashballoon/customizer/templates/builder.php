@@ -1,4 +1,4 @@
-<div id="sbc-builder-app" class="sbc-fb-fs sbc-builder-app" :class="dismissLite == false || dismissLite == undefined ? 'sbc-builder-app-lite-dismiss' : '' " :data-app-loaded="appLoaded ? 'true' : 'false'" :data-app-customizer="iscustomizerScreen">
+<div id="sbc-builder-app" class="sbc-fb-fs sbc-builder-app" :class="dismissLite == false || dismissLite == undefined ? 'sbc-builder-app-lite-dismiss' : '' " :data-app-loaded="appLoaded ? 'true' : 'false'" :data-app-customizer="iscustomizerScreen" :data-app-type="sbyIsPro ? 'pro' : 'free'">
 	<?php
 		$icons = \Smashballoon\Customizer\Feed_Builder::builder_svg_icons();
 		include_once CUSTOMIZER_ABSPATH . 'templates/sections/header.php';

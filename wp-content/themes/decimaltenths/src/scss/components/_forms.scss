@@ -22,7 +22,7 @@ textarea {
 select {
     box-sizing: border-box;
     width: 100%;
-    height: 50px;
+    height: 60px;
     margin: 0 0 1rem;
     padding: $small-spacing;
     padding-right: 1.5rem;
@@ -32,9 +32,10 @@ select {
     font-weight: normal;
     line-height: 1.5;
     background-color: #fefefe;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2343B143' d='M4.251 181.1C7.392 177.7 11.69 175.1 16 175.1c3.891 0 7.781 1.406 10.86 4.25l197.1 181.1l197.1-181.1c6.5-6 16.64-5.625 22.61 .9062c6 6.5 5.594 16.59-.8906 22.59l-208 192c-6.156 5.688-15.56 5.688-21.72 0l-208-192C-1.343 197.7-1.749 187.6 4.251 181.1z'/%3E%3C/svg%3E");
+    // svg - arrow down
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2350e887' d='m320 176v223.3c0 8.812-7.141 15.97-15.95 16l-224 .6562c-8.82.0438-16.02-7.0562-16.05-15.9562-.0313-8.812 7.109-16 15.95-16.03l185.6-.5547-260.862-260.8153c-6.25-6.25-6.25-16.38 0-22.62s16.38-6.25 22.62 0l260.692 260.62v-184.6c0-8.8 7.2-16 16-16s16 7.2 16 16z'/%3E%3C/svg%3E");
     background-origin: content-box;
-    background-position: right -1rem center;
+    background-position: right center;
     background-repeat: no-repeat;
     background-size: 16px auto;
     appearance: none;
@@ -52,13 +53,11 @@ select {
     }
 }
 
-@media screen and (min-width: 0\0) {
-    select {
-        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==");
-    }
-}
-
-
+// @media screen and (min-width: 0\0) {
+//     select {
+//         background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==");
+//     }
+// }
 
 select:disabled {
     background-color: #e6e6e6;
@@ -200,10 +199,4 @@ label {
     font-weight: normal;
     line-height: 1.8;
     color: #0a0a0a;
-}
-
-.ico-search {
-    padding-right: calc(45px + 14px);
-    background: var(--brand-green) url('../svg/magnifying-glass-regular.svg') calc(100% - 30px) center no-repeat;
-    background-size: 14px auto;
 }

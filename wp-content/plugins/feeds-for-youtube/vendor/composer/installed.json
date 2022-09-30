@@ -263,12 +263,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:awesomemotive\/sb-customizer.git",
-                "reference": "74252a9b90a8b7202c3cbb95329ed51f7105d19d"
+                "reference": "3c8f62e899481f49bbd4d0c7ba64e36309e65e4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/awesomemotive\/sb-customizer\/zipball\/74252a9b90a8b7202c3cbb95329ed51f7105d19d",
-                "reference": "74252a9b90a8b7202c3cbb95329ed51f7105d19d",
+                "url": "https:\/\/api.github.com\/repos\/awesomemotive\/sb-customizer\/zipball\/3c8f62e899481f49bbd4d0c7ba64e36309e65e4a",
+                "reference": "3c8f62e899481f49bbd4d0c7ba64e36309e65e4a",
                 "shasum": ""
             },
             "require": {
@@ -279,9 +279,9 @@
             "require-dev": {
                 "vlucas\/phpdotenv": "^4.0"
             },
-            "time": "2022-08-02T20:55:44+00:00",
+            "time": "2022-08-19T20:15:00+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Smashballoon\\Customizer\\": "app\/"

@@ -32,19 +32,23 @@ class Autowiring implements DefinitionSource
     /**
      * Read the type-hinting from the parameters of the function.
      */
-    private function getParametersDefinition(\ReflectionFunctionAbstract $constructor)
-    {
-        $parameters = [];
-        foreach ($constructor->getParameters() as $index => $parameter) {
-            // Skip optional parameters
-            if ($parameter->isOptional()) {
-                continue;
-            }
-            $parameterClass = $parameter->getClass();
-            if ($parameterClass) {
-                $parameters[$index] = new EntryReference($parameterClass->getName());
-            }
-        }
-        return $parameters;
-    }
+	private function getParametersDefinition(\ReflectionFunctionAbstract $constructor)
+	{
+		$parameters = [];
+		foreach ($constructor->getParameters() as $index => $parameter) {
+			// Skip optional parameters
+			if ($parameter->isOptional()) {
+				continue;
+			}
+			if (version_compare(phpversion(), '8.0.0') >= 0) {
+				$parameterClass = $parameter->getType() && ! $parameter->getType()->isBuiltin() ? new \ReflectionClass($parameter->getType()->getName()) : null;
+			} else {
+				$parameterClass = $parameter->getClass();
+			}
+			if ($parameterClass) {
+				$parameters[$index] = new EntryReference($parameterClass->getName());
+			}
+		}
+		return $parameters;
+	}
 }

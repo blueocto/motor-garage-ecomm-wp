@@ -1,37 +1,39 @@
 // Absolute URLs needed as loaded inline header.php
-// readex-pro-regular - latin
+
+/* source-code-pro-200 - latin */
 @font-face {
-	font-family: "Readex Pro";
+font-family: 'Source Code Pro';
+font-style: normal;
+font-weight: 200;
+src: local(''),
+		url('/wp-content/themes/decimaltenths/dist/fonts/source-code-pro-v22-latin-200.woff2') format('woff2'),
+		url('/wp-content/themes/decimaltenths/dist/fonts/source-code-pro-v22-latin-200.woff') format('woff');
+}
+/* source-code-pro-regular - latin */
+@font-face {
+font-family: 'Source Code Pro';
+font-style: normal;
+font-weight: 400;
+src: local(''),
+		url('/wp-content/themes/decimaltenths/dist/fonts/source-code-pro-v22-latin-regular.woff2') format('woff2'),
+		url('/wp-content/themes/decimaltenths/dist/fonts/source-code-pro-v22-latin-regular.woff') format('woff');
+}
+/* source-code-pro-500 - latin */
+@font-face {
+font-family: 'Source Code Pro';
+font-style: normal;
+font-weight: 500;
+src: local(''),
+		url('/wp-content/themes/decimaltenths/dist/fonts/source-code-pro-v22-latin-500.woff2') format('woff2'),
+		url('/wp-content/themes/decimaltenths/dist/fonts/source-code-pro-v22-latin-500.woff') format('woff');
+}
+
+/* michroma-regular - latin */
+@font-face {
+	font-family: 'Michroma';
 	font-style: normal;
 	font-weight: 400;
-	font-display: swap;
-	src: local(""),
-		url("/wp-content/themes/blueocto-2022/dist/fonts/readex-pro-v8-latin-regular.woff2")
-			format("woff2"),
-		url("/wp-content/themes/blueocto-2022/dist/fonts/readex-pro-v8-latin-regular.woff")
-			format("woff");
-}
-// readex-pro-500 - latin
-@font-face {
-	font-family: "Readex Pro";
-	font-style: normal;
-	font-weight: 500;
-	font-display: swap;
-	src: local(""),
-		url("/wp-content/themes/blueocto-2022/dist/fonts/readex-pro-v8-latin-500.woff2")
-			format("woff2"),
-		url("/wp-content/themes/blueocto-2022/dist/fonts/readex-pro-v8-latin-500.woff")
-			format("woff");
-}
-// readex-pro-600 - latin
-@font-face {
-	font-family: "Readex Pro";
-	font-style: normal;
-	font-weight: 600;
-	font-display: swap;
-	src: local(""),
-		url("/wp-content/themes/blueocto-2022/dist/fonts/readex-pro-v8-latin-600.woff2")
-			format("woff2"),
-		url("/wp-content/themes/blueocto-2022/dist/fonts/readex-pro-v8-latin-600.woff")
-			format("woff");
+	src: local(''),
+		 url('/wp-content/themes/decimaltenths/dist/fonts/michroma-v16-latin-regular.woff2') format('woff2'),
+		 url('/wp-content/themes/decimaltenths/dist/fonts/michroma-v16-latin-regular.woff') format('woff');
 }

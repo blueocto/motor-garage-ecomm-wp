@@ -65,15 +65,10 @@
 // to use when inside breakpoint
 @mixin column() {
 	flex: 1 1 0px;
-	padding-right: $small-spacing;
-	padding-left: $small-spacing;
+	padding-right: $medium-spacing;
+	padding-left: $medium-spacing;
 	min-width: 0;
 	// outline: 1px dashed cyan;
-
-	@include breakpoint(large) {
-		padding-right: $medium-spacing;
-		padding-left: $medium-spacing;
-	}
 }
 
 %column {
@@ -185,22 +180,22 @@
 
 %btn {
     display: inline-block;
-    padding: 13px 45px;
-    color: white;
-    font-style: italic;
-    font-weight: $semi-bold;
-    font-size: rem-calc(14);
-    font-family: $brand-font;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    background-color: var(--brand-green);
-    clip-path: polygon(7% 0%, 100% 0%, 93% 100%, 0% 100%);
+	padding: 10px 50px;
+	height: 50px;
+	color: var(--brand-neon-green);
+	font-family: $heading-font;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	background-color: transparent;
+	border: 2px solid var(--brand-neon-green);
+	border-radius: 50px;
 	cursor: pointer;
 
-    &:hover, &:focus {
-        color: white;
-        background-color: $brand-green-dark;
-    }
+	&:hover,
+	&:focus {
+		color: black;
+		background-color: var(--brand-neon-green);
+	}
 }
 
 // Alerts and Errors

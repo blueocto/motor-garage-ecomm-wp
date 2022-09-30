@@ -2,20 +2,22 @@
 // Variables
 // ==============================================
 
-$global-width: 1340px;
+$global-width: 1490px;
 
 // Font family
-$brand-font: "Titillium Web";
-$heading-font: "proxima-nova";
+$brand-font: "Source Code Pro";
+$heading-font: "Michroma";
 
 // Colors
 $brand-green-dark: darken(#43B143, 10%);
 
 // Font weights
+$extra-light: 200;
+$light: 300;
 $regular: 400;
 $medium: 500;
 $semi-bold: 600;
-// $bold: 700;
+$bold: 700;
 $xtra-bold: 800;
 
 // Global padding/margin

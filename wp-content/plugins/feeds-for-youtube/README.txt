@@ -3,9 +3,9 @@ Author: Smash Balloon
 Contributors: smashballoon, craig-at-smash-balloon
 Support Website: http://smashballoon/youtube-feed/
 Tags: YouTube, YouTube feed, YouTube widget, YouTube channel, YouTube gallery
-Requires at least: 3.4
+Requires at least: 4.1
 Tested up to: 6.0
-Stable tag: 2.0.0
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,6 +162,15 @@ By default, the plugin retrieves new videos for your YouTube gallery once every 
 6. Embed your feed using a shortcode you can copy and paste after you are done creating
 
 == Changelog ==
+= 2.0.2 =
+* Fix: Fixed a conflict with the All in One SEO plugin causing menu tabs to not work properly.
+
+= 2.0.1 =
+* Tweak: Improved the user experience to avoid confusion over connecting an account when creating a new feed.
+* Fix: Fixed deprecation warnings when using PHP 8.0+.
+* Fix: Added any API key saved in settings to the system info for easy support debugging.
+* Fix: Activating the Pro version would trigger an error if the free version of YouTube Feeds was also active.
+
 = 2.0 =
 * Important: Minimum supported WordPress version has been raised from 3.5 to 4.1.
 * New: Our biggest update ever! We've completely redesigned the plugin settings from head to toe to make it easier to create, manage, and customize your YouTube feeds.

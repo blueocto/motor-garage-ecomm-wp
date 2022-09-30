@@ -3,85 +3,94 @@
 // ==============================================
 
 .footer {
-	// margin-top: 100px;
-	padding: rem-calc(60px) $medium-spacing;
-	color: white;
-	text-align: center;
-	background-color: black;
-}
+	padding-top: rem-calc(50px);
+	padding-bottom: rem-calc(50px);
+	background-color: var(--brand-neon-green);
 
-.footer--summary {
-	justify-content: center;
+	@include breakpoint(large) {
+		padding-top: rem-calc(100px);
+	}
 
 	.logo {
-		margin: 0 auto $large-spacing;
-	}
-}
+		max-width: rem-calc(254px);
 
-.footer--desc {
-	margin: 0 auto $large-spacing;
-	font-size: rem-calc(14px);
-	max-width: 70ch;
-
-	a {
-		@extend %a-styled;
-	}
-}
-
-.footer--social {
-
-	.soc {
-		display: inline-block;
-		margin: 0 5px;
-		padding-top: 9px;
-		width: 50px;
-		height: 50px;
-		background-color: var(--brand-d-grey);
-		border-radius: 50%;
-	}
-
-	.svg {
-		max-width: 32px;
-		max-height: 32px;
-		fill: #ffffff;
-		transition: all 0.3s;
-	}
-
-	.svg--facebook {
-
-		&:hover,
-		&:focus {
-			fill: #4267B2;
+		@include breakpoint(medium down) {
+			margin: 0 auto;
 		}
 	}
 
-	.svg--youtube {
+	.row {
+		margin-bottom: rem-calc(50px);
 
-		&:hover,
-		&:focus {
-			fill: #FF0000;
+		@include breakpoint(large) {
+			margin-bottom: rem-calc(80px);
 		}
 	}
-}
 
-.footer--end {
+	.column {
 
-	.copyright, 
+		@include breakpoint(medium down) {
+			// small-12
+			flex: 0 0 100%;
+			max-width: 100%;
+			margin-bottom: $xlarge-spacing;
+		}
+
+		@include breakpoint(large) {
+			text-align: right;
+		}
+
+		&:first-of-type {
+			margin-bottom: rem-calc(50);
+		}
+
+		h3 {
+			margin-bottom: $xlarge-spacing;
+			letter-spacing: 0.05em;
+		}
+	}
+
+	.footer--menu {
+		font-weight: $medium;
+		font-size: rem-calc(16);
+
+		.menu-item {
+			padding-bottom: rem-calc(4);
+			text-transform: none;
+
+			a {
+				color: black;
+			}
+		}
+	}
+
+	footer-summary {
+		@extend %row;
+		@extend %column;
+
+		p {
+			font-size: rem-calc(13);
+		}
+	}
+
+	.copyright,
 	.credit {
-		font-size: rem-calc(14px);
+		flex: 0 0 100%;
+		max-width: 100%;
+		font-size: rem-calc(13);
+		text-align: center;
 
-		a {
-			@extend %a-styled;
+		@include breakpoint(large) {
+			flex: 0 0 50%;
+			max-width: 50%;
 		}
 	}
 
-	@include breakpoint(medium) {
+	@include breakpoint(large) {
 		.copyright {
 			text-align: left;
 		}
-	}
 
-	@include breakpoint(medium) {
 		.credit {
 			text-align: right;
 		}

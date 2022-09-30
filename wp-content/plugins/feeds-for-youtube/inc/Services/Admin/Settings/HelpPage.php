@@ -5,6 +5,7 @@ namespace SmashBalloon\YouTubeFeed\Services\Admin\Settings;
 use Smashballoon\Customizer\Container;
 use Smashballoon\Customizer\Feed_Builder;
 use SmashBalloon\YouTubeFeed\Builder\SBY_Feed_Builder;
+use SmashBalloon\YouTubeFeed\SBY_Settings;
 
 class HelpPage extends BaseSettingPage {
 
@@ -22,7 +23,7 @@ class HelpPage extends BaseSettingPage {
 	 */
 	private $feed_builder;
 
-	public function __construct() {
+    public function __construct() {
 		$this->feed_builder = Container::getInstance()->get(Feed_Builder::class);
 	}
 
@@ -70,7 +71,8 @@ class HelpPage extends BaseSettingPage {
 		$php_curl        = is_callable( 'curl_init' ) ? 'Yes' : 'No';
 		$php_json_decode = function_exists( 'json_decode' ) ? 'Yes' : 'No';
 		$php_ssl         = in_array( 'https', stream_get_wrappers(), true ) ? 'Yes' : 'No';
-
+		$settings = sby_get_database_settings();
+		$api_verification_status = get_option('sby_api_key_verification', null);
 		$output  = '## SITE/SERVER INFO: ##<br />';
 		$output .= 'Plugin Version:' . self::get_whitespace( 11 ) . esc_html( SBY_PLUGIN_NAME ) . '<br />';
 		$output .= 'Site URL:' . self::get_whitespace( 17 ) . esc_html( site_url() ) . '<br />';
@@ -82,6 +84,8 @@ class HelpPage extends BaseSettingPage {
 		$output .= 'PHP cURL:' . self::get_whitespace( 17 ) . esc_html( $php_curl ) . '<br />';
 		$output .= 'JSON:' . self::get_whitespace( 21 ) . esc_html( $php_json_decode ) . '<br />';
 		$output .= 'SSL Stream:' . self::get_whitespace( 15 ) . esc_html( $php_ssl ) . '<br />';
+		$output .= 'API Key:' . self::get_whitespace( 18 ) . esc_html( isset($settings['api_key']) ? $settings['api_key'] : 'Empty' ) . '<br />';
+		$output .= 'API Status:' . self::get_whitespace( 15 ) . esc_html( !empty($api_verification_status) ? ($api_verification_status->status == true ? "Successful" : "Failed") : 'Unknown' ) . '<br />';
 		$output .= '<br />';
 
 		return $output;
