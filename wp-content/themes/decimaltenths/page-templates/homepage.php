@@ -18,16 +18,16 @@ get_header(); ?>
     <brand-logos>
         <div class="row">
             <div class="column">
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-audi.png'; ?>" alt="" />
+                <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/audi-white.svg'; ?>" alt="" />
             </div>
             <div class="column">
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-seat.png'; ?>" alt="" />
+                <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/seat-white.svg'; ?>" alt="" />
             </div>
             <div class="column">
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-skoda.png'; ?>" alt="" />
+                <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/skoda-white.svg'; ?>" alt="" />
             </div>
             <div class="column">
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-vw.png'; ?>" alt="" />
+                <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/volkswagen-white.svg'; ?>" alt="" />
             </div>
         </div>
     </brand-logos>

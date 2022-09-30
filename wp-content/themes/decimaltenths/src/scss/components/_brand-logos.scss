@@ -4,7 +4,34 @@
 
 brand-logos {
     display: block;
-    padding-top: 150px;
-    padding-bottom: 150px;
-    outline: 1px dashed #f0f;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    .column {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        flex: 0 0 50%;
+        max-width: 50%;
+
+        @include breakpoint(medium) {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        @include breakpoint(large) {
+            flex: 1 1 0px;
+            max-width: unset;
+        }
+    }
+
+    .b-logo {
+        width: 120px;
+        max-height: 120px;
+        opacity: 0.5;
+    }
 }
