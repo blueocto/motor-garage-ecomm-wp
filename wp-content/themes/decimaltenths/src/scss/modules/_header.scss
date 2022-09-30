@@ -17,10 +17,10 @@
 }
 
 .header {
-	background-color: black;
 	border-bottom: 2px solid var(--brand-neon-green);
 
 	@include breakpoint(medium down) {
+		background-color: black;
 		height: calc(15px + 50px + 15px);
 	}
 
