@@ -8,6 +8,10 @@ hero-car-filters {
     background: black url('../img/green-car-bg.jpg') right center; 
     background-size: cover;
 
+    @include breakpoint(medium down) {
+        height: 95vh;
+    }
+
     &::before {
         content: '';
         position: absolute;
@@ -28,10 +32,6 @@ hero-car-filters {
         position: relative;
         z-index: 5;
         padding-top: rem-calc(119px);
-
-        @include breakpoint(medium down) {
-            height: 95vh;
-        }
 
         @include breakpoint(large) {
             padding-left: rem-calc(52px);

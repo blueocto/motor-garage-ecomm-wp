@@ -16,12 +16,25 @@ get_header(); ?>
     </hero-car-filters>
 
     <brand-logos>
-        <div class="row column">[ Affiliate logo's ]</div>
+        <div class="row">
+            <div class="column">
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-audi.png'; ?>" alt="" />
+            </div>
+            <div class="column">
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-seat.png'; ?>" alt="" />
+            </div>
+            <div class="column">
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-skoda.png'; ?>" alt="" />
+            </div>
+            <div class="column">
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/car-brand-vw.png'; ?>" alt="" />
+            </div>
+        </div>
     </brand-logos>
 
     <scrolling-products>
         <div class="row column">
-            <h2>New In</h2>
+            <h2 class="h3">New In</h2>
         </div>
         <div class="row column">
             <p>[ scrolling products - new feed ]</p>

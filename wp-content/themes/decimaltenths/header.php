@@ -36,17 +36,17 @@
 
 <header class="header" role="banner">
 	
-	<?php //get_template_part( 'template-parts/site-logo' ); ?>
-	<p class="logo">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
-			<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>
-			<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-duotone.svg'; ?>" alt="Decimal Tenths logo" loading="eager" />
-		</a>
-	</p>
-	
-	<p class="a11y-skip"><a href="#main">Skip to Content</a></p>
-
 	<div id="site-navigation" class="header--inner">
+
+		<p class="logo">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
+				<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>
+				<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-duotone.svg'; ?>" alt="Decimal Tenths logo" loading="eager" />
+			</a>
+		</p>
+		
+		<p class="a11y-skip"><a href="#main">Skip to Content</a></p>
+		
 		<?php /* Menu trigger for small devices */ ?>	
 		<div class="menu-button-container">
 			<button id="primary-mobile-menu" class="menu-button-trigger" aria-controls="primary-menu-list" aria-expanded="false">
@@ -88,9 +88,24 @@
 
 
 		<div class="header--shop-links">
-			<p class="menu-item"><a href="/basket/">Cart <?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?></a></p>
-			<p class="menu-item"><a href="/my-account/">Account <?php get_template_part( 'template-parts/svg/user-light' ); ?></a></p>
-			<p class="menu-item"><a href="">Search <?php get_template_part( 'template-parts/svg/magnifying-glass-light' ); ?></a></p>
+			<p class="menu-item">
+				<a href="/basket/">
+					<span class="visuallyhidden">Cart</span>
+					<?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?>
+				</a>
+			</p>
+			<p class="menu-item">
+				<a href="/my-account/">
+					<span class="visuallyhidden">Account</span>
+					<?php get_template_part( 'template-parts/svg/user-light' ); ?>
+				</a>
+			</p>
+			<p class="menu-item">
+				<a href="">
+					<span class="visuallyhidden">Search</span>
+					<?php get_template_part( 'template-parts/svg/magnifying-glass-light' ); ?>
+				</a>
+			</p>
 		</div>
 
 	</div>

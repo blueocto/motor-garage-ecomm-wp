@@ -17,58 +17,75 @@
 }
 
 .header {
-	display: flex;
-	flex-flow: row wrap;
-	align-items: center;
-	padding: $large-spacing $medium-spacing;
 	background-color: black;
 	border-bottom: 2px solid var(--brand-neon-green);
 
+	@include breakpoint(medium down) {
+		height: calc(15px + 50px + 15px);
+	}
+
 	@include breakpoint(xlarge) {
-		padding: rem-calc(26px 49px);
+		padding: rem-calc(32px 49px 47px);
 	}
 
 	.logo {
-		margin-right: $large-spacing;
+		width: rem-calc(153px);
+
+		@include breakpoint(medium down) {
+			position: absolute;
+			top: 15px;
+			left: calc(100vw + 15px);
+		}
 	}
 
 	// groups everything to appear in mobile menu
 	.header--inner {
-		flex-grow: 1;
+
+		@include breakpoint(large) {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-between;
+			align-items: center;
+		}
 	}
 
 	.header--shop-links {
-		margin-left: auto;
-		align-self: flex-end;
 
 		.menu-item {
-			display: block;
+			display: inline-block;
 			margin-bottom: 0;
-			padding: $small-spacing;
+			width: 50px;
+			height: 50px;
 			color: white;
-			// font-weight: $semi-bold;
-			font-size: rem-calc(16px);
+			font-size: rem-calc(14px);
 			text-transform: uppercase;
-			letter-spacing: 0.01em;
-
-			@include breakpoint(large) {
-				position: relative;
-				top: -2px;
-				display: inline-block;
-				padding-left: $large-spacing;
-			}
+			letter-spacing: 0.05em;
 
 			a {
 				display: block;
+				padding-top: 12px;
+				text-align: center;
 			}
 
 			.svg {
 				display: inline-block;
 				vertical-align: middle;
-				margin-left: 10px;
 				width: 16px;
-				fill: var(--brand-green);
+				fill: var(--brand-neon-green);
 			}
 		}
 	}
 }
+
+// when the offcanvas opens
+.primary-navigation-open {
+
+	.header {
+
+		.logo {
+			left: 15px;
+		}
+	}
+}
+
+

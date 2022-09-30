@@ -5,6 +5,7 @@
 .footer {
 	padding-top: rem-calc(50px);
 	padding-bottom: rem-calc(50px);
+	color: black;
 	background-color: var(--brand-neon-green);
 
 	@include breakpoint(large) {
@@ -44,7 +45,7 @@
 			margin-bottom: rem-calc(50);
 		}
 
-		h3 {
+		.h4 {
 			margin-bottom: $xlarge-spacing;
 			letter-spacing: 0.05em;
 		}
@@ -70,6 +71,7 @@
 
 		p {
 			font-size: rem-calc(13);
+			text-align: justify;
 		}
 	}
 

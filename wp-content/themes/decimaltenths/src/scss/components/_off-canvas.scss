@@ -7,7 +7,7 @@ $offMenuWidth: 100vw;
 // Menu trigger to open/close off-canvas
 .menu-button-container {
 	position: absolute;
-	top: 20px;
+	top: 15px;
 	right: calc(-100% + 10px);
 
 	@include breakpoint(large) {
@@ -17,9 +17,9 @@ $offMenuWidth: 100vw;
 
 .menu-button-trigger {
 	padding: 0;
-	width: 45px;
-	height: 45px;
-	color: var(--brand-green);
+	width: 50px;
+	height: 50px;
+	color: var(--brand-neon-green);
 	font-size: rem-calc(13px);
 	text-transform: uppercase;
 	letter-spacing: 0.01em;
@@ -29,12 +29,12 @@ $offMenuWidth: 100vw;
 
 	.svg--bars {
 		max-width: 18px;
-		fill: var(--brand-green);
+		fill: var(--brand-neon-green);
 	}
 
 	.svg--xmark {
 		max-width: 16px;
-		fill: var(--brand-green);
+		fill: var(--brand-neon-green);
 	}
 
 	&[aria-expanded="false"] {
@@ -66,7 +66,7 @@ $offMenuWidth: 100vw;
 		width: $offMenuWidth;
 		min-height: 100vh;
 		transition: all 0.3s ease-in-out;
-		padding: rem-calc(50px 15px 15px);
+		padding: rem-calc(100px 15px 15px);
 		transform: translate3d(-$offMenuWidth, 0, 0);
 		background-color: transparent;
 		z-index: 0;

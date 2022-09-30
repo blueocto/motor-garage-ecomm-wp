@@ -10,7 +10,7 @@
 				</p>
 			</div>
 			<div class="column">
-				<h3>Shop</h3>
+				<h3 class="h4">Shop</h3>
 				<nav>
 					<ul class="menu footer--menu">
 						<li class="menu-item"><a href="#">Shop All</a></li>
@@ -23,7 +23,7 @@
 				</nav>
 			</div>
 			<div class="column">
-				<h3>Customer</h3>
+				<h3 class="h4">Customer</h3>
 				<nav>
 					<ul class="menu footer--menu">
 						<li class="menu-item"><a href="#">Account</a></li>
@@ -35,7 +35,7 @@
 				</nav>
 			</div>
 			<div class="column">
-				<h3>Services</h3>
+				<h3 class="h4">Services</h3>
 				<nav>
 					<ul class="menu footer--menu">
 						<li class="menu-item"><a href="#">All Services</a></li>
@@ -44,7 +44,7 @@
 				</nav>
 			</div>
 			<div class="column">
-				<h3>Social</h3>
+				<h3 class="h4">Social</h3>
 				<nav>
 					<ul class="menu footer--menu">
 						<li class="menu-item"><a href="#">YouTube</a></li>
