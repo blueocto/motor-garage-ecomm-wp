@@ -31,11 +31,11 @@ hero-car-filters {
         @extend %row;
         position: relative;
         z-index: 5;
-        padding-top: rem-calc(119px);
+        padding-top: rem-calc(128px);
 
         @include breakpoint(large) {
-            padding-left: rem-calc(52px);
-            padding-bottom: rem-calc(50px);
+            padding-left: rem-calc(42px);
+            padding-bottom: rem-calc(48px);
         }
     }
 
@@ -51,7 +51,7 @@ hero-car-filters {
     .hero--heading {
         margin-bottom: $small-spacing;
         font-size: calc(69px * #{$medium-calc});
-        line-height: 1.2;
+        line-height: 1.24;
         letter-spacing: 0.05em;
 
         @include breakpoint(large) {
@@ -62,5 +62,6 @@ hero-car-filters {
     .hero--subheading {
         font-size: rem-calc(18);
         line-height: rem-calc(34);
+        font-style: italic;
     }
 }
