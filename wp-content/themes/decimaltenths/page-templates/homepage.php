@@ -34,34 +34,71 @@ get_header(); ?>
         <div class="row column">
             <h2 class="h3">New In</h2>
         </div>
-        <div class="row column">
-            <p>[ scrolling products - new feed ]</p>
+        <div class="row">
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
         </div>
     </scrolling-products>
 
     <category-panels>
-        <div class="row column">
-            <h2>Browse our categories</h2>
-        </div>
+        <h2 class="visuallyhidden">Browse our categories</h2>
         <div class="row column">
             <panel>
-                <h3>Engines</h3>
+                <h3 class="h4">Engines</h3>
                 <p><a href="#">Browse</a></p>
             </panel>
             <panel>
-                <h3>Lorum</h3>
+                <h3 class="h4">Lorum</h3>
                 <p><a href="#">Browse</a></p>
             </panel>
             <panel>
-                <h3>Ipsum</h3>
+                <h3 class="h4">Ipsum</h3>
                 <p><a href="#">Browse</a></p>
             </panel>
             <panel>
-                <h3>Hover</h3>
+                <h3 class="h4">Hover</h3>
                 <p><a href="#">Browse</a></p>
             </panel>
             <panel>
-                <h3>Amet</h3>
+                <h3 class="h4">Amet</h3>
                 <p><a href="#">Browse</a></p>
             </panel>
         </div>
@@ -69,10 +106,49 @@ get_header(); ?>
 
     <scrolling-products>
         <div class="row column">
-            <h2>Popular</h2>
+            <h2 class="h3">Popular</h2>
         </div>
-        <div class="row column">
-            <p>[ scrolling products - popular ]</p>
+        <div class="row">
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
+            <div class="column small-12 medium-6 large-3">
+                <product-card>
+                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
+                    <div class="product--desc">
+                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
+                        <p class="product--price">&pound;1,324.99</p>
+                        <p class="product--category">Crankshafts</p>
+                    </div>
+                </product-card>
+            </div>
         </div>
     </scrolling-products>
 
@@ -86,7 +162,7 @@ get_header(); ?>
 
     <video-feed>
         <div class="row column">
-            <h2>Latest Videos <a href="#">View All</a></h2>
+            <h2 class="h3">Latest Videos <p><a href="#">View All</a></p></h2>
         </div>
         <div class="row column">
             <p>[ Youtube Channel Feed ]</p>
