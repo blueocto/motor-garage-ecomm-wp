@@ -18,7 +18,7 @@
 @import "components/forms";
 
 // Modules
-
+@import "modules/home-carousel";
 @import "modules/footer";
 
 // Homepage
@@ -29,3 +29,6 @@
 @import "components/category-panels";
 @import "components/service-highlight";
 @import "components/video-feed";
+
+// Custom blocks
+@import "vendor/accessible-slick-theme";

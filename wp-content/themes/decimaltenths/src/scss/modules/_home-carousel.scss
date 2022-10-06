@@ -1,0 +1,67 @@
+.new_in_carousel_buttons, .popular_carousel_buttons {
+	position: relative;
+
+	.slick-next,
+	.slick-prev {
+		&:focus {
+			top: 31px !important;
+			@include breakpoint(medium down) {
+				top: 25px !important;
+			}
+		}
+	}
+
+	.slick-next {
+	    width: 30px;
+	    height: 30px;
+	    justify-content: flex-start;
+	    z-index: 1000;
+	    left: auto;
+		right: 30px;
+	    display: flex;
+	    align-items: center;
+
+	    .slick-next-icon {
+		    &:before {
+		    	content: '';
+		    	width: 20px;
+	    		height: 20px;
+	    		background: url('../img/arrow-left-white.png') center/contain no-repeat;
+				display: inline-block;
+		    }
+		}
+	}
+	.slick-prev {
+	    width: 30px;
+	    height: 30px;
+	    justify-content: flex-end;
+	    z-index: 1000;
+	    right: 75px;
+		left: inherit;
+	    display: flex;
+	    align-items: center;
+
+	    .slick-prev-icon {
+		    &:before {
+		    	content: '';
+		    	width: 20px;
+	    		height: 20px;
+	    		background: url('../img/arrow-right-white.png') center/contain no-repeat;
+				display: inline-block;
+		    }
+		}
+	}
+}
+.new_in_carousel, .popular_carousel {
+	background-color: var(--brand-color-grey);
+	position: relative;
+	overflow: hidden;
+
+	.slick-track {
+		display: flex;
+	}
+
+	.slick-slide {
+		height: inherit !important;
+	}
+}

@@ -59,6 +59,9 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 
 			wp_enqueue_script( 'theme-menu', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'primary-navigation.js' ), '', '', false );
 
+			// Slick carousel the A11y version
+			wp_enqueue_script( 'theme-slick', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'slick.min.js' ), '', '', true );
+
 
 			//*====*//
 

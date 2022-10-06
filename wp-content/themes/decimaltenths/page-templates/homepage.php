@@ -30,53 +30,7 @@ get_header(); ?>
         </div>
     </brand-logos>
 
-    <scrolling-products>
-        <div class="row column">
-            <h2 class="h3">New In</h2>
-        </div>
-        <div class="row">
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-        </div>
-    </scrolling-products>
+    <?php get_template_part( 'template-parts/blocks/new-in-products' ); ?>
 
     <category-panels>
         <h2 class="visuallyhidden">Browse our categories</h2>
@@ -104,53 +58,7 @@ get_header(); ?>
         </div>
     </category-panels>
 
-    <scrolling-products>
-        <div class="row column">
-            <h2 class="h3">Popular</h2>
-        </div>
-        <div class="row">
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-            <div class="column small-12 medium-6 large-3">
-                <product-card>
-                    <img class="product--img" src="<?php echo get_stylesheet_directory_uri() . '/dist/img/placeholder-product.png'; ?>" alt="" />
-                    <div class="product--desc">
-                        <p class="product--title">Genuine 2.0 TFSI 1.8T Stroker Crankshaft</p>
-                        <p class="product--price">&pound;1,324.99</p>
-                        <p class="product--category">Crankshafts</p>
-                    </div>
-                </product-card>
-            </div>
-        </div>
-    </scrolling-products>
+    <?php get_template_part( 'template-parts/blocks/popular-products' ); ?>
 
     <service-highlight>
         <div class="row column">
