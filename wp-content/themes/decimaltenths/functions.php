@@ -7,6 +7,9 @@
  * @link https://codex.wordpress.org/Theme_Development
  */
 
+/** ACF */
+require_once( 'library/acf.php' );
+
 /** Show featured image in Admin area */
 require_once( 'library/admin-featured-image.php' );
 
