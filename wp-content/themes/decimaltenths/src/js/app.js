@@ -7,6 +7,31 @@ jQuery(document).ready(function ($) {
     // wrap a container around the single product entry-summary and tabs
     $(".entry-summary, .woocommerce-tabs").wrapAll('<div class="single-product-description"></div>');
 
+	$(".manufacturer").change(function(){
+		var selectedCatID = $(this).find(':selected').data('catid');
+		$("select.model").empty().append("<option value=\"\">--Model--</option>");
+		$.ajax({
+            type: "GET",
+            url: "/car-models/models.json",
+            dataType: "json",
+            beforeSend: function() {
+            },
+            success: function(json){
+				$.each(json, function(i,item){
+					if(selectedCatID == item.parent){
+						$("select.model").append("<option value=\""+item.slug+"\">"+item.name+"</option>");
+					}
+				});
+            },
+            complete: function(){
+
+            },
+            error: function() {
+                console.log("An error occurred while processing JSON file.");
+            }
+        });
+	});
+
     if ($(".new_in_carousel").length) {
 		$(".new_in_carousel").slick({
 			mobileFirst: true,

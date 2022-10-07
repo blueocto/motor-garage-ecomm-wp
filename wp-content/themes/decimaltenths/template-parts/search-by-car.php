@@ -1,21 +1,25 @@
+<?php
+// Get Woocommerce product categories WP_Term objects
+$categories = get_terms( ['taxonomy' => 'product_cat'] );
+?>
+
 <section class="search-by-car-form">
     <form class="sbcf--form">
         <div class="form-row">
-            <select>
+            <select class="manufacturer" name="manufacturer">
                 <option value="">--Choose Your Manufacturer--</option>
-                <option value="">Audi</option>
-                <option value="">SEAT</option>
-                <option value="">Skoda</option>
-                <option value="">Volkswagen</option>
+                <?php
+                foreach( $categories as $manufacturer ) {
+                    if($manufacturer->parent == 0 && ($manufacturer->slug != "awd-2006-2010-awd-2006-2010" && $manufacturer->slug != "brake-discs" && $manufacturer->slug != "formentor-vz2" && $manufacturer->slug != "dtmerchandise" && $manufacturer->slug != "ecus" && $manufacturer->slug != "engine-build" && $manufacturer->slug != "misc")){
+                        echo "<option data-catid=\"".$manufacturer->term_id."\" value=\"".$manufacturer->slug."\">".$manufacturer->name."</option>";
+                    }
+                }
+                ?>
             </select>
         </div>
         <div class="form-row">
-            <select>
+            <select class="model" name="model">
                 <option value="">--Model--</option>
-                <option value="">Amarok</option>
-                <option value="">Arteon</option>
-                <option value="">Golf</option>
-                <option value="">Yeti</option>
             </select>
         </div>
         <div class="form-row">
