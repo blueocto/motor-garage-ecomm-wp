@@ -73,15 +73,10 @@
 
 %column {
 	flex: 1 1 0px;
-	padding-right: $small-spacing;
-	padding-left: $small-spacing;
+	padding-right: $medium-spacing;
+	padding-left: $medium-spacing;
 	min-width: 0;
 	outline: 1px dashed cyan;
-
-	@include breakpoint(large) {
-		padding-right: $medium-spacing;
-		padding-left: $medium-spacing;
-	}
 }
 
 // Typography scale at 1.285
