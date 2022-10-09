@@ -32,7 +32,21 @@ jQuery(document).ready(function ($) {
         });
 	});
 
-    if ($(".new_in_carousel").length) {
+    // TODO: Dan...
+	if ($(".hero_image_carousel").length) {
+		$(".hero_image_carousel").slick({
+			mobileFirst: true,
+			lazyLoad: "progressive",
+			infinite: true,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			// arrows: false,
+            prevArrow: $('.prev-hero'),
+            nextArrow: $('.next-hero'),
+		});
+	}
+	
+	if ($(".new_in_carousel").length) {
 		$(".new_in_carousel").slick({
 			mobileFirst: true,
 			lazyLoad: "progressive",

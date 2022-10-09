@@ -6,6 +6,18 @@ get_header(); ?>
 
 <main id="main" class="main">
     <hero-car-filters>
+        <!-- // TODO: Dan... -->
+        <hero-images>
+            <div class="hero_image_carousel">
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/cobra-sport-exhaust_audi-s3-8y.webp.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/cobra-sport-exhaust_vw-golf-mk7.5-gti.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/forge-fuel-pressure-regulator.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/powerflex-front-wishbone-rear-bush-anitlift-caster-offset.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/powerflex-performance-polyurethane-bushes.webp'; ?>" alt="" />
+            </div>
+        </hero-images>
+        
         <hero-inner>
             <hero-content>
                 <h2 class="hero--heading">Quality Parts</h2>
