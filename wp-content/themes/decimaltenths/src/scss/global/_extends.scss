@@ -50,7 +50,7 @@
 	margin-left: auto;
 	display: flex;
 	flex-flow: row wrap;
-	outline: 1px dashed red;
+	// outline: 1px dashed red;
 }
 
 %row {
@@ -59,7 +59,7 @@
 	margin-left: auto;
 	display: flex;
 	flex-flow: row wrap;
-	outline: 1px dashed red;
+	// outline: 1px dashed red;
 }
 
 // to use when inside breakpoint
@@ -68,7 +68,7 @@
 	padding-right: $medium-spacing;
 	padding-left: $medium-spacing;
 	min-width: 0;
-	outline: 1px dashed cyan;
+	// outline: 1px dashed cyan;
 }
 
 %column {
@@ -76,7 +76,7 @@
 	padding-right: $medium-spacing;
 	padding-left: $medium-spacing;
 	min-width: 0;
-	outline: 1px dashed cyan;
+	// outline: 1px dashed cyan;
 }
 
 // Typography scale at 1.285

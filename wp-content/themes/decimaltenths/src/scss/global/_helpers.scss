@@ -36,22 +36,22 @@ body {
 	}
 }
 
-html {
-	border: 2px solid red;
+// html {
+// 	border: 2px solid red;
 
-	@include breakpoint(medium) {
-		border: 2px solid orange;
-	}
+// 	@include breakpoint(medium) {
+// 		border: 2px solid orange;
+// 	}
 
-	@include breakpoint(large) {
-		border: 2px solid yellow;
-	}
+// 	@include breakpoint(large) {
+// 		border: 2px solid yellow;
+// 	}
 
-	@include breakpoint(xlarge) {
-		border: 2px solid blue;
-	}
+// 	@include breakpoint(xlarge) {
+// 		border: 2px solid blue;
+// 	}
 
-	@include breakpoint(xxlarge) {
-		border: 2px solid green;
-	}
-}
+// 	@include breakpoint(xxlarge) {
+// 		border: 2px solid green;
+// 	}
+// }
