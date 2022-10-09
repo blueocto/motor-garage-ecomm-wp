@@ -15,20 +15,7 @@ get_header(); ?>
         </hero-inner>
     </hero-car-filters>
 
-    <brand-logos>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/audi-white.svg'; ?>" alt="" />
-        </div>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/seat-white.svg'; ?>" alt="" />
-        </div>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/skoda-white.svg'; ?>" alt="" />
-        </div>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/volkswagen-white.svg'; ?>" alt="" />
-        </div>
-    </brand-logos>
+    <?php get_template_part( 'template-parts/blocks/brand-logos' ); ?>
 
     <?php get_template_part( 'template-parts/blocks/new-in-products' ); ?>
 
@@ -37,10 +24,28 @@ get_header(); ?>
     <?php get_template_part( 'template-parts/blocks/popular-products' ); ?>
 
     <service-highlight>
-        <div class="row column">
+        <div class="picture highlight-img-1">
+            <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.jpg'; ?>" alt="" />
+        </div>
+        <div class="picture highlight-img-2">
+            <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.jpg'; ?>" alt="" />
+        </div>
+        <div class="picture highlight-img-3">
+            <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.jpg'; ?>" alt="" />
+        </div>
+        <div class="highlight-content">
             <h2>Custom Tuning</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</p>
-            <p><a href="#">View services</a></p>
+            <p><a class="btn" href="#">View services</a></p>
+        </div>
+        <div class="picture highlight-img-4">
+            <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.jpg'; ?>" alt="" />
+        </div>
+        <div class="picture highlight-img-5">
+            <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.jpg'; ?>" alt="" />
+        </div>
+        <div class="picture highlight-img-6">
+            <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.jpg'; ?>" alt="" />
         </div>
     </service-highlight>
 
