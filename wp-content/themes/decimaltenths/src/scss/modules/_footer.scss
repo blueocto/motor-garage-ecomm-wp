@@ -74,7 +74,7 @@
 
 	.copyright,
 	.credit {
-		flex: 1 0 auto;
+		flex: 0 0 100%;
 		font-size: rem-calc(13);
 		text-align: center;
 	}
@@ -87,6 +87,7 @@
 		}
 
 		.credit {
+			flex: 1 0 auto;
 			text-align: right;
 		}
 	}
