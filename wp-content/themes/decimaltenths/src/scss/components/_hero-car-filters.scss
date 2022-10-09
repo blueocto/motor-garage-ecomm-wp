@@ -5,7 +5,7 @@
 hero-car-filters {
     position: relative;
     display: block;
-    background: url('../img/green-car-bg.jpg') right center; 
+    background: url('../img/green-car-bg.webp') right center; 
     background-size: cover;
 
     @include breakpoint(medium down) {
