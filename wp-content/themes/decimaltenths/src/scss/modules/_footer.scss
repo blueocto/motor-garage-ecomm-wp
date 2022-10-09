@@ -30,14 +30,11 @@
 
 	.column {
 
-		@include breakpoint(medium down) {
-			// small-12
-			flex: 0 0 100%;
-			max-width: 100%;
+		@include breakpoint(large down) {
 			margin-bottom: $xlarge-spacing;
 		}
 
-		@include breakpoint(large) {
+		@include breakpoint(xlarge) {
 			text-align: right;
 		}
 
@@ -77,19 +74,15 @@
 
 	.copyright,
 	.credit {
-		flex: 0 0 100%;
-		max-width: 100%;
+		flex: 1 0 auto;
 		font-size: rem-calc(13);
 		text-align: center;
-
-		@include breakpoint(large) {
-			flex: 0 0 50%;
-			max-width: 50%;
-		}
 	}
 
 	@include breakpoint(large) {
 		.copyright {
+			flex: 0 0 65%;
+			max-width: 65%;
 			text-align: left;
 		}
 

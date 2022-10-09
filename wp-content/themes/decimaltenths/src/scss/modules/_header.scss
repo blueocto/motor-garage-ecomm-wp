@@ -24,18 +24,8 @@
 		height: calc(15px + 50px + 15px);
 	}
 
-	@include breakpoint(xlarge) {
+	@include breakpoint(xxlarge) {
 		padding: rem-calc(29px 49px 42px);
-	}
-
-	.logo {
-		width: rem-calc(153px);
-
-		@include breakpoint(medium down) {
-			position: absolute;
-			top: 15px;
-			left: calc(100vw + 15px);
-		}
 	}
 
 	// groups everything to appear in mobile menu
@@ -46,6 +36,45 @@
 			flex-flow: row wrap;
 			justify-content: space-between;
 			align-items: center;
+			text-align: center;
+		}
+
+		@include breakpoint(large) {
+			padding: 15px;
+		}
+
+		.logo {
+			width: rem-calc(153px);
+	
+			@include breakpoint(medium down) {
+				position: absolute;
+				top: 15px;
+				left: calc(100vw + 15px);
+			}
+
+			@include breakpoint(large) {
+				order: 0;
+			}
+		}
+
+		.primary--menu {
+			@include breakpoint(large) {
+				order: 2;
+			}
+
+			@include breakpoint(xxlarge) {
+				order: unset;
+			}
+		}
+
+		.header--shop-links {
+			@include breakpoint(large ) {
+				order: 1;
+			}
+
+			@include breakpoint(xxlarge) {
+				order: unset;
+			}
 		}
 	}
 
