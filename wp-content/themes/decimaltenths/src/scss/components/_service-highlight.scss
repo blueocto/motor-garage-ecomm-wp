@@ -3,23 +3,50 @@
 // ==============================================
 
 service-highlight {
-    // CSS Grid
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 10px 10px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "highlight-img-1 highlight-img-1 highlight-img-1 highlight-img-1"
-        "highlight-img-2 highlight-img-3 highlight-content highlight-content"
-        "highlight-img-4 highlight-img-4 highlight-img-5 highlight-img-6";
-    
     margin: 0 auto;
     padding-top: rem-calc(50px);
     padding-bottom: rem-calc(50px);
     max-width: $global-width;
 
-    .highlight-img-2,
+	// CSS Grid
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto auto auto auto auto auto;
+	gap: 10px 10px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"highlight-img-1"
+		"highlight-img-2"
+		"highlight-img-3"
+		"highlight-content"
+		"highlight-img-4"
+		"highlight-img-5"
+		"highlight-img-6";
+	
+	@include breakpoint(medium) {
+		// CSS Grid
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto auto auto auto;
+		grid-template-areas:
+			"highlight-img-1 highlight-img-1"
+			"highlight-img-2 highlight-img-3" 
+			"highlight-content highlight-content"
+			"highlight-img-6 highlight-img-5" 
+			"highlight-img-4 highlight-img-4";
+	}
+
+	@include breakpoint(large) {
+		// CSS Grid
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto auto auto;
+		grid-template-areas:
+			"highlight-img-1 highlight-img-1 highlight-img-1 highlight-img-1"
+			"highlight-img-2 highlight-img-3 highlight-content highlight-content"
+			"highlight-img-4 highlight-img-4 highlight-img-5 highlight-img-6";
+	}
+
+    .highlight-img-1,
+	.highlight-img-2,
     .highlight-img-3,
     .highlight-img-4,
     .highlight-img-5,
@@ -30,39 +57,52 @@ service-highlight {
 
     .highlight-img-1 { 
         grid-area: highlight-img-1;
-        height: 50vh;
+
+		@include breakpoint(large) {
+			height: 50vh;
+		}
     }
 
-    .highlight-img-2 { 
-        grid-area: highlight-img-2;
-    }
+	.highlight-img-2 { 
+		grid-area: highlight-img-2;
+	}
 
-    .highlight-img-3 { 
-        grid-area: highlight-img-3;
-    }
+	.highlight-img-3 { 
+		grid-area: highlight-img-3;
+	}
+
+	.highlight-img-4 { 
+		grid-area: highlight-img-4;
+	}
+
+	.highlight-img-5 { 
+		grid-area: highlight-img-5;
+	}
+
+	.highlight-img-6 { 
+		grid-area: highlight-img-6;
+	}
 
     .highlight-content { 
         grid-area: highlight-content;
         display: flex;
         flex-flow: column wrap;
         justify-content: center;
-        padding-left: rem-calc(90px);
-        padding-right: rem-calc(90px);
+
+		@include breakpoint(large down) {
+			padding-top: $xxlarge-spacing;
+			padding-bottom: $large-spacing;
+			padding-left: $medium-spacing;
+        	padding-right: $medium-spacing;
+		}
+
+		@include breakpoint(xlarge) {
+			padding-left: rem-calc(90px);
+        	padding-right: rem-calc(90px);
+		}
 
         > * {
             margin-bottom: rem-calc(30px);
         }
-    }
-
-    .highlight-img-4 { 
-        grid-area: highlight-img-4;
-    }
-
-    .highlight-img-5 { 
-        grid-area: highlight-img-5;
-    }
-
-    .highlight-img-6 { 
-        grid-area: highlight-img-6;
     }
 }
