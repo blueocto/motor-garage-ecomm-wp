@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Yoast SEO - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-09-06 07:25:21+0000\n"
+"PO-Revision-Date: 2022-09-29 12:29:11+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,72 @@ msgstr ""
 "X-Generator: GlotPress/4.0.0-alpha.3\n"
 "Language: en_GB\n"
 "Project-Id-Version: Plugins - Yoast SEO - Stable (latest release)\n"
+
+#: src/presenters/admin/sidebar-presenter.php:69
+msgid "Read reviews from real users"
+msgstr "Read reviews from real users"
+
+#. translators: %1$s expands to an opening strong tag, %2$s expands to a
+#. closing strong tag
+#: src/presenters/admin/sidebar-presenter.php:54
+msgid "Be the first to %1$s get new features & tools%2$s, before everyone else. Get %1$s 24/7 support%2$s and boost your website’s visibility."
+msgstr "Be the first to %1$s get new features & tools%2$s, before everyone else. Get %1$s 24/7 support%2$s and boost your website’s visibility."
+
+#. translators: %1$s expands to Yoast SEO, %2$s expands to the name of the
+#. class that could not be found.
+#: src/loader.php:259
+msgid "%1$s attempted to load the class %2$s but it could not be found."
+msgstr "%1$s attempted to load the class %2$s but it could not be found."
+
+#: src/integrations/admin/crawl-settings-integration.php:317
+msgid "This feature is not available for multisites."
+msgstr "This feature is not available for multisites."
+
+#: src/integrations/admin/crawl-settings-integration.php:207
+msgid "WordPress loads lots of resources, some of which your site might not need. If you’re not using these, removing them can speed up your pages and save resources."
+msgstr "WordPress loads lots of resources, some of which your site might not need. If you’re not using these, removing them can speed up your pages and save resources."
+
+#: src/integrations/admin/crawl-settings-integration.php:207
+msgid "Remove unused resources"
+msgstr "Remove unused resources"
+
+#: src/integrations/admin/crawl-settings-integration.php:149
+msgid "Prevent search engines from crawling /wp-json/"
+msgstr "Prevent search engines from crawling /wp-json/"
+
+#: src/integrations/admin/crawl-settings-integration.php:144
+msgid "Prevent search engines from crawling site search URLs"
+msgstr "Prevent search engines from crawling site search URLs"
+
+#: admin/views/tabs/dashboard/features.php:94
+msgid "Please update your Yoast SEO Premium plugin to the latest version to be able to use this feature."
+msgstr "Please update your Yoast SEO Premium plugin to the latest version to be able to use this feature."
+
+#: admin/views/tabs/dashboard/features.php:84
+msgid "This feature has been disabled, since it is not supported for your language yet."
+msgstr "This feature has been disabled, since it is not supported for your language yet."
+
+#: admin/views/class-yoast-feature-toggles.php:98
+msgid "Discover why inclusive language is important for SEO."
+msgstr "Discover why inclusive language is important for SEO."
+
+#: admin/views/class-yoast-feature-toggles.php:97
+msgid "The inclusive language analysis offers suggestions to write more inclusive copy."
+msgstr "The inclusive language analysis offers suggestions to write more inclusive copy."
+
+#: admin/views/class-yoast-feature-toggles.php:91 js/dist/new-settings.js:182
+msgid "Inclusive language analysis"
+msgstr "Inclusive language analysis"
+
+#: src/deprecated/admin/metabox/class-metabox-section-inclusive-language.php:49
+msgid "Inclusive language"
+msgstr "Inclusive language"
+
+#. translators: %1$s expands to the opening span tag (styling). %2$s expands to
+#. the closing span tag.
+#: src/integrations/settings-integration.php:233
+msgid "Settings %1$sBeta%2$s"
+msgstr "Settings %1$sBeta%2$s"
 
 #. translators: 1: expands to a link opening tag; 2: expands to a link closing
 #. tag
@@ -314,10 +380,6 @@ msgstr "Page comments"
 #: src/services/health-check/links-table-check.php:48
 msgid "Links table"
 msgstr "Links table"
-
-#: src/services/health-check/curl-check.php:48
-msgid "cURL"
-msgstr "cURL"
 
 #: src/integrations/admin/import-integration.php:218
 msgid "If you already have saved AIOSEO 'Search Appearance' settings and the issue persists, please contact our support team so we can take a closer look."
@@ -963,17 +1025,6 @@ msgstr "Enable Breadcrumbs for your theme"
 msgid "Note: You can always choose to enable / disable them for your theme below. This setting will not apply to breadcrumbs inserted through a widget, a block or a shortcode."
 msgstr "Note: you can always choose to enable/disable them for your theme below. This setting will not apply to breadcrumbs inserted through a widget, a block, or a shortcode."
 
-#. translators: %1$s expands to 'Yoast'.
-#: src/services/health-check/curl-reports.php:47
-msgid "%1$s premium plugin updates work fine"
-msgstr "%1$s premium plugin updates work fine"
-
-#. translators: %1$s expands to 'Yoast'.
-#: src/services/health-check/curl-reports.php:61
-#: src/services/health-check/curl-reports.php:93
-msgid "%1$s premium plugins cannot update"
-msgstr "%1$s premium plugins cannot update"
-
 #: src/exceptions/indexable/post-not-found-exception.php:16
 msgid "The post could not be found."
 msgstr "The post could not be found."
@@ -1376,24 +1427,6 @@ msgstr "This %1$s REST API endpoint gives you all the metadata you need for a sp
 #: admin/views/class-yoast-feature-toggles.php:182
 msgid "REST API: Head endpoint"
 msgstr "REST API: head endpoint"
-
-#: src/services/health-check/curl-reports.php:49
-msgid "Great! You can activate your premium plugin(s) and receive updates."
-msgstr "Great! You can activate your premium plugin(s) and receive updates."
-
-#. translators: %1$s Emphasis open tag, %2$s: Emphasis close tag, %3$s Link
-#. start tag to the Yoast help center, %4$s Link closing tag, %5$s to Yoast
-#. SEO, %6$s to my.yoast.com.
-#: src/services/health-check/curl-reports.php:107
-msgid "You can %1$snot%2$s activate your premium plugin(s) and receive updates because %5$s cannot connect to %6$s. The cause for this error is probably that the cURL software on your server is too old. Please contact your host and ask them to update it to at least version 7.34. %3$sRead more about cURL in our help center%4$s."
-msgstr "You can %1$snot%2$s activate your premium plugin(s) and receive updates because %5$s cannot connect to %6$s. The cause for this error is probably that the cURL software on your server is too old. Please contact your host and ask them to update it to at least version 7.34. %3$sRead more about cURL in our help centre%4$s."
-
-#. translators: %1$s Emphasis open tag, %2$s: Emphasis close tag, %3$s Link
-#. start tag to the Yoast help center, %4$s Link closing tag, %5$s to Yoast
-#. SEO, %6$s to my.yoast.com.
-#: src/services/health-check/curl-reports.php:75
-msgid "You can %1$snot%2$s activate your premium plugin(s) and receive updates because %5$s cannot connect to %6$s. A common cause for not being able to connect is an out-of-date version of cURL, software used to connect to other servers. However, your cURL version seems fine. Please talk to your host and, if needed, the Yoast support team to figure out what is broken. %3$sRead more about cURL in our help center%4$s."
-msgstr "You can %1$snot%2$s activate your premium plugin(s) and receive updates because %5$s cannot connect to %6$s. A common cause for not being able to connect is an out-of-date version of cURL, software used to connect to other servers. However, your cURL version seems fine. Please talk to your host and, if needed, the Yoast support team to figure out what is broken. %3$sRead more about cURL in our help centre%4$s."
 
 #. translators: %1$s: Opening tag of the link to the Yoast Ryte website, %2$s:
 #. Expands to 'Ryte', %3$s: Link closing tag.
