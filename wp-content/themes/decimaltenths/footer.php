@@ -9,7 +9,7 @@
 					</a>
 				</p>
 			</div>
-			<div class="column small-12 medium-6">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Shop</h3>
 				<nav>
 					<ul class="menu footer--menu">
@@ -22,7 +22,7 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="column small-12 medium-6">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Customer</h3>
 				<nav>
 					<ul class="menu footer--menu">
@@ -34,7 +34,7 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="column small-12 medium-6">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Services</h3>
 				<nav>
 					<ul class="menu footer--menu">
@@ -43,7 +43,7 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="column small-12 medium-6">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Social</h3>
 				<nav>
 					<ul class="menu footer--menu">
