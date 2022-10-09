@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
             nextArrow: $('.next-new'),
 			responsive: [
 				{
-					breakpoint: 1024,
+					breakpoint: 1200,
 					settings: {
 						infinite: true,
 						slidesToShow: 4,
@@ -51,7 +51,7 @@ jQuery(document).ready(function ($) {
 					},
 				},
 				{
-					breakpoint: 640,
+					breakpoint: 1024,
 					settings: {
 						infinite: true,
 						slidesToShow: 2,
@@ -59,7 +59,7 @@ jQuery(document).ready(function ($) {
 					},
 				},
 				{
-					breakpoint: 480,
+					breakpoint: 640,
 					settings: {
 						infinite: true,
 						slidesToShow: 1,
