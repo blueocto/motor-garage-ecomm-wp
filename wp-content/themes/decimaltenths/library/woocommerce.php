@@ -174,7 +174,7 @@ function dequeue_woocommerce_styles_scripts() {
 				wp_deregister_style( 'woocommerce-general' );
 				wp_deregister_style( 'sby_styles' );
 				wp_deregister_style( 'wc-blocks-vendors-style' );
-				wp_deregister_style( 'dashicons' );
+				//wp_deregister_style( 'dashicons' );
 			
 			# Scripts
 				wp_deregister_script( 'wc-settings' );
