@@ -32,17 +32,16 @@ jQuery(document).ready(function ($) {
         });
 	});
 
-    // TODO: Dan...
-	if ($(".hero_image_carousel").length) {
+    if ($(".hero_image_carousel").length) {
 		$(".hero_image_carousel").slick({
 			mobileFirst: true,
 			lazyLoad: "progressive",
 			infinite: true,
 			slidesToShow: 1,
 			slidesToScroll: 1,
-			// arrows: false,
-            prevArrow: $('.prev-hero'),
-            nextArrow: $('.next-hero'),
+			arrows: false,
+			autoplay: true,
+			autoplaySpeed: 5000
 		});
 	}
 	

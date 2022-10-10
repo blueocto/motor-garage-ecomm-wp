@@ -4,7 +4,9 @@
 
 hero-car-filters {
     position: relative;
-    display: block;
+    display: flex;
+    height: 100%;
+    max-height: 600px;
 
     @include breakpoint(medium down) {
         height: 95vh;
