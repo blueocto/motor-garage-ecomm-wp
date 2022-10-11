@@ -1,0 +1,20 @@
+.shop-sidebar {
+    h3 {
+        font-size: var(--size-l-2);
+    }
+
+    .woof_container_inner {
+        h4 {
+            font-size: var(--size-l-1);
+        }
+    }
+
+    ul {
+        padding: 0;
+        li {
+            label {
+                color: white;
+            }
+        }
+    }
+}

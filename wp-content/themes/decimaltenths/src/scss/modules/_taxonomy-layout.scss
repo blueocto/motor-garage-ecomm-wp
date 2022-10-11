@@ -55,7 +55,7 @@
 // CSS Grid
 // ==============================================
 
-.archive .woo-container {
+.archive #woof_results_by_ajax {
 	@include breakpoint(large) {
 		display: grid;
 		gap: 0;
@@ -173,6 +173,12 @@
 		@include breakpoint(large) {
 			grid-area: woo-pagination;
 		}
+	}
+}
+
+ul.products {
+	@include breakpoint(large) {
+		grid-area: tax-content;
 	}
 }
 

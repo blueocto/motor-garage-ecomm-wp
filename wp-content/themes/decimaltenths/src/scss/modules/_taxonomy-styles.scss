@@ -13,7 +13,17 @@
 
 .shop-sidebar {
     padding: $small-spacing;
-    background-color: var(--brand-l-grey);
+}
+
+.products {
+    .product {
+        a {
+            .woocommerce-loop-product__title {
+                font-size: 1rem !important;
+                text-transform: capitalize;
+            }
+        }
+    }
 }
 
 .woocommerce-pagination {
