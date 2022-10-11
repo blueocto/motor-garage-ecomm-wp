@@ -1,7 +1,7 @@
 	<footer class="footer" role="contentinfo">
 
 		<div class="row">
-			<div class="column">
+			<div class="column small-12">
 				<p class="logo">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
 						<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>
@@ -9,7 +9,7 @@
 					</a>
 				</p>
 			</div>
-			<div class="column">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Shop</h3>
 				<nav>
 					<ul class="menu footer--menu">
@@ -22,7 +22,7 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="column">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Customer</h3>
 				<nav>
 					<ul class="menu footer--menu">
@@ -34,7 +34,7 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="column">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Services</h3>
 				<nav>
 					<ul class="menu footer--menu">
@@ -43,15 +43,14 @@
 					</ul>
 				</nav>
 			</div>
-			<div class="column">
+			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Social</h3>
 				<nav>
 					<ul class="menu footer--menu">
-						<li class="menu-item"><a href="#">YouTube</a></li>
-						<li class="menu-item"><a href="#">Twitter</a></li>
-						<li class="menu-item"><a href="#">Facebook</a></li>
-						<li class="menu-item"><a href="#">Instagram</a></li>
-						<li class="menu-item"><a href="#">LinkedIn</a></li>
+						<li class="menu-item"><a href="https://www.youtube.com/channel/UCIipR1T51cr5fsfCSRX_kgA" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+						<li class="menu-item"><a href="https://www.facebook.com/decimaltenths" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+						<li class="menu-item"><a href="https://www.instagram.com/decimaltenths/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+						<li class="menu-item"><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
 					</ul>
 				</nav>
 			</div>

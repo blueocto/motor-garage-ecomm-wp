@@ -6,6 +6,18 @@ get_header(); ?>
 
 <main id="main" class="main">
     <hero-car-filters>
+        <!-- // TODO: Dan... -->
+        <hero-images>
+            <div class="hero_image_carousel">
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/cobra-sport-exhaust_audi-s3-8y.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/cobra-sport-exhaust_vw-golf-mk7.5-gti.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/forge-fuel-pressure-regulator.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/powerflex-front-wishbone-rear-bush-anitlift-caster-offset.webp'; ?>" alt="" />
+                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/powerflex-performance-polyurethane-bushes.webp'; ?>" alt="" />
+            </div>
+        </hero-images>
+        
         <hero-inner>
             <hero-content>
                 <h2 class="hero--heading">Quality Parts</h2>
@@ -15,65 +27,22 @@ get_header(); ?>
         </hero-inner>
     </hero-car-filters>
 
-    <brand-logos>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/audi-white.svg'; ?>" alt="" />
-        </div>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/seat-white.svg'; ?>" alt="" />
-        </div>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/skoda-white.svg'; ?>" alt="" />
-        </div>
-        <div class="column">
-            <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/volkswagen-white.svg'; ?>" alt="" />
-        </div>
-    </brand-logos>
+    <?php get_template_part( 'template-parts/blocks/brand-logos' ); ?>
 
     <?php get_template_part( 'template-parts/blocks/new-in-products' ); ?>
 
-    <category-panels>
-        <h2 class="visuallyhidden">Browse our categories</h2>
-        <div class="row column">
-            <panel>
-                <h3 class="h4">Engines</h3>
-                <p><a href="#">Browse</a></p>
-            </panel>
-            <panel>
-                <h3 class="h4">Lorum</h3>
-                <p><a href="#">Browse</a></p>
-            </panel>
-            <panel>
-                <h3 class="h4">Ipsum</h3>
-                <p><a href="#">Browse</a></p>
-            </panel>
-            <panel>
-                <h3 class="h4">Hover</h3>
-                <p><a href="#">Browse</a></p>
-            </panel>
-            <panel>
-                <h3 class="h4">Amet</h3>
-                <p><a href="#">Browse</a></p>
-            </panel>
-        </div>
-    </category-panels>
+    <?php get_template_part( 'template-parts/blocks/category-panels' ); ?>
 
     <?php get_template_part( 'template-parts/blocks/popular-products' ); ?>
 
-    <service-highlight>
-        <div class="row column">
-            <h2>Custom Tuning</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</p>
-            <p><a href="#">View services</a></p>
-        </div>
-    </service-highlight>
+    <?php get_template_part( 'template-parts/blocks/service-highlight' ); ?>
 
     <video-feed>
         <div class="row column">
             <h2 class="h3">Latest Videos <p><a href="#">View All</a></p></h2>
         </div>
         <div class="row column">
-            <p>[ Youtube Channel Feed ]</p>
+            <?php echo do_shortcode("[youtube-feed feed=1]"); ?>
         </div>
     </video-feed>
 

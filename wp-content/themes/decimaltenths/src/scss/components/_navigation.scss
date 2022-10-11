@@ -36,7 +36,12 @@
 .primary--menu {
 
 	@include breakpoint(medium down) {
-		margin-bottom: 40px;
+		margin-bottom: rem-calc(40px);
+	}
+
+	@include breakpoint(xlarge down) {
+		width: 100%;
+		text-align: center;
 	}
 
 	> .menu-item {
@@ -48,6 +53,14 @@
 			display: inline-block;
 			padding: 0;
 			padding-right: $large-spacing;
+		}
+
+		@include breakpoint(large) {
+			font-size: rem-calc(15px);
+		}
+
+		@include breakpoint(xxlarge) {
+			font-size: rem-calc(16px);
 		}
 
 		> a {
@@ -95,6 +108,18 @@
 		cursor: pointer;
 	}
 
+	// had to make an exception here, to stop the menu going off-screen
+	.menu-item-157806 {
+		// shop by part
+
+		.sub-menu {
+			@include breakpoint(xxlarge) {
+				left: 50%;
+				transform: translateX(-50%);
+			}
+		}
+	}
+
 	// styles for all sub-menu's
 	.sub-menu {
 		padding: $medium-spacing;
@@ -104,7 +129,7 @@
 		@include breakpoint(large) {
 			display: none;
 			position: absolute;
-			left: 0px;
+			left: 0;
 			top: 100%;
 		}
 
@@ -113,6 +138,14 @@
 			padding-bottom: $medium-spacing;
 			color: black;
 			cursor: pointer;
+
+			@include breakpoint(large) {
+				font-size: rem-calc(15px);
+			}
+
+			@include breakpoint(xxlarge) {
+				font-size: rem-calc(16px);
+			}
 
 			a {
 
@@ -131,19 +164,22 @@
 		> .sub-menu {
 			margin: 0;
 			width: 100%;
+			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+			transition: all 0.5s ease;
+			overflow: scroll;
 
 			@include breakpoint(large) {
+				display: block;
+				min-width: 300px;
+				max-height: 80vh;
+				z-index: 999;
+			}
+
+			@include breakpoint(xxlarge) {
 				display: flex;
 				flex-flow: row wrap;
-				min-width: 300px;
 				width: max-content;
-
 				max-height: 100vh;
-				overflow: scroll;
-				
-				box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-				transition: all 0.5s ease;
-				z-index: 88888;
 			}
 		}
 	}
@@ -155,11 +191,15 @@
 		padding-right: $medium-spacing;
 
 		&.menu-item {
-			font-weight: $semi-bold;
-			text-align: center;
+			padding: 0;
+			text-align: left;
 
 			> a {
-				padding-bottom: $medium-spacing;
+				padding: $medium-spacing;
+			}
+
+			&:nth-child(even) {
+				background-color: var(--brand-l-grey);
 			}
 		}
 
@@ -167,6 +207,7 @@
 			position: relative;
 			top: 0;
 			font-weight: $regular;
+			background-color: transparent;
 
 			@include breakpoint(large) {
 				display: block !important;

@@ -36,26 +36,22 @@ body {
 	}
 }
 
-// body {
-// 	background-color: red;
+// html {
+// 	border: 2px solid red;
 
 // 	@include breakpoint(medium) {
-// 		background-color: orange;
+// 		border: 2px solid orange;
 // 	}
 
 // 	@include breakpoint(large) {
-// 		background-color: yellow;
+// 		border: 2px solid yellow;
 // 	}
 
 // 	@include breakpoint(xlarge) {
-// 		background-color: blue;
+// 		border: 2px solid blue;
 // 	}
 
 // 	@include breakpoint(xxlarge) {
-// 		background-color: green;
+// 		border: 2px solid green;
 // 	}
-// }
-
-// section, .section {
-// 	outline: 1px dashed #f0f;
 // }

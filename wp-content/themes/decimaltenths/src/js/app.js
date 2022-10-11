@@ -32,7 +32,20 @@ jQuery(document).ready(function ($) {
         });
 	});
 
-    if ($(".new_in_carousel").length) {
+    if ($(".hero_image_carousel").length) {
+		$(".hero_image_carousel").slick({
+			mobileFirst: true,
+			lazyLoad: "progressive",
+			infinite: true,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			arrows: false,
+			autoplay: true,
+			autoplaySpeed: 5000
+		});
+	}
+	
+	if ($(".new_in_carousel").length) {
 		$(".new_in_carousel").slick({
 			mobileFirst: true,
 			lazyLoad: "progressive",
@@ -43,7 +56,7 @@ jQuery(document).ready(function ($) {
             nextArrow: $('.next-new'),
 			responsive: [
 				{
-					breakpoint: 1024,
+					breakpoint: 1200,
 					settings: {
 						infinite: true,
 						slidesToShow: 4,
@@ -51,7 +64,7 @@ jQuery(document).ready(function ($) {
 					},
 				},
 				{
-					breakpoint: 640,
+					breakpoint: 1024,
 					settings: {
 						infinite: true,
 						slidesToShow: 2,
@@ -59,7 +72,7 @@ jQuery(document).ready(function ($) {
 					},
 				},
 				{
-					breakpoint: 480,
+					breakpoint: 640,
 					settings: {
 						infinite: true,
 						slidesToShow: 1,
@@ -81,7 +94,7 @@ jQuery(document).ready(function ($) {
             nextArrow: $('.next-popular'),
 			responsive: [
 				{
-					breakpoint: 1024,
+					breakpoint: 1200,
 					settings: {
 						infinite: true,
 						slidesToShow: 4,
@@ -89,7 +102,7 @@ jQuery(document).ready(function ($) {
 					},
 				},
 				{
-					breakpoint: 640,
+					breakpoint: 1024,
 					settings: {
 						infinite: true,
 						slidesToShow: 2,
@@ -97,7 +110,7 @@ jQuery(document).ready(function ($) {
 					},
 				},
 				{
-					breakpoint: 480,
+					breakpoint: 640,
 					settings: {
 						infinite: true,
 						slidesToShow: 1,

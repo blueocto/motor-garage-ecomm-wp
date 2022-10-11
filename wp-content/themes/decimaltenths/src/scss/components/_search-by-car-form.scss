@@ -4,8 +4,6 @@
 
 .search-by-car-form {
 
-    // .sbcf--form {}
-
     .form-row {
 
         &:last-of-type {
@@ -14,11 +12,12 @@
     }
 
     select {
+        width: 100%;
         background-color: white;
         border: 0;
 
-        @include breakpoint(large) {
-            width: 60%;
+        @include breakpoint(xlarge) {
+            max-width: 60%;
         }
     }
 

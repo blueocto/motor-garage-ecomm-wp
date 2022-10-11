@@ -1,4 +1,5 @@
-.new_in_carousel_buttons, .popular_carousel_buttons {
+.new_in_carousel_buttons, 
+.popular_carousel_buttons {
 	position: relative;
 
 	.slick-next,
@@ -52,7 +53,8 @@
 		}
 	}
 }
-.new_in_carousel, .popular_carousel {
+.new_in_carousel, 
+.popular_carousel {
 	background-color: var(--brand-color-grey);
 	position: relative;
 	overflow: hidden;
