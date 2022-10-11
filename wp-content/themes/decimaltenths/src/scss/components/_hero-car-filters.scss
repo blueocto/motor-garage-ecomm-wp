@@ -33,7 +33,7 @@ hero-car-filters {
         position: absolute;
         top: 0;
         z-index: 5;
-        padding-top: rem-calc(128px);
+        padding-top: rem-calc(80px);
         width: 100%;
 
         @include breakpoint(large) {
@@ -74,10 +74,29 @@ hero-car-filters {
 }
 
 // carousel
-
-// TODO: Dan...
 hero-images {
     display: block;
+    position: relative;
+    overflow: hidden;
+
+    div {
+        height: 100%;
+    }
+
+    .hero_image_carousel {
+        
+        .slick-track {
+            display: flex;
+
+            img {
+                height: 100%;
+                object-fit: cover;
+            }
+            
+        }
+    }
+
+
     // position: relative;
     // z-index: 1;
     // @extend %picture;
