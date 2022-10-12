@@ -4,7 +4,7 @@ $categories = get_terms( ['taxonomy' => 'product_cat'] );
 ?>
 
 <section class="search-by-car-form">
-    <form class="sbcf--form">
+    <form role="search" method="get" class="search-form" action="<?php echo home_url( '/' ); ?>">
         <div class="form-row">
             <select class="manufacturer" name="manufacturer">
                 <option value="">--Choose Your Manufacturer--</option>
