@@ -33,6 +33,8 @@ endif;
 if ( ! function_exists( 'octopress_scripts' ) ) :
 	function octopress_scripts() {
 
+		global $template;
+
 		if (!is_admin()) {
 			/* Function to defer loaded scripts 
 			ref: https://jasonyingling.me/fixing-render-blocking-scripts-third-party-sources-wordpress/ */
@@ -101,6 +103,10 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 			if ( is_product_category() || is_shop()  || is_archive() ) {
 
 				wp_enqueue_style( 'theme-category', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'category.css' ), array(), '', 'all' );
+			}
+
+			if( basename($template) == "search.php" ) {
+				wp_enqueue_style( 'theme-search', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'search.css' ), array(), '', 'all' );
 			}
 		}
 	}

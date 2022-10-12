@@ -1,0 +1,19 @@
+@charset 'utf-8';
+
+// Foundation Utils
+@import "foundation/util/util";
+
+// Re-usable
+@import "global/root-vars";
+@import "global/variables";
+@import "global/extends";
+
+// Components
+@import "components/alerts";
+@import "components/breadcrumbs";
+@import "components/product-filter";
+@import "components/woo-grid";
+
+// Modules
+@import "modules/taxonomy-layout";
+@import "modules/taxonomy-styles";
