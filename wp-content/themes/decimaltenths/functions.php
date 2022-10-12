@@ -36,7 +36,7 @@ require_once( 'library/widget-areas.php' );
 // require_once( 'library/acf-blocks.php' );
 
 /* Custom pagination */
-// require_once( 'library/pagination.php' );
+require_once( 'library/pagination.php' );
 
 /** WooCommerce */
 require_once( 'library/woocommerce.php' );
