@@ -40,3 +40,33 @@ require_once( 'library/widget-areas.php' );
 
 /** WooCommerce */
 require_once( 'library/woocommerce.php' );
+
+function myplugin_register_query_vars( $vars ) {
+    $vars[] = 'manufacturer';
+    $vars[] = 'model';
+    return $vars;
+}
+add_filter( 'query_vars', 'myplugin_register_query_vars' );
+
+function my_custom_search_template( $template ) {
+    $manufacturer = $_GET['manufacturer'] ?? '';
+    $model = $_GET['model'] ?? '';
+    if ( $manufacturer && $model ) {
+        $ct = locate_template('search.php', false, false);
+        if ( $ct ) $template = $ct;
+    }
+    return $template;
+}
+add_filter('template_include', 'my_custom_search_template');
+
+function search_title ($title){
+    global $template;
+    $manufacturer = $_GET['manufacturer'] ?? '';
+    $model = $_GET['model'] ?? '';
+
+    if( basename($template) == "search.php" ) {
+        $title = "Search for ".$manufacturer."(".$model.")";
+    }
+    return $title;
+}
+add_filter( 'wpseo_title', 'search_title', 10, 1);
