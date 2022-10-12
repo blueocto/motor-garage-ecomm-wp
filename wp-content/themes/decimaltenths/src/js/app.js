@@ -1,5 +1,7 @@
 /* Start custom jQuery... */
 jQuery(document).ready(function ($) {
+
+	$.ajaxSetup({ cache: false });
 	
     // wrap a container around the Title and Description on a Taxonomy/shop category page
     $( ".woocommerce-products-header .page-title, .woocommerce-products-header .term-description, .woocommerce-products-header .page-description" ).wrapAll( "<div class='taxonomy-head-wrap'/>" );
