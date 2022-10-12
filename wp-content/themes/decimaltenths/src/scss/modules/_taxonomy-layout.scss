@@ -55,7 +55,7 @@
 // CSS Grid
 // ==============================================
 
-.archive #woof_results_by_ajax {
+.archive .woo-container, .archive .search_results {
 	@include breakpoint(large) {
 		display: grid;
 		gap: 0;
