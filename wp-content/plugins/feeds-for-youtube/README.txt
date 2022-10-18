@@ -5,7 +5,7 @@ Support Website: http://smashballoon/youtube-feed/
 Tags: YouTube, YouTube feed, YouTube widget, YouTube channel, YouTube gallery
 Requires at least: 4.1
 Tested up to: 6.0
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,6 +162,10 @@ By default, the plugin retrieves new videos for your YouTube gallery once every 
 6. Embed your feed using a shortcode you can copy and paste after you are done creating
 
 == Changelog ==
+= 2.0.3 =
+* Fix: Removed DotEnv code that was causing a conflict in some rare circumstances.
+* Fix: When using two or more feeds on one page and the "AJAX theme loading fix" setting, an empty lightbox related element would display at the bottom of the page.
+
 = 2.0.2 =
 * Fix: Fixed a conflict with the All in One SEO plugin causing menu tabs to not work properly.
 

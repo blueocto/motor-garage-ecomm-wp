@@ -53,9 +53,3 @@ if (!defined('CUSTOMIZER_ABSPATH')) {
 if (!defined('CUSTOMIZER_PLUGIN_URL')) {
     define('CUSTOMIZER_PLUGIN_URL', plugin_dir_url(__DIR__ . '/vendor/smashballoon/customizer/bootstrap.php'));
 }
-
-//Load .env variables
-if (class_exists('Dotenv\Dotenv')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->safeLoad();
-}
