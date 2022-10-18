@@ -11,7 +11,9 @@ register_nav_menus(
 		'primary-nav'  => esc_html__( 'Primary Navigation', 'decimaltenths' ),
 		'shop-by-car' => esc_html__( 'Shop By Car', 'decimaltenths' ),
 		'shop-by-part' => esc_html__( 'Shop By Part', 'decimaltenths' ),
-		'footer-nav' => esc_html__( 'Footer Navigation', 'decimaltenths' ),
+		'footer-nav-a' => esc_html__( 'Footer A', 'decimaltenths' ),
+		'footer-nav-b' => esc_html__( 'Footer B', 'decimaltenths' ),
+		'footer-nav-c' => esc_html__( 'Footer C', 'decimaltenths' ),
 	)
 );
 
@@ -70,18 +72,52 @@ if ( ! function_exists( 'octopress_shopbypart_nav' ) ) {
 }
 
 /**
- * Footer navigation
+ * Footer navigation (A)
  */
-// if ( ! function_exists( 'octopress_footer_nav' ) ) {
-// 	function octopress_footer_nav() {
-// 		wp_nav_menu(
-// 			array(
-// 				'theme_location'  => 'footer-nav',
-// 				'menu_class'      => 'menu-wrapper menu footer--menu',
-// 				'container_class' => 'footer-menu-container',
-// 				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
-// 				'fallback_cb'     => false,
-// 			)
-// 		);
-// 	}
-// }
+if ( ! function_exists( 'octopress_footer_nav_a' ) ) {
+	function octopress_footer_nav_a() {
+		wp_nav_menu(
+			array(
+				'theme_location'  => 'footer-nav-a',
+				'menu_class'      => 'menu-wrapper menu footer--menu',
+				'container_class' => 'footer-menu-container',
+				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+				'fallback_cb'     => false,
+			)
+		);
+	}
+}
+
+/**
+ * Footer navigation (B)
+ */
+if ( ! function_exists( 'octopress_footer_nav_b' ) ) {
+	function octopress_footer_nav_b() {
+		wp_nav_menu(
+			array(
+				'theme_location'  => 'footer-nav-b',
+				'menu_class'      => 'menu-wrapper menu footer--menu',
+				'container_class' => 'footer-menu-container',
+				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+				'fallback_cb'     => false,
+			)
+		);
+	}
+}
+
+/**
+ * Footer navigation (C)
+ */
+if ( ! function_exists( 'octopress_footer_nav_c' ) ) {
+	function octopress_footer_nav_c() {
+		wp_nav_menu(
+			array(
+				'theme_location'  => 'footer-nav-c',
+				'menu_class'      => 'menu-wrapper menu footer--menu',
+				'container_class' => 'footer-menu-container',
+				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+				'fallback_cb'     => false,
+			)
+		);
+	}
+}

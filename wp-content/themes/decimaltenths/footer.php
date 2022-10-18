@@ -12,35 +12,13 @@
 			<div class="column small-12 medium-6 xlarge-3">
 				<h3 class="h4">Shop</h3>
 				<nav>
-					<ul class="menu footer--menu">
-						<li class="menu-item"><a href="#">Shop All</a></li>
-						<li class="menu-item"><a href="#">Engines</a></li>
-						<li class="menu-item"><a href="#">ECU</a></li>
-						<li class="menu-item"><a href="#">Exhausts</a></li>
-						<li class="menu-item"><a href="#">Suspension</a></li>
-						<li class="menu-item"><a href="#">Merch</a></li>
-					</ul>
+					<?php octopress_footer_nav_a(); ?>
 				</nav>
 			</div>
 			<div class="column small-12 medium-6 xlarge-3">
-				<h3 class="h4">Customer</h3>
+				<h3 class="h4">Menu</h3>
 				<nav>
-					<ul class="menu footer--menu">
-						<li class="menu-item"><a href="#">Account</a></li>
-						<li class="menu-item"><a href="#">Delivery</a></li>
-						<li class="menu-item"><a href="#">Returns</a></li>
-						<li class="menu-item"><a href="#">FAQ</a></li>
-						<li class="menu-item"><a href="#">Terms</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="column small-12 medium-6 xlarge-3">
-				<h3 class="h4">Services</h3>
-				<nav>
-					<ul class="menu footer--menu">
-						<li class="menu-item"><a href="#">All Services</a></li>
-						<li class="menu-item"><a href="#">Custom Tuning</a></li>
-					</ul>
+					<?php octopress_footer_nav_b(); ?>
 				</nav>
 			</div>
 			<div class="column small-12 medium-6 xlarge-3">
