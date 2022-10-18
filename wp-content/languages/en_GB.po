@@ -1639,15 +1639,15 @@ msgstr "Type / to choose a block"
 msgid "By %s"
 msgstr "By %s"
 
-#: wp-trackback.php:130
+#: wp-trackback.php:133
 msgid "There is already a ping from that URL for this post."
 msgstr "There is already a ping from that URL for this post."
 
-#: wp-trackback.php:115
+#: wp-trackback.php:118
 msgid "Sorry, trackbacks are closed for this item."
 msgstr "Sorry, trackbacks are closed for this item."
 
-#: wp-trackback.php:88
+#: wp-trackback.php:91
 msgid "I really need an ID for this to work."
 msgstr "I really need an ID for this to work."
 
@@ -1892,27 +1892,22 @@ msgid "Site Name:"
 msgstr "Site Name:"
 
 #. translators: %s: The message ID.
-#: wp-mail.php:261
+#: wp-mail.php:262
 msgid "Mission complete. Message %s deleted."
 msgstr "Mission complete. Message %s deleted."
 
 #. translators: %s: POP3 error.
-#: wp-mail.php:253
+#: wp-mail.php:254
 msgid "Oops: %s"
 msgstr "Oops: %s"
 
-#: wp-mail.php:248
+#: wp-mail.php:249
 msgid "Posted title:"
 msgstr "Posted title:"
 
-#: wp-mail.php:247 wp-admin/includes/plugin-install.php:654
+#: wp-mail.php:248 wp-admin/includes/plugin-install.php:654
 msgid "Author:"
 msgstr "Author:"
-
-#. translators: %s: Post author email address.
-#: wp-mail.php:138
-msgid "Author is %s"
-msgstr "Author is %s"
 
 #: wp-mail.php:65
 msgid "There does not seem to be any new mail."
@@ -2986,29 +2981,29 @@ msgstr "Sidebar"
 msgid "Sidebar %d"
 msgstr "Sidebar %d"
 
-#: wp-includes/user.php:4845
+#: wp-includes/user.php:4833
 msgid "The confirmation key has expired for this personal data request."
 msgstr "The confirmation key has expired for this personal data request."
 
-#: wp-includes/user.php:4841
+#: wp-includes/user.php:4829
 msgid "The confirmation key is invalid for this personal data request."
 msgstr "The confirmation key is invalid for this personal data request."
 
-#: wp-includes/user.php:4822
+#: wp-includes/user.php:4810
 msgid "The confirmation key is missing from this personal data request."
 msgstr "The confirmation key is missing from this personal data request."
 
-#: wp-includes/user.php:4818
+#: wp-includes/user.php:4806
 msgid "This personal data request has expired."
 msgstr "This personal data request has expired."
 
-#: wp-includes/user.php:4759
+#: wp-includes/user.php:4747
 msgid "Unable to send personal data export confirmation email."
 msgstr "Unable to send personal data export confirmation email."
 
 #. translators: Do not translate DESCRIPTION, CONFIRM_URL, SITENAME, SITEURL:
 #. those are placeholders.
-#: wp-includes/user.php:4678
+#: wp-includes/user.php:4666
 msgid ""
 "Howdy,\n"
 "\n"
@@ -3044,70 +3039,70 @@ msgstr ""
 
 #. translators: Confirm privacy data request notification email subject. 1:
 #. Site title, 2: Name of the action.
-#: wp-includes/user.php:4655
+#: wp-includes/user.php:4643
 msgid "[%1$s] Confirm Action: %2$s"
 msgstr "[%1$s] Confirm Action: %2$s"
 
-#: wp-includes/user.php:4626 wp-includes/user.php:4814
+#: wp-includes/user.php:4614 wp-includes/user.php:4802
 #: wp-admin/includes/privacy-tools.php:23
 #: wp-admin/includes/privacy-tools.php:52
 msgid "Invalid personal data request."
 msgstr "Invalid personal data request."
 
 #. translators: %s: Action name.
-#: wp-includes/user.php:4596
+#: wp-includes/user.php:4584
 msgid "Confirm the \"%s\" action"
 msgstr "Confirm the \"%s\" action"
 
-#: wp-includes/user.php:4592 wp-admin/erase-personal-data.php:104
+#: wp-includes/user.php:4580 wp-admin/erase-personal-data.php:104
 #: wp-admin/menu.php:351
 msgid "Erase Personal Data"
 msgstr "Erase Personal Data"
 
-#: wp-includes/user.php:4589 wp-admin/export-personal-data.php:104
+#: wp-includes/user.php:4577 wp-admin/export-personal-data.php:104
 #: wp-admin/menu.php:350
 msgid "Export Personal Data"
 msgstr "Export Personal Data"
 
-#: wp-includes/user.php:4558
+#: wp-includes/user.php:4546
 msgid "An incomplete personal data request for this email address already exists."
 msgstr "An incomplete personal data request for this email address already exists."
 
-#: wp-includes/user.php:4537
+#: wp-includes/user.php:4525
 msgid "Invalid request status."
 msgstr "Invalid request status."
 
-#: wp-includes/user.php:4533
+#: wp-includes/user.php:4521
 msgid "Invalid action name."
 msgstr "Invalid action name."
 
-#: wp-includes/user.php:4490
+#: wp-includes/user.php:4478
 msgid "The site administrator has been notified. You will receive an email confirmation when they erase your data."
 msgstr "The site administrator has been notified. You will receive an email confirmation when they erase your data."
 
-#: wp-includes/user.php:4489
+#: wp-includes/user.php:4477
 msgid "Thanks for confirming your erasure request."
 msgstr "Thanks for confirming your erasure request."
 
-#: wp-includes/user.php:4487
+#: wp-includes/user.php:4475
 msgid "The site administrator has been notified. You will receive a link to download your export via email when they fulfill your request."
 msgstr "The site administrator has been notified. You will receive a link to download your export via email when they fulfill your request."
 
-#: wp-includes/user.php:4486
+#: wp-includes/user.php:4474
 msgid "Thanks for confirming your export request."
 msgstr "Thanks for confirming your export request."
 
-#: wp-includes/user.php:4482
+#: wp-includes/user.php:4470
 msgid "The site administrator has been notified and will fulfill your request as soon as possible."
 msgstr "The site administrator has been notified and will fulfil your request as soon as possible."
 
-#: wp-includes/user.php:4481
+#: wp-includes/user.php:4469
 msgid "Action has been confirmed."
 msgstr "Action has been confirmed."
 
 #. translators: Do not translate SITENAME, SITEURL, PRIVACY_POLICY_URL; those
 #. are placeholders.
-#: wp-includes/user.php:4314
+#: wp-includes/user.php:4302
 msgid ""
 "Howdy,\n"
 "\n"
@@ -3134,7 +3129,7 @@ msgstr ""
 "###SITEURL###"
 
 #. translators: Do not translate SITENAME, SITEURL; those are placeholders.
-#: wp-includes/user.php:4300
+#: wp-includes/user.php:4288
 msgid ""
 "Howdy,\n"
 "\n"
@@ -3158,18 +3153,18 @@ msgstr ""
 
 #. translators: Erasure request fulfilled notification email subject. %s: Site
 #. title.
-#: wp-includes/user.php:4247
+#: wp-includes/user.php:4235
 msgid "[%s] Erasure Request Fulfilled"
 msgstr "[%s] Erasure Request Fulfilled"
 
 #. translators: 1 & 2: Deprecation replacement options.
-#: wp-includes/user.php:4123 wp-includes/user.php:4365
+#: wp-includes/user.php:4111 wp-includes/user.php:4353
 msgid "%1$s or %2$s"
 msgstr "%1$s or %2$s"
 
 #. translators: Do not translate SITENAME, USER_EMAIL, DESCRIPTION, MANAGE_URL,
 #. SITEURL; those are placeholders.
-#: wp-includes/user.php:4068
+#: wp-includes/user.php:4056
 msgid ""
 "Howdy,\n"
 "\n"
@@ -3203,133 +3198,133 @@ msgstr ""
 
 #. translators: Privacy data request confirmed notification email subject. 1:
 #. Site title, 2: Name of the confirmed action.
-#: wp-includes/user.php:4041
+#: wp-includes/user.php:4029
 msgid "[%1$s] Action Confirmed: %2$s"
 msgstr "[%1$s] Action Confirmed: %2$s"
 
-#: wp-includes/user.php:3942
+#: wp-includes/user.php:3930
 msgid "User&#8217;s Session Tokens data."
 msgstr "User&#8217;s Session Tokens data."
 
-#: wp-includes/user.php:3941
+#: wp-includes/user.php:3929
 msgid "Session Tokens"
 msgstr "Session Tokens"
 
-#: wp-includes/user.php:3920
+#: wp-includes/user.php:3908
 msgid "Last Login"
 msgstr "Last Login"
 
-#: wp-includes/user.php:3919
+#: wp-includes/user.php:3907
 msgid "User Agent"
 msgstr "User Agent"
 
-#: wp-includes/user.php:3917
+#: wp-includes/user.php:3905
 msgid "Expiration"
 msgstr "Expiration"
 
-#: wp-includes/user.php:3907
+#: wp-includes/user.php:3895
 msgid "User&#8217;s location data used for the Community Events in the WordPress Events and News dashboard widget."
 msgstr "User&#8217;s location data used for the Community Events in the WordPress Events and News dashboard widget."
 
-#: wp-includes/user.php:3906
+#: wp-includes/user.php:3894
 msgid "Community Events Location"
 msgstr "Community Events Location"
 
-#: wp-includes/user.php:3890 wp-includes/user.php:3918
+#: wp-includes/user.php:3878 wp-includes/user.php:3906
 msgid "IP"
 msgstr "IP"
 
-#: wp-includes/user.php:3889
+#: wp-includes/user.php:3877
 msgid "Longitude"
 msgstr "Longitude"
 
-#: wp-includes/user.php:3888
+#: wp-includes/user.php:3876
 msgid "Latitude"
 msgstr "Latitude"
 
-#: wp-includes/user.php:3887
+#: wp-includes/user.php:3875
 msgid "Country"
 msgstr "Country"
 
-#: wp-includes/user.php:3886
+#: wp-includes/user.php:3874
 msgid "City"
 msgstr "City"
 
-#: wp-includes/user.php:3877
+#: wp-includes/user.php:3865
 msgid "User&#8217;s profile data."
 msgstr "User&#8217;s profile data."
 
-#: wp-includes/user.php:3876 wp-includes/js/dist/block-library.js:1999
+#: wp-includes/user.php:3864 wp-includes/js/dist/block-library.js:1999
 #: wp-includes/js/dist/core-data.js:2101
 msgid "User"
 msgstr "User"
 
 #. translators: %s: wp_privacy_additional_user_profile_data
-#: wp-includes/user.php:3862
+#: wp-includes/user.php:3850
 msgid "Filter %s returned items with reserved names."
 msgstr "Filter %s returned items with reserved names."
 
-#: wp-includes/user.php:3794
+#: wp-includes/user.php:3782
 msgid "User Description"
 msgstr "User Description"
 
-#: wp-includes/user.php:3793
+#: wp-includes/user.php:3781
 msgid "User Last Name"
 msgstr "User Last Name"
 
-#: wp-includes/user.php:3792
+#: wp-includes/user.php:3780
 msgid "User First Name"
 msgstr "User First Name"
 
-#: wp-includes/user.php:3791
+#: wp-includes/user.php:3779
 msgid "User Nickname"
 msgstr "User Nickname"
 
-#: wp-includes/user.php:3790
+#: wp-includes/user.php:3778
 msgid "User Display Name"
 msgstr "User Display Name"
 
-#: wp-includes/user.php:3789
+#: wp-includes/user.php:3777
 msgid "User Registration Date"
 msgstr "User Registration Date"
 
-#: wp-includes/user.php:3788
+#: wp-includes/user.php:3776
 msgid "User URL"
 msgstr "User URL"
 
-#: wp-includes/user.php:3787
+#: wp-includes/user.php:3775
 msgid "User Email"
 msgstr "User Email"
 
-#: wp-includes/user.php:3786
+#: wp-includes/user.php:3774
 msgid "User Nice Name"
 msgstr "User Nice Name"
 
-#: wp-includes/user.php:3785
+#: wp-includes/user.php:3773
 msgid "User Login Name"
 msgstr "User Login Name"
 
-#: wp-includes/user.php:3784
+#: wp-includes/user.php:3772
 msgid "User ID"
 msgstr "User ID"
 
-#: wp-includes/user.php:3750
+#: wp-includes/user.php:3738
 msgid "WordPress User"
 msgstr "WordPress User"
 
 #. translators: %s: New email address.
-#: wp-includes/user.php:3720
+#: wp-includes/user.php:3708
 msgid "Your email address has not been updated yet. Please check your inbox at %s for a confirmation email."
 msgstr "Your email address has not been updated yet. Please check your inbox at %s for a confirmation email."
 
 #. translators: New email address notification email subject. %s: Site title.
-#: wp-includes/user.php:3698
+#: wp-includes/user.php:3686
 msgid "[%s] Email Change Request"
 msgstr "[%s] Email Change Request"
 
 #. translators: Do not translate USERNAME, ADMIN_URL, EMAIL, SITENAME, SITEURL:
 #. those are placeholders.
-#: wp-includes/user.php:3650
+#: wp-includes/user.php:3638
 msgid ""
 "Howdy ###USERNAME###,\n"
 "\n"
@@ -3363,120 +3358,120 @@ msgstr ""
 "All at ###SITENAME###\n"
 "###SITEURL###"
 
-#: wp-includes/user.php:3630
+#: wp-includes/user.php:3618
 msgid "<strong>Error</strong>: The email address is already used."
 msgstr "<strong>Error</strong>: the email address is already used."
 
 #. translators: %s: Admin email address.
-#: wp-includes/user.php:3375
+#: wp-includes/user.php:3363
 msgid "<strong>Error</strong>: Could not register you&hellip; please contact the <a href=\"mailto:%s\">site admin</a>!"
 msgstr "<strong>Error</strong>: Could not register you&hellip; please contact the <a href=\"mailto:%s\">site admin</a>!"
 
-#: wp-includes/user.php:3320 wp-includes/user.php:3618
+#: wp-includes/user.php:3308 wp-includes/user.php:3606
 #: wp-admin/includes/user.php:203
 msgid "<strong>Error</strong>: The email address is not correct."
 msgstr "<strong>Error</strong>: The email address is not correct."
 
-#: wp-includes/user.php:3318
+#: wp-includes/user.php:3306
 msgid "<strong>Error</strong>: Please type your email address."
 msgstr "<strong>Error</strong>: please type your email address."
 
-#: wp-includes/user.php:3312 wp-admin/includes/user.php:196
+#: wp-includes/user.php:3300 wp-admin/includes/user.php:196
 msgid "<strong>Error</strong>: Sorry, that username is not allowed."
 msgstr "<strong>Error</strong>: sorry, that username is not allowed."
 
-#: wp-includes/user.php:3306 wp-admin/includes/user.php:189
+#: wp-includes/user.php:3294 wp-admin/includes/user.php:189
 msgid "<strong>Error</strong>: This username is already registered. Please choose another one."
 msgstr "<strong>Error</strong>: this username is already registered. Please choose another one."
 
-#: wp-includes/user.php:3303 wp-admin/includes/user.php:185
+#: wp-includes/user.php:3291 wp-admin/includes/user.php:185
 msgid "<strong>Error</strong>: This username is invalid because it uses illegal characters. Please enter a valid username."
 msgstr "<strong>Error</strong>: this username is invalid because it uses illegal characters. Please enter a valid username."
 
-#: wp-includes/user.php:3301 wp-admin/includes/user.php:146
+#: wp-includes/user.php:3289 wp-admin/includes/user.php:146
 msgid "<strong>Error</strong>: Please enter a username."
 msgstr "<strong>Error</strong>: please enter a username."
 
-#: wp-includes/user.php:3235
+#: wp-includes/user.php:3223
 msgid "https://wordpress.org/support/article/resetting-your-password/"
 msgstr "https://wordpress.org/support/article/resetting-your-password/"
 
 #. translators: %s: Documentation URL.
-#: wp-includes/user.php:3234
+#: wp-includes/user.php:3222
 msgid "<strong>Error</strong>: The email could not be sent. Your site may not be correctly configured to send emails. <a href=\"%s\">Get support for resetting your password</a>."
 msgstr "<strong>Error</strong>: the email could not be sent. Your site may not be correctly configured to send emails. <a href=\"%s\">Get support for resetting your password</a>."
 
 #. translators: Password reset notification email subject. %s: Site title.
-#: wp-includes/user.php:3150
+#: wp-includes/user.php:3138
 msgid "[%s] Password Reset"
 msgstr "[%s] Password Reset"
 
 #. translators: %s: IP address of password reset requester.
-#: wp-includes/user.php:3143
+#: wp-includes/user.php:3131
 msgid "This password reset request originated from the IP address %s."
 msgstr "This password reset request originated from the IP address %s."
 
-#: wp-includes/user.php:3135
+#: wp-includes/user.php:3123
 msgid "To reset your password, visit the following address:"
 msgstr "To reset your password, visit the following address:"
 
-#: wp-includes/user.php:3134
+#: wp-includes/user.php:3122
 msgid "If this was a mistake, ignore this email and nothing will happen."
 msgstr "If this was a mistake, ignore this email and nothing will happen."
 
 #. translators: %s: Site name.
-#: wp-includes/user.php:3131
+#: wp-includes/user.php:3119
 msgid "Site Name: %s"
 msgstr "Site Name: %s"
 
-#: wp-includes/user.php:3129
+#: wp-includes/user.php:3117
 msgid "Someone has requested a password reset for the following account:"
 msgstr "Someone has requested a password reset for the following account:"
 
-#: wp-includes/user.php:3028
+#: wp-includes/user.php:3016
 msgid "<strong>Error</strong>: Please enter a username or email address."
 msgstr "<strong>Error</strong>: please enter a username or email address."
 
-#: wp-includes/user.php:2936 wp-includes/user.php:2940
-#: wp-includes/user.php:2946 wp-includes/user.php:2972
-#: wp-includes/user.php:2981 wp-includes/user.php:2985
-#: wp-includes/user.php:3002
+#: wp-includes/user.php:2924 wp-includes/user.php:2928
+#: wp-includes/user.php:2934 wp-includes/user.php:2960
+#: wp-includes/user.php:2969 wp-includes/user.php:2973
+#: wp-includes/user.php:2990
 msgid "Invalid key."
 msgstr "Invalid key."
 
-#: wp-includes/user.php:2873
+#: wp-includes/user.php:2861
 msgid "Password reset is not allowed for this user"
 msgstr "Password reset is not allowed for this user"
 
-#: wp-includes/user.php:2833 wp-includes/user.php:3032
-#: wp-includes/user.php:3086
+#: wp-includes/user.php:2821 wp-includes/user.php:3020
+#: wp-includes/user.php:3074
 msgid "<strong>Error</strong>: There is no account with that username or email address."
 msgstr "<strong>Error</strong>: there is no account with that username or email address."
 
-#: wp-includes/user.php:2807
+#: wp-includes/user.php:2795
 msgid "Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; )."
 msgstr "Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; )."
 
-#: wp-includes/user.php:2769
+#: wp-includes/user.php:2757
 msgid "Jabber / Google Talk"
 msgstr "Jabber/Google Talk"
 
-#: wp-includes/user.php:2768
+#: wp-includes/user.php:2756
 msgid "Yahoo IM"
 msgstr "Yahoo IM"
 
-#: wp-includes/user.php:2767
+#: wp-includes/user.php:2755
 msgid "AIM"
 msgstr "AIM"
 
 #. translators: Email change notification email subject. %s: Site title.
-#: wp-includes/user.php:2644
+#: wp-includes/user.php:2632
 msgid "[%s] Email Changed"
 msgstr "[%s] Email Changed"
 
 #. translators: Do not translate USERNAME, ADMIN_EMAIL, NEW_EMAIL, EMAIL,
 #. SITENAME, SITEURL: those are placeholders.
-#: wp-includes/user.php:2626
+#: wp-includes/user.php:2614
 msgid ""
 "Hi ###USERNAME###,\n"
 "\n"
@@ -3506,7 +3501,7 @@ msgstr ""
 
 #. translators: Do not translate USERNAME, ADMIN_EMAIL, EMAIL, SITENAME,
 #. SITEURL: those are placeholders.
-#: wp-includes/user.php:2568
+#: wp-includes/user.php:2556
 msgid ""
 "Hi ###USERNAME###,\n"
 "\n"
@@ -3534,33 +3529,33 @@ msgstr ""
 "All at ###SITENAME###\n"
 "###SITEURL###"
 
-#: wp-includes/user.php:2331
+#: wp-includes/user.php:2319
 msgid "Not enough data to create this user."
 msgstr "Not enough data to create this user."
 
 #. translators: 1: User's first name, 2: Last name.
-#: wp-includes/user.php:2246
+#: wp-includes/user.php:2234
 msgctxt "Display name based on first name and last name"
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
-#: wp-includes/user.php:2200
+#: wp-includes/user.php:2188
 msgid "Sorry, marking a user as spam is only supported on Multisite."
 msgstr "Sorry, marking a user as spam is only supported on Multisite."
 
-#: wp-includes/user.php:2192
+#: wp-includes/user.php:2180
 msgid "User URL may not be longer than 100 characters."
 msgstr "User URL may not be longer than 100 characters."
 
-#: wp-includes/user.php:2177
+#: wp-includes/user.php:2165
 msgid "Sorry, that email address is already used!"
 msgstr "Sorry, that email address is already used!"
 
-#: wp-includes/user.php:2140
+#: wp-includes/user.php:2128
 msgid "Nicename may not be longer than 50 characters."
 msgstr "Nicename may not be longer than 50 characters."
 
-#: wp-includes/user.php:2096
+#: wp-includes/user.php:2084
 msgid "Cannot create a user with an empty login name."
 msgstr "Cannot create a user with an empty login name."
 
@@ -5539,68 +5534,68 @@ msgstr "Sorry, you are not allowed to view themes."
 msgid "The theme's stylesheet. This uniquely identifies the theme."
 msgstr "The theme's style sheet. This uniquely identifies the theme."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1114
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1167
 msgid "Limit result set to terms with one or more specific slugs."
 msgstr "Limit result set to terms with one or more specific slugs."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1108
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1161
 msgid "Limit result set to terms assigned to a specific post."
 msgstr "Limit result set to terms assigned to a specific post."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1102
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1155
 msgid "Limit result set to terms assigned to a specific parent."
 msgstr "Limit result set to terms assigned to a specific parent."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1095
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1148
 msgid "Whether to hide terms not assigned to any posts."
 msgstr "Whether to hide terms not assigned to any posts."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1079
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1132
 msgid "Sort collection by term attribute."
 msgstr "Sort collection by term attribute."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1017
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1070
 msgid "The parent term ID."
 msgstr "The parent term ID."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1004
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1057
 msgid "Type attribution for the term."
 msgstr "Type attribution for the term."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:996
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1049
 msgid "An alphanumeric identifier for the term unique to its type."
 msgstr "An alphanumeric identifier for the term unique to its type."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:987
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1040
 msgid "HTML title for the term."
 msgstr "HTML title for the term."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:980
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1033
 msgid "URL of the term."
 msgstr "URL of the term."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:975
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1028
 msgid "HTML description of the term."
 msgstr "HTML description of the term."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:969
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1022
 msgid "Number of published posts for the term."
 msgstr "Number of published posts for the term."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:711
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:764
 msgid "The term cannot be deleted."
 msgstr "The term cannot be deleted."
 
 #. translators: %s: force=true
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:697
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:750
 msgid "Terms do not support trashing. Set '%s' to delete."
 msgstr "Terms do not support binning. Set '%s' to delete."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:338
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:391
 msgid "Term does not exist."
 msgstr "Term does not exist."
 
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:165
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:194
 #: wp-admin/edit-tags.php:23
 msgid "Sorry, you are not allowed to edit terms in this taxonomy."
 msgstr "Sorry, you are not allowed to edit terms in this taxonomy."
@@ -5610,7 +5605,7 @@ msgid "Required to be true, as terms do not support trashing."
 msgstr "Required to be true, as terms do not support binning."
 
 #: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:111
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:963
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1016
 msgid "Unique identifier for the term."
 msgstr "Unique identifier for the term."
 
@@ -6915,7 +6910,7 @@ msgstr "Sort collection by comment attribute."
 #: wp-includes/rest-api/endpoints/class-wp-rest-menu-items-controller.php:943
 #: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:2798
 #: wp-includes/rest-api/endpoints/class-wp-rest-revisions-controller.php:793
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1069
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1122
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:1536
 msgid "Order sort attribute ascending or descending."
 msgstr "Order sort attribute ascending or descending."
@@ -6923,7 +6918,7 @@ msgstr "Order sort attribute ascending or descending."
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:1602
 #: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:2793
 #: wp-includes/rest-api/endpoints/class-wp-rest-revisions-controller.php:788
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1063
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1116
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:1530
 msgid "Offset the result set by a specific number of items."
 msgstr "Offset the result set by a specific number of items."
@@ -6931,7 +6926,7 @@ msgstr "Offset the result set by a specific number of items."
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:1593
 #: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:2777
 #: wp-includes/rest-api/endpoints/class-wp-rest-revisions-controller.php:779
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1053
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1106
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:1521
 msgid "Limit result set to specific IDs."
 msgstr "Limit result set to specific IDs."
@@ -6939,7 +6934,7 @@ msgstr "Limit result set to specific IDs."
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:1584
 #: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:2768
 #: wp-includes/rest-api/endpoints/class-wp-rest-revisions-controller.php:770
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1044
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:1097
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:1512
 msgid "Ensure result set excludes specific IDs."
 msgstr "Ensure result set excludes specific IDs."
@@ -8001,7 +7996,7 @@ msgstr "%s is not a valid IP address."
 
 #: wp-includes/rest-api.php:2185
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:733
-#: wp-includes/user.php:4529 wp-admin/network/site-new.php:96
+#: wp-includes/user.php:4517 wp-admin/network/site-new.php:96
 msgid "Invalid email address."
 msgstr "Invalid email address."
 
@@ -9057,196 +9052,196 @@ msgid "Only a static class method or function can be used in an uninstall hook."
 msgstr "Only a static class method or function can be used in an uninstall hook."
 
 #. translators: Login details notification email subject. %s: Site title.
-#: wp-includes/pluggable.php:2184
+#: wp-includes/pluggable.php:2179
 msgid "[%s] Login Details"
 msgstr "[%s] Login Details"
 
-#: wp-includes/pluggable.php:2176
+#: wp-includes/pluggable.php:2171
 msgid "To set your password, visit the following address:"
 msgstr "To set your password, visit the following address:"
 
 #. translators: New user registration notification email subject. %s: Site
 #. title.
-#: wp-includes/pluggable.php:2127
+#: wp-includes/pluggable.php:2122
 msgid "[%s] New User Registration"
 msgstr "[%s] New User Registration"
 
 #. translators: %s: User login.
-#: wp-includes/pluggable.php:2120 wp-includes/pluggable.php:2175
-#: wp-includes/user.php:3133
+#: wp-includes/pluggable.php:2115 wp-includes/pluggable.php:2170
+#: wp-includes/user.php:3121
 msgid "Username: %s"
 msgstr "Username: %s"
 
 #. translators: %s: Site title.
-#: wp-includes/pluggable.php:2118
+#: wp-includes/pluggable.php:2113
 msgid "New user registration on your site %s:"
 msgstr "New user registration on your site %s:"
 
 #. translators: Password change notification email subject. %s: Site title.
-#: wp-includes/pluggable.php:2049 wp-includes/user.php:2586
+#: wp-includes/pluggable.php:2044 wp-includes/user.php:2574
 msgid "[%s] Password Changed"
 msgstr "[%s] Password Changed"
 
 #. translators: %s: User name.
-#: wp-includes/pluggable.php:2041
+#: wp-includes/pluggable.php:2036
 msgid "Password changed for user: %s"
 msgstr "Password changed for user: %s"
 
 #. translators: Comment moderation notification email subject. 1: Site title,
 #. 2: Post title.
-#: wp-includes/pluggable.php:1973
+#: wp-includes/pluggable.php:1968
 msgid "[%1$s] Please moderate: \"%2$s\""
 msgstr "[%1$s] Please moderate: \"%2$s\""
 
 #. translators: Comment moderation. %s: Number of comments awaiting approval.
-#: wp-includes/pluggable.php:1963
+#: wp-includes/pluggable.php:1958
 msgid "Currently %s comment is waiting for approval. Please visit the moderation panel:"
 msgid_plural "Currently %s comments are waiting for approval. Please visit the moderation panel:"
 msgstr[0] "Currently %s comment is waiting for approval. Please visit the moderation panel:"
 msgstr[1] "Currently %s comments are waiting for approval. Please visit the moderation panel:"
 
 #. translators: Comment moderation. %s: Comment action URL.
-#: wp-includes/pluggable.php:1948
+#: wp-includes/pluggable.php:1943
 msgid "Approve it: %s"
 msgstr "Approve it: %s"
 
 #. translators: %s: Post title.
-#: wp-includes/pluggable.php:1928
+#: wp-includes/pluggable.php:1923
 msgid "A new comment on the post \"%s\" is waiting for your approval"
 msgstr "A new comment on the post \"%s\" is waiting for your approval"
 
-#: wp-includes/pluggable.php:1923
+#: wp-includes/pluggable.php:1918
 msgid "Pingback excerpt: "
 msgstr "Pingback excerpt: "
 
 #. translators: %s: Post title.
-#: wp-includes/pluggable.php:1917
+#: wp-includes/pluggable.php:1912
 msgid "A new pingback on the post \"%s\" is waiting for your approval"
 msgstr "A new pingback on the post \"%s\" is waiting for your approval"
 
-#: wp-includes/pluggable.php:1912
+#: wp-includes/pluggable.php:1907
 msgid "Trackback excerpt: "
 msgstr "Trackback excerpt: "
 
 #. translators: %s: Post title.
-#: wp-includes/pluggable.php:1906
+#: wp-includes/pluggable.php:1901
 msgid "A new trackback on the post \"%s\" is waiting for your approval"
 msgstr "A new trackback on the post \"%s\" is waiting for your approval"
 
 #. translators: Comment moderation. %s: Comment action URL.
-#: wp-includes/pluggable.php:1779 wp-includes/pluggable.php:1959
+#: wp-includes/pluggable.php:1774 wp-includes/pluggable.php:1954
 msgid "Spam it: %s"
 msgstr "Spam it: %s"
 
 #. translators: Comment moderation. %s: Comment action URL.
-#: wp-includes/pluggable.php:1776 wp-includes/pluggable.php:1955
+#: wp-includes/pluggable.php:1771 wp-includes/pluggable.php:1950
 msgid "Delete it: %s"
 msgstr "Delete it: %s"
 
 #. translators: Comment moderation. %s: Comment action URL.
-#: wp-includes/pluggable.php:1773 wp-includes/pluggable.php:1952
+#: wp-includes/pluggable.php:1768 wp-includes/pluggable.php:1947
 msgid "Trash it: %s"
 msgstr "Bin it: %s"
 
 #. translators: %s: Comment URL.
-#: wp-includes/pluggable.php:1768
+#: wp-includes/pluggable.php:1763
 msgid "Permalink: %s"
 msgstr "Permalink: %s"
 
 #. translators: Comment notification email subject. 1: Site title, 2: Post
 #. title.
-#: wp-includes/pluggable.php:1762
+#: wp-includes/pluggable.php:1757
 msgid "[%1$s] Comment: \"%2$s\""
 msgstr "[%1$s] Comment: \"%2$s\""
 
-#: wp-includes/pluggable.php:1760
+#: wp-includes/pluggable.php:1755
 msgid "You can see all comments on this post here:"
 msgstr "You can see all comments on this post here:"
 
 #. translators: Comment moderation. %s: Parent comment edit URL.
 #. translators: %s: Comment link.
-#: wp-includes/pluggable.php:1755 wp-includes/pluggable.php:1939
+#: wp-includes/pluggable.php:1750 wp-includes/pluggable.php:1934
 #: wp-admin/edit-form-comment.php:177
 msgid "In reply to: %s"
 msgstr "In reply to: %s"
 
 #. translators: %s: Comment author email.
 #. translators: %s: User email address.
-#: wp-includes/pluggable.php:1749 wp-includes/pluggable.php:1933
-#: wp-includes/pluggable.php:2122
+#: wp-includes/pluggable.php:1744 wp-includes/pluggable.php:1928
+#: wp-includes/pluggable.php:2117
 msgid "Email: %s"
 msgstr "Email: %s"
 
 #. translators: 1: Comment author's name, 2: Comment author's IP address, 3:
 #. Comment author's hostname.
-#: wp-includes/pluggable.php:1747 wp-includes/pluggable.php:1931
+#: wp-includes/pluggable.php:1742 wp-includes/pluggable.php:1926
 msgid "Author: %1$s (IP address: %2$s, %3$s)"
 msgstr "Author: %1$s (IP address: %2$s, %3$s)"
 
 #. translators: %s: Post title.
-#: wp-includes/pluggable.php:1745
+#: wp-includes/pluggable.php:1740
 msgid "New comment on your post \"%s\""
 msgstr "New comment on your post \"%s\""
 
 #. translators: Pingback notification email subject. 1: Site title, 2: Post
 #. title.
-#: wp-includes/pluggable.php:1740
+#: wp-includes/pluggable.php:1735
 msgid "[%1$s] Pingback: \"%2$s\""
 msgstr "[%1$s] Pingback: \"%2$s\""
 
-#: wp-includes/pluggable.php:1738
+#: wp-includes/pluggable.php:1733
 msgid "You can see all pingbacks on this post here:"
 msgstr "You can see all pingbacks on this post here:"
 
 #. translators: %s: Post title.
-#: wp-includes/pluggable.php:1731
+#: wp-includes/pluggable.php:1726
 msgid "New pingback on your post \"%s\""
 msgstr "New pingback on your post \"%s\""
 
 #. translators: Trackback notification email subject. 1: Site title, 2: Post
 #. title.
-#: wp-includes/pluggable.php:1726
+#: wp-includes/pluggable.php:1721
 msgid "[%1$s] Trackback: \"%2$s\""
 msgstr "[%1$s] Trackback: \"%2$s\""
 
-#: wp-includes/pluggable.php:1724
+#: wp-includes/pluggable.php:1719
 msgid "You can see all trackbacks on this post here:"
 msgstr "You can see all trackbacks on this post here:"
 
 #. translators: %s: Comment text.
-#: wp-includes/pluggable.php:1723 wp-includes/pluggable.php:1737
-#: wp-includes/pluggable.php:1759 wp-includes/pluggable.php:1943
+#: wp-includes/pluggable.php:1718 wp-includes/pluggable.php:1732
+#: wp-includes/pluggable.php:1754 wp-includes/pluggable.php:1938
 msgid "Comment: %s"
 msgstr "Comment: %s"
 
 #. translators: %s: Trackback/pingback/comment author URL.
-#: wp-includes/pluggable.php:1721 wp-includes/pluggable.php:1735
-#: wp-includes/pluggable.php:1751 wp-includes/pluggable.php:1911
-#: wp-includes/pluggable.php:1922 wp-includes/pluggable.php:1935
+#: wp-includes/pluggable.php:1716 wp-includes/pluggable.php:1730
+#: wp-includes/pluggable.php:1746 wp-includes/pluggable.php:1906
+#: wp-includes/pluggable.php:1917 wp-includes/pluggable.php:1930
 msgid "URL: %s"
 msgstr "URL: %s"
 
 #. translators: 1: Trackback/pingback website name, 2: Website IP address, 3:
 #. Website hostname.
-#: wp-includes/pluggable.php:1719 wp-includes/pluggable.php:1733
-#: wp-includes/pluggable.php:1909 wp-includes/pluggable.php:1920
+#: wp-includes/pluggable.php:1714 wp-includes/pluggable.php:1728
+#: wp-includes/pluggable.php:1904 wp-includes/pluggable.php:1915
 msgid "Website: %1$s (IP address: %2$s, %3$s)"
 msgstr "Website: %1$s (IP address: %2$s, %3$s)"
 
 #. translators: %s: Post title.
-#: wp-includes/pluggable.php:1717
+#: wp-includes/pluggable.php:1712
 msgid "New trackback on your post \"%s\""
 msgstr "New trackback on your post \"%s\""
 
-#: wp-includes/pluggable.php:1399
+#: wp-includes/pluggable.php:1394
 msgid "HTTP redirect status code must be a redirection code, 3xx."
 msgstr "HTTP redirect status code must be a redirection code, 3xx."
 
-#: wp-includes/pluggable.php:1260 wp-includes/pluggable.php:1305
+#: wp-includes/pluggable.php:1255 wp-includes/pluggable.php:1300
 msgid "You should specify an action to be verified by using the first parameter."
 msgstr "You should specify an action to be verified by using the first parameter."
 
-#: wp-includes/pluggable.php:625
+#: wp-includes/pluggable.php:620
 msgid "<strong>Error</strong>: Invalid username, email address or incorrect password."
 msgstr "<strong>Error</strong>: invalid username, email address or incorrect password."
 
@@ -9847,11 +9842,11 @@ msgid "That username is currently reserved but may be available in a couple of d
 msgstr "That username is currently reserved but may be available in a couple of days."
 
 #. translators: %s: Link to the login page.
-#: wp-includes/ms-functions.php:529 wp-includes/user.php:3327
+#: wp-includes/ms-functions.php:529 wp-includes/user.php:3315
 msgid "<strong>Error:</strong> This email address is already registered. <a href=\"%s\">Log in</a> with this address or choose another one."
 msgstr "<strong>Error:</strong> this email address is already registered. <a href=\"%s\">Log in</a> with this address or choose another one."
 
-#: wp-includes/ms-functions.php:520 wp-includes/user.php:2102
+#: wp-includes/ms-functions.php:520 wp-includes/user.php:2090
 msgid "Sorry, that username already exists!"
 msgstr "Sorry, that username already exists!"
 
@@ -9863,7 +9858,7 @@ msgstr "Sorry, that email address is not allowed!"
 msgid "Sorry, usernames must have letters too!"
 msgstr "Sorry, usernames must have letters too!"
 
-#: wp-includes/ms-functions.php:501 wp-includes/user.php:2098
+#: wp-includes/ms-functions.php:501 wp-includes/user.php:2086
 msgid "Username may not be longer than 60 characters."
 msgstr "Username may not be longer than 60 characters."
 
@@ -9881,7 +9876,7 @@ msgstr "Please enter a valid email address."
 
 #: wp-includes/ms-functions.php:480 wp-includes/ms-functions.php:487
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:1280
-#: wp-includes/user.php:2115
+#: wp-includes/user.php:2103
 msgid "Sorry, that username is not allowed."
 msgstr "Sorry, that username is not allowed."
 
@@ -11363,48 +11358,48 @@ msgstr "Scripts and styles should not be registered or enqueued until the %1$s, 
 
 #. translators: 1: Function name, 2: A variable type, like "boolean" or
 #. "integer".
-#: wp-includes/functions.php:8356
+#: wp-includes/functions.php:8358
 msgid "%1$s only accepts a non-empty path string, received %2$s."
 msgstr "%1$s only accepts a non-empty path string, received %2$s."
 
 #. translators: Documentation explaining HTTPS and why it should be used.
-#: wp-includes/functions.php:8161
+#: wp-includes/functions.php:8163
 msgid "https://wordpress.org/support/article/why-should-i-use-https/"
 msgstr "https://wordpress.org/support/article/why-should-i-use-https/"
 
-#: wp-includes/functions.php:8102
+#: wp-includes/functions.php:8104
 msgid "Update PHP"
 msgstr "Update PHP"
 
 #. translators: %s: Default Update PHP page URL.
-#: wp-includes/functions.php:8045
+#: wp-includes/functions.php:8047
 msgid "This resource is provided by your web host, and is specific to your site. For more information, <a href=\"%s\" target=\"_blank\">see the official WordPress documentation</a>."
 msgstr "This resource is provided by your web host, and is specific to your site. For more information, <a href=\"%s\" target=\"_blank\">see the official WordPress documentation</a>."
 
-#: wp-includes/functions.php:8002
+#: wp-includes/functions.php:8004
 msgctxt "localized PHP upgrade information page"
 msgid "https://wordpress.org/support/update-php/"
 msgstr "https://wordpress.org/support/update-php/"
 
 #. translators: Deleted long text.
-#: wp-includes/functions.php:7825
+#: wp-includes/functions.php:7827
 msgid "This content was deleted by the author."
 msgstr "This content was deleted by the author."
 
 #. translators: Deleted text.
-#: wp-includes/functions.php:7821
+#: wp-includes/functions.php:7823
 msgid "[deleted]"
 msgstr "[deleted]"
 
 #. translators: Site admin email change notification email subject. %s: Site
 #. title.
-#: wp-includes/functions.php:7674
+#: wp-includes/functions.php:7676
 msgid "[%s] Admin Email Changed"
 msgstr "[%s] Admin Email Changed"
 
 #. translators: Do not translate OLD_EMAIL, NEW_EMAIL, SITENAME, SITEURL: those
 #. are placeholders.
-#: wp-includes/functions.php:7657
+#: wp-includes/functions.php:7659
 msgid ""
 "Hi,\n"
 "\n"
@@ -11430,149 +11425,149 @@ msgstr ""
 "All at ###SITENAME###\n"
 "###SITEURL###"
 
-#: wp-includes/functions.php:7576
+#: wp-includes/functions.php:7578
 msgid "Only UUID V4 is supported at this time."
 msgstr "Only UUID V4 is supported at this time."
 
-#: wp-includes/functions.php:7160
+#: wp-includes/functions.php:7162
 msgid "The login page will open in a new tab. After logging in you can close it and return to this page."
 msgstr "The login page will open in a new tab. After logging in you can close it and return to this page."
 
-#: wp-includes/functions.php:7159 wp-includes/user.php:295
+#: wp-includes/functions.php:7161 wp-includes/user.php:295
 msgid "Please log in again."
 msgstr "Please log in again."
 
-#: wp-includes/functions.php:7158 wp-includes/script-loader.php:1223
+#: wp-includes/functions.php:7160 wp-includes/script-loader.php:1223
 msgid "Session expired"
 msgstr "Session expired"
 
-#: wp-includes/functions.php:7140 wp-includes/media-template.php:199
+#: wp-includes/functions.php:7142 wp-includes/media-template.php:199
 #: wp-includes/media-template.php:347 wp-includes/js/dist/components.js:56151
 msgid "Close dialog"
 msgstr "Close dialogue"
 
-#: wp-includes/functions.php:6463
+#: wp-includes/functions.php:6465
 msgid "Manual Offsets"
 msgstr "Manual Offsets"
 
-#: wp-includes/functions.php:6454 wp-includes/functions.php:6459
+#: wp-includes/functions.php:6456 wp-includes/functions.php:6461
 msgid "UTC"
 msgstr "GMT"
 
-#: wp-includes/functions.php:6409
+#: wp-includes/functions.php:6411
 msgid "Select a city"
 msgstr "Select a city"
 
 #. translators: Developer debugging message. 1: PHP function name, 2:
 #. Explanatory message, 3: WordPress version number.
-#: wp-includes/functions.php:5826
+#: wp-includes/functions.php:5828
 msgid "Function %1$s was called <strong>incorrectly</strong>. %2$s %3$s"
 msgstr "Function %1$s was called <strong>incorrectly</strong>. %2$s %3$s"
 
 #. translators: Documentation explaining debugging in WordPress.
-#: wp-includes/functions.php:5820
+#: wp-includes/functions.php:5822
 #: wp-admin/includes/class-wp-site-health.php:1465
 msgid "https://wordpress.org/support/article/debugging-in-wordpress/"
 msgstr "https://wordpress.org/support/article/debugging-in-wordpress/"
 
 #. translators: %s: Documentation URL.
-#: wp-includes/functions.php:5819
+#: wp-includes/functions.php:5821
 msgid "Please see <a href=\"%s\">Debugging in WordPress</a> for more information."
 msgstr "Please see <a href=\"%s\">Debugging in WordPress</a> for more information."
 
 #. translators: %s: Version number.
-#: wp-includes/functions.php:5814
+#: wp-includes/functions.php:5816
 msgid "(This message was added in version %s.)"
 msgstr "(This message was added in version %s.)"
 
 #. translators: 1: WordPress hook name, 2: Version number.
-#: wp-includes/functions.php:5760
+#: wp-includes/functions.php:5762
 msgid "Hook %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr "Hook %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 
 #. translators: 1: WordPress hook name, 2: Version number, 3: Alternative hook
 #. name.
-#: wp-includes/functions.php:5749
+#: wp-includes/functions.php:5751
 msgid "Hook %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 msgstr "Hook %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 
 #. translators: 1: PHP function name, 2: Version number.
-#: wp-includes/functions.php:5669
+#: wp-includes/functions.php:5671
 msgid "Function %1$s was called with an argument that is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr "Function %1$s was called with an argument that is <strong>deprecated</strong> since version %2$s with no alternative available."
 
 #. translators: 1: PHP function name, 2: Version number, 3: Optional message
 #. regarding the change.
-#: wp-includes/functions.php:5658
+#: wp-includes/functions.php:5660
 msgid "Function %1$s was called with an argument that is <strong>deprecated</strong> since version %2$s! %3$s"
 msgstr "Function %1$s was called with an argument that is <strong>deprecated</strong> since version %2$s! %3$s"
 
 #. translators: 1: PHP file name, 2: Version number.
-#: wp-includes/functions.php:5575
+#: wp-includes/functions.php:5577
 msgid "File %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr "File %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 
 #. translators: 1: PHP file name, 2: Version number, 3: Alternative file name.
-#: wp-includes/functions.php:5564
+#: wp-includes/functions.php:5566
 msgid "File %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 msgstr "File %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 
 #. translators: 1: PHP class name, 2: Version number, 3: __construct() method.
-#: wp-includes/functions.php:5478
+#: wp-includes/functions.php:5480
 msgid "The called constructor method for %1$s class is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 msgstr "The called constructor method for %1$s class is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 
 #. translators: 1: PHP class name, 2: PHP parent class name, 3: Version number,
 #. 4: __construct() method.
-#: wp-includes/functions.php:5466
+#: wp-includes/functions.php:5468
 msgid "The called constructor method for %1$s class in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead."
 msgstr "The called constructor method for %1$s class in %2$s is <strong>deprecated</strong> since version %3$s! Use %4$s instead."
 
 #. translators: 1: PHP function name, 2: Version number.
-#: wp-includes/functions.php:5385
+#: wp-includes/functions.php:5387
 msgid "Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 msgstr "Function %1$s is <strong>deprecated</strong> since version %2$s with no alternative available."
 
 #. translators: 1: PHP function name, 2: Version number, 3: Alternative
 #. function name.
-#: wp-includes/functions.php:5374
+#: wp-includes/functions.php:5376
 msgid "Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 msgstr "Function %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead."
 
-#: wp-includes/functions.php:5314
+#: wp-includes/functions.php:5316
 msgid "Database Error"
 msgstr "Database Error"
 
-#: wp-includes/functions.php:5314 wp-includes/ms-load.php:471
+#: wp-includes/functions.php:5316 wp-includes/ms-load.php:471
 #: wp-includes/wp-db.php:1801
 msgid "Error establishing a database connection"
 msgstr "Error establishing a database connection"
 
 #. translators: 1: Path to the JSON file, 2: Error message.
-#: wp-includes/functions.php:4546
+#: wp-includes/functions.php:4548
 msgid "Error when decoding a JSON file at path %1$s: %2$s"
 msgstr "Error when decoding a JSON file at path %1$s: %2$s"
 
 #. translators: %s: Path to the JSON file.
-#: wp-includes/functions.php:4532
+#: wp-includes/functions.php:4534
 msgid "File %s doesn't exist!"
 msgstr "File %s doesn't exist!"
 
 #. translators: 1: WP_REST_Response, 2: WP_Error
-#: wp-includes/functions.php:4395
+#: wp-includes/functions.php:4397
 msgid "Return a %1$s or %2$s object from your callback when using the REST API."
 msgstr "Return a %1$s or %2$s object from your callback when using the REST API."
 
-#: wp-includes/functions.php:4218
+#: wp-includes/functions.php:4220
 #: wp-includes/sitemaps/class-wp-sitemaps-renderer.php:267 wp-load.php:106
 msgid "WordPress &rsaquo; Error"
 msgstr "WordPress &rsaquo; Error"
 
-#: wp-includes/functions.php:3759
+#: wp-includes/functions.php:3761
 msgid "&laquo; Back"
 msgstr "&laquo; Back"
 
-#: wp-includes/functions.php:3587
+#: wp-includes/functions.php:3589
 msgid "Please try again."
 msgstr "Please try again."
 
@@ -12786,16 +12781,16 @@ msgid "Event timestamp must be a valid Unix timestamp."
 msgstr "Event timestamp must be a valid Unix timestamp."
 
 #. translators: %d: Comment ID.
-#: wp-includes/comment.php:3776
+#: wp-includes/comment.php:3789
 msgid "Comment %d contains personal data but could not be anonymized."
 msgstr "Comment %d contains personal data but could not be anonymised."
 
-#: wp-includes/comment.php:3675
+#: wp-includes/comment.php:3688
 msgid "User&#8217;s comment data."
 msgstr "User&#8217;s comment data."
 
 #. translators: Default privacy policy heading.
-#: wp-includes/comment.php:3674 wp-includes/link-template.php:3178
+#: wp-includes/comment.php:3687 wp-includes/link-template.php:3178
 #: wp-includes/link-template.php:3241 wp-admin/edit-comments.php:170
 #: wp-admin/edit-comments.php:231
 #: wp-admin/includes/class-wp-comments-list-table.php:506
@@ -12809,63 +12804,63 @@ msgstr "User&#8217;s comment data."
 msgid "Comments"
 msgstr "Comments"
 
-#: wp-includes/comment.php:3631
+#: wp-includes/comment.php:3644
 msgid "Comment URL"
 msgstr "Comment URL"
 
-#: wp-includes/comment.php:3630
+#: wp-includes/comment.php:3643
 msgid "Comment Content"
 msgstr "Comment Content"
 
-#: wp-includes/comment.php:3629
+#: wp-includes/comment.php:3642
 msgid "Comment Date"
 msgstr "Comment Date"
 
-#: wp-includes/comment.php:3628
+#: wp-includes/comment.php:3641
 msgid "Comment Author User Agent"
 msgstr "Comment Author User Agent"
 
-#: wp-includes/comment.php:3627
+#: wp-includes/comment.php:3640
 msgid "Comment Author IP"
 msgstr "Comment Author IP"
 
-#: wp-includes/comment.php:3626
+#: wp-includes/comment.php:3639
 msgid "Comment Author URL"
 msgstr "Comment Author URL"
 
-#: wp-includes/comment.php:3625
+#: wp-includes/comment.php:3638
 msgid "Comment Author Email"
 msgstr "Comment Author Email"
 
-#: wp-includes/comment.php:3624 wp-admin/edit-form-comment.php:45
+#: wp-includes/comment.php:3637 wp-admin/edit-form-comment.php:45
 msgid "Comment Author"
 msgstr "Comment Author"
 
-#: wp-includes/comment.php:3589 wp-includes/comment.php:3699
+#: wp-includes/comment.php:3602 wp-includes/comment.php:3712
 msgid "WordPress Comments"
 msgstr "WordPress Comments"
 
-#: wp-includes/comment.php:3573
+#: wp-includes/comment.php:3586
 msgid "<strong>Error</strong>: The comment could not be saved. Please try again later."
 msgstr "<strong>Error</strong>: the comment could not be saved. Please try again later."
 
-#: wp-includes/comment.php:3559
+#: wp-includes/comment.php:3572
 msgid "<strong>Error</strong>: Please type your comment text."
 msgstr "<strong>Error</strong>: please type your comment text."
 
-#: wp-includes/comment.php:3534
+#: wp-includes/comment.php:3547
 msgid "<strong>Error</strong>: Please enter a valid email address."
 msgstr "<strong>Error</strong>: please enter a valid email address."
 
-#: wp-includes/comment.php:3532
+#: wp-includes/comment.php:3545
 msgid "<strong>Error</strong>: Please fill the required fields."
 msgstr "<strong>Error</strong>: please fill the required fields."
 
-#: wp-includes/comment.php:3472
+#: wp-includes/comment.php:3485
 msgid "Sorry, comments are not allowed for this item."
 msgstr "Sorry, comments are not allowed for this item."
 
-#: wp-includes/comment.php:2533
+#: wp-includes/comment.php:2546
 msgid "Could not update comment in the database."
 msgstr "Could not update comment in the database."
 
@@ -13286,12 +13281,12 @@ msgstr "Comment author name and email are required."
 msgid "Sorry, you are not allowed to comment on this post."
 msgstr "Sorry, you are not allowed to comment on this post."
 
-#: wp-includes/class-wp-xmlrpc-server.php:3922 wp-includes/comment.php:3445
+#: wp-includes/class-wp-xmlrpc-server.php:3922 wp-includes/comment.php:3458
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:549
 msgid "Sorry, comments are closed for this item."
 msgstr "Sorry, comments are closed for this item."
 
-#: wp-includes/class-wp-xmlrpc-server.php:3899 wp-includes/comment.php:3524
+#: wp-includes/class-wp-xmlrpc-server.php:3899 wp-includes/comment.php:3537
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:446
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:468
 msgid "Sorry, you must be logged in to comment."
@@ -13405,8 +13400,8 @@ msgstr "Sorry, you are not allowed to list users."
 #: wp-includes/rest-api/endpoints/class-wp-rest-application-passwords-controller.php:680
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:399
 #: wp-includes/rest-api/endpoints/class-wp-rest-users-controller.php:723
-#: wp-includes/user.php:2067 wp-includes/user.php:2496
-#: wp-includes/user.php:2502 wp-admin/user-edit.php:24
+#: wp-includes/user.php:2055 wp-includes/user.php:2484
+#: wp-includes/user.php:2490 wp-admin/user-edit.php:24
 #: wp-admin/user-edit.php:26
 msgid "Invalid user ID."
 msgstr "Invalid user ID."
@@ -13433,7 +13428,7 @@ msgid "Sorry, deleting the term failed."
 msgstr "Sorry, deleting the term failed."
 
 #: wp-includes/class-wp-xmlrpc-server.php:2318
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:668
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:721
 msgid "Sorry, you are not allowed to delete this term."
 msgstr "Sorry, you are not allowed to delete this term."
 
@@ -13444,14 +13439,14 @@ msgstr "Sorry, editing the term failed."
 #: wp-includes/class-wp-xmlrpc-server.php:2221
 #: wp-includes/rest-api/endpoints/class-wp-rest-menus-controller.php:198
 #: wp-includes/rest-api/endpoints/class-wp-rest-menus-controller.php:292
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:446
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:593
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:499
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:646
 msgid "Cannot set parent term, taxonomy is not hierarchical."
 msgstr "Cannot set parent term, taxonomy is not hierarchical."
 
 #: wp-includes/class-wp-xmlrpc-server.php:2208
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:376
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:567
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:429
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:620
 msgid "Sorry, you are not allowed to edit this term."
 msgstr "Sorry, you are not allowed to edit this term."
 
@@ -13463,8 +13458,8 @@ msgstr "Sorry, the term could not be created."
 #: wp-includes/class-wp-xmlrpc-server.php:2232
 #: wp-includes/rest-api/endpoints/class-wp-rest-menus-controller.php:204
 #: wp-includes/rest-api/endpoints/class-wp-rest-menus-controller.php:298
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:456
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:603
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:509
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:656
 #: wp-includes/taxonomy.php:2376 wp-includes/taxonomy.php:3159
 msgid "Parent term does not exist."
 msgstr "Parent term does not exist."
@@ -13479,7 +13474,7 @@ msgid "The term name cannot be empty."
 msgstr "The term name cannot be empty."
 
 #: wp-includes/class-wp-xmlrpc-server.php:2088
-#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:425
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:478
 #: wp-admin/edit-tags.php:86
 msgid "Sorry, you are not allowed to create terms in this taxonomy."
 msgstr "Sorry, you are not allowed to create terms in this taxonomy."
@@ -13636,6 +13631,7 @@ msgstr "Sorry, you are not allowed to edit this post."
 #: wp-includes/rest-api/endpoints/class-wp-rest-comments-controller.php:828
 #: wp-includes/rest-api/endpoints/class-wp-rest-menu-items-controller.php:432
 #: wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:447
+#: wp-includes/rest-api/endpoints/class-wp-rest-terms-controller.php:205
 #: wp-includes/revision.php:324
 msgid "Invalid post ID."
 msgstr "Invalid post ID."
@@ -13892,7 +13888,7 @@ msgstr "Black"
 
 #. translators: Name of a comment's author after being anonymized.
 #: wp-includes/class-wp-theme.php:930 wp-includes/comment-template.php:33
-#: wp-includes/comment.php:3745 wp-includes/js/dist/block-library.js:7376
+#: wp-includes/comment.php:3758 wp-includes/js/dist/block-library.js:7376
 msgid "Anonymous"
 msgstr "Anonymous"
 
@@ -14330,7 +14326,7 @@ msgstr "Invalid cookie format."
 msgid "No cookie present."
 msgstr "No cookie present."
 
-#: wp-includes/class-wp-query.php:1492
+#: wp-includes/class-wp-query.php:1505
 msgctxt "Comma-separated list of search stopwords in your language"
 msgid "about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,www"
 msgstr "about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,www"
@@ -16430,18 +16426,18 @@ msgid "Visual"
 msgstr "Visual"
 
 #. translators: 1: Month, 2: Day of month.
-#: wp-includes/class-wp-date-query.php:446
+#: wp-includes/class-wp-date-query.php:449
 msgid "The following values do not describe a valid date: month %1$s, day %2$s."
 msgstr "The following values do not describe a valid date: month %1$s, day %2$s."
 
 #. translators: 1: Year, 2: Month, 3: Day of month.
-#: wp-includes/class-wp-date-query.php:430
+#: wp-includes/class-wp-date-query.php:433
 msgid "The following values do not describe a valid date: year %1$s, month %2$s, day %3$s."
 msgstr "The following values do not describe a valid date: year %1$s, month %2$s, day %3$s."
 
 #. translators: Date query invalid date message. 1: Invalid value, 2: Type of
 #. value, 3: Minimum valid value, 4: Maximum valid value.
-#: wp-includes/class-wp-date-query.php:400
+#: wp-includes/class-wp-date-query.php:403
 msgid "Invalid value %1$s for %2$s. Expected value should be between %3$s and %4$s."
 msgstr "Invalid value %1$s for %2$s. Expected value should be between %3$s and %4$s."
 
@@ -17475,7 +17471,7 @@ msgstr "Copy"
 #: wp-includes/class-wp-customize-manager.php:5679
 #: wp-includes/class-wp-customize-manager.php:5700
 #: wp-includes/customize/class-wp-customize-nav-menu-locations-control.php:58
-#: wp-includes/functions.php:8104 wp-includes/media-template.php:167
+#: wp-includes/functions.php:8106 wp-includes/media-template.php:167
 #: wp-includes/widgets/class-wp-widget-custom-html.php:318 wp-login.php:648
 #: wp-includes/js/dist/components.js:62573
 #: wp-includes/js/dist/customize-widgets.js:1232
@@ -17933,7 +17929,7 @@ msgstr "No categories"
 #. translators: 1: caller_get_posts, 2: ignore_sticky_posts
 #. translators: 1: who, 2: capability
 #: wp-includes/category-template.php:373 wp-includes/category.php:47
-#: wp-includes/class-wp-query.php:1843 wp-includes/class-wp-user-query.php:400
+#: wp-includes/class-wp-query.php:1866 wp-includes/class-wp-user-query.php:400
 msgid "%1$s is deprecated. Use %2$s instead."
 msgstr "%1$s is deprecated. Use %2$s instead."
 
@@ -18780,7 +18776,7 @@ msgstr "Menus"
 
 #: wp-includes/admin-bar.php:1027
 #: wp-includes/class-wp-customize-widgets.php:418
-#: wp-includes/functions.php:5255 wp-includes/js/dist/blocks.js:5556
+#: wp-includes/functions.php:5257 wp-includes/js/dist/blocks.js:5556
 #: wp-includes/js/dist/core-data.js:2090
 #: wp-includes/js/dist/customize-widgets.js:2317
 #: wp-includes/js/dist/edit-widgets.js:3867
