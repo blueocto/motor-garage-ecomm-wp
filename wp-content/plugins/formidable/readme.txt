@@ -5,7 +5,7 @@ Tags: forms, form builder, survey, free, custom form, contact form, form maker, 
 Requires at least: 5.2
 Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: 5.5.1
+Stable tag: 5.5.2
 
 The most advanced WordPress forms plugin. Go beyond contact forms with our drag and drop form builder for surveys, quizzes, and more.
 
@@ -440,14 +440,31 @@ Using our Zapier integration, you can easily connect your website with over 1000
 See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zapier Integrations</a>.
 
 == Changelog ==
+= 5.5.2 =
+* New: When dragging a field or field group, a smaller drag helper will be used that is more consistent with the field type options in the sidebar, and the field that is being dragged will gray out.
+* New: Improved error handling when installing templates from XML. A message will be shown when the simple XML extension is not installed, and errors will now be shown in a pop up when a template falls to install.
+* New: Added a new frm_before_simple_form_render action that triggers before a Gutenberg block is rendered.
+* New: Added a new frm_rich_text_emails filter for cases when a plain textarea may be preferred over rich text.
+* New: Fields with floating labels now take up less space in the front end.
+* Fix: When inserting a [default-plain] or [default-html] shortcode into a rich text editor, the shortcode would insert instead of changing dynamically as expected.
+* Fix: Rich text HTML emails were not automatically using wpautop so line breaks were not appearing in emails as expected.
+* Fix: Improved how drag and drop works when dragging multiple sections in a field group.
+* Fix: Prevent a warning that would trigger when previewing in-theme when using Twenty Twenty One.
+* Fix: Prevent a fatal error that would only ever happen once, immediately when upgrading to version 5.5 or higher from an older version.
+* Fix: Prevent a fatal error that was preventing add ons from installing via API.
+* Fix: Updated radio button styling on the Edit Entry page to fix visual issues at mobile screen sizes.
+* Embed examples no longer include title=true and description=true.
+* License types will no longer appear as application template category options.
+* Plain text email actions will no longer use a rich text editor.
+
 = 5.5.1 =
 * New: Email actions now use a rich text editor.
 * New: Added new frm_before_title, frm_before_submit_btn, and frm_after_submit_btn actions.
 * New: Image URLs used in options for radio and checkbox fields will now be included in XML exports, and used on import when the option to import files is on.
-* Fix: Prevent a bug that would sometimes cause a form to repeat 10 times when previewing in-theme.
+* Fix: Prevent a bug that would sometimes cause a form to repeat when previewing in-theme.
 * Fix: Shortcode popup will now appear below textareas to avoid visibility issues with overlapping over content.
-* Fix: Prevent a fatal error in PHP8 where a field's field options data is in an unsupported format.
-* Fix: An entry with a name longer than 255 characters long would throw an error and never submit. It will now be truncated to a maximum of 255 characters instead.
+* Fix: Prevent a fatal error in PHP8 where a field's options data is in an unsupported format.
+* Fix: An entry with a name longer than 255 characters long would throw an error and never submit. It will now be truncated to a maximum of 255 characters.
 * Removed icon fonts from front end CSS when only Lite is loaded to significantly reduce CSS size where it is not required.
 * Updated styles for back end modals.
 
@@ -755,30 +772,5 @@ See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zap
 * New: Use frm_inline_success for the class in the customized HTML to move the success message next to the submit button. "frm_inline_success frm_alignright_success" will right-align the message.
 * Tweak: Improve the admin listing pages when nothing has been created.
 * Fix: Update the recaptcha for better reliability to catch more spam.
-
-= 4.06.03 =
-* More consistent dropdown styling with multiselect dropdowns.
-* Prepare the code for handling permissions options as an array of roles.
-* Fix: WP 5.5 - Email subject lines were coming through encoded.
-* Fix: WP 5.5 - When WP Mail SMTP was installed, the Formidable SMTP page has an error.
-
-= 4.05.02 =
-* New: Added frm_message_placement hook to show the message below the form
-* New: New classes that can be used in the class setting: frm_plain_success (Removes styling from the success message) and frm_below_success (Moves the success message below).
-* Add Formidable back to the admin bar. This is now a setting if the default WordPress v5.2+ behavior is desired.
-* Fix: Review requests were added to the inbox too frequently for sites with multiple admins.
-* Fix: Elementor conflict by using the glost $post in the admin area.
-* Fix: The color picker position in the styling settings was off for some options.
-
-= 4.05.01 =
-* Fix: The entry list wasn't always showing the entries.
-* Better sync between review requests in inbox and message.
-
-= 4.05 =
-* Updates to the default styling.
-* New: Added an inbox as a centralized place for notices and communication.
-* New: Added frm_color_block and frm_total_big classes for more beautiful forms.
-* Help prevent common email issues by showing a warning in the email settings when the from and to email addresses are the same.
-* Fix: Forms edited after export and reimported were losing the required indicator in some cases.
 
 <a href="https://raw.githubusercontent.com/Strategy11/formidable-forms/master/changelog.txt">See changelog for all versions</a>
