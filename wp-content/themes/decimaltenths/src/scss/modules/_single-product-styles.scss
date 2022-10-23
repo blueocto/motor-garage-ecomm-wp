@@ -16,14 +16,27 @@
     }
 }
 
-.single-product .type-product {
-    margin-top: rem-calc(50);
+.single-product {
+
+    .woocommerce-product-gallery {
+        margin-bottom: rem-calc(50);
+    }
+
 
     .single-product-description {
         padding: $small-spacing;
     }
 
     .entry-summary {
-        margin-bottom: rem-calc(30);
+        margin-bottom: rem-calc(50);
     }
 }
+
+.stock {
+
+    &.out-of-stock {
+        color: red;
+    }
+}
+
+

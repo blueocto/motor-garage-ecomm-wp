@@ -1,0 +1,52 @@
+// ==============================================
+// WooCommerce Tabs
+// Used on the Single product view
+// ==============================================
+
+.woocommerce-tabs, 
+.wc-tabs-wrapper {
+
+    // UL to toggle the panels
+    .tabs, 
+    .wc-tabs {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: block; 
+            width: 48%;
+            @extend %h3;
+            text-transform: uppercase;
+
+            a {
+                display: block; 
+                padding: $large-spacing;
+                border-bottom: 2px solid var(--brand-neon-green);
+            }
+
+            &.active {
+
+                a {
+                    background-color: var(--brand-d-grey);
+                }
+            }
+        }
+    }
+
+    // DIVs with the content
+    .woocommerce-Tabs-panel, 
+    .woocommerce-Tabs-panel--description, 
+    .wc-tab {
+        padding: rem-calc(30px 20px);
+        background-color: var(--brand-d-grey);
+
+        &.entry-content > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce) {
+            max-width: unset;
+            
+        }
+    }
+}

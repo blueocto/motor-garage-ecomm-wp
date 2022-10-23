@@ -8,6 +8,7 @@
 
     > h2 {
         text-align: center;
+        @extend %h1;
     }
 
     // UL
@@ -16,6 +17,10 @@
         justify-content: center;
         list-style: none;
         padding: 0;
+
+        // .woocommerce-loop-product__title {
+        //     @extend %h3;
+        // }
     }
 }
 

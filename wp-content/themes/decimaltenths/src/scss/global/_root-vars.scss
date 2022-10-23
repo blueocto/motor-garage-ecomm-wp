@@ -23,7 +23,7 @@
 	// ==============================================
 	// ref: https://aristath.github.io/blog/typography-scales-with-css-vars
 
-	--scale: 1.15; // use this to set Heading scale
+	--scale: 1.08; //1.15; // use this to set Heading scale
 
 	@include breakpoint(large) {
 		--scale: 1.22; // use this to set Heading scale
