@@ -54,7 +54,8 @@
 }
 
 .shop-sidebar {
-    padding: $small-spacing;
+    padding: rem-calc(50) $medium-spacing;
+    width: 100%; // odd this needs declaring to prevent overflow
 }
 
 // global styles

@@ -1,0 +1,25 @@
+// ==============================================
+// Plugin: WOOF Filter
+// Style overrides
+// ==============================================
+
+.WOOF_Widget {
+
+    .woof_container {
+        margin-bottom: rem-calc(30);
+
+        h4 {
+            margin-bottom: $medium-spacing;
+        }
+    }
+
+    .woof_price_search_container .price_slider_amount .price_label {
+        float: none !important;
+    }
+}
+
+// price slider
+.woof .widget_price_filter .ui-slider .ui-slider-range,
+.woof .widget_price_filter .ui-slider .ui-slider-handle {
+    background-color: var(--brand-neon-green);
+}
