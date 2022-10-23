@@ -94,7 +94,8 @@
 
 			+ .sub-menu {
 				display: block;
-				outline: 2px dashed #f0f;
+				max-height: 100vh;
+				overflow: scroll;
 			}
 		}
 	}
