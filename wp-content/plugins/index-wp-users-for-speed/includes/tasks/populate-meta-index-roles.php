@@ -2,7 +2,6 @@
 
 namespace IndexWpUsersForSpeed;
 
-
 /**
  * Task to populate meta_key = 'whatever_role_administrator, etc.
  */
@@ -31,8 +30,8 @@ class PopulateMetaIndexRoles extends Task {
     $indexer = Indexer::getInstance();
     $this->setBlog();
     $this->maxUserId = $indexer->getMaxUserId();
-    $roles = wp_roles();
-    $roles = $roles->get_names();
+    $roles           = wp_roles();
+    $roles           = $roles->get_names();
     foreach ( $roles as $role => $name ) {
       $this->roles[] = $role;
     }
@@ -52,7 +51,7 @@ class PopulateMetaIndexRoles extends Task {
     foreach ( $queries as $query ) {
       $query .= ' WHERE a.user_id >= %d AND a.user_id < %d';
       $q     = $wpdb->prepare( $query, $this->currentStart, $currentEnd );
-      $wpdb->query( $q );
+      $this->doQuery( $q );
     }
     $this->currentStart = $currentEnd;
 
@@ -60,6 +59,12 @@ class PopulateMetaIndexRoles extends Task {
     $this->fractionComplete = min( 1, $this->currentStart / $this->maxUserId );
 
     $this->setStatus( null, null, ! $done, $this->fractionComplete );
+
+    /* update table stats at the end of the indexing */
+    if ( $done ) {
+      $query = $wpdb->prepare( "ANALYZE TABLE $wpdb->usermeta;" );
+      $this->doQuery( $query );
+    }
 
     $this->endChunk();
 
@@ -123,5 +128,3 @@ class PopulateMetaIndexRoles extends Task {
   }
 
 }
-
-

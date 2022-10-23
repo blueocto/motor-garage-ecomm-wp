@@ -1,13 +1,12 @@
-<?php
+<?php /** @noinspection PhpPropertyOnlyWrittenInspection */
 
 namespace IndexWpUsersForSpeed;
 
 use WP_REST_Request;
-use WP_REST_Response;
-use WP_User;
 use WP_User_Query;
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/indexer.php';
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/selection-box.php';
 
 /**
  * The admin-specific hooks for handling users
@@ -26,6 +25,9 @@ class UserHandler extends WordPressHooks {
   private $recursionLevelBySite = [];
   private $userCount = 0;
   private $options_name;
+  private $selectionBoxCache;
+  private $doAutocomplete;
+  private $requestedCapabilities;
 
   public function __construct() {
 
@@ -41,7 +43,7 @@ class UserHandler extends WordPressHooks {
   /**
    * Filters whether the site is considered large, based on its number of users.
    *
-   * Here we declare that it's not large.
+   * Here we declare that the site is not large.
    *
    * @param bool $is_large_user_count Whether the site has a large number of users.
    * @param int $count The total number of users.
@@ -56,81 +58,148 @@ class UserHandler extends WordPressHooks {
     return false;
   }
 
-  /**
-   * Fires immediately after a user is added to a site.
+  /** Make sure wp_capabilities option values don't contain unexpected junk.
    *
-   * @param int $user_id User ID.
-   * @param string $role User role.
-   * @param int $blog_id Blog ID.
+   * @param array $option Option value, from dbms.
    *
-   * @noinspection PhpUnused
-   * @since MU (3.0.0)
-   *
+   * @return array Option value, cleaned up.
    */
-  public function action__add_user_to_blog( $user_id, $role, $blog_id ) {
-    $this->indexer->updateUserCounts( $role, + 1 );
-    $this->indexer->updateEditors( $user_id );
-    $this->indexer->updateIndexRole( $user_id, $role, $blog_id );
+  private function sanitizeCapabilitiesOption( $option ) {
+    if ( ! is_array( $option ) ) {
+      return [];
+    }
+    /* each array element must be 'string' => true in a valid option */
+    return array_filter( $option, function ( $value, $key ) {
+      return is_string( $key ) && $value === true;
+    }, ARRAY_FILTER_USE_BOTH );
+  }
+
+  private function getCurrentUserRoles( $user_id, $meta_key = null ) {
+    global $wpdb;
+    if ( ! $meta_key ) {
+      $meta_key = $wpdb->prefix . 'capabilities';
+    }
+    $roles = $this->sanitizeCapabilitiesOption( get_user_meta( $user_id, $meta_key, true ) );
+
+    $metas  = get_user_meta( $user_id, '', false );
+    $prefix = $wpdb->prefix . INDEX_WP_USERS_FOR_SPEED_KEY_PREFIX . 'r:';
+    foreach ( $metas as $key => $value ) {
+      if ( strpos( $key, $prefix ) === 0 ) {
+        $role            = explode( ':', $key )[1];
+        $roles [ $role ] = true;
+      }
+    }
+    return $roles;
   }
 
   /**
-   * Fires before a user is removed from a site in multisite
+   * Fires immediately before updating user metadata.
    *
-   * @param int $user_id ID of the user being removed.
-   * @param int $blog_id ID of the blog the user is being removed from.
-   * @param int $reassign ID of the user to whom to reassign posts.
+   * We use this to watch for changes in the wp_capabilities metadata.
+   * (It's named wp_2_capabilities etc in multisite).
    *
-   * @noinspection PhpUnused
+   * @param int $meta_id ID of the metadata entry to update.
+   * @param int $user_id ID of the object metadata is for.
+   * @param string $meta_key Metadata key.
+   * @param mixed $meta_value Metadata value, not serialized.
    *
-   * @since 5.4.0 Added the `$reassign` parameter.
-   *
-   * @since MU (3.0.0)
-   */
-  public function action__remove_user_from_blog( $user_id, $blog_id, $reassign ) {
-    $user  = get_userdata( $user_id );
-    $roles = $user->roles;
-    $this->indexer->updateUserCounts( $roles, - 1 );
-    $this->indexer->updateEditors( $user_id, true );
-    $this->indexer->removeIndexRole( $user_id, $blog_id );
-  }
-
-  /**
-   * Fires immediately after a user is deleted from the database in single-site
-   *
-   * The deleted user's wp_usermeta data is already gone by this action.
-   *
-   * @param int $id ID of the deleted user.
-   * @param int|null $reassign ID of the user to reassign posts and links to.
-   *                           Default null, for no reassignment.
-   * @param WP_User $user WP_User object of the deleted user.
-   *
-   * @noinspection PhpUnused
-   *
-   * @since 5.5.0 Added the `$user` parameter.
+   * @return void
    * @since 2.9.0
+   *
    */
-  public function action__deleted_user( $id, $reassign, $user ) {
-    $roles = $user->roles;
-    $this->indexer->updateUserCounts( $roles, - 1 );
-    $this->indexer->updateEditors( $id, true );
+  public function action__update_user_meta( $meta_id, $user_id, $meta_key, $meta_value ) {
+    if ( ! $this->isCapabilitiesKey( $meta_key ) ) {
+      return;
+    }
+    $newRoles = $this->sanitizeCapabilitiesOption( $meta_value );
+    $oldRoles = $this->getCurrentUserRoles( $user_id, $meta_key );
+    $this->userRoleChange( $user_id, $newRoles, $oldRoles );
   }
 
   /**
-   * Fires after the user's role has changed.
+   * Fires immediately before user meta is added.
    *
-   * @param int $user_id The user ID.
-   * @param string $newRole The new role.
-   * @param string[] $oldRoles An array of the user's previous roles.
+   * We use this to watch a new wp_capabilities metadata item, meaning
+   * a new user is added, overall or to a particular multisite blog.
+   * It's named wp_2_capabilities etc in multisite.
    *
-   * @noinspection PhpUnused
-   * @since 3.6.0 Added $old_roles to include an array of the user's previous roles.
+   * @param int $user_id ID of the object metadata is for.
+   * @param string $meta_key Metadata key.
+   * @param mixed $meta_value Metadata value.
    *
-   * @since 2.9.0
+   * @since 3.1.0
+   *
    */
-  public function action__set_user_role( $user_id, $newRole, $oldRoles ) {
-    $this->indexer->updateUserCountsForRoleChange( $newRole, $oldRoles );
-    $this->indexer->updateEditors( $user_id );
-    $this->indexer->updateIndexRole( $user_id, $newRole, get_current_blog_id() );
+  public function action__add_user_meta( $user_id, $meta_key, $meta_value ) {
+    if ( ! $this->isCapabilitiesKey( $meta_key ) ) {
+      return;
+    }
+    $newRoles = $this->sanitizeCapabilitiesOption( $meta_value );
+    $this->indexer->updateUserCountsTotal( + 1 );
+    $oldRoles = $this->getCurrentUserRoles( $user_id, $meta_key );
+    $this->userRoleChange( $user_id, $newRoles, $oldRoles );
+  }
+
+  /**
+   * Fires immediately before deleting user metadata.
+   *
+   * We use this to watch for deletion of the wp_capabilities metadata.
+   * That means the user is being deleted.
+   * It's named wp_2_capabilities etc in multisite.
+   * This fires when a user is removed from a blog in a multisite setup.
+   *
+   * @param string[] $meta_ids An array of metadata entry IDs to delete.
+   * @param int $user_id ID of the object metadata is for.
+   * @param string $meta_key Metadata key.
+   * @param mixed $meta_value Metadata value, not serialized.
+   *
+   * @since 3.1.0
+   *
+   */
+  public function action__delete_user_meta( $meta_ids, $user_id, $meta_key, $meta_value ) {
+    if ( ! $this->isCapabilitiesKey( $meta_key ) ) {
+      return;
+    }
+    $oldRoles = $this->getCurrentUserRoles( $user_id, $meta_key );
+    $this->indexer->updateUserCountsTotal( - 1 );
+    $this->userRoleChange( $user_id, [], $oldRoles );
+  }
+
+  /** Returns the capabilities meta key, or false if it's not the capabilities key.
+   *
+   * @param $meta_key
+   *
+   * @return false|string
+   */
+  private function isCapabilitiesKey( $meta_key ) {
+    global $wpdb;
+    return $meta_key === $wpdb->prefix . 'capabilities';
+  }
+
+  /**
+   * @param int $user_id
+   * @param array $newRoles
+   * @param array $oldRoles
+   *
+   * @return void
+   */
+  private function userRoleChange( $user_id, $newRoles, $oldRoles ) {
+
+    if ( $newRoles !== $oldRoles ) {
+      $toAdd    = array_diff_key( $newRoles, $oldRoles );
+      $toRemove = array_diff_key( $oldRoles, $newRoles );
+
+      foreach ( array_keys( $toRemove ) as $role ) {
+        $this->indexer->updateUserCounts( $role, - 1 );
+        $this->indexer->updateEditors( $user_id, true );
+        $this->indexer->removeIndexRole( $user_id, $role );
+      }
+      foreach ( array_keys( $toAdd ) as $role ) {
+        $this->indexer->updateUserCounts( $role, + 1 );
+        $this->indexer->updateEditors( $user_id, false );
+        $this->indexer->addIndexRole( $user_id, $role );
+      }
+    }
   }
 
   /**
@@ -152,6 +221,9 @@ class UserHandler extends WordPressHooks {
   public function filter__pre_count_users( $result, $strategy, $site_id ) {
     /* cron jobs use this; don't intervene with this filter there. */
     if ( wp_doing_cron() ) {
+      return $result;
+    }
+    if ( 'force_recount' === $strategy ) {
       return $result;
     }
     /* this bad boy gets called recursively, the way we cache user counts. */
@@ -188,62 +260,79 @@ class UserHandler extends WordPressHooks {
    * @noinspection PhpUnused
    */
   public function filter__wp_dropdown_users_args( $query_args, $parsed_args ) {
-    $options    = get_option( $this->options_name );
-    $fixed_args = $this->filtered_query_args( $query_args, $parsed_args );
-
-    if ( isset ( $options ['quickedit_threshold_on'] ) && 'on' === $options ['quickedit_threshold_on'] ) {
-      $fixed_args ['number'] = $options ['quickedit_threshold_limit'];
+    /* is this about posts or pages */
+    if ( array_key_exists( 'capability', $query_args ) ) {
+      $this->requestedCapabilities = $query_args['capability'];
     }
-    if ( isset ( $options ['quickedit_mostposts_on'] ) && 'on' === $options ['quickedit_mostposts_on'] ) {
+    /* Is our number of possible authors smaller than the threshold? */
+    $threshold            = get_option( $this->options_name )['quickedit_threshold_limit'];
+    $editors              = $this->indexer->getEditors();
+    $this->doAutocomplete = true;
+    if ( count( $editors ) <= $threshold ) {
+      $this->doAutocomplete  = false;
+      $query_args['include'] = $editors;
+    } else if ( array_key_exists( 'include_selected', $parsed_args ) && $parsed_args['include_selected']
+                && array_key_exists( 'name', $parsed_args ) && $parsed_args['name'] === 'post_author_override'
+                && array_key_exists( 'selected', $parsed_args ) && is_numeric( $parsed_args['selected'] ) && $parsed_args['selected'] > 0 ) {
+      /* Fetch just that single author, by ID, into the dropdown. The autocomplete code will then use it. */
+      $query_args['include'] = [ $parsed_args['selected'] ];
+      unset ( $query_args['capability'] );
+      return $query_args;
+    }
+    $fixed_args = $this->filtered_query_args( $query_args, $parsed_args );
+    /* This query is run twice, once for quickedit and again for bulkedit.
+     * This suppresses most of the work in both runs.  */
+    if ( $this->doAutocomplete ) {
+      $fixed_args ['number'] = 1;
+      unset ( $fixed_args['orderby'] );
       unset ( $fixed_args['order'] );
-      $fixed_args ['orderby'] = [ 'post_count' => 'DESC', 'display_name' => 'ASC' ];
     }
     return $fixed_args;
   }
 
   private function filtered_query_args( $query_args, $parsed_args ) {
-    $capFound = null;
+    $capsFound = [];
 
-    /* if the query is already restricted with an "include" item, do nothing */
-    if ( is_array( $query_args['include'] ) && count( $query_args['include'] ) > 0 ) {
-      return $query_args;
-    }
-    /* Notice that the JSON ajax requests for lists of users have the deprecated who=authors
-     * query syntax. This code allows both that and the new capability=[edit_posts] syntax */
-    if ( isset( $query_args['who'] ) && $query_args['who'] === 'authors' ) {
-      $capFound = 'edit_posts';
-      unset ( $query_args['who'] );
-    } else if ( isset( $parsed_args['capability'] ) ) {
-      $argsCap = is_array( $parsed_args['capability'] ) ? $parsed_args['capability'] : [ $parsed_args['capability'] ];
-      /* capability item is set to either edit_posts or edit_pages */
+    if ( array_key_exists( 'capability', $parsed_args ) || array_key_exists( 'capability__in', $parsed_args ) ) {
+      /* deal with the possibility that we have either the capability or the capability__in arg */
+      $cap     = array_key_exists( 'capability', $parsed_args ) ? $parsed_args['capability'] : [];
+      $cap     = is_array( $cap ) ? $cap : [ $cap ];
+      $caps    = array_key_exists( 'capability__in', $parsed_args ) ? $parsed_args['capability__in'] : [];
+      $argsCap = array_unique( $cap + $caps );
+      /* capabilites are edit_posts and/or edit_pages */
       foreach ( [ 'edit_posts', 'edit_pages' ] as $capToCheck ) {
         if ( in_array( $capToCheck, $argsCap ) ) {
-          $capFound = $capToCheck;
+          $capsFound [] = $capToCheck;
         }
       }
+    } else if ( isset( $query_args['who'] ) && $query_args['who'] === 'authors' ) {
+      /* Clean up the obsolete 'who' REST argument if it's there, thanks Gutenberg editor. */
+      $capsFound = [ 'edit_posts', 'edit_pages' ];
+      unset ( $query_args['who'] );
     } else {
       return $query_args;
     }
-    /* get the pre-stored list of editors */
-    $editors = $this->indexer->getEditors();
     /* count up the users if we can */
     $userCounts = $this->indexer->getUserCounts( false );
+    $userCounts = is_array( $userCounts ) ? $userCounts : [];
     $roleCounts = array_key_exists( 'avail_roles', $userCounts ) ? $userCounts['avail_roles'] : [];
-    if ( $this->indexer->isMetaIndexRoleAvailable() &&
-         is_array( $editors ) &&
-         count( $editors ) >= INDEX_WP_USERS_FOR_SPEED_USER_COUNT_LIMIT ) {
-      /* We have many registered editors and the meta indexing is done. Use it. */
-      /* Find the list of roles (administrator, contributor, etc.) with the $capFound capability */
+    if ( $this->indexer->isMetaIndexRoleAvailable() ) {
+      /* the meta indexing is done. Use it. */
+      /* Find the list of roles (administrator, contributor, etc.) with $capsFound capabilities */
       global $wp_roles;
+      /* sometimes it isn't initialized in multisite. */
+      $wp_roles = $wp_roles ?: new \WP_Roles();
       $wp_roles->for_site( get_current_blog_id() );
       $metaQuery = [];
-      foreach ( $wp_roles->roles as $name => $role ) {
-        $caps = &$role['capabilities'];
-        if ( array_key_exists( $capFound, $caps ) && $caps[ $capFound ] === true ) {
-          $userCount = array_key_exists( $name, $roleCounts ) ? $roleCounts[ $name ] : 0;
-          if ( $userCount > 0 ) {
-            $metaQuery[]     = $this->makeRoleQueryArgs( $name );
-            $this->userCount += $userCount;
+      foreach ( $capsFound as $capFound ) {
+        foreach ( $wp_roles->roles as $name => $role ) {
+          $caps = &$role['capabilities'];
+          if ( array_key_exists( $capFound, $caps ) && $caps[ $capFound ] === true ) {
+            $userCount = array_key_exists( $name, $roleCounts ) ? $roleCounts[ $name ] : 0;
+            if ( $userCount > 0 ) {
+              $metaQuery[]     = $this->makeRoleQueryArgs( $name );
+              $this->userCount += $userCount;
+            }
           }
         }
       }
@@ -257,6 +346,7 @@ class UserHandler extends WordPressHooks {
       $query_args ['meta_query'] = $metaQuery;
       unset ( $query_args['capability'] );
     } else {
+      /*  The meta indexing isn't yet done. Return partial list of editors. */
       $editors = $this->indexer->getEditors();
       if ( is_array( $editors ) ) {
         $query_args['include'] = $editors;
@@ -332,7 +422,7 @@ class UserHandler extends WordPressHooks {
       return $sql;
     }
     /* single meta query that doesn't look like one of ours. */
-    if ( ! is_multisite() && $queries['relation'] !== 'OR' ) {
+    if ( ! is_multisite() && ( ! array_key_exists( 'relation', $queries ) || $queries['relation'] !== 'OR' ) ) {
       return $sql;
     }
 
@@ -354,24 +444,18 @@ class UserHandler extends WordPressHooks {
           $keys[] = $query['key'];
         }
       }
-      $joins  = [];
-      $wheres = [];
-      $k      = 1;
+      $unions = [];
       foreach ( $keys as $key ) {
-        $join      = "wp_usermeta um$k ON $primary_table.$primary_id_column = um$k.user_id AND um$k.meta_key = %s";
-        $join      = $wpdb->prepare( $join, $key );
-        $joins[]   = $join;
-        $wheres [] = "um$k.umeta_id IS NOT NULL";
-        $k ++;
+        $unions [] = $wpdb->prepare( "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s", $key );
       }
-      $join  = PHP_EOL . ' LEFT JOIN ' . implode( PHP_EOL . ' LEFT JOIN ', $joins );
-      $where = PHP_EOL . ' AND (' . implode( PHP_EOL . ' OR ', $wheres ) . ')';
+      $where = PHP_EOL . " AND $wpdb->users.ID IN (" . implode( PHP_EOL . 'UNION ALL' . PHP_EOL, $unions ) . ')' . PHP_EOL;
       /* only do this once per invocation of user query with metadata */
       remove_filter( 'get_meta_sql', [ $this, 'filter_meta_sql' ], 10 );
-      return [ 'join' => $join, 'where' => $where ];
-    } else {
-      return $sql;
+
+      $sql['join']  = '';
+      $sql['where'] = $where;
     }
+    return $sql;
   }
 
   /**
@@ -611,61 +695,53 @@ class UserHandler extends WordPressHooks {
    * @noinspection PhpUnused
    */
   public function filter__rest_user_query( $query_args, $request ) {
+    $threshold = get_option( $this->options_name )['quickedit_threshold_limit'];
+    $editors   = $this->indexer->getEditors();
+    if ( count( $editors ) <= $threshold ) {
+      $query_args['include'] = $editors;
+    }
     return $this->filtered_query_args( $query_args, $query_args );
   }
 
   /**
-   * Fires immediately after a user is created or updated via the REST API.
+   * Filters the wp_dropdown_users() HTML output.
    *
-   * @param WP_User $user Inserted or updated user object.
-   * @param WP_REST_Request $request Request object.
-   * @param bool $creating True when creating a user, false when updating.
+   * @param string $html HTML output generated by wp_dropdown_users().
    *
-   * @noinspection PhpUnused
-   * @noinspection PhpUnusedParameterInspection
-   * @since 4.7.0
+   * @returns string HTML to use.
+   * @since 2.3.0
    *
    */
-  public function action__rest_insert_user( $user, $request, $creating ) {
-    // TODO
-    $a = $user;
-  }
+  public function filter__wp_dropdown_users( $html ) {
+    if ( ! $this->doAutocomplete ) {
+      return $html;
+    }
 
-  /**
-   * Fires after a user is completely created or updated via the REST API.
-   *
-   * @param WP_User $user Inserted or updated user object.
-   * @param WP_REST_Request $request Request object.
-   * @param bool $creating True when creating a user, false when updating.
-   *
-   * @noinspection PhpUnused
-   * @since 5.0.0
-   *
-   */
-  public
-  function action__rest_after_insert_user(
-    $user, $request, $creating
-  ) {
-    $a = $user;
-  }
+    wp_enqueue_script( 'jquery-ui-autocomplete' );
+    wp_enqueue_script( 'iufs-ui-autocomplete',
+      plugins_url( 'js/quick-edit-autocomplete.js', __FILE__ ),
+      [ 'jquery-ui-autocomplete' ], INDEX_WP_USERS_FOR_SPEED_VERSION );
+    wp_enqueue_style( 'iufs-ui-autocomplete-style',
+      plugins_url( 'css/quick-edit-autocomplete.css', __FILE__ ),
+      [], INDEX_WP_USERS_FOR_SPEED_VERSION );
 
-  /**
-   * Fires immediately after a user is deleted via the REST API.
-   *
-   * @param WP_User $user The user data.
-   * @param WP_REST_Response $response The response returned from the API.
-   * @param WP_REST_Request $request The request sent to the API.
-   *
-   * @noinspection PhpUnused
-   * @since 4.7.0
-   *
-   */
-  public
-  function action__rest_delete_user(
-    $user, $response, $request
-  ) {
-    //TODO
-    $a = $user;
+    $selectionBox = new SelectionBox( $html, get_option( $this->options_name ) );
+    $selectionBox->addClass( 'index-wp-users-for-speed' );
+
+    if ( $this->selectionBoxCache ) {
+      /* Already ran a version of this, look for the No Change entry and put it into the cached SelectionBox */
+      if ( count( $selectionBox->users ) > 0
+           && $selectionBox->users[0]->id === - 1
+           && ( count( $this->selectionBoxCache->users ) === 0 || $this->selectionBoxCache->users[0]->id !== - 1 ) ) {
+        $this->selectionBoxCache->prepend( $selectionBox->users[0] );
+      }
+    } else {
+      $this->selectionBoxCache = $selectionBox;
+    }
+    $autocompleteHtml = $this->selectionBoxCache->generateAutocomplete( $this->requestedCapabilities, false );
+    $selectHtml       = $this->selectionBoxCache->generateSelect( false );
+
+    return $selectHtml . PHP_EOL . $autocompleteHtml;
   }
 }
 
