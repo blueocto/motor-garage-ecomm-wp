@@ -22,7 +22,6 @@
 // ==============================================
 
 .woocommerce-products-header {
-    // margin-bottom: rem-calc(50);
     background-color: var(--brand-l-grey);
 
     @include breakpoint(medium) {
@@ -35,16 +34,18 @@
     align-items: center;
     justify-content: center;
     padding: 0 $medium-spacing;
+    height: rem-calc(66); // to match the select
     background-color: rgba(black, 90%);
 
-    @include breakpoint(medium) {
-        height: rem-calc(66); // to match the select
+    @include breakpoint(large) {
+        justify-content: flex-start;
     }
 }
 
 .woocommerce-ordering {
     margin-bottom: rem-calc(50);
     padding: 0 $medium-spacing;
+    width: 100%;
 
     @include breakpoint(medium) {}
 
@@ -54,8 +55,13 @@
 }
 
 .shop-sidebar {
-    padding: rem-calc(50) $medium-spacing;
-    width: 100%; // odd this needs declaring to prevent overflow
+    padding: $large-spacing;
+    background-color: var(--brand-d-grey);
+
+    @include breakpoint(large) {
+        margin-right: 25px;
+        width: 24vw;
+    }
 }
 
 // global styles

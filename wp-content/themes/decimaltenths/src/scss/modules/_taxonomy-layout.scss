@@ -56,16 +56,30 @@
 // ==============================================
 
 .archive .woo-container, .archive .search_results {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		display: grid;
 		gap: 0;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(8, auto);
+		grid-template-areas:
+			"tax-bread			tax-bread"
+			"tax-notice			tax-notice"
+			"tax-head			tax-head"
+			"tax-result-count	tax-ordering"
+			"tax-content		tax-content"
+			"woo-pagination		woo-pagination"
+			"tax-sidebar		tax-sidebar"
+			"recently-viewed	recently-viewed";
+	}
+
+	@include breakpoint(large) {
 		grid-template-columns:
-			$small-spacing
-			minmax(16.666%, 25%)
-			minmax(16.666%, 25%)
-			minmax(16.666%, 25%)
-			minmax(16.666%, 25%)
-			$small-spacing;
+		$medium-spacing
+		auto
+		1fr
+		1fr
+		1fr
+		$medium-spacing;
 		grid-template-rows: auto auto auto auto auto auto;
 		grid-template-areas:
 			". 			tax-bread 			tax-bread 			tax-notice 			tax-notice 			."
@@ -75,28 +89,17 @@
 			". 			woo-pagination 		woo-pagination 		woo-pagination 		woo-pagination 		."
 			". 			recently-viewed 	recently-viewed		recently-viewed		recently-viewed		.";
 	}
-
-	@include breakpoint(xxlarge) {
-		grid-template-columns:
-			minmax($small-spacing, 16.666%)
-			minmax(16.666%, 342px)
-			minmax(16.666%, 342px)
-			minmax(16.666%, 342px)
-			minmax(16.666%, 342px)
-			minmax($small-spacing, 16.666%);
-		grid-template-rows: auto auto auto auto auto auto;
-	}
 }
 
 .woocommerce-breadcrumb {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-bread;
 	}
 }
 
 .woocommerce-products-header {
 	
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-head;
 		gap: 0;
 		
@@ -130,31 +133,31 @@
 // }
 
 .taxonomy-head-wrap {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: taxonomy-head-wrap;
 	}
 }
 
 .woo-picture {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-image;
 	}
 }
 
 .woocommerce-notices-wrapper {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-notice;
 	}
 }
 
 .woocommerce-result-count {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-result-count;
 	}
 }
 
 .woocommerce-ordering {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-ordering;
 	}
 }
@@ -163,33 +166,33 @@
 
 	// UL
 	> .products {
-		@include breakpoint(large) {
+		@include breakpoint(medium) {
 			grid-area: tax-content;
 		}
 	}
 
 	// when no products in category..
 	.woocommerce-info {
-		@include breakpoint(large) {
+		@include breakpoint(medium) {
 			grid-area: woo-pagination;
 		}
 	}
 }
 
 ul.products {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-content;
 	}
 }
 
 .shop-sidebar {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: tax-sidebar;
 	}
 }
 
 .woocommerce-pagination {
-	@include breakpoint(large) {
+	@include breakpoint(medium) {
 		grid-area: woo-pagination;
 	}
 }

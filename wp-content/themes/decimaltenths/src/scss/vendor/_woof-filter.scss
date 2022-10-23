@@ -5,11 +5,30 @@
 
 .WOOF_Widget {
 
+    .widget--title {
+        margin-bottom: 30px;
+        @extend %h4;
+    }
+
     .woof_container {
         margin-bottom: rem-calc(30);
 
         h4 {
             margin-bottom: $medium-spacing;
+            @extend %h5;
+        }
+    }
+
+    @include breakpoint(medium only) {
+        .woof_redraw_zone {
+            display: flex;
+            flex-flow: row wrap;
+
+            .woof_container {
+                flex: 0 0 50%;
+                max-width: 50%;
+                padding: $small-spacing;
+            }
         }
     }
 
