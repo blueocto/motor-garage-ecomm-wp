@@ -34,11 +34,11 @@
                         <product-card>
                             <?php echo wp_get_attachment_image( $product->get_image_id(), "large", array( 'loading' => 'lazy')); ?>
                             <div class="product--desc">
-                                <p class="product--title"><?php echo $product->name; ?></p>
+                                <p class="product--title"><?php the_title(); ?></p>
                                 <p class="product--price">&pound;<?php echo $product->get_price(); ?></p>
                                 <p class="product--category">
                                 <?php 
-                                $terms = get_the_terms( $product->id, 'product_cat' ); 
+                                $terms = get_the_terms( $post->id, 'product_cat' ); 
                                 print($terms[0]->name);
                                 ?>
                                 </p>
@@ -62,11 +62,11 @@
                         <product-card>
                             <?php echo wp_get_attachment_image( $product->get_image_id(), "large", array( 'loading' => 'lazy')); ?>
                             <div class="product--desc">
-                                <p class="product--title"><?php echo $product->name; ?></p>
+                                <p class="product--title"><?php the_title(); ?></p>
                                 <p class="product--price">&pound;<?php echo $product->get_price(); ?></p>
                                 <p class="product--category">
                                 <?php 
-                                $terms = get_the_terms( $product->id, 'product_cat' ); 
+                                $terms = get_the_terms( $post->id, 'product_cat' ); 
                                 print($terms[0]->name);
                                 ?>
                                 </p>
