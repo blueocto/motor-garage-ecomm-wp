@@ -17,7 +17,8 @@ try {
 
     } else {
         foreach ( $categories as $models ) {
-            if($models->parent != 0 && ($models->parent != "15723" && $models->parent != "15235" && $models->parent != "10705" && $models->parent != "14406" && $models->parent != "14599" && $models->parent != "14421" && $models->parent != "3735")){
+
+            if($models->parent != 0 && ($models->parent != "17950" && $models->parent != "18109" && $models->parent != "3735")){
                 $jsonData .= "{\"name\": \"".$models->name."\", \"slug\": \"".$models->slug."\", \"parent\": \"".$models->parent."\", \"id\": \"".$models->term_id."\"},";
             }
         }
