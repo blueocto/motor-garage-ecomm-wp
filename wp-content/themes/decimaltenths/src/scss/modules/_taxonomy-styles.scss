@@ -3,20 +3,73 @@
 // taxonomy-product-cat.php
 // ==============================================
 
+// The /shop/ page
+@include breakpoint(medium down) {
+    .woocommerce-shop {
+
+        .wp-block-media-text.is-stacked-on-mobile .wp-block-media-text__media {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .wp-block-media-text__content {
+            padding: 0 $medium-spacing;
+        }
+    }
+}
+
 // Styles
 // ==============================================
 
 .woocommerce-products-header {
-    margin-bottom: rem-calc(50);
     background-color: var(--brand-l-grey);
+
+    @include breakpoint(medium) {
+        margin-bottom: rem-calc(100);
+    }
+}
+
+.woocommerce-result-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 $medium-spacing;
+    height: rem-calc(66); // to match the select
+    background-color: rgba(black, 90%);
+
+    @include breakpoint(large) {
+        justify-content: flex-start;
+    }
+}
+
+.woocommerce-ordering {
+    margin-bottom: rem-calc(50);
+    padding: 0 $medium-spacing;
+    width: 100%;
+
+    @include breakpoint(medium) {}
+
+    .orderby {
+        margin-bottom: 0;
+    }
 }
 
 .shop-sidebar {
-    padding: $small-spacing;
+    padding: $large-spacing;
+    background-color: var(--brand-d-grey);
+
+    @include breakpoint(large) {
+        margin-right: 25px;
+        width: 24vw;
+    }
 }
 
+// global styles
+// UL
 .products {
+
     .product {
+
         a {
             .woocommerce-loop-product__title {
                 font-size: 1rem !important;
@@ -27,7 +80,9 @@
 }
 
 .woocommerce-pagination {
-    padding: rem-calc(50px 0);
+    margin-bottom: rem-calc(50);
+    padding: rem-calc(50px 15px);
+    background-color: var(--brand-d-grey);
 
     // UL
     ul.page-numbers {
@@ -42,10 +97,13 @@
 
             span, a {
                 display: inline-block;
-                width: rem-calc(60);
-                height: rem-calc(60);
-                line-height: rem-calc(60);
-                border: 1px solid var(--grey-30);
+                margin: 5px 0;
+                padding: 0 7px;
+                min-width: rem-calc(50);
+                height: rem-calc(50);
+                color: black;
+                line-height: rem-calc(50);
+                background-color: white;
 
                 &:hover,
                 &:focus {
@@ -53,9 +111,7 @@
                 }
 
                 &.current {
-                    color: white;
-                    background-color: var(--brand-green);
-                    border-color: var(--brand-green);
+                    background-color: var(--brand-neon-green);
                 }
             }
         }

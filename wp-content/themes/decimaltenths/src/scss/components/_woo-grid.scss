@@ -12,6 +12,7 @@ ul.products {
 	// justify-content: center;
 	align-content: flex-start;
 	list-style: none;
+	margin: 0;
 	padding: 0;
 }
 
@@ -22,6 +23,12 @@ ul.products {
 ul.products,
 // UL
 .featured-products {
+
+	// Image 
+	.attachment-woocommerce_thumbnail, 
+	.size-woocommerce_thumbnail {
+		margin-bottom: rem-calc(20px);
+	}
 
 	// Shop category listings
 	.woocommerce-loop-category__title {
@@ -148,15 +155,16 @@ ul.products,
 
 		.woocommerce-loop-product__title {
 			@extend %h5;
-			margin-bottom: 0;
+			margin-bottom: 15px;
 			// font-weight: $regular;
 		}
 	}
 }
 
 .price {
+	display: block;
 	font-weight: bold;
-	color: darkgreen;
+	color: var(--brand-neon-green);
 
 	del {
 		opacity: 0.5;

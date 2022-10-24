@@ -5,10 +5,16 @@
 .woocommerce-product-gallery, 
 .woocommerce-product-gallery--with-images, 
 .woocommerce-product-gallery--columns-4 {
+
+    margin-bottom: rem-calc(50);
 }
 
 .woocommerce-product-gallery {
     position: relative;
+
+    @include breakpoint(medium) {
+        padding: 0 $medium-spacing;
+    }
 }
 
 .woocommerce-product-gallery__wrapper {

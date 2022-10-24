@@ -1,7 +1,11 @@
 <?php
 /** Plugin Name: Index WP MySQL For Speed Upgrade Filter for mu-plugins.
  *  Description: Prevents version upgrades from changing database table keys. Installed during activation, removed during deactivation.
+<<<<<<< HEAD
  *  Version: 1.4.10
+=======
+ *  Version: 1.4.11
+>>>>>>> 87adf2d23fb23aacc166ac74c61f1cc47543c9c1
  *  License: GPL v2 or later
  */
 

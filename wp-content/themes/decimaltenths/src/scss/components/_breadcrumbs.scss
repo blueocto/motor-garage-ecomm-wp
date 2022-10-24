@@ -3,9 +3,11 @@
 // ==============================================
 
 .woocommerce-breadcrumb {
-    margin-top: $small-spacing;
-    margin-bottom: $small-spacing;
-    padding-left: $small-spacing;
-    padding-right: $small-spacing;
-    // background-color: #FFCDD2;
+    padding: $medium-spacing;
+    font-size: rem-calc(14);
+    background-color: (rgba(black, 60%));
+
+    @include breakpoint(large) {
+        max-width: 50%;
+    }
 }

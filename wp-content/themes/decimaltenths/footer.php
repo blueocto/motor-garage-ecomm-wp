@@ -1,7 +1,7 @@
 	<footer class="footer" role="contentinfo">
 
 		<div class="row">
-			<div class="column small-12">
+			<div class="column small-12 medium-6 xlarge-3">
 				<p class="logo">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
 						<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>

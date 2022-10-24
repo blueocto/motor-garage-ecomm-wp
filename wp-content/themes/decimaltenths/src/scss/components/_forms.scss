@@ -22,20 +22,20 @@ textarea {
 select {
     box-sizing: border-box;
     width: 100%;
-    height: 66px;
-    margin: 0 0 14px;
+    height: rem-calc(66);
+    margin: 0 0 rem-calc(15);
     padding: $small-spacing;
-    padding-right: 1.5rem;
+    padding-right: rem-calc(35);
     color: #0a0a0a;
     font-family: inherit;
-    font-size: 1rem;
-    font-weight: normal;
-    line-height: 1.5;
+    font-size: rem-calc(16);
+    // font-weight: normal;
+    // line-height: 1.5;
     background-color: #fefefe;
     // svg - arrow down
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2350e887' d='m320 176v223.3c0 8.812-7.141 15.97-15.95 16l-224 .6562c-8.82.0438-16.02-7.0562-16.05-15.9562-.0313-8.812 7.109-16 15.95-16.03l185.6-.5547-260.862-260.8153c-6.25-6.25-6.25-16.38 0-22.62s16.38-6.25 22.62 0l260.692 260.62v-184.6c0-8.8 7.2-16 16-16s16 7.2 16 16z'/%3E%3C/svg%3E");
     background-origin: content-box;
-    background-position: right center;
+    background-position: calc(100% + 25px) center;
     background-repeat: no-repeat;
     background-size: 16px auto;
     appearance: none;
