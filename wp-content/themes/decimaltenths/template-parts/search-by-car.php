@@ -10,7 +10,7 @@ $categories = get_terms( ['taxonomy' => 'product_cat'] );
                 <option value="">--Choose Your Manufacturer--</option>
                 <?php
                 foreach( $categories as $manufacturer ) {
-                    if($manufacturer->parent == 0 && ($manufacturer->slug != "awd-2006-2010-awd-2006-2010" && $manufacturer->slug != "brake-discs" && $manufacturer->slug != "formentor-vz2" && $manufacturer->slug != "dtmerchandise" && $manufacturer->slug != "ecus" && $manufacturer->slug != "engine-build" && $manufacturer->slug != "misc")){
+                    if($manufacturer->parent == 0 && ($manufacturer->slug != "spark-plugs" && $manufacturer->slug != "universal" && $manufacturer->slug != "uncategorised")){
                         echo "<option data-catid=\"".$manufacturer->term_id."\" value=\"".$manufacturer->slug."\">".$manufacturer->name."</option>";
                     }
                 }
