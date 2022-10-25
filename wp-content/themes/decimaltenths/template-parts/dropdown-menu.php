@@ -2,8 +2,8 @@
     echo '
     <div class="primary-menu-container">
         <ul id="primary-menu-list" class="menu primary--menu">
-            <li id="menu-item-163427" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-163427"><a href="">Home</a></li>
-            <li id="menu-item-163478" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item menu-item-163478"><a href="shop/" aria-current="page">Shop</a></li>
+            <li id="menu-item-163427" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-163427"><a href="'.home_url().'">Home</a></li>
+            <li id="menu-item-163478" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item menu-item-163478"><a href="'.home_url().'/shop/" aria-current="page">Shop</a></li>
             <li class="menu-item menu-item-has-children">
                 <a href="#">Shop by Vehicle</a>
                 <button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
