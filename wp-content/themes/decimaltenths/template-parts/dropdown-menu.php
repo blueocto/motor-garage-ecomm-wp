@@ -2,8 +2,8 @@
     echo '
     <div class="primary-menu-container">
         <ul id="primary-menu-list" class="menu primary--menu">
-            <li id="menu-item-163427" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-163427"><a href="//localhost:3000/">Home</a></li>
-            <li id="menu-item-163478" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item menu-item-163478"><a href="//localhost:3000/shop/" aria-current="page">Shop</a></li>
+            <li id="menu-item-163427" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-163427"><a href="">Home</a></li>
+            <li id="menu-item-163478" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item menu-item-163478"><a href="shop/" aria-current="page">Shop</a></li>
             <li class="menu-item menu-item-has-children">
                 <a href="#">Shop by Vehicle</a>
                 <button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
@@ -31,11 +31,9 @@
 
     foreach ($all_categories as $cat) { 
 
-        if($cat->category_parent == 0) { 
+        if($cat->category_parent == 0 && ($cat->term_id == 18087 || $cat->term_id == 18089 || $cat->term_id == 18090 || $cat->term_id == 18088)){
 
             $category_id = $cat->term_id; 
-            // $thumbnail_id = get_woocommerce_term_meta( $cat->term_id, 'thumbnail_id', true ); 
-            // $image = wp_get_attachment_url( $thumbnail_id );
             $term_link = get_term_link( $cat );
 
             echo '
@@ -76,25 +74,6 @@
                             </a>
                         </li>
                     ';
-
-                    /*
-                    $args = array( 
-                        'post_type' => 'product', 
-                        'product_cat' => $sub_category->slug
-                    ); 
-                    $loop = new WP_Query( $args ); 
-
-                    while ( $loop->have_posts() ) : $loop->the_post(); global $product; ?>
-
-                    <li class="level-3">
-                        <a href="<?php echo get_permalink( $loop->post->ID ) ?>" 
-                            title="<?php echo esc_attr($loop->post->post_title ? $loop->post->post_title : $loop->post->ID); ?>"><?php the_title(); ?></a>
-                    </li>
-
-            <?php 
-                    endwhile; 
-                    wp_reset_query(); 
-                    */
                 
                 } // end foreach
             
@@ -104,23 +83,6 @@
                 </ul><!-- // sub-sub-menu -->
             </li>
             ';
-            
-            /*
-            else { 
-                echo 'else nothing';
-                // $args = array( 'post_type' => 'product', 'product_cat' => $cat->slug ); 
-                // $loop = new WP_Query( $args ); 
-                // echo "<ul class='products'>"; 
-                // while ( $loop->have_posts() ) : $loop->the_post(); global $product; 
-            ?>
-
-            <li>
-                <a href="<?php echo get_permalink( $loop->post->ID ) ?>" title="<?php echo esc_attr($loop->post->post_title ? $loop->post->post_title : $loop->post->ID); ?>"><?php the_title(); ?></a>
-            </li>
-
-<?php 
-            } //end else
-            */
 
         } //endif
     } //end foreach
