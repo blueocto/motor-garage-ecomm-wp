@@ -13,6 +13,7 @@ $model = $_GET['model'] ?? '';
 ?>
 
 <div class="archive">
+    <input type="hidden" class="model_search" value="<?php print($model); ?>" />
     <h1>Search for &ldquo;<?php echo esc_html( $_GET['manufacturer'] ); ?> (<?php echo esc_html( $model ); ?>)&rdquo;</h1>
     <?php
     $category = get_term_by( 'slug', ''.$model.'', 'product_cat' );
