@@ -34,6 +34,15 @@ jQuery(document).ready(function ($) {
         });
 	});
 
+	var currentSearchModel = $(".model_search").val();
+	$("#woof_tax_select_product_cat > option").each(function() {
+		if(this.value == currentSearchModel){
+			$(this).attr("selected", "selected");
+		} else {
+			$(this).attr("disabled", "disabled");
+		}
+	});
+
     if ($(".hero_image_carousel").length) {
 		$(".hero_image_carousel").slick({
 			mobileFirst: true,
