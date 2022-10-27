@@ -34,14 +34,37 @@ jQuery(document).ready(function ($) {
         });
 	});
 
-	var currentSearchModel = $(".model_search").val();
-	$("#woof_tax_select_product_cat > option").each(function() {
-		if(this.value == currentSearchModel){
-			$(this).attr("selected", "selected");
-		} else {
-			$(this).attr("disabled", "disabled");
-		}
-	});
+	// Disable brands that are not relevant for the search of a model
+	if($(".brands_array").val()) {
+		var brands = $.parseJSON($(".brands_array").val());
+		$("#woof_tax_select_pwb-brand > option").each(function() {
+			if($.inArray($(this).val(), brands) == -1){
+				$(this).attr("disabled", "disabled");
+			}
+		});
+	}
+
+	// Disable vechinle types that do not match search of a model
+	if($("input[name=model]").val()) {
+		var currentSearchModel = $("input[name=model]").val();
+		$("#woof_tax_select_product_cat > option").each(function() {
+			if(this.value == currentSearchModel){
+				$(this).attr("selected", "selected");
+			} else {
+				$(this).attr("disabled", "disabled");
+			}
+		});
+	}
+
+	// Disable tags that are not relevant for the search of a model
+	if($(".tags_array").val()) {
+		var tags = $.parseJSON($(".tags_array").val());
+		$("#woof_tax_select_product_tag > option").each(function() {
+			if($.inArray($(this).val(), tags) == -1){
+				$(this).attr("disabled", "disabled");
+			}
+		});
+	}
 
     if ($(".hero_image_carousel").length) {
 		$(".hero_image_carousel").slick({
