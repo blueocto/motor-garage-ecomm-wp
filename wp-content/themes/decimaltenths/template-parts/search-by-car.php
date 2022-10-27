@@ -10,7 +10,7 @@ $categories = get_terms( ['taxonomy' => 'product_cat'] );
                 <option value="">--Choose Your Manufacturer--</option>
                 <?php
                 foreach( $categories as $manufacturer ) {
-                    if($manufacturer->parent == 0 && ($manufacturer->slug != "spark-plugs" && $manufacturer->slug != "universal" && $manufacturer->slug != "uncategorised")){
+                    if($manufacturer->parent == 0 && ($manufacturer->term_id == 18087 || $manufacturer->term_id == 18089 || $manufacturer->term_id == 18090 || $manufacturer->term_id == 18088)){
                         echo "<option data-catid=\"".$manufacturer->term_id."\" value=\"".$manufacturer->slug."\">".$manufacturer->name."</option>";
                     }
                 }
