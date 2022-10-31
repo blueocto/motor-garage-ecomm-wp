@@ -59,6 +59,15 @@
 	position: relative;
 	overflow: hidden;
 
+	product-card {
+		img {
+			width:  300px;
+    		height: 300px;
+    		object-fit: cover;
+			min-height:100%;
+		}
+	}
+
 	.slick-track {
 		display: flex;
 	}
