@@ -50,7 +50,6 @@
 			grid-area: single-product;
 			margin-left: auto;
 			margin-right: auto;
-			width: $global-width;
 		}
 	}
 
@@ -58,6 +57,11 @@
 		@include breakpoint(large) {
 			// grid-area: related-products;
 			grid-area: upsells;
+		}
+
+		.woocommerce-loop-product__title {
+			text-transform: none;
+			font-size: var(--size-l-1);
 		}
 	}
 
@@ -98,6 +102,31 @@
 		.single-product-description {
 			@include breakpoint(large) {
 				grid-area: product-description;
+			}
+
+			.summary {
+				background-color: white;
+				border: 2px solid var(--brand-neon-green);
+				color: black;
+				border-radius: 5px;
+				padding: 20px;
+			}
+
+			.product_title {
+				text-transform: none;
+			}
+
+			.price {
+				font-size: var(--size-l-4);
+			}
+
+			.single_add_to_cart_button {
+				color: black;
+    			background-color: var(--brand-neon-green);
+
+				&:hover {
+					color: white;
+				}
 			}
 		}
 	}

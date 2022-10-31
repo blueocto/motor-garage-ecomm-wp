@@ -8,6 +8,6 @@
     background-color: (rgba(black, 60%));
 
     @include breakpoint(large) {
-        max-width: 50%;
+        max-width: 100%;
     }
 }
