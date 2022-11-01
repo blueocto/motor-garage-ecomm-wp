@@ -129,6 +129,13 @@
 			left: 0;
 			top: 100%;
 		}
+		
+		&.brands {
+			.menu-item {
+				flex: 0 0 25%;
+				padding-top: $medium-spacing;
+			}
+		}
 
 		.menu-item {
 			display: block;

@@ -92,6 +92,35 @@
     echo '
                 </ul><!-- // sub-menu -->
             </li>
+            <li class="menu-item menu-item-has-children">
+                <a href="#">Brands</a>
+                <button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
+                <ul class="sub-menu brands">';
+
+                $args_brands = array( 
+                    'taxonomy' => "pwb-brand", 
+                    'orderby' => 'name', 
+                    'show_count' => 0, 
+                    'pad_counts' => 0, 
+                    'hierarchical' => 1, 
+                    'hide_empty' => 0
+                );
+            
+                $all_brands = get_categories( $args_brands ); 
+
+                foreach ($all_brands as $brand) { 
+                    $brand_id = $brand->term_id; 
+                    $term_link = get_term_link( $brand );
+
+                    echo '
+                    <li class="level-1 menu-item">
+                        <a href="' . esc_url( $term_link ) . '">
+                    ';
+                    echo $brand->name; 
+                    echo '</a></li>';
+                }
+            echo '</ul>
+            </li>
         </ul>
     </div>
     ';
