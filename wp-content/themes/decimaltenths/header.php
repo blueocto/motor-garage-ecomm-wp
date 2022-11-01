@@ -66,6 +66,7 @@
 		<?php get_template_part( 'template-parts/dropdown-menu' ); ?>
 
 		<div class="header--shop-links">
+			<?php get_search_form(); ?>
 			<p class="menu-item">
 				<a href="/basket/">
 					<span class="visuallyhidden">Cart</span>
@@ -76,12 +77,6 @@
 				<a href="/my-account/">
 					<span class="visuallyhidden">Account</span>
 					<?php get_template_part( 'template-parts/svg/user-light' ); ?>
-				</a>
-			</p>
-			<p class="menu-item">
-				<a href="">
-					<span class="visuallyhidden">Search</span>
-					<?php get_template_part( 'template-parts/svg/magnifying-glass-light' ); ?>
 				</a>
 			</p>
 		</div>
