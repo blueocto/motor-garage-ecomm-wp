@@ -57,7 +57,7 @@ get_header();
 
     <?php } else { ?>
 
-        <h1>Search for &ldquo;<?php echo esc_html( $_GET['s'] ); ?>&rdquo;</h1>
+        <h1>Search for &ldquo;<?php echo esc_html( get_search_query() ); ?>&rdquo;</h1>
 
         <div class="search_results">
         <?php
@@ -65,20 +65,36 @@ get_header();
         $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
         $args = array( 
             'post_type' => array( 'post', 'product' ),
-            's' => $_GET['s'],
+            's' => get_search_query(),
             'status' => 'publish',
             'posts_per_page' => 9, 
             'paged' => $paged, 
         );
         // The Query
         $wp_query = new WP_Query( $args );
+
         // The Loop
         if ( $wp_query->have_posts() ) {
             ?>
             <ul class="products columns-3">
             <?php
             while ( $wp_query->have_posts() ) : $wp_query->the_post(); 
-                wc_get_template_part( 'content', 'product' );
+                ?>
+                <li class="product">
+                    <a href="<?php echo esc_url( get_permalink()); ?>">
+                    <?php if( function_exists( 'has_post_thumbnail' ) && has_post_thumbnail() ) { ?>				
+                    <picture class="excerpt--picture picture">
+                        <?php the_post_thumbnail( array(1348, 1348), array( 'loading' => 'lazy' ) ); ?>
+                    </picture>
+                    <?php } else { ?>
+                    <picture class="excerpt--picture picture">
+                        <img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2022/10/dt-product-placeholder.png" width="307" height="307" alt="Decimal Tenths Placeholder logo" />
+                    </picture>
+                    <?php } ?>
+                    <div class="blog-title"><?php the_title( sprintf( '<h2>'), '</h2>' ); ?></div>
+                    </a>
+                </li>
+                <?php
             endwhile;
             ?>
             </ul>

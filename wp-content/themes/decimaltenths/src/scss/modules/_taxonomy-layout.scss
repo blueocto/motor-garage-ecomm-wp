@@ -55,7 +55,7 @@
 // CSS Grid
 // ==============================================
 
-.archive .woo-container, .archive .search_results, .archive .woof_shortcode_output {
+.archive .woo-container, .archive .search_results, .archive .woof_shortcode_output, .blog .index--content {
 	@include breakpoint(medium) {
 		display: grid;
 		gap: 0;
@@ -116,9 +116,9 @@
 	}
 }
 
-.woocommerce-products-header__title.page-title {
-	display: none;
-}
+// .woocommerce-products-header__title.page-title {
+// 	display: none;
+// }
 
 // .page-title {
 // 	@include breakpoint(large) {

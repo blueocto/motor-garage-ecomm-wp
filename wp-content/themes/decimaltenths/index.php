@@ -3,21 +3,24 @@
 <main id="main" class="main">
 
 	<?php if ( is_home() ) { ?>
-		<h1>News</h1>
+		<h1>Decimal Tenth Blog</h1>
 	<?php } elseif ( is_category() || is_archive() ) { ?>
 		<h1><?php the_archive_title( '' ); ?></h1>
 	<?php } elseif( is_search() ) { ?>
 		<h1>&ldquo;<?php echo esc_html( $_GET['s'] ); ?>&rdquo;</h1>
 	<?php } ?>
 	
-	
+	<div class="index--content">
 	<?php if ( have_posts() ) : ?>
+		<ul class="products columns-3">
 		<?php while ( have_posts() ) : the_post(); ?>
 			<?php get_template_part( 'template-parts/content', 'excerpt' ); ?>
 		<?php endwhile; ?>
+		</ul>
 		<?php else : ?>
 			<?php get_template_part( 'template-parts/content', 'none' ); ?>
 	<?php endif; // End have_posts() check. ?>
+		</div>
 
 	
 	<?php 

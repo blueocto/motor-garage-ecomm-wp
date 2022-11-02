@@ -80,9 +80,13 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 			// Enqueue the main Stylesheet.
 			wp_enqueue_style( 'theme-app', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'app.css' ), array(), '', 'all' );
 
+			if( is_home() ) {
+				wp_enqueue_style( 'theme-blog', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'blog.css' ), array(), '', 'all' );
+			}
+
 			if ( is_home() || is_search() || is_category() ) {
 
-				// wp_enqueue_style( 'theme-blog', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'blog.css' ), array(), '', 'all' );
+				wp_enqueue_style( 'theme-blog', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'blog.css' ), array(), '', 'all' );
 			}
 
 			if ( is_single() ) {

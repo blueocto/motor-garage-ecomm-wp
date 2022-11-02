@@ -22,11 +22,12 @@
 // ==============================================
 
 .woocommerce-products-header {
-    background-color: var(--brand-l-grey);
+    padding: $large-spacing;
+    // background-color: var(--brand-l-grey);
 
-    @include breakpoint(medium) {
-        margin-bottom: rem-calc(100);
-    }
+    // @include breakpoint(medium) {
+    //     margin-bottom: rem-calc(100);
+    // }
 }
 
 .woocommerce-result-count {

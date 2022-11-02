@@ -1,0 +1,20 @@
+.blog {
+    .main {
+        h1 {
+            padding: $xxlarge-spacing;
+        }
+    }
+}
+
+.index--content {
+    margin-bottom: $xxlarge-spacing;
+
+    .blog-title {
+        background-color: var(--brand-d-grey);
+        padding: $large-spacing;
+
+        h2 {
+            text-transform: none;
+        }
+    }
+}

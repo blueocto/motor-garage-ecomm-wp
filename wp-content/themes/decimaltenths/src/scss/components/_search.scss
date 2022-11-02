@@ -1,5 +1,28 @@
+.archive {
+    h1 {
+        padding: $large-spacing;
+    }
+}
+
 .searchandfilter {
     ul {
         margin-left: -20px;
+    }
+
+    input[type=submit]{
+        color: black;
+        background-color: var(--brand-neon-green);
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.search_results {
+    h2 {
+        text-transform: none;
+        font-size: 1rem !important;
+        text-align: left;
     }
 }
