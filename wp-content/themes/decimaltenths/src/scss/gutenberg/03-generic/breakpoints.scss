@@ -136,7 +136,7 @@ $breakpoint_xxl: 1920px; //1024px;
 }
 
 %responsive-alignwide-width {
-	max-width: $global-width; //var(--responsive--alignwide-width);
+	max-width: var(--responsive--alignwide-width); //$global-width;
 	margin-left: auto;
 	margin-right: auto;
 }
