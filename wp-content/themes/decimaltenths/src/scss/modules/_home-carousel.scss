@@ -5,10 +5,7 @@
 	.slick-next,
 	.slick-prev {
 		&:focus {
-			top: 31px !important;
-			@include breakpoint(medium down) {
-				top: 25px !important;
-			}
+			top: calc(50% - 2px);
 		}
 	}
 

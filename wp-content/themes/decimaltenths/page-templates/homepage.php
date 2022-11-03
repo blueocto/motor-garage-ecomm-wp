@@ -39,7 +39,7 @@ get_header(); ?>
 
     <video-feed>
         <div class="row column">
-            <h2 class="h3">Latest Videos <p><a href="#">View All</a></p></h2>
+            <h2 class="h3">Latest Videos <p><a href="https://www.youtube.com/channel/UCIipR1T51cr5fsfCSRX_kgA" target="_blank">View All</a></p></h2>
         </div>
         <div class="row column">
             <?php echo do_shortcode("[youtube-feed feed=1]"); ?>
