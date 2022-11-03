@@ -25,7 +25,7 @@ $categories = get_terms( ['taxonomy' => 'product_cat'] );
         </div>
         <div class="form-row">
             <input type="submit" value="Search">
-            <a class="btn btn-white" href="#">Shop all</a>
+            <a class="btn" href="#">Shop all</a>
         </div>
     </form>
 </section>
