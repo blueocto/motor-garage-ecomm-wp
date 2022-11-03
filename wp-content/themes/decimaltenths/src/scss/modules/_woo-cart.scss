@@ -7,11 +7,116 @@
 
 	.woocommerce {
 		max-width: var(--grid-width);
+		margin-top: 0;
 		margin-right: auto;
 		margin-left: auto;
 		padding-right: $small-spacing;
 		padding-left: $small-spacing;
-		padding-bottom: var(--section-padding);
+		padding-bottom: $xxlarge-spacing;
+	}
+
+	h1 {
+		position: relative;
+		display: inline-block;
+		padding: $large-spacing $large-spacing 0 $large-spacing;
+
+		&::after {
+			content: '';
+			position: relative;
+			display: block;
+			bottom: 0;
+			width: 80%;
+			height: 4px;
+			background-color: green;
+		}
+	}
+}
+
+table:not(.variations) {
+	margin-bottom: $xxlarge-spacing;
+	width: 100%;
+	border-collapse: collapse;
+
+	th {
+		@extend %p;
+		padding: $small-spacing;
+		color: white;
+		text-align: left; 
+		font-weight: $bold;
+		text-transform: uppercase;
+		background-color: var(--brand-neon-green);
+		border: 1px solid var(--off-black);
+
+		@include breakpoint(medium) {
+			padding: $medium-spacing;
+		}
+
+		&:last-of-type {
+			border-right: 2px solid var(--off-black);
+		}
+	}
+
+	// Zebra stripes
+	tbody {
+
+		tr {
+			&:nth-child(even) {
+				border-bottom: 0;
+			}
+		}
+	}
+
+	td {
+		@extend %p;
+		padding: $small-spacing;
+		text-align: left; 
+		border: 1px solid var(--off-black);
+		background-color: white;
+		color: var(--off-black);
+
+		@include breakpoint(medium) {
+			padding: $medium-spacing;
+		}
+	}
+
+	@include breakpoint(medium down) {
+		// stack tables on smaller devices....
+
+		thead {
+			display: none;
+		}
+
+		th {
+			display: none;
+		}
+
+		tr {
+			display: block;
+		}
+
+		td {
+			display: block;
+			text-align: right !important;
+
+			&::before {
+				content: attr(data-title) " ";
+				font-weight: 700;
+				float: left;
+			}
+		}
+	}
+
+	a.remove {
+		display: inline-block;
+		width: 38px;
+		height: 38px;
+		color: #fff;
+		text-align: center;
+		line-height: 36px;
+		border-radius: 50%;
+		background-color: #e9808a;
+		font-size: var(--size-l-6);
+		font-weight: $bold;
 	}
 }
 
@@ -78,7 +183,7 @@
 			}
 
 			[name="apply_coupon"] {
-				color: black;
+				color: white;
 				background-color: green;
 				border: 1px solid darkgreen;
 
@@ -115,6 +220,24 @@
 
 	.cart_totals {
 		order: 0;
+	}
+	.checkout-button {
+		display: inline-block;
+		padding: 10px 35px;
+		height: 50px;
+		color: black;
+		font-family: $heading-font;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		background-color: transparent;
+		border: 2px solid var(--brand-neon-green);
+		cursor: pointer;
+		background-color: var(--brand-neon-green);
+
+		&:hover,
+		&:focus {
+			color: white;
+		}
 	}
 }
 
