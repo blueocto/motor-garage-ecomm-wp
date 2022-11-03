@@ -1,0 +1,75 @@
+table:not(.variations) {
+	margin-bottom: $xxlarge-spacing;
+	width: 100%;
+	border-collapse: collapse;
+
+	th {
+		@extend %p;
+		padding: $small-spacing;
+		color: var(--off-black);
+		text-align: left; 
+		font-weight: $bold;
+		text-transform: uppercase;
+		background-color: var(--brand-neon-green);
+		border: 1px solid var(--off-black);
+
+		@include breakpoint(medium) {
+			padding: $medium-spacing;
+		}
+
+		&:last-of-type {
+			border-right: 2px solid var(--off-black);
+		}
+	}
+
+	// Zebra stripes
+	tbody {
+
+		tr {
+			&:nth-child(even) {
+				border-bottom: 0;
+			}
+		}
+	}
+
+	td {
+		@extend %p;
+		padding: $small-spacing;
+		text-align: left; 
+		border: 1px solid var(--off-black);
+		background-color: var(--off-white);
+		color: var(--off-black);
+
+		@include breakpoint(medium) {
+			padding: $medium-spacing;
+		}
+	}
+
+	@include breakpoint(medium down) {
+		// stack tables on smaller devices....
+
+		thead {
+			display: none;
+		}
+
+		th {
+			display: none;
+		}
+
+		tr {
+			display: block;
+		}
+
+		td {
+			display: block;
+			text-align: right !important;
+
+			&::before {
+				content: attr(data-title) " ";
+				font-weight: 700;
+				float: left;
+			}
+		}
+	}
+
+}

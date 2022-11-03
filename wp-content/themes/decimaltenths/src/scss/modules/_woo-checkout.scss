@@ -42,19 +42,28 @@
 
 .woocommerce-form-coupon-toggle {
 	@extend %alert;
-	@extend %tip;
 	margin-bottom: $small-spacing;
+	background-color: var(--brand-l-grey);
+	border:none;
+
+	.woocommerce-info {
+		border: none;
+		background-color: var(--brand-l-grey);
+		color: black;
+	}
 
 	a {
-		color: darken($alert-tip, 50%);
+		&:hover {
+			text-decoration: underline;
+		};
 	}
 }
 
 .woocommerce-form-coupon {
 	@extend %alert;
-	@extend %tip;
-	margin-bottom: $large-spacing;
 	text-align: left;
+	background-color: var(--brand-l-grey);
+	border:none;
 }
 
 
@@ -66,6 +75,12 @@
 	// small-12
 	flex: 0 0 100%;
 	max-width: 100%;
+
+	#customer_details {
+		label {
+			color: var(--off-white);
+		}
+	}
 
 	> * {
 		@include column();
@@ -111,7 +126,9 @@
 .woocommerce-checkout-payment {
 	margin-bottom: $xxlarge-spacing;
 	padding: $small-spacing;
-	border: 2px solid var(--brand-l-grey);
+	border: 2px solid var(--brand-neon-green);
+	background-color: var(--off-white);
+	color: var(--off-black);
 
 	.wc_payment_methods {
 		list-style: none;
@@ -130,3 +147,61 @@
 }
 
 
+// Order received
+.woocommerce-order {
+	display: flex;
+    flex-flow: row wrap;
+    padding-top: 2.5rem;
+    flex: 0 0 100%;
+    max-width: 100%;
+
+	p, ul {
+		flex: 0 0 100%;
+    	max-width: 100%;
+		margin-bottom: $medium-spacing;
+
+		&.woocommerce-thankyou-order-received {
+			margin: 0;
+			padding-top: $large-spacing;
+			background-color: var(--off-white);
+			border-top: 3px solid var(--brand-neon-green);
+			border-left: 3px solid var(--brand-neon-green);
+			border-right: 3px solid var(--brand-neon-green);
+			font-size: var(--size-l-4);
+		}
+		&.woocommerce-thankyou-order-details {
+			margin: -2px 0 $large-spacing 0;
+			background-color: var(--off-white);
+			color: var(--off-black);
+			padding: $xxlarge-spacing;
+			border-bottom: 3px solid var(--brand-neon-green);
+			border-left: 3px solid var(--brand-neon-green);
+			border-right: 3px solid var(--brand-neon-green);
+		}
+	}
+
+	p {
+		&:last-of-type {
+			display: none;
+		}
+	}
+
+	section {
+		@include column();
+		// small-12
+		flex: 0 0 100%;
+		max-width: 100%;
+
+		@include breakpoint(large) {
+			flex: 0 0 50%;
+			max-width: 50%;
+		}
+		
+		address {
+			padding: $large-spacing;
+			background-color: var(--off-white);
+			color: var(--off-black);
+			border: 2px solid var(--brand-neon-green);
+		}
+	}
+}

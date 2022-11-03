@@ -154,4 +154,7 @@ jQuery(document).ready(function ($) {
 			],
 		});
 	}
+
+	$("#order_review_heading").prependTo("#order_review");
+
 });

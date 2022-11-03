@@ -99,6 +99,11 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 				wp_enqueue_style( 'theme-checkout', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'checkout.css' ), array(), '', 'all' );
 			}
 
+			if ( is_account_page() ) {
+				
+				wp_enqueue_style( 'theme-account', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'account.css' ), array(), '', 'all' );
+			}
+
 			if ( is_product() ) {
 
 				wp_enqueue_style( 'theme-product', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'product.css' ), array(), '', 'all' );
