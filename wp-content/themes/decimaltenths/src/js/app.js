@@ -40,6 +40,14 @@ jQuery(document).ready(function ($) {
 		$("#woof_tax_select_pwb-brand > option").each(function() {
 			if($.inArray($(this).val(), brands) == -1){
 				$(this).attr("disabled", "disabled");
+				$(this).css("display", "none");
+			}
+		});
+	}
+	if($("input[name=woof_t_pwb-brand]").val()){
+		$("#woof_tax_select_pwb-brand > option").each(function() {
+			if($(this).attr('disabled')){
+				$(this).css("display", "none");
 			}
 		});
 	}
@@ -52,6 +60,7 @@ jQuery(document).ready(function ($) {
 				$(this).attr("selected", "selected");
 			} else {
 				$(this).attr("disabled", "disabled");
+				$(this).css("display", "none");
 			}
 		});
 	}
@@ -62,6 +71,14 @@ jQuery(document).ready(function ($) {
 		$("#woof_tax_select_product_tag > option").each(function() {
 			if($.inArray($(this).val(), tags) == -1){
 				$(this).attr("disabled", "disabled");
+				$(this).css("display", "none");
+			}
+		});
+	}
+	if($("input[name=woof_t_product_tag]").val()){
+		$("#woof_tax_select_product_tag > option").each(function() {
+			if($(this).attr('disabled')){
+				$(this).css("display", "none");
 			}
 		});
 	}
