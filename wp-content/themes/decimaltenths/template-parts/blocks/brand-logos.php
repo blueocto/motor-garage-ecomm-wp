@@ -1,14 +1,17 @@
 <brand-logos>
-    <div class="column">
-        <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/audi-white.svg'; ?>" alt="" />
-    </div>
-    <div class="column">
-        <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/seat-white.svg'; ?>" alt="" />
-    </div>
-    <div class="column">
-        <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/skoda-white.svg'; ?>" alt="" />
-    </div>
-    <div class="column">
-        <img class="b-logo" src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/volkswagen-white.svg'; ?>" alt="" />
-    </div>
+    <?php 
+    if( have_rows('brand_logos', 'option') ):
+        ?>
+        <?php
+        while ( have_rows( 'brand_logos', 'option' ) ) : the_row();
+        ?>
+        <div class="column">
+            <img class="b-logo" src="<?php print(get_sub_field("logo", 'option')); ?>" alt="Car logo" />
+        </div>
+        <?php
+        endwhile;
+        ?>
+    <?php
+    endif;
+    ?>
 </brand-logos>
