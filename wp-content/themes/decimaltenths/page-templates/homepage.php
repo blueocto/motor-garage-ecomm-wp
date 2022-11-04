@@ -6,22 +6,28 @@ get_header(); ?>
 
 <main id="main" class="main">
     <hero-car-filters>
-        <!-- // TODO: Dan... -->
         <hero-images>
             <div class="hero_image_carousel">
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/green-car-bg.webp'; ?>" alt="" />
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/cobra-sport-exhaust_audi-s3-8y.webp'; ?>" alt="" />
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/cobra-sport-exhaust_vw-golf-mk7.5-gti.webp'; ?>" alt="" />
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/forge-fuel-pressure-regulator.webp'; ?>" alt="" />
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/powerflex-front-wishbone-rear-bush-anitlift-caster-offset.webp'; ?>" alt="" />
-                <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/powerflex-performance-polyurethane-bushes.webp'; ?>" alt="" />
+                <?php 
+                if( have_rows('home_hero_carousel', 'option') ):
+                    ?>
+                    <?php
+                    while ( have_rows( 'home_hero_carousel', 'option' ) ) : the_row();
+                    ?>
+                        <?php print(wp_get_attachment_image( get_sub_field("image", 'option'), "large", array( 'loading' => 'lazy'))); ?>
+                    <?php
+                    endwhile;
+                    ?>
+                <?php
+                endif;
+                ?>
             </div>
         </hero-images>
         
         <hero-inner>
             <hero-content>
-                <h2 class="hero--heading">Quality Parts</h2>
-                <p class="hero--subheading">For your beloved Audi, SEAT, VW and more&hellip;</p>
+                <h2 class="hero--heading"><?php print(get_field("home_hero_heading", 'option')); ?></h2>
+                <p class="hero--subheading"><?php print(get_field("home_hero_sub_heading", 'option')); ?></p>
                 <?php get_template_part( 'template-parts/search-by-car' ); ?>
             </hero-content>
         </hero-inner>
