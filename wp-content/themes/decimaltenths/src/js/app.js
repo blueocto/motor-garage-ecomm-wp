@@ -64,6 +64,13 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	}
+	if($("input[name=woof_t_product_cat]").val()){
+		$("#woof_tax_select_product_cat > option").each(function() {
+			if($(this).attr('disabled')){
+				$(this).css("display", "none");
+			}
+		});
+	}
 
 	// Disable tags that are not relevant for the search of a model
 	if($(".tags_array").val()) {
