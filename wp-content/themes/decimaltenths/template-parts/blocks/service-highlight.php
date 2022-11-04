@@ -1,25 +1,25 @@
 <service-highlight>
     <div class="picture highlight-img-1">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/SBM0232.webp'; ?>" alt="" />
+        <?php print(wp_get_attachment_image( get_field("service_image_1", 'option'), "large", array( 'loading' => 'lazy'))); ?>
     </div>
     <div class="picture highlight-img-2">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/SBM0100.webp'; ?>" alt="" />
+        <?php print(wp_get_attachment_image( get_field("service_image_2", 'option'), "large", array( 'loading' => 'lazy'))); ?>
     </div>
     <div class="picture highlight-img-3">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/SBM0222.webp'; ?>" alt="" />
+        <?php print(wp_get_attachment_image( get_field("service_image_3", 'option'), "large", array( 'loading' => 'lazy'))); ?>
     </div>
     <div class="highlight-content">
-        <h2>Custom Tuning</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo pulvinar lacus, et porta diam rutrum non.</p>
-        <p><a class="btn" href="#">View services</a></p>
+        <h2><?php print(get_field("service_heading", "option")); ?></h2>
+        <?php print(get_field("service_content", "option")); ?>
+        <p><a class="btn" href="<?php print(get_field("service_link_url", "option")); ?>"><?php print(get_field("service_link_text", "option")); ?></a></p>
     </div>
     <div class="picture highlight-img-4">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/SBM0106.webp'; ?>" alt="" />
+     <?php print(wp_get_attachment_image( get_field("service_image_4", 'option'), "large", array( 'loading' => 'lazy'))); ?>
     </div>
     <div class="picture highlight-img-5">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/SBM0150.webp'; ?>" alt="" />
+        <?php print(wp_get_attachment_image( get_field("service_image_5", 'option'), "large", array( 'loading' => 'lazy'))); ?>
     </div>
     <div class="picture highlight-img-6">
-        <img src="<?php echo get_stylesheet_directory_uri() . '/dist/img/SBM0166.webp'; ?>" alt="" />
+        <?php print(wp_get_attachment_image( get_field("service_image_6", 'option'), "large", array( 'loading' => 'lazy'))); ?>
     </div>
 </service-highlight>
