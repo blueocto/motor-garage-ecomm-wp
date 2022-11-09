@@ -151,7 +151,6 @@ textarea[readonly] {
 [type='submit'],
 [type='button'] {
     appearance: none;
-    border-radius: 0;
 }
 
 input[type='search'] {
@@ -189,7 +188,6 @@ label > [type='radio'] {
 
 [type='submit'] {
     @extend %btn;
-    border: 0;
 }
 
 label {

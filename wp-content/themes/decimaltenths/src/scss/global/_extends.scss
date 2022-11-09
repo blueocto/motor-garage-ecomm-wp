@@ -177,7 +177,6 @@
     display: inline-block;
 	padding: 10px 50px;
 	height: 50px;
-	color: black;
 	font-family: $heading-font;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
@@ -185,11 +184,12 @@
 	border: 2px solid var(--brand-neon-green);
 	border-radius: 50px;
 	cursor: pointer;
-    background-color: var(--brand-neon-green);
+    color: var(--brand-neon-green);
 
 	&:hover,
 	&:focus {
-		color: white;
+		color: var(--off-black);
+		background: var(--brand-neon-green);
 	}
 }
 

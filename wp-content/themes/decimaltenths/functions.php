@@ -77,3 +77,10 @@ function cc_mime_types($mimes) {
     return $mimes;
 }
 add_filter('upload_mimes', 'cc_mime_types');
+
+// Move add to cart button before price
+add_action( 'woocommerce_single_product_summary', 'moving_add_cart', 1 );
+function moving_add_cart() {
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+    add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 15 );
+}
