@@ -9,21 +9,23 @@
     // UL to toggle the panels
     .tabs, 
     .wc-tabs {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
+        display: grid;
+        overflow: hidden;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 1fr;
+        grid-column-gap: 5px;
+        grid-row-gap: 5px;
         list-style: none;
         margin: 0;
         padding: 0;
         border-bottom: 2px solid var(--brand-neon-green);
 
         li {
-            display: block; 
-            width: 49%;
+            display: flex;
             @extend %h3;
             text-transform: uppercase;
             position: relative;
-            top: 4px;
+            font-size: var(--size-l-1);
 
             a {
                 display: block; 
@@ -32,14 +34,14 @@
                 border-bottom: none;
                 border-top-left-radius: 30px;
                 border-top-right-radius: 30px;
+                width: 100%;
             }
 
             &.active {
-                border-bottom: 2px solid black;
                 a {
                     color: var(--brand-neon-green);
                     border: 2px solid var(--brand-neon-green);
-                    border-bottom: 2px solid black;
+                    border-bottom: none;
                 }
             }
         }
