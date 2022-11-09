@@ -18,6 +18,7 @@
 
 .header {
 	border-bottom: 2px solid var(--brand-neon-green);
+	background-color: black;
 
 	@include breakpoint(medium down) {
 		background-color: black;

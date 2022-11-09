@@ -12,9 +12,12 @@
 
     .woof_container {
         margin-bottom: rem-calc(30);
+        background-color: var(--brand-neon-green);
+        padding: $large-spacing;
 
         h4 {
             margin-bottom: $medium-spacing;
+            color: var(--off-black);
             @extend %h5;
         }
     }
@@ -34,11 +37,26 @@
 
     .woof_price_search_container .price_slider_amount .price_label {
         float: none !important;
+        color: var(--off-black);
+    }
+
+    .iradio_flat-green {
+        display: none;
+    }
+    .woof_radio_label {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .woof_is_closed,
+    .woof_is_opened {
+        filter: brightness(0) invert(0);
     }
 }
 
 // price slider
 .woof .widget_price_filter .ui-slider .ui-slider-range,
 .woof .widget_price_filter .ui-slider .ui-slider-handle {
-    background-color: var(--brand-neon-green);
+    background-color: var(--off-black);
+    border: 1px solid white;
 }

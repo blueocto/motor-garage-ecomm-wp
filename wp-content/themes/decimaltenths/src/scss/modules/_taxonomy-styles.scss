@@ -56,8 +56,7 @@
 }
 
 .shop-sidebar {
-    padding: $large-spacing;
-    background-color: var(--brand-d-grey);
+    // padding: $large-spacing;
 
     @include breakpoint(large) {
         margin-right: 25px;
