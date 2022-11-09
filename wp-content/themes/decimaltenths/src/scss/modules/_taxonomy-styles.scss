@@ -105,13 +105,20 @@
                 line-height: rem-calc(50);
                 background-color: var(--off-white);
 
+                &.dots {
+                    color: var(--off-white);
+                    background-color: transparent;
+                }
+
                 &:hover,
                 &:focus {
-                    background-color: var(--grey-30);
+                    color: var(--off-white);
+                    background-color: transparent;
                 }
 
                 &.current {
-                    background-color: var(--brand-neon-green);
+                    color: var(--off-white);
+                    background-color: transparent;
                 }
             }
         }
