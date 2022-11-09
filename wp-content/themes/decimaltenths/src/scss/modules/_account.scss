@@ -4,6 +4,11 @@
 
 .woocommerce-account {
 
+	[type=submit], 
+	[type=button] {
+		color: var(--off-black);
+	}
+
 	.woocommerce {
 		max-width: var(--grid-width);
 		margin-right: auto;

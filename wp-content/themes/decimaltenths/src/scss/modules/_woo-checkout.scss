@@ -110,6 +110,11 @@
 			background-color: green;
 		}
 	}
+
+	[type=submit], 
+	[type=button] {
+		color: var(--off-black);
+	}
 }
 
 .woocommerce-checkout-review-order-table {

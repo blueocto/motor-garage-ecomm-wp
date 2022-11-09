@@ -15,23 +15,31 @@
         list-style: none;
         margin: 0;
         padding: 0;
+        border-bottom: 2px solid var(--brand-neon-green);
 
         li {
             display: block; 
-            width: 48%;
+            width: 49%;
             @extend %h3;
             text-transform: uppercase;
+            position: relative;
+            top: 4px;
 
             a {
                 display: block; 
                 padding: $large-spacing;
-                border-bottom: 2px solid var(--brand-neon-green);
+                border: 2px solid var(--off-white);
+                border-bottom: none;
+                border-top-left-radius: 30px;
+                border-top-right-radius: 30px;
             }
 
             &.active {
-
+                border-bottom: 2px solid black;
                 a {
-                    background-color: var(--brand-d-grey);
+                    color: var(--brand-neon-green);
+                    border: 2px solid var(--brand-neon-green);
+                    border-bottom: 2px solid black;
                 }
             }
         }
@@ -42,11 +50,15 @@
     .woocommerce-Tabs-panel--description, 
     .wc-tab {
         padding: rem-calc(30px 20px);
-        background-color: var(--brand-d-grey);
 
         &.entry-content > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce) {
             max-width: unset;
             
+        }
+
+        p {
+            margin-bottom: $small-spacing;
+			line-height: $small-spacing;
         }
     }
 }
