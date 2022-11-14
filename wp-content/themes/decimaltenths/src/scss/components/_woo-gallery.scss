@@ -92,15 +92,14 @@
     margin: $small-spacing 0 0 0;
     padding: 0;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    gap: 7px;
 }
 
 .flex-control-thumbs li {
     float: left;
     margin: 0;
-    flex: 0 0 24%;
-    max-width: 24%;
+    flex: 0 1 25%;
+    max-width: 25%;
     list-style: none;
 }
 
