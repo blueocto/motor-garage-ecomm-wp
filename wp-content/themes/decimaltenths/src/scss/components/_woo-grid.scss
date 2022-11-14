@@ -159,6 +159,7 @@ ul.products,
 			position: relative;
 			overflow: hidden;
 			height: 30vh;
+			margin-bottom: $medium-spacing;
 
 			&::before {
 				content: '';
