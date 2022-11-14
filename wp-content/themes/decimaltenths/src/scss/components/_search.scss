@@ -10,11 +10,22 @@
     }
 
     input[type=submit]{
-        color: black;
-        background-color: var(--brand-neon-green);
+        display: inline-block;
+        padding: 10px 50px;
+        height: 50px;
+        font-family: $heading-font;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        background-color: transparent;
+        border: 2px solid var(--brand-neon-green);
+        border-radius: 50px;
+        cursor: pointer;
+        color: var(--brand-neon-green);
 
-        &:hover {
-            color: var(--off-white);
+        &:hover,
+        &:focus {
+            color: var(--off-black);
+            background: var(--brand-neon-green);
         }
     }
 }
@@ -24,5 +35,24 @@
         text-transform: none;
         font-size: 1rem !important;
         text-align: left;
+    }
+
+    .shop-sidebar {
+        .searchandfilter {
+            ul {
+                li:not(:last-child) {
+                    margin-bottom: rem-calc(30);
+                    background-color: var(--brand-neon-green);
+                    padding: $large-spacing;
+                    width: 100%;
+
+                    h4 {
+                        margin-bottom: $medium-spacing;
+                        color: var(--off-black);
+                        @extend %h5;
+                    }
+                }
+            }
+        }
     }
 }
