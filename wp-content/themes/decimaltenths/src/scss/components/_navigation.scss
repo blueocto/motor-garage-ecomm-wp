@@ -103,6 +103,7 @@
 
 				@include breakpoint(medium down) {
 					flex-flow: column;
+					justify-content: space-between;
 				}
 			}
 		}
