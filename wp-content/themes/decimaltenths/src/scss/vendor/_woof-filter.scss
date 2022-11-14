@@ -5,6 +5,10 @@
 
 .WOOF_Widget {
 
+    @include breakpoint(medium down) {
+        padding: $large-spacing;
+    }
+
     .widget--title {
         margin-bottom: 30px;
         @extend %h4;
