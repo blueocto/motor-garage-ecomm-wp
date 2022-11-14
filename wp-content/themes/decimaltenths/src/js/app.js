@@ -43,6 +43,12 @@ jQuery(document).ready(function ($) {
 				$(this).css("display", "none");
 			}
 		});
+		$(".woof_container_pwb-brand .woof_list_radio li").each(function(){
+			var inputDisabledCheck = $(this).children()[0];
+			if($.inArray($(inputDisabledCheck).data("slug"), brands) == -1){
+				$(this).css("display", "none");
+			}
+		});
 	}
 	if($("input[name=woof_t_pwb-brand]").val()){
 		$("#woof_tax_select_pwb-brand > option").each(function() {
@@ -50,10 +56,17 @@ jQuery(document).ready(function ($) {
 				$(this).css("display", "none");
 			}
 		});
+		$(".woof_container_pwb-brand .woof_list_radio li").each(function(){
+			var inputDisabledCheck = $(this).children()[0];
+			if($(inputDisabledCheck).prop('disabled') == true){
+				$(this).hide();
+			}
+		});
 	}
 
-	// Disable vechinle types that do not match search of a model
+	// Disable vehicle types that do not match search of a model
 	if($("input[name=model]").val()) {
+		var currentSearchManfacturer = $("input[name=manufacturer]").val();
 		var currentSearchModel = $("input[name=model]").val();
 		$("#woof_tax_select_product_cat > option").each(function() {
 			if(this.value == currentSearchModel){
@@ -63,11 +76,29 @@ jQuery(document).ready(function ($) {
 				$(this).css("display", "none");
 			}
 		});
+		$(".woof_container_product_cat .woof_list_radio > li").each(function(){
+			var inputDisabledCheck = $(this).children()[0];;
+			if($(inputDisabledCheck).data("slug") != currentSearchManfacturer){
+				$(this).css("display", "none");
+			}
+		});
+		$(".woof_container_product_cat ul.woof_list_radio li ul li:not(.woof_container_product_cat ul.woof_list_radio li ul li ul li)").each(function(){
+			var inputDisabledCheck = $(this).children()[0];
+			if($(inputDisabledCheck).data("slug") != currentSearchModel){
+				$(this).css("display", "none");
+			}
+		});
 	}
 	if($("input[name=woof_t_product_cat]").val()){
 		$("#woof_tax_select_product_cat > option").each(function() {
 			if($(this).attr('disabled')){
 				$(this).css("display", "none");
+			}
+		});
+		$(".woof_container_product_cat .woof_list_radio li").each(function(){
+			var inputDisabledCheck = $(this).children()[0];
+			if($(inputDisabledCheck).prop('disabled') == true){
+				$(this).hide();
 			}
 		});
 	}
@@ -81,11 +112,24 @@ jQuery(document).ready(function ($) {
 				$(this).css("display", "none");
 			}
 		});
+		$(".woof_container_product_tag .woof_list_radio li").each(function(){
+			var inputDisabledCheck = $(this).children()[0];
+			if($.inArray($(inputDisabledCheck).data("slug"), tags) == -1){
+				$(this).css("display", "none");
+			}
+		});
+		
 	}
 	if($("input[name=woof_t_product_tag]").val()){
 		$("#woof_tax_select_product_tag > option").each(function() {
 			if($(this).attr('disabled')){
 				$(this).css("display", "none");
+			}
+		});
+		$(".woof_container_product_tag .woof_list_radio li").each(function(){
+			var inputDisabledCheck = $(this).children()[0];
+			if($(inputDisabledCheck).prop('disabled') == true){
+				$(this).hide();
 			}
 		});
 	}
