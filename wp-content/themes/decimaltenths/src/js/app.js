@@ -146,6 +146,7 @@ jQuery(document).ready(function ($) {
 			autoplaySpeed: 5000
 		});
 	}
+	$('.hero_image_carousel').slick("refresh");
 	
 	if ($(".new_in_carousel").length) {
 		$(".new_in_carousel").slick({
