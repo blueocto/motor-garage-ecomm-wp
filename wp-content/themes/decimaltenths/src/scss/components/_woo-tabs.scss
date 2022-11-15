@@ -9,16 +9,17 @@
     // UL to toggle the panels
     .tabs, 
     .wc-tabs {
-        display: grid;
-        overflow: hidden;
-        grid-template-columns: repeat(3, 1fr);
-        grid-auto-rows: 1fr;
-        grid-column-gap: 5px;
-        grid-row-gap: 5px;
-        list-style: none;
-        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         padding: 0;
-        border-bottom: 2px solid var(--brand-neon-green);
+        margin: 0;
+        gap: 7px;
+
+        @include breakpoint(small down) {
+            flex-direction: column;
+            padding: $small-spacing;
+        }
 
         li {
             display: flex;
@@ -26,6 +27,11 @@
             text-transform: uppercase;
             position: relative;
             font-size: var(--size-l-1);
+            flex: 0 0 20%;
+
+            @include breakpoint(small down) {
+                flex: 0 0 100%;
+            }
 
             a {
                 display: block; 
@@ -35,13 +41,27 @@
                 border-top-left-radius: 30px;
                 border-top-right-radius: 30px;
                 width: 100%;
+                text-align: center;
+                position: relative;
+                top: 2px;
+
+                @include breakpoint(small down) {
+                    border: 2px solid var(--off-white);
+                    border-bottom-left-radius: 30px;
+                    border-bottom-right-radius: 30px;
+                }
             }
 
             &.active {
                 a {
                     color: var(--brand-neon-green);
                     border: 2px solid var(--brand-neon-green);
-                    border-bottom: none;
+                    border-bottom: 2px solid black;
+                    z-index: 2;
+
+                    @include breakpoint(small down) {
+                        border: 2px solid var(--brand-neon-green);
+                    }
                 }
             }
         }
@@ -52,6 +72,13 @@
     .woocommerce-Tabs-panel--description, 
     .wc-tab {
         padding: rem-calc(30px 20px);
+        border-top: 2px solid var(--brand-neon-green);
+        position: relative;
+        z-index: 1;
+
+        @include breakpoint(small down) {
+            border: none;
+        }
 
         &.entry-content > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce) {
             max-width: unset;

@@ -225,6 +225,8 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
+	$(".woocommerce-tabs").prependTo(".single-product .woo-container .related.products");
+
 	$("#order_review_heading").prependTo("#order_review");
 
 });
