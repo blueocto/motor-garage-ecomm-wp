@@ -1,0 +1,42 @@
+.error_404 {
+    justify-content: center;
+    margin: $xlarge-spacing 0 $xlarge-spacing 0;
+
+    .error_image {
+        // CSS Grid
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto auto auto;
+        gap: 10px 10px;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "error-img-1";
+        
+        @include breakpoint(medium) {
+            // CSS Grid
+            grid-template-rows: auto auto auto auto auto;
+        }
+
+        @include breakpoint(large) {
+            // CSS Grid
+            grid-template-rows: auto auto auto;
+        }
+
+        .error-img-1 {
+            height: 50vh;
+        }
+
+
+        .error-img-1 { 
+            grid-area: error-img-1;
+
+            @include breakpoint(medium down) {
+                height: 75vh;
+            }
+
+            @include breakpoint(small down) {
+                height: 33vh;
+            }
+        }
+    }
+}
