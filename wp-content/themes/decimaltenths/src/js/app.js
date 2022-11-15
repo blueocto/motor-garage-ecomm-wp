@@ -134,19 +134,20 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-    if ($(".hero_image_carousel").length) {
-		$(".hero_image_carousel").slick({
-			mobileFirst: true,
-			lazyLoad: "progressive",
-			infinite: true,
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			arrows: false,
-			autoplay: true,
-			autoplaySpeed: 5000
-		});
-	}
-	$('.hero_image_carousel').slick("refresh");
+    setTimeout(function () {
+		if ($(".hero_image_carousel").length) {
+			$(".hero_image_carousel").slick({
+				mobileFirst: true,
+				lazyLoad: "progressive",
+				infinite: true,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				arrows: false,
+				autoplay: true,
+				autoplaySpeed: 5000
+			});
+		}
+	}, 100);
 	
 	if ($(".new_in_carousel").length) {
 		$(".new_in_carousel").slick({
