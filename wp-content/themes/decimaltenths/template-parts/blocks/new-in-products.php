@@ -44,7 +44,6 @@
                             <div class="product--desc">
                                 <p class="product--title"><?php the_title(); ?></p>
                                 <p class="product--price">&pound;<?php echo $product->get_price(); ?></p>
-                                <p class="product--category">
                                 <?php 
                                 $terms = get_the_terms( $post->id, 'product_cat' ); 
                                 if(!empty($terms)){
