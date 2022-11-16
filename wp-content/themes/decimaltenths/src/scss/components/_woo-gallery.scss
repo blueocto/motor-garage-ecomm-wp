@@ -36,6 +36,12 @@
     }
 }
 
+.woocommerce-product-gallery__image {
+    img {
+        width: 100%;
+    }
+}
+
 .woocommerce-product-gallery__image:nth-child(n+2) {
     width: 25%;
     display: inline-block;
