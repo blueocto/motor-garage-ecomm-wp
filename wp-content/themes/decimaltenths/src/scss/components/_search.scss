@@ -31,10 +31,20 @@
 }
 
 .search_results {
-    h2 {
-        text-transform: none;
-        font-size: 1rem !important;
-        text-align: left;
+
+    a {
+        margin-bottom: calc(80px * #{$medium-calc});
+
+        @include breakpoint(medium) {
+            margin-bottom: rem-calc(80px);
+        }
+
+        h2 {
+            text-transform: none;
+            font-size: 0.85rem !important;
+            text-align: left;
+            line-height: 1.375;
+        }
     }
 
     .shop-sidebar {
