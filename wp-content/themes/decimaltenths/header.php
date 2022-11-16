@@ -68,15 +68,18 @@
 		<div class="header--shop-links">
 			<?php get_search_form(); ?>
 			<p class="menu-item">
-				<a href="/basket/">
-					<span class="visuallyhidden">Cart</span>
-					<?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?>
-				</a>
-			</p>
-			<p class="menu-item">
 				<a href="/my-account/">
 					<span class="visuallyhidden">Account</span>
 					<?php get_template_part( 'template-parts/svg/user-light' ); ?>
+				</a>
+			</p>
+			<p class="menu-item">
+				<a href="/basket/">
+					<span class="visuallyhidden">Cart</span>
+					<?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?>
+					<span class="basket-quantity">
+						<?php global $woocommerce; echo $woocommerce->cart->cart_contents_count; ?>
+					</span>
 				</a>
 			</p>
 		</div>
