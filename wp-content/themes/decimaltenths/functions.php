@@ -59,13 +59,19 @@ function my_custom_search_template( $template ) {
 }
 add_filter('template_include', 'my_custom_search_template');
 
-function search_title ($title){
+function search_title($title){
     global $template;
     $manufacturer = $_GET['manufacturer'] ?? '';
     $model = $_GET['model'] ?? '';
-
+    $search = $_GET['s'] ?? '';
+    
     if( basename($template) == "search.php" ) {
-        $title = "Search for ".$manufacturer."(".$model.")";
+
+        if($manufacturer != "" && $model != ""){
+            $title = "Search for ".$manufacturer."(".$model.") - Decimal Tenths";
+        } else {
+            $title = "Search for ".$search." - Decimal Tenths";
+        }
     }
     return $title;
 }
@@ -93,3 +99,6 @@ function remove_forced_spaces($content) {
     return $content; 
 } 
 add_filter("the_content", "remove_forced_spaces", 9);
+
+// Remove the product description Title
+add_filter( 'woocommerce_product_description_heading', '__return_null' );
