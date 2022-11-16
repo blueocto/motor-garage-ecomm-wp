@@ -81,8 +81,8 @@
         }
 
         &.entry-content > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce) {
-            max-width: unset;
-            
+            max-width: var(--grid-width);
+            margin: 0 auto;
         }
 
         p {
