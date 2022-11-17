@@ -100,5 +100,8 @@ function remove_forced_spaces($content) {
 } 
 add_filter("the_content", "remove_forced_spaces", 9);
 
-// Remove the product description Title
+// Remove titles from tabs
 add_filter( 'woocommerce_product_description_heading', '__return_null' );
+add_filter( 'woocommerce_product_brand_heading', '__return_null' );
+add_filter( 'woocommerce_product_additional_information_heading', '__return_null' );
+add_filter( 'woocommerce_product_reviews_heading', '__return_null' );
