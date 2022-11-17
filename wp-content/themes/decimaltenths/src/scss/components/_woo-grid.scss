@@ -151,14 +151,10 @@ ul.products,
 			position: relative;
 			display: block;
 			margin-bottom: calc(80px * #{$medium-calc});
-			text-align: center;
+			text-align: left;
 
 			@include breakpoint(medium) {
 				margin-bottom: rem-calc(80px);
-			}
-
-			@media screen and (min-width: 1288px) {
-				text-align: left;
 			}
 		}
 
