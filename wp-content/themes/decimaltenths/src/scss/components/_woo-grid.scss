@@ -122,6 +122,10 @@ ul.products,
 			@extend %h5;
 		}
 
+		.star-rating {
+			margin-top: 15px;
+		}
+
 		// on sale badge
 		.onsale {
 			position: absolute;
