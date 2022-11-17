@@ -76,6 +76,12 @@
         position: relative;
         z-index: 1;
 
+        .woocommerce-Reviews {
+            label {
+                color: white;
+            }
+        }
+
         @include breakpoint(small down) {
             border: none;
         }
