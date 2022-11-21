@@ -127,20 +127,20 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 endif;
 
 /* Load remaning stylesheets performantly */
-if ( ! function_exists( 'octopress_stylesheet_loader' ) ) :
-	function octopress_stylesheet_loader($html, $handle, $href, $media) {
+// if ( ! function_exists( 'octopress_stylesheet_loader' ) ) :
+// 	function octopress_stylesheet_loader($html, $handle, $href, $media) {
 
-		$handles = array( 'theme-app', 'theme-gberg', 'theme-blog', 'theme-checkout', 'theme-account', 'theme-product', 'theme-category', 'theme-search', 'theme-404' );
-		if( in_array( $handle, $handles ) ){
-	        // $html = str_replace('https:', '', $html);   
-	        $strval = str_replace("rel='stylesheet'", 'rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"', $html);
-	        return str_replace("type='text/css' media='all'", '', $strval);
-	    }
-	    return $html;
+// 		$handles = array( 'theme-app', 'theme-gberg', 'theme-blog', 'theme-checkout', 'theme-account', 'theme-product', 'theme-category', 'theme-search', 'theme-404' );
+// 		if( in_array( $handle, $handles ) ){
+// 	        // $html = str_replace('https:', '', $html);   
+// 	        $strval = str_replace("rel='stylesheet'", 'rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"', $html);
+// 	        return str_replace("type='text/css' media='all'", '', $strval);
+// 	    }
+// 	    return $html;
 
-	}
-	add_filter('style_loader_tag', 'octopress_stylesheet_loader', 10, 4);
-endif;
+// 	}
+// 	add_filter('style_loader_tag', 'octopress_stylesheet_loader', 10, 4);
+// endif;
 
 
 /* For the admin */
