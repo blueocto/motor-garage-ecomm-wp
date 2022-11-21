@@ -51,6 +51,11 @@ add_theme_support( 'editor-color-palette', array(
 		'color'	=> '#43B143',
 	),
 	array(
+		'name'  => __( 'Brand Neon Green', 'textdomain' ),
+		'slug'  => 'brand-neon-green',
+		'color'	=> '#50e887',
+	),
+	array(
 		'name'  => __( 'Brand Light Grey', 'textdomain' ),
 		'slug'  => 'brand-light-grey',
 		'color'	=> '#F2F2F2',
