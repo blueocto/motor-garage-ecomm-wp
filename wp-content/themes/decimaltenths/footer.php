@@ -5,7 +5,7 @@
 		<p class="logo">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
 				<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>
-				<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-black.svg'; ?>" alt="Decimal Tenths logo" loading="lazy" />
+				<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-black.svg'; ?>" alt="Decimal Tenths logo" loading="lazy" width="300" height="83" />
 			</a>
 		</p>
 	</div>
