@@ -40,26 +40,26 @@ jQuery(document).ready(function ($) {
 		$("#woof_tax_select_pwb-brand > option").each(function() {
 			if($.inArray($(this).val(), brands) == -1){
 				$(this).attr("disabled", "disabled");
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_pwb-brand .woof_list_radio li").each(function(){
 			var inputDisabledCheck = $(this).children()[0];
 			if($.inArray($(inputDisabledCheck).data("slug"), brands) == -1){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 	}
 	if($("input[name=woof_t_pwb-brand]").val()){
 		$("#woof_tax_select_pwb-brand > option").each(function() {
 			if($(this).attr('disabled')){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_pwb-brand .woof_list_radio li").each(function(){
 			var inputDisabledCheck = $(this).children()[0];
 			if($(inputDisabledCheck).prop('disabled') == true){
-				$(this).hide();
+				$(this).remove();
 			}
 		});
 	}
@@ -73,32 +73,32 @@ jQuery(document).ready(function ($) {
 				$(this).attr("selected", "selected");
 			} else {
 				$(this).attr("disabled", "disabled");
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_product_cat .woof_list_radio > li").each(function(){
 			var inputDisabledCheck = $(this).children()[0];;
 			if($(inputDisabledCheck).data("slug") != currentSearchManfacturer){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_product_cat ul.woof_list_radio li ul li:not(.woof_container_product_cat ul.woof_list_radio li ul li ul li)").each(function(){
 			var inputDisabledCheck = $(this).children()[0];
 			if($(inputDisabledCheck).data("slug") != currentSearchModel){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 	}
 	if($("input[name=woof_t_product_cat]").val()){
 		$("#woof_tax_select_product_cat > option").each(function() {
 			if($(this).attr('disabled')){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_product_cat .woof_list_radio li").each(function(){
 			var inputDisabledCheck = $(this).children()[0];
 			if($(inputDisabledCheck).prop('disabled') == true){
-				$(this).hide();
+				$(this).remove();
 			}
 		});
 	}
@@ -109,13 +109,13 @@ jQuery(document).ready(function ($) {
 		$("#woof_tax_select_product_tag > option").each(function() {
 			if($.inArray($(this).val(), tags) == -1){
 				$(this).attr("disabled", "disabled");
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_product_tag .woof_list_radio li").each(function(){
 			var inputDisabledCheck = $(this).children()[0];
 			if($.inArray($(inputDisabledCheck).data("slug"), tags) == -1){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		
@@ -123,13 +123,13 @@ jQuery(document).ready(function ($) {
 	if($("input[name=woof_t_product_tag]").val()){
 		$("#woof_tax_select_product_tag > option").each(function() {
 			if($(this).attr('disabled')){
-				$(this).css("display", "none");
+				$(this).remove();
 			}
 		});
 		$(".woof_container_product_tag .woof_list_radio li").each(function(){
 			var inputDisabledCheck = $(this).children()[0];
 			if($(inputDisabledCheck).prop('disabled') == true){
-				$(this).hide();
+				$(this).remove();
 			}
 		});
 	}
