@@ -130,7 +130,7 @@ endif;
 if ( ! function_exists( 'octopress_stylesheet_loader' ) ) :
 	function octopress_stylesheet_loader($html, $handle, $href, $media) {
 
-		$handles = array( 'theme-app', 'theme-gberg', 'theme-blog', 'theme-checkout', 'theme-account', 'theme-product', 'theme-category', 'theme-search', 'theme-404' );
+		$handles = array( 'theme-app', 'theme-gberg', 'theme-blog', 'theme-checkout', 'theme-account', 'theme-product', 'theme-category', 'theme-search', 'theme-404', 'formidable', 'searchandfilter', 'woof', 'woof_step_filter_html_items' );
 		if( in_array( $handle, $handles ) ){
 	        // $html = str_replace('https:', '', $html);   
 	        $strval = str_replace("rel='stylesheet'", 'rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"', $html);
