@@ -14,7 +14,7 @@ get_header(); ?>
                     <?php
                     while ( have_rows( 'home_hero_carousel', 'option' ) ) : the_row();
                     ?>
-                        <?php print(wp_get_attachment_image( get_sub_field("image", 'option'), "large", array( 'loading' => 'lazy'))); ?>
+                        <?php print(wp_get_attachment_image( get_sub_field("image", 'option'), "large")); ?>
                     <?php
                     endwhile;
                     ?>
