@@ -41,6 +41,11 @@ category-panels {
                 }
             }
         }
+    }
+
+    // P tag
+    .content {
+        margin-bottom: 0;
 
         // span
         .arrow-right {
@@ -62,10 +67,7 @@ category-panels {
         .picture {
             position: relative;
             margin-bottom: rem-calc(28px);
-            // height: 30vh;
-            height: 0; 
-            padding-top: 100%;
-            
+            height: 30vh;
             border-top-right-radius: rem-calc(90px);
             border-bottom-left-radius: rem-calc(90px);
             overflow: hidden;

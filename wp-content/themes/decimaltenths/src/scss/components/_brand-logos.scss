@@ -31,8 +31,11 @@ brand-logos {
     }
 
     .b-logo {
+        padding: $small-spacing;
         width: rem-calc(120);
         max-height: rem-calc(120);
+        background-color: black;
         opacity: 0.7;
+        border-radius: 50%;
     }
 }

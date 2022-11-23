@@ -3,16 +3,16 @@
 // ==============================================
 
 service-highlight {
-    margin: 0 auto;
-    padding-top: rem-calc(50px);
-    padding-bottom: rem-calc(50px);
+    margin: $medium-spacing;
+    padding-top: rem-calc(50);
+    padding-bottom: rem-calc(50);
     max-width: $global-width;
 
 	// CSS Grid
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: auto auto auto auto auto auto;
-	gap: 10px 10px;
+	gap: $medium-spacing;
 	grid-auto-flow: row;
 	grid-template-areas:
 		"highlight-img-1"
@@ -97,12 +97,22 @@ service-highlight {
 		}
 
 		@include breakpoint(xlarge) {
-			padding-left: rem-calc(90px);
-        	padding-right: rem-calc(90px);
+			padding-left: rem-calc(90);
+        	padding-right: rem-calc(90);
 		}
 
         > * {
-            margin-bottom: rem-calc(30px);
+            margin-bottom: rem-calc(30);
         }
+
+		.btn {
+			background-color: var(--off-black);
+			border-color: transparent;
+
+			&:hover,
+			&:focus {
+				color: white;
+			}
+		}
     }
 }

@@ -9,7 +9,7 @@
             ?>
                 <panel class="column">
                     <h3 class="h4"><?php print(get_sub_field("name", 'option')); ?></h3>
-                    <p>
+                    <p class="content">
                         <a href="<?php print(get_sub_field("link", 'option')); ?>">
                             <span class="arrow-right">Browse</span>
                             <span class="picture">

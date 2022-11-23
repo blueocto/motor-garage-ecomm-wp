@@ -154,8 +154,8 @@ jQuery(document).ready(function ($) {
 			mobileFirst: true,
 			lazyLoad: "progressive",
 			infinite: true,
-			slidesToShow: 1,
-			slidesToScroll: 1,
+			slidesToShow: 2,
+			slidesToScroll: 2,
             prevArrow: $('.prev-new'),
             nextArrow: $('.next-new'),
 			responsive: [
@@ -163,7 +163,7 @@ jQuery(document).ready(function ($) {
 					breakpoint: 1200,
 					settings: {
 						infinite: true,
-						slidesToShow: 4,
+						slidesToShow: 6,
 						slidesToScroll: 1,
 					},
 				},
@@ -171,16 +171,8 @@ jQuery(document).ready(function ($) {
 					breakpoint: 1024,
 					settings: {
 						infinite: true,
-						slidesToShow: 2,
-						slidesToScroll: 1,
-					},
-				},
-				{
-					breakpoint: 640,
-					settings: {
-						infinite: true,
-						slidesToShow: 1,
-						slidesToScroll: 1,
+						slidesToShow: 4,
+						slidesToScroll: 2,
 					},
 				},
 			],
@@ -192,8 +184,8 @@ jQuery(document).ready(function ($) {
 			mobileFirst: true,
 			lazyLoad: "progressive",
 			infinite: true,
-			slidesToShow: 1,
-			slidesToScroll: 1,
+			slidesToShow: 2,
+			slidesToScroll: 2,
             prevArrow: $('.prev-popular'),
             nextArrow: $('.next-popular'),
 			responsive: [
@@ -201,7 +193,7 @@ jQuery(document).ready(function ($) {
 					breakpoint: 1200,
 					settings: {
 						infinite: true,
-						slidesToShow: 4,
+						slidesToShow: 6,
 						slidesToScroll: 1,
 					},
 				},
@@ -209,16 +201,8 @@ jQuery(document).ready(function ($) {
 					breakpoint: 1024,
 					settings: {
 						infinite: true,
-						slidesToShow: 2,
-						slidesToScroll: 1,
-					},
-				},
-				{
-					breakpoint: 640,
-					settings: {
-						infinite: true,
-						slidesToShow: 1,
-						slidesToScroll: 1,
+						slidesToShow: 4,
+						slidesToScroll: 2,
 					},
 				},
 			],

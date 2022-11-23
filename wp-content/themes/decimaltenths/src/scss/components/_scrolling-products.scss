@@ -5,11 +5,11 @@
 scrolling-products {
     @extend %row;
     display: block;
-    padding-top: rem-calc(50px);
-    padding-bottom: rem-calc(50px);
+    padding-top: rem-calc(50);
+    padding-bottom: rem-calc(50);
 
     .h3 {
-        margin-bottom: rem-calc(24px);
+        margin-bottom: rem-calc(24);
     }
 
     product-card {
@@ -21,12 +21,6 @@ scrolling-products {
     }
 
     .product--desc {
-        // CSS Grid to control layout
-        display: grid;
-        grid-template-columns: 70% 30%;
-        grid-template-rows: repeat(2, 1fr);
-        grid-column-gap: 0;
-        grid-row-gap: 0;
 
         p {
             margin-bottom: $small-spacing;
@@ -34,16 +28,15 @@ scrolling-products {
     }
 
     .product--title {
-        grid-area: 1 / 1 / 2 / 2;
+        @extend %h2;
     }
 
     .product--price {
-        grid-area: 1 / 2 / 2 / 3;
-        text-align: right;
+        @extend %h3;
+        font-weight: $bold;
     }
 
     .product--category {
-        grid-area: 2 / 1 / 3 / 3;
         color: var(--brand-dark-green);
     }
 }
