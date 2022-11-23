@@ -8,15 +8,13 @@ brand-logos {
     padding-bottom: rem-calc(40);
 
     background: var(--off-black) url('../img/body-bg-1.png') center no-repeat;
-	background-size: 100% auto;
+    background-size: cover;
 
     .column {
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
         align-items: center;
-        // padding-top: rem-calc(20);
-        // padding-bottom: rem-calc(20);
 
         flex: 0 0 50%;
         max-width: 50%;

@@ -3,8 +3,9 @@
 // ==============================================
 
 scrolling-products {
+    @extend %row;
     display: block;
-    padding-top: rem-calc(35px);
+    padding-top: rem-calc(50px);
     padding-bottom: rem-calc(50px);
 
     .h3 {
@@ -24,8 +25,8 @@ scrolling-products {
         display: grid;
         grid-template-columns: 70% 30%;
         grid-template-rows: repeat(2, 1fr);
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
+        grid-column-gap: 0;
+        grid-row-gap: 0;
 
         p {
             margin-bottom: $small-spacing;
@@ -43,6 +44,6 @@ scrolling-products {
 
     .product--category {
         grid-area: 2 / 1 / 3 / 3;
-        color: var(--brand-neon-green);
+        color: var(--brand-dark-green);
     }
 }

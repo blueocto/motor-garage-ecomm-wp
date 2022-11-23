@@ -74,13 +74,13 @@ $slick-opacity-not-active: 0.25 !default;
 ==================================*/
 .slick-prev,
 .slick-next {
-  position: absolute;
-  top: 50%;
+  // position: absolute;
+  // top: 50%;
 
-  display: block;
+  // display: block;
   padding: 0;
-  height: 20px;
-  width: 20px;
+  // height: 20px;
+  // width: 20px;
 
   line-height: 0;
   font-size: 0;
@@ -89,7 +89,7 @@ $slick-opacity-not-active: 0.25 !default;
   color: transparent;
   border: none;
 
-  transform: translate(0, -50%);
+  // transform: translate(0, -50%);
 
   // Hover and focus states
   &:hover,
@@ -101,13 +101,13 @@ $slick-opacity-not-active: 0.25 !default;
   }
 
   &:focus {
-    top: calc(50% - 1px);
+    // top: calc(50% - 1px);
 
     .slick-prev-icon,
     .slick-next-icon {
       color: orange;
-      font-size: 28px;
-      margin-left: -2px;
+      // font-size: 28px;
+      // margin-left: -2px;
     }
   }
 
@@ -125,53 +125,55 @@ $slick-opacity-not-active: 0.25 !default;
   .slick-prev-icon,
   .slick-next-icon {
     display: block;
-    color: $slick-arrow-color;
-    opacity: $slick-opacity-default;
-    font-family: $slick-font-family;
-    font-size: 24px;
+    width: 100%;
+    height: 100%;
+    // color: $slick-arrow-color;
+    // opacity: $slick-opacity-default;
+    // font-family: $slick-font-family;
+    // font-size: 24px;
     line-height: 1;
   }
 }
 
 // Previous button
-.slick-prev {
-  left: -25px;
+// .slick-prev {
+  // left: -25px;
 
-  [dir="rtl"] & {
-    left: auto;
-    right: -25px;
-  }
+  // [dir="rtl"] & {
+  //   left: auto;
+  //   right: -25px;
+  // }
 
-  .slick-prev-icon {
-    &:before {
-      content: $slick-prev-character;
+//   .slick-prev-icon {
+//     &:before {
+//       content: $slick-prev-character;
 
-      [dir="rtl"] & {
-        content: $slick-next-character;
-      }
-    }
-  }
-}
+//       [dir="rtl"] & {
+//         content: $slick-next-character;
+//       }
+//     }
+//   }
+// }
 
 // Next button
-.slick-next {
-  right: -25px;
+// .slick-next {
+//   right: -25px;
 
-  [dir="rtl"] & {
-    left: -25px;
-    right: auto;
-  }
+//   [dir="rtl"] & {
+//     left: -25px;
+//     right: auto;
+//   }
 
-  .slick-next-icon {
-    &:before {
-      content: $slick-next-character;
+//   .slick-next-icon {
+//     &:before {
+//       content: $slick-next-character;
 
-      [dir="rtl"] & {
-        content: $slick-prev-character;
-      }
-    }
-  }
-}
+//       [dir="rtl"] & {
+//         content: $slick-prev-character;
+//       }
+//     }
+//   }
+// }
 
 /*==========================
   Slide navigation dots

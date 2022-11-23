@@ -1,50 +1,56 @@
 .new_in_carousel_buttons, 
 .popular_carousel_buttons {
-	position: relative;
+	text-align: right;
 
-	.slick-next,
-	.slick-prev {
-		&:focus {
-			top: calc(50% - 2px);
-		}
+	// button
+	.slick-arrow {
+		position: relative;
+		display: inline-block;
+		width: rem-calc(50);
+		height: rem-calc(50);
 	}
 
+	// .slick-next,
+	// .slick-prev {
+	// 	&:focus {
+	// 		top: calc(50% - 2px);
+	// 	}
+	// }
+
 	.slick-next {
-	    width: 30px;
-	    height: 30px;
-	    justify-content: flex-start;
-	    z-index: 1000;
-	    left: auto;
-		right: 30px;
-	    display: flex;
-	    align-items: center;
+		// width: rem-calc(50);
+	    // height: rem-calc(50);
+	    // z-index: 1000;
+	    // left: auto;
+		// right: 30px;
 
 	    .slick-next-icon {
 		    &:before {
 		    	content: '';
-		    	width: 20px;
-	    		height: 20px;
-	    		background: url('../img/arrow-left-white.png') center/contain no-repeat;
+		    	width: rem-calc(25);
+	    		height: rem-calc(25);
+	    		// background: url('../img/arrow-left-white.png') center/contain no-repeat;
+				background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 448 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m443.7 266.8-165.9 176c-3.3 3.5-8.7 5.2-12.3 5.2-3.986 0-7.988-1.375-11.16-4.156-6.773-5.938-7.275-16.06-1.118-22.59l140.678-149.254h-377.31c-9.171 0-16.59-7.155-16.59-15.1s7.421-16.9 16.59-16.9h377.3l-140.7-149.3c-6.157-6.531-5.655-16.66 1.118-22.59 6.789-5.906 17.27-5.469 23.45 1.094l165.9 176c5.742 6.096 5.742 15.496.042 21.596z'/%3E%3C/svg%3E");
+				background-position: right center;
 				display: inline-block;
 		    }
 		}
 	}
 	.slick-prev {
-	    width: 30px;
-	    height: 30px;
-	    justify-content: flex-end;
-	    z-index: 1000;
-	    right: 75px;
-		left: inherit;
-	    display: flex;
-	    align-items: center;
+	    // width: rem-calc(50);
+	    // height: rem-calc(50);
+	    // z-index: 1000;
+	    // right: 75px;
+		// left: inherit;
 
 	    .slick-prev-icon {
 		    &:before {
 		    	content: '';
-		    	width: 20px;
-	    		height: 20px;
-	    		background: url('../img/arrow-right-white.png') center/contain no-repeat;
+		    	width: rem-calc(25);
+	    		height: rem-calc(25);
+	    		// background: url('../img/arrow-right-white.png') center/contain no-repeat;
+				background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 448 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m448 256c0 8.8-7.4 16-16.6 16h-377.29l140.7 149.3c6.157 6.531 5.655 16.66-1.118 22.59-3.192 2.71-7.192 4.11-11.192 4.11-4.505 0-9.009-1.75-12.28-5.25l-165.9-176c-5.752-6.094-5.752-15.41 0-21.5l165.9-176c6.19-6.562 16.69-7 23.45-1.094 6.773 5.938 7.275 16.06 1.118 22.59l-140.678 149.254h377.3c9.19 0 16.59 7.2 16.59 16z'/%3E%3C/svg%3E");
+				background-position: left center;
 				display: inline-block;
 		    }
 		}
@@ -72,7 +78,9 @@
 		.picture {
 			position: relative;
 			overflow: hidden;
-			height: 30vh;
+			// height: 30vh;
+			height: 0; 
+            padding-top: 100%;
 
 			&::before {
 				content: '';
