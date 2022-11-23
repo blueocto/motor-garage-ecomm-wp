@@ -4,13 +4,10 @@
 
 .footer {
 	padding-top: rem-calc(50px);
-	padding-bottom: rem-calc(50px);
-	color: black;
-	background-color: var(--brand-neon-green);
-
-	@include breakpoint(large) {
-		padding-top: rem-calc(100px);
-	}
+	padding-bottom: rem-calc(40px);
+	color: var(--off-white);
+	background-color: var(--off-black);
+	border-top: 2px solid var(--brand-neon-green);
 
 	.logo {
 		max-width: rem-calc(254px);
@@ -22,16 +19,12 @@
 
 	.row {
 		margin-bottom: rem-calc(50px);
-
-		@include breakpoint(large) {
-			margin-bottom: rem-calc(80px);
-		}
 	}
 
 	.column {
 
 		@include breakpoint(large down) {
-			margin-bottom: $xlarge-spacing;
+			margin-bottom: $large-spacing;
 		}
 
 		@include breakpoint(xlarge) {
@@ -39,11 +32,11 @@
 		}
 
 		&:first-of-type {
-			margin-bottom: rem-calc(50);
+			margin-bottom: rem-calc(50px);
 		}
 
 		.h4 {
-			margin-bottom: $xlarge-spacing;
+			margin-bottom: $large-spacing;
 			letter-spacing: 0.05em;
 		}
 	}
@@ -57,7 +50,12 @@
 			text-transform: none;
 
 			a {
-				color: black;
+				color: var(--off-white);
+
+				&:hover,
+				&:focus {
+					color: var(--brand-neon-green);
+				}
 			}
 		}
 	}
