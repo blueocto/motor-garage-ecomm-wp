@@ -10,7 +10,7 @@ legend {
 
 textarea {
     height: auto;
-    min-height: 50px;
+    min-height: rem-calc(50px);
     max-width: 100%; 
     border-radius: 0;
 
@@ -22,7 +22,7 @@ textarea {
 select {
     box-sizing: border-box;
     width: 100%;
-    height: rem-calc(66);
+    height: rem-calc(50);
     margin: 0 0 rem-calc(15);
     padding: $small-spacing;
     padding-right: rem-calc(35);
@@ -33,7 +33,7 @@ select {
     // line-height: 1.5;
     background-color: #fefefe;
     // svg - arrow down
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2350e887' d='m320 176v223.3c0 8.812-7.141 15.97-15.95 16l-224 .6562c-8.82.0438-16.02-7.0562-16.05-15.9562-.0313-8.812 7.109-16 15.95-16.03l185.6-.5547-260.862-260.8153c-6.25-6.25-6.25-16.38 0-22.62s16.38-6.25 22.62 0l260.692 260.62v-184.6c0-8.8 7.2-16 16-16s16 7.2 16 16z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2343B143' d='m320 176v223.3c0 8.812-7.141 15.97-15.95 16l-224 .6562c-8.82.0438-16.02-7.0562-16.05-15.9562-.0313-8.812 7.109-16 15.95-16.03l185.6-.5547-260.862-260.8153c-6.25-6.25-6.25-16.38 0-22.62s16.38-6.25 22.62 0l260.692 260.62v-184.6c0-8.8 7.2-16 16-16s16 7.2 16 16z'/%3E%3C/svg%3E");
     background-origin: content-box;
     background-position: calc(100% + 25px) center;
     background-repeat: no-repeat;
@@ -52,12 +52,6 @@ select {
         transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
     }
 }
-
-// @media screen and (min-width: 0\0) {
-//     select {
-//         background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==");
-//     }
-// }
 
 select:disabled {
     background-color: #e6e6e6;
@@ -116,7 +110,7 @@ textarea {
     display: block;
     box-sizing: border-box;
     width: 100%;
-    height: 50px;
+    height: rem-calc(50);
     margin: 0 0 1rem;
     padding: 0.5rem;
     border: 1px solid #cacaca;
