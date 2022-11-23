@@ -6,3 +6,4 @@ wp-config-sample.php
 wp-content/themes/decimaltenths/node_modules
 wp-content/themes/decimaltenths/dist
 .htaccess
+wp-content/cache
