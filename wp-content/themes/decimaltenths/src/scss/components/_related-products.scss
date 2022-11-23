@@ -3,8 +3,6 @@
 // ==============================================
 
 .related.products {
-    margin-top: rem-calc(50);
-    padding: $small-spacing;
 
     > h2 {
         text-align: center;
@@ -16,7 +14,7 @@
         @extend %row;
         justify-content: center;
         list-style: none;
-        padding: 0;
+        padding: $small-spacing;
 
         // .woocommerce-loop-product__title {
         //     @extend %h3;

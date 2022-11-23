@@ -59,13 +59,19 @@ function my_custom_search_template( $template ) {
 }
 add_filter('template_include', 'my_custom_search_template');
 
-function search_title ($title){
+function search_title($title){
     global $template;
     $manufacturer = $_GET['manufacturer'] ?? '';
     $model = $_GET['model'] ?? '';
-
+    $search = $_GET['s'] ?? '';
+    
     if( basename($template) == "search.php" ) {
-        $title = "Search for ".$manufacturer."(".$model.")";
+
+        if($manufacturer != "" && $model != ""){
+            $title = "Search for ".$manufacturer."(".$model.") - Decimal Tenths";
+        } else {
+            $title = "Search for ".$search." - Decimal Tenths";
+        }
     }
     return $title;
 }
@@ -84,3 +90,18 @@ function moving_add_cart() {
     remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
     add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 15 );
 }
+
+//Forcibly removes spaces at start of content 
+function remove_forced_spaces($content) {     
+    $string = htmlentities($content, null, 'utf-8');     
+    $content = str_replace("&nbsp;", " ", $string);     
+    $content = html_entity_decode($content);     
+    return $content; 
+} 
+add_filter("the_content", "remove_forced_spaces", 9);
+
+// Remove titles from tabs
+add_filter( 'woocommerce_product_description_heading', '__return_null' );
+add_filter( 'woocommerce_product_brand_heading', '__return_null' );
+add_filter( 'woocommerce_product_additional_information_heading', '__return_null' );
+add_filter( 'woocommerce_product_reviews_heading', '__return_null' );

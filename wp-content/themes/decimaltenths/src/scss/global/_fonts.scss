@@ -5,6 +5,7 @@
 font-family: 'Source Code Pro';
 font-style: normal;
 font-weight: 200;
+font-display: swap;
 src: local(''),
 		url('./fonts/source-code-pro-v22-latin-200.woff2') format('woff2'),
 		url('./fonts/source-code-pro-v22-latin-200.woff') format('woff');
@@ -14,6 +15,7 @@ src: local(''),
 font-family: 'Source Code Pro';
 font-style: normal;
 font-weight: 400;
+font-display: swap;
 src: local(''),
 		url('../fonts/source-code-pro-v22-latin-regular.woff2') format('woff2'),
 		url('../fonts/source-code-pro-v22-latin-regular.woff') format('woff');
@@ -23,6 +25,7 @@ src: local(''),
 font-family: 'Source Code Pro';
 font-style: normal;
 font-weight: 500;
+font-display: swap;
 src: local(''),
 		url('../fonts/source-code-pro-v22-latin-500.woff2') format('woff2'),
 		url('../fonts/source-code-pro-v22-latin-500.woff') format('woff');
@@ -33,6 +36,7 @@ src: local(''),
 	font-family: 'Michroma';
 	font-style: normal;
 	font-weight: 400;
+	font-display: swap;
 	src: local(''),
 		 url('../fonts/michroma-v16-latin-regular.woff2') format('woff2'),
 		 url('../fonts/michroma-v16-latin-regular.woff') format('woff');

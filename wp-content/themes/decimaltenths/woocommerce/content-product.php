@@ -43,6 +43,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 		do_action( 'woocommerce_before_shop_loop_item_title' );
 	echo '</span>';
 
+	echo '<div class="product-info">';
 	/**
 	 * Hook: woocommerce_shop_loop_item_title.
 	 *
@@ -57,6 +58,19 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	 * @hooked woocommerce_template_loop_price - 10
 	 */
 	do_action( 'woocommerce_after_shop_loop_item_title' );
+
+	$terms = get_the_terms( $product->get_id(), 'product_cat' ); 
+	if(!empty($terms)){
+	?>
+	<p class="product--category">
+	<?php
+	print(remove_forced_spaces($terms[0]->name));
+	?>
+	</p>
+	<?php
+	}
+
+	echo '</div>';
 
 	/**
 	 * Hook: woocommerce_after_shop_loop_item.

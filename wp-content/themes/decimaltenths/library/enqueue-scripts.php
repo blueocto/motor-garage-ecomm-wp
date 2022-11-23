@@ -57,12 +57,12 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 
 			/* Enqueue our Theme scripts */
 
-			wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array('jquery'), '', false );
-
 			wp_enqueue_script( 'theme-menu', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'primary-navigation.js' ), '', '', false );
 
 			// Slick carousel the A11y version
 			wp_enqueue_script( 'theme-slick', get_stylesheet_directory_uri() . '/dist/vendor/' . octopress_asset_path( 'slick.min.js' ), '', '', true );
+
+			wp_enqueue_script( 'theme-app', get_template_directory_uri() . '/dist/js/' . octopress_asset_path( 'app.js' ), array('jquery'), '', true );
 
 
 			//*====*//
@@ -117,27 +117,30 @@ if ( ! function_exists( 'octopress_scripts' ) ) :
 			if( basename($template) == "search.php" ) {
 				wp_enqueue_style( 'theme-search', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( 'search.css' ), array(), '', 'all' );
 			}
+
+			if(is_404()){
+				wp_enqueue_style( 'theme-404', get_stylesheet_directory_uri() . '/dist/css/' . octopress_asset_path( '404.css' ), array(), '', 'all' );
+			}
 		}
 	}
 	add_action( 'wp_enqueue_scripts', 'octopress_scripts' );
 endif;
 
-
 /* Load remaning stylesheets performantly */
-// if ( ! function_exists( 'octopress_stylesheet_loader' ) ) :
-// 	function octopress_stylesheet_loader($html, $handle, $href, $media) {
+if ( ! function_exists( 'octopress_stylesheet_loader' ) ) :
+	function octopress_stylesheet_loader($html, $handle, $href, $media) {
 
-// 		$handles = array( 'theme-app' );
-// 		if( in_array( $handle, $handles ) ){
-// 	        // $html = str_replace('https:', '', $html);   
-// 	        $strval = str_replace("rel='stylesheet'", 'rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"', $html);
-// 	        return str_replace("type='text/css' media='all'", '', $strval);
-// 	    }
-// 	    return $html;
+		$handles = array( 'theme-app', 'theme-gberg', 'theme-blog', 'theme-checkout', 'theme-account', 'theme-product', 'theme-category', 'theme-search', 'theme-404', 'formidable', 'searchandfilter', 'woof', 'woof_step_filter_html_items', 'wc-blocks-style', 'wc-blocks-vendors-style', 'plainoverlay', 'icheck-jquery-color', 'pwb-styles-frontend' );
+		if( in_array( $handle, $handles ) ){
+	        // $html = str_replace('https:', '', $html);   
+	        $strval = str_replace("rel='stylesheet'", 'rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"', $html);
+	        return str_replace("type='text/css' media='all'", '', $strval);
+	    }
+	    return $html;
 
-// 	}
-// 	add_filter('style_loader_tag', 'octopress_stylesheet_loader', 10, 4);
-// endif;
+	}
+	add_filter('style_loader_tag', 'octopress_stylesheet_loader', 10, 4);
+endif;
 
 
 /* For the admin */

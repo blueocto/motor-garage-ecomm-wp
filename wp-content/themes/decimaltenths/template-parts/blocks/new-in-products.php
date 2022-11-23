@@ -34,7 +34,7 @@
                         <product-card>
                             <?php if($product->get_image_id() == "") { ?>
                                 <span class="picture">
-                                    <img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2022/10/dt-product-placeholder.png" width="307" height="307" alt="Decimal Tenths Placeholder logo" />
+                                    <?php echo wp_get_attachment_image( 164148, "large", array( 'loading' => 'lazy')); ?>
                                 </span>
                             <?php } else { ?>
                                 <span class="picture">
@@ -44,7 +44,6 @@
                             <div class="product--desc">
                                 <p class="product--title"><?php the_title(); ?></p>
                                 <p class="product--price">&pound;<?php echo $product->get_price(); ?></p>
-                                <p class="product--category">
                                 <?php 
                                 $terms = get_the_terms( $post->id, 'product_cat' ); 
                                 if(!empty($terms)){
@@ -77,7 +76,7 @@
                         <product-card>
                             <?php if($product->get_image_id() == "") { ?>
                                 <span class="picture">
-                                    <img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2022/10/dt-product-placeholder.png" width="307" height="307" alt="Decimal Tenths Placeholder logo" />
+                                    <?php echo wp_get_attachment_image( 164148, "large", array( 'loading' => 'lazy')); ?>
                                 </span>
                             <?php } else { ?>
                                 <span class="picture">

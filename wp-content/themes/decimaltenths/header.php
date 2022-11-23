@@ -10,10 +10,10 @@
 	<?php //get_template_part( 'template-parts/head-icons' ); ?>
 
 	<?php /* FONTS */ ?>
-	<link rel="stylesheet" href="https://use.typekit.net/pbr8cho.css">
+	<link as="style" rel="stylesheet preload prefetch" href="https://use.typekit.net/pbr8cho.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;1,600&display=swap" rel="stylesheet">
+	<link as="style" rel="stylesheet preload prefetch" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;1,600&display=swap">
 
 	<?php /* Critical CSS */ ?>
 	<style type="text/css">
@@ -41,7 +41,7 @@
 		<p class="logo">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" title="<?php bloginfo( 'name' ); ?>">
 				<span class="visuallyhidden"><?php bloginfo( 'name' ); ?></span>
-				<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-duotone.svg'; ?>" alt="Decimal Tenths logo" loading="eager" />
+				<img src="<?php echo get_stylesheet_directory_uri() . '/dist/svg/logo-duotone.svg'; ?>" alt="Decimal Tenths logo" loading="eager" width="300" height="53" />
 			</a>
 		</p>
 		
@@ -68,15 +68,18 @@
 		<div class="header--shop-links">
 			<?php get_search_form(); ?>
 			<p class="menu-item">
-				<a href="/basket/">
-					<span class="visuallyhidden">Cart</span>
-					<?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?>
-				</a>
-			</p>
-			<p class="menu-item">
 				<a href="/my-account/">
 					<span class="visuallyhidden">Account</span>
 					<?php get_template_part( 'template-parts/svg/user-light' ); ?>
+				</a>
+			</p>
+			<p class="menu-item">
+				<a href="/basket/">
+					<span class="visuallyhidden">Cart</span>
+					<?php get_template_part( 'template-parts/svg/cart-shopping-light' ); ?>
+					<span class="basket-quantity">
+						<?php global $woocommerce; echo $woocommerce->cart->cart_contents_count; ?>
+					</span>
 				</a>
 			</p>
 		</div>

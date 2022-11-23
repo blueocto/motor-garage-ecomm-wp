@@ -6,7 +6,9 @@
         while ( have_rows( 'brand_logos', 'option' ) ) : the_row();
         ?>
         <div class="column">
-            <img class="b-logo" src="<?php print(get_sub_field("logo", 'option')); ?>" alt="Car logo" />
+            <?php
+            echo wp_get_attachment_image( get_sub_field('logo', 'option'), "large", "", array("class" => "b-logo") );
+            ?>
         </div>
         <?php
         endwhile;

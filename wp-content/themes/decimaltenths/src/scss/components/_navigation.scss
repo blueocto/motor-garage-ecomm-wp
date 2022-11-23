@@ -99,7 +99,7 @@
 				width: 100%;
 				max-height: 100vh;
 				overflow: scroll;
-				z-index: 9;
+				z-index: 10;
 
 				@include breakpoint(medium down) {
 					flex-flow: column;

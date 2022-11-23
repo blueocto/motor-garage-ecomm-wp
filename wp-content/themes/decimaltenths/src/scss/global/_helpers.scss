@@ -5,8 +5,8 @@
 body {
 	color: white;
 	background-color: black;
-	background-image: url('../img/body-bg-2.png');
-	background-position: right 2vh, right bottom;
+	background-image: linear-gradient(225deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,1) 100%, rgba(0,0,0,1) 100%), url('../img/body-bg-1.png');
+	background-position: right 2vh, right top;
 	background-repeat: no-repeat, no-repeat;
 	background-size: 100% auto;
 }

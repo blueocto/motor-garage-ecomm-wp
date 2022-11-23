@@ -96,6 +96,14 @@
 				display: block;
 				padding-top: 12px;
 				text-align: center;
+
+				.basket-quantity {
+					background-color: var(--off-white);
+					color: var(--off-black);
+					border-radius: 10px;
+					position: relative;
+					padding: 1px 5px;
+				}
 			}
 
 			.svg {
