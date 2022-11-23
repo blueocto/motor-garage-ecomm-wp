@@ -1,19 +1,15 @@
-# Translation of Plugins - Redirection - Development (trunk) in English (UK)
-# This file is distributed under the same license as the Plugins - Redirection - Development (trunk) package.
+# Translation of Plugins - Redirection - Stable (latest release) in English (UK)
+# This file is distributed under the same license as the Plugins - Redirection - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-08-07 12:34:45+0000\n"
+"PO-Revision-Date: 2022-11-06 11:35:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.1\n"
+"X-Generator: GlotPress/4.0.0-alpha.3\n"
 "Language: en_GB\n"
-"Project-Id-Version: Plugins - Redirection - Development (trunk)\n"
-
-#: redirection-strings.php:118 redirection.js:2
-msgid "The caret {{code}}^{{/code}} should be at the start. For example: {{code}}%(example)s{{/code}}"
-msgstr "The caret {{code}}^{{/code}} should be at the start. For example: {{code}}%(example)s{{/code}}"
+"Project-Id-Version: Plugins - Redirection - Stable (latest release)\n"
 
 #: redirection-strings.php:746 redirection.js:2
 msgid "Your REST API appears to be cached and this will cause problems. Please exclude your REST API from your caching system."
@@ -87,9 +83,9 @@ msgstr "Search exact URL"
 msgid "Version %s installed! Please read the {{url}}release notes{{/url}} for details."
 msgstr "Version %s installed! Please read the {{url}}release notes{{/url}} for details."
 
-#: redirection-strings.php:5 redirection.js:2
-msgid "Are you sure want to delete all %d matching items?"
-msgstr "Are you sure want to delete all %d matching items?"
+#: redirection-strings.php:118 redirection.js:2
+msgid "The caret {{code}}^{{/code}} should be at the start. For example: {{code}}%(example)s{{/code}}"
+msgstr "The caret {{code}}^{{/code}} should be at the start. For example: {{code}}%(example)s{{/code}}"
 
 #: redirection-strings.php:116 redirection.js:2
 msgid "Please add migrated permalinks to the Site page under the \"Permalink Migration\" section."
@@ -98,6 +94,10 @@ msgstr "Please add migrated permalinks to the Site page under the \"Permalink Mi
 #: redirection-strings.php:92 redirection-strings.php:658 redirection.js:2
 msgid "Exact match in any order"
 msgstr "Exact match in any order"
+
+#: redirection-strings.php:5 redirection.js:2
+msgid "Are you sure want to delete all %d matching items?"
+msgstr "Are you sure want to delete all %d matching items?"
 
 #: models/fixer.php:91
 msgid "Too many regular expressions may impact site performance"
@@ -251,14 +251,6 @@ msgstr "Request Headers"
 msgid "Exclude from logs"
 msgstr "Exclude from logs"
 
-#: redirection-strings.php:524 redirection.js:2
-msgid "The companion plugin Search Regex allows you to search and replace data on your site. It also supports Redirection, and is handy if you want to bulk update a lot of redirects."
-msgstr "The companion plugin Search Regex allows you to search and replace data on your site. It also supports Redirection, and is handy if you want to bulk update a lot of redirects."
-
-#: redirection-strings.php:523 redirection.js:2
-msgid "Need to search and replace?"
-msgstr "Need to search and replace?"
-
 #: redirection-strings.php:722 redirection.js:2
 msgid "Relocate to domain"
 msgstr "Relocate to domain"
@@ -343,13 +335,17 @@ msgstr "A site alias is another domain that you want to be redirected to this si
 msgid "Site Aliases"
 msgstr "Site Aliases"
 
+#: redirection-strings.php:524 redirection.js:2
+msgid "The companion plugin Search Regex allows you to search and replace data on your site. It also supports Redirection, and is handy if you want to bulk update a lot of redirects."
+msgstr "The companion plugin Search Regex allows you to search and replace data on your site. It also supports Redirection, and is handy if you want to bulk update a lot of redirects."
+
+#: redirection-strings.php:523 redirection.js:2
+msgid "Need to search and replace?"
+msgstr "Need to search and replace?"
+
 #: redirection-strings.php:512 redirection.js:2
 msgid "Options on this page can cause problems if used incorrectly. You can {{link}}temporarily disable them{{/link}} to make changes."
 msgstr "Options on this page can cause problems if used incorrectly. You can {{link}}temporarily disable them{{/link}} to make changes."
-
-#: redirection-strings.php:121 redirection.js:2
-msgid "If you want to redirect everything please use a site relocation or alias from the Site page."
-msgstr "If you want to redirect everything, please use a site relocation or alias from the Site page."
 
 #: redirection-strings.php:186 redirection.js:2
 msgid "Please wait, importing."
@@ -379,6 +375,10 @@ msgstr "Import Existing Redirects"
 #: redirection-strings.php:213 redirection.js:2
 msgid "That's all there is to it - you are now redirecting! Note that the above is just an example."
 msgstr "That's all there is to it – you are now redirecting! Note that the above is just an example."
+
+#: redirection-strings.php:121 redirection.js:2
+msgid "If you want to redirect everything please use a site relocation or alias from the Site page."
+msgstr "If you want to redirect everything, please use a site relocation or alias from the Site page."
 
 #: redirection-strings.php:761 redirection.js:2
 msgid "Value"
@@ -1609,14 +1609,6 @@ msgstr "Create associated redirect (added to end of URL)"
 msgid "<code>Redirectioni10n</code> is not defined. This usually means another plugin is blocking Redirection from loading. Please disable all plugins and try again."
 msgstr "<code>Redirectioni10n</code> is not defined. This usually means another plugin is blocking Redirection from loading. Please disable all plugins and try again."
 
-#: redirection-admin.php:526
-msgid "Also check if your browser is able to load <code>redirection.js</code>:"
-msgstr "Also check if your browser is able to load <code>redirection.js</code>:"
-
-#: redirection-admin.php:514
-msgid "Unable to load Redirection"
-msgstr "Unable to load Redirection"
-
 #: redirection-strings.php:530 redirection.js:2
 msgid "If the magic button doesn't work then you should read the error and see if you can fix it manually, otherwise follow the 'Need help' section below."
 msgstr "If the magic button doesn't work then you should read the error and see if you can fix it manually, otherwise follow the 'Need help' section below."
@@ -1666,9 +1658,17 @@ msgstr "URL Monitor"
 msgid "Your server has rejected the request for being too big. You will need to reconfigure it to continue."
 msgstr "Your server has rejected the request for being too large. You will need to reconfigure it to continue."
 
+#: redirection-admin.php:526
+msgid "Also check if your browser is able to load <code>redirection.js</code>:"
+msgstr "Also check if your browser is able to load <code>redirection.js</code>:"
+
 #: redirection-admin.php:525 redirection-strings.php:257 redirection.js:2
 msgid "If you are using a page caching plugin or service (CloudFlare, OVH, etc) then you can also try clearing that cache."
 msgstr "If you are using a page caching plugin or service (CloudFlare, OVH, etc) then you can also try clearing that cache."
+
+#: redirection-admin.php:514
+msgid "Unable to load Redirection"
+msgstr "Unable to load Redirection"
 
 #: models/fixer.php:80
 msgid "Post monitor group is valid"
