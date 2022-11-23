@@ -3,9 +3,9 @@ Plugin Name: Formidable Forms - Contact Form, Survey & Quiz Form Builder for Wor
 Contributors: formidableforms, sswells, srwells
 Tags: forms, form builder, survey, free, custom form, contact form, form maker, form creator, paypal form, paypal, stripe, stripe form, aweber, aweber form, getresponse, calculator, quote form, contact button, form manager, Akismet, payment form, survey form, donation form, email subscription, user registration form, wordpress registration, wordpress login form, constant contact, mailpoet, active campaign, salesforce, hubspot, campaign monitor, quiz builder, quiz, feedback form, drag and drop, mailchimp form
 Requires at least: 5.2
-Tested up to: 6.0.2
+Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 5.5.2
+Stable tag: 5.5.3.1
 
 The most advanced WordPress forms plugin. Go beyond contact forms with our drag and drop form builder for surveys, quizzes, and more.
 
@@ -440,6 +440,23 @@ Using our Zapier integration, you can easily connect your website with over 1000
 See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zapier Integrations</a>.
 
 == Changelog ==
+= 5.5.3 =
+* New: HTML emails using wpautop will now also convert line breaks into <br /> tags.
+* New: Improved support for importing large XML files. Previously a file over 200MB would trigger a "parser error : internal error: Huge input lookup" error.
+* Fix: When an HTML email includes a body tag, only the content of the body tag will use wpautop.
+* Fix: A duplicated field group would merge into one larger field group instead of creating a second identical field group as expected.
+* Fix: The "Add Fields Here" placeholder wouldn't hide after duplicating a section until after refreshing the page.
+* Fix: The Screen Options tab was not hidden after duplicating an entry, causing it to overlap the update button.
+* Fix: An imported view shortcode was not properly updating to its new ID value if the post containing it did not also include a [formidable] shortcode.
+* Fix: Tooltips that overlap the element that triggered the tooltip would cause the tooltip to flicker on and off.
+* Fix: The ellipses icon that triggers shortcode pop ups was offset incorrectly in of text fields inside of form actions.
+* Fix: The update button was missing on the alternative style editor submenu link available from the WordPress themes menu.
+* Fix: Honeypot fields should no longer gain focus when tabbing through fields in Chrome.
+* Fix: Fields wouldn't follow the cursor as expected after scrolling the page while dragging.
+* Fix: Recent styling updates were applying to radio buttons in the form builder by mistake, causing them to look incorrect.
+* Front end polyfills for IE8 have been removed, reducing the size of the loaded script file.
+* Added additional form builder restrictions so a hidden field and page break don't become part of a field group.
+
 = 5.5.2 =
 * New: When dragging a field or field group, a smaller drag helper will be used that is more consistent with the field type options in the sidebar, and the field that is being dragged will gray out.
 * New: Improved error handling when installing templates from XML. A message will be shown when the simple XML extension is not installed, and errors will now be shown in a pop up when a template falls to install.
@@ -461,10 +478,10 @@ See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zap
 * New: Email actions now use a rich text editor.
 * New: Added new frm_before_title, frm_before_submit_btn, and frm_after_submit_btn actions.
 * New: Image URLs used in options for radio and checkbox fields will now be included in XML exports, and used on import when the option to import files is on.
-* Fix: Prevent a bug that would sometimes cause a form to repeat when previewing in-theme.
+* Fix: Prevent a bug that would sometimes cause a form to repeat 10 times when previewing in-theme.
 * Fix: Shortcode popup will now appear below textareas to avoid visibility issues with overlapping over content.
-* Fix: Prevent a fatal error in PHP8 where a field's options data is in an unsupported format.
-* Fix: An entry with a name longer than 255 characters long would throw an error and never submit. It will now be truncated to a maximum of 255 characters.
+* Fix: Prevent a fatal error in PHP8 where a field's field options data is in an unsupported format.
+* Fix: An entry with a name longer than 255 characters long would throw an error and never submit. It will now be truncated to a maximum of 255 characters instead.
 * Removed icon fonts from front end CSS when only Lite is loaded to significantly reduce CSS size where it is not required.
 * Updated styles for back end modals.
 
@@ -772,5 +789,30 @@ See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zap
 * New: Use frm_inline_success for the class in the customized HTML to move the success message next to the submit button. "frm_inline_success frm_alignright_success" will right-align the message.
 * Tweak: Improve the admin listing pages when nothing has been created.
 * Fix: Update the recaptcha for better reliability to catch more spam.
+
+= 4.06.03 =
+* More consistent dropdown styling with multiselect dropdowns.
+* Prepare the code for handling permissions options as an array of roles.
+* Fix: WP 5.5 - Email subject lines were coming through encoded.
+* Fix: WP 5.5 - When WP Mail SMTP was installed, the Formidable SMTP page has an error.
+
+= 4.05.02 =
+* New: Added frm_message_placement hook to show the message below the form
+* New: New classes that can be used in the class setting: frm_plain_success (Removes styling from the success message) and frm_below_success (Moves the success message below).
+* Add Formidable back to the admin bar. This is now a setting if the default WordPress v5.2+ behavior is desired.
+* Fix: Review requests were added to the inbox too frequently for sites with multiple admins.
+* Fix: Elementor conflict by using the glost $post in the admin area.
+* Fix: The color picker position in the styling settings was off for some options.
+
+= 4.05.01 =
+* Fix: The entry list wasn't always showing the entries.
+* Better sync between review requests in inbox and message.
+
+= 4.05 =
+* Updates to the default styling.
+* New: Added an inbox as a centralized place for notices and communication.
+* New: Added frm_color_block and frm_total_big classes for more beautiful forms.
+* Help prevent common email issues by showing a warning in the email settings when the from and to email addresses are the same.
+* Fix: Forms edited after export and reimported were losing the required indicator in some cases.
 
 <a href="https://raw.githubusercontent.com/Strategy11/formidable-forms/master/changelog.txt">See changelog for all versions</a>
