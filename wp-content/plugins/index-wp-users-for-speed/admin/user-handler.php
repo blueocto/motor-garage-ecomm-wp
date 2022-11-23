@@ -2,7 +2,10 @@
 
 namespace IndexWpUsersForSpeed;
 
+use WP_Error;
+use WP_HTTP_Response;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_User_Query;
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/indexer.php';
@@ -28,6 +31,8 @@ class UserHandler extends WordPressHooks {
   private $selectionBoxCache;
   private $doAutocomplete;
   private $requestedCapabilities;
+  private $savedOrderby;
+  private $doingRestQuery;
 
   public function __construct() {
 
@@ -284,8 +289,8 @@ class UserHandler extends WordPressHooks {
      * This suppresses most of the work in both runs.  */
     if ( $this->doAutocomplete ) {
       $fixed_args ['number'] = 1;
-      unset ( $fixed_args['orderby'] );
-      unset ( $fixed_args['order'] );
+      $this->savedOrderby    = $fixed_args['orderby'];
+      $fixed_args['orderby'] = 'ID';
     }
     return $fixed_args;
   }
@@ -323,18 +328,23 @@ class UserHandler extends WordPressHooks {
       /* sometimes it isn't initialized in multisite. */
       $wp_roles = $wp_roles ?: new \WP_Roles();
       $wp_roles->for_site( get_current_blog_id() );
-      $metaQuery = [];
+      $roleList = [];
       foreach ( $capsFound as $capFound ) {
         foreach ( $wp_roles->roles as $name => $role ) {
           $caps = &$role['capabilities'];
           if ( array_key_exists( $capFound, $caps ) && $caps[ $capFound ] === true ) {
             $userCount = array_key_exists( $name, $roleCounts ) ? $roleCounts[ $name ] : 0;
             if ( $userCount > 0 ) {
-              $metaQuery[]     = $this->makeRoleQueryArgs( $name );
-              $this->userCount += $userCount;
+              $roleList[ $name ] = true;
             }
           }
         }
+      }
+      $metaQuery = [];
+      foreach ( $roleList as $name => $_ ) {
+        $metaQuery[]     = $this->makeRoleQueryArgs( $name );
+        $userCount       = array_key_exists( $name, $roleCounts ) ? $roleCounts[ $name ] : 0;
+        $this->userCount += $userCount;
       }
       if ( count( $metaQuery ) === 0 ) {
         return $query_args;
@@ -344,7 +354,10 @@ class UserHandler extends WordPressHooks {
       }
       add_filter( 'get_meta_sql', [ $this, 'filter_meta_sql' ], 10, 6 );
       $query_args ['meta_query'] = $metaQuery;
+      unset ( $query_args ['capability__in'] );
       unset ( $query_args['capability'] );
+      $this->savedOrderby     = $query_args ['orderby'];
+      $query_args ['orderby'] = 'ID';
     } else {
       /*  The meta indexing isn't yet done. Return partial list of editors. */
       $editors = $this->indexer->getEditors();
@@ -444,11 +457,12 @@ class UserHandler extends WordPressHooks {
           $keys[] = $query['key'];
         }
       }
-      $unions = [];
-      foreach ( $keys as $key ) {
-        $unions [] = $wpdb->prepare( "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s", $key );
-      }
-      $where = PHP_EOL . " AND $wpdb->users.ID IN (" . implode( PHP_EOL . 'UNION ALL' . PHP_EOL, $unions ) . ')' . PHP_EOL;
+      $capabilityTags = array_map( function ( $key ) {
+        global $wpdb;
+        return $wpdb->prepare( "%s", $key );
+      }, $keys );
+
+      $where = PHP_EOL . " AND $wpdb->users.ID IN ( SELECT user_id FROM $wpdb->usermeta WHERE meta_key IN (" . implode( ',', $capabilityTags ) . '))' . PHP_EOL;
       /* only do this once per invocation of user query with metadata */
       remove_filter( 'get_meta_sql', [ $this, 'filter_meta_sql' ], 10 );
 
@@ -456,6 +470,56 @@ class UserHandler extends WordPressHooks {
       $sql['where'] = $where;
     }
     return $sql;
+  }
+
+  /**
+   * Filters the users array before the query takes place.
+   *
+   * Return a non-null value to bypass WordPress' default user queries.
+   *
+   * Filtering functions that require pagination information are encouraged to set
+   * the `total_users` property of the WP_User_Query object, passed to the filter
+   * by reference. If WP_User_Query does not perform a database query, it will not
+   * have enough information to generate these values itself.
+   *
+   * @param array|null $results Return an array of user data to short-circuit WP's user query
+   *                               or null to allow WP to run its normal queries.
+   * @param WP_User_Query $query The WP_User_Query instance (passed by reference).
+   *
+   * @since 5.1.0
+   *
+   */
+  public function filter__users_pre_query( $results, $query ) {
+    global $wpdb;
+    /* Do we want a result set of just one value because we're autocompleting?
+     * We can just fake it and shortcut the query entirely. */
+    if ( $this->doAutocomplete ) {
+      if ( array_key_exists( 'number', $query->query_vars ) && $query->query_vars['number'] === 1 ) {
+        $splits = explode( ' ', $query->query_fields );
+        if ( count( $splits ) > 1 && strtoupper( $splits[0] ) === 'DISTINCT' ) {
+          array_shift( $splits );
+          $fields  = explode( ',', implode( ' ', $splits ) );
+          $fakeRow = [];
+          foreach ( $fields as $field ) {
+            $components = explode( '.', $field );
+            if ( count( $components ) > 1 && $components[0] === $wpdb->users ) {
+              array_shift( $components );
+              $field = implode( '.', $components );
+            }
+            $fakeRow[ $field ] = '-1';
+          }
+          $query->query_fields = $fields;
+          return [ (object) $fakeRow ];
+        }
+      }
+    }
+
+    /* Are we doing a REST query? If so we can get rid of the ordering to speed things up. */
+    if ( $this->doingRestQuery ) {
+      $query->query_orderby = '';
+      $this->doingRestQuery = false;
+    }
+    return $results;
   }
 
   /**
@@ -700,7 +764,52 @@ class UserHandler extends WordPressHooks {
     if ( count( $editors ) <= $threshold ) {
       $query_args['include'] = $editors;
     }
+    $this->doingRestQuery = true;
     return $this->filtered_query_args( $query_args, $query_args );
+  }
+
+  /**
+   * Filters the response immediately after executing any REST API
+   * callbacks.
+   *
+   * Allows plugins to perform any needed cleanup, for example,
+   * to undo changes made during the {@see 'rest_request_before_callbacks'}
+   * filter.
+   *
+   * Note that this filter will not be called for requests that
+   * fail to authenticate or match to a registered route.
+   *
+   * Note that an endpoint's `permission_callback` can still be
+   * called after this filter - see `rest_send_allow_header()`.
+   *
+   * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+   *                                                                   Usually a WP_REST_Response or WP_Error.
+   * @param array $handler Route handler used for the request.
+   * @param WP_REST_Request $request Request used to generate the response.
+   *
+   * @since 4.7.0
+   *
+   */
+  public function filter__rest_request_after_callbacks( $response, $handler, $request ) {
+
+    /* Is this a REST operation to fetch a list of users?
+     * If so, we may have messed around with the orderby parameter
+     * of the related query to make the DBMS do less work.
+     * In that case, fix the order of the result set. */
+    $params = $request->get_params();
+    if ( $this->savedOrderby === 'display_name'
+         && $request->get_route() === '/wp/v2/users'
+         && $request->get_method() === 'GET'
+         && is_array( $params )
+         && array_key_exists( '_fields', $params )
+         && false !== strpos( $params['_fields'], 'name' ) ) {
+      usort( $response->data, function ( $a, $b ) {
+        return strnatcasecmp( $a['name'], $b['name'] );
+      } );
+    }
+    $this->savedOrderby   = null;
+    $this->doingRestQuery = false;
+    return $response;
   }
 
   /**
@@ -741,6 +850,7 @@ class UserHandler extends WordPressHooks {
     $autocompleteHtml = $this->selectionBoxCache->generateAutocomplete( $this->requestedCapabilities, false );
     $selectHtml       = $this->selectionBoxCache->generateSelect( false );
 
+    $this->savedOrderby = null;
     return $selectHtml . PHP_EOL . $autocompleteHtml;
   }
 }
