@@ -13,7 +13,7 @@
 	<link as="style" rel="stylesheet preload prefetch" href="https://use.typekit.net/pbr8cho.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link as="style" rel="stylesheet preload prefetch" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;1,600&display=swap">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 	<?php /* Critical CSS */ ?>
 	<style type="text/css">
