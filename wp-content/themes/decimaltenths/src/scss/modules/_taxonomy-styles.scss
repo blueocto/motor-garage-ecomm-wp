@@ -21,6 +21,16 @@
 // Styles
 // ==============================================
 
+.woo-container {
+    // background-color: black;
+	background-image: linear-gradient(180deg, black 0%, black 21%, var(--off-white) 26%, var(--off-white) 100%), 
+                    url('../img/body-bg-1.png');
+	background-position: 0 0, 
+                        right top;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+}
+
 .woocommerce-products-header {
     padding: $large-spacing;
     // background-color: var(--brand-l-grey);
@@ -36,7 +46,8 @@
     justify-content: center;
     padding: 0 $medium-spacing;
     height: rem-calc(66); // to match the select
-    background-color: rgba(black, 90%);
+    color: white;
+    // background-color: rgba(black, 90%);
 
     @include breakpoint(large) {
         justify-content: flex-start;
