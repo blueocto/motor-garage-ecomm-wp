@@ -10,7 +10,6 @@
 	border-top: 2px solid var(--brand-neon-green);
 
 	.logo {
-		max-width: rem-calc(254px);
 
 		@include breakpoint(medium down) {
 			margin: 0 auto;
