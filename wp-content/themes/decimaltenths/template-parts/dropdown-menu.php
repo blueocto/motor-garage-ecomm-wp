@@ -7,7 +7,7 @@
             <li class="menu-item menu-item-has-children">
                 <a href="#">Shop by Vehicle</a>
                 <button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
-                <ul class="sub-menu">
+                <ul class="sub-menu vehicles">
     ';
 
     $taxonomy = 'product_cat'; 

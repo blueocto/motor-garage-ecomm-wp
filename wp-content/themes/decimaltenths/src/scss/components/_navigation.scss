@@ -91,18 +91,19 @@
 			background-position: 10px 6px;
 
 			+ .sub-menu {
-				display: flex;
-				flex-flow: row wrap;
-				justify-content: space-around;
+				// display: flex;
+				// flex-flow: row wrap;
+				// justify-content: space-around;
 				width: 100%;
-				max-height: 100vh;
+				// height: 80vh;
+				// max-height: 100vh;
 				overflow: scroll;
 				z-index: 10;
 
-				@include breakpoint(medium down) {
-					flex-flow: column;
-					justify-content: space-between;
-				}
+				// @include breakpoint(medium down) {
+					// flex-flow: column;
+					// justify-content: space-between;
+				// }
 			}
 		}
 	}
@@ -134,10 +135,21 @@
 		}
 		
 		&.brands {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: center;
+			align-content: flex-start;
+			align-items: stretch;
+			
+			.level-1 {
+				flex: 0 0 25%;
+				width: 25%;
+			}
+
 			.menu-item {
 				flex: 0 0 25%;
-				padding-top: $medium-spacing;
-				margin: 5px;
+				padding: $small-spacing;
+				margin: rem-calc(5px);
 
 				@include breakpoint(medium down) {
 					flex: 0 0 100%;
@@ -150,53 +162,68 @@
 			}
 		}
 
-		.menu-item {
-			display: block;
-			padding-bottom: $medium-spacing;
-			color: black;
-			cursor: pointer;
+		&.vehicles {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: center;
+			height: 80vh;
+			max-height: 100vh;
 
-			@include breakpoint(large) {
-				font-size: rem-calc(12px);
-			}
+			.menu-item {
+				display: block;
+				color: black;
+				cursor: pointer;
 
-			@include breakpoint(xxlarge) {
-				font-size: rem-calc(14px);
-			}
+				@include breakpoint(large) {
+					font-size: rem-calc(12px);
+				}
 
-			a {
+				@include breakpoint(xxlarge) {
+					font-size: rem-calc(14px);
+				}
 
-				&:hover,
-				&:focus {
-					border-bottom-color: var(--brand-neon-green);
+				a {
+
+					&:hover,
+					&:focus {
+						border-bottom-color: var(--brand-neon-green);
+					}
 				}
 			}
-		}
-	}
 
-	// make of car, e.g. Audi
-	// menu-item-has-children
-	.level-1 {
+			// make of car, e.g. Audi
+			// menu-item-has-children
+			.level-1 {
+				flex: 0 0 25%;
+				max-width: 25%;
+				padding: 0 $small-spacing;
+				font-size: rem-calc(14);
 
-		> .sub-menu {
-			margin: 0;
-			width: 100%;
-			box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-			transition: all 0.5s ease;
-			overflow: scroll;
+				.sub-sub-menu {
+					margin-top: $large-spacing;
+				}
 
-			@include breakpoint(large) {
-				display: block;
-				min-width: 300px;
-				max-height: 80vh;
-				z-index: 999;
-			}
+				> .sub-menu {
+					margin: 0;
+					width: 100%;
+					box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+					transition: all 0.5s ease;
+					overflow: scroll;
 
-			@include breakpoint(xxlarge) {
-				display: flex;
-				flex-flow: row wrap;
-				width: max-content;
-				max-height: 100vh;
+					@include breakpoint(large) {
+						display: block;
+						min-width: 300px;
+						max-height: 80vh;
+						z-index: 999;
+					}
+
+					@include breakpoint(xxlarge) {
+						display: flex;
+						flex-flow: row wrap;
+						width: max-content;
+						max-height: 100vh;
+					}
+				}
 			}
 		}
 	}
@@ -217,7 +244,7 @@
 			text-align: left;
 
 			> a {
-				padding: $medium-spacing;
+				padding: rem-calc(7px 10px);
 			}
 
 			&:nth-child(even) {
