@@ -3,9 +3,9 @@
 // ==============================================
 
 .woocommerce-breadcrumb {
-    padding: $medium-spacing;
+    padding: $small-spacing;
     font-size: rem-calc(14);
-    background-color: (rgba(black, 60%));
+    // background-color: (rgba(black, 60%));
 
     @include breakpoint(large) {
         max-width: 50%;
