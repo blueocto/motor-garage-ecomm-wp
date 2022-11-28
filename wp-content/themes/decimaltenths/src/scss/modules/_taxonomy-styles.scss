@@ -21,19 +21,20 @@
 // Styles
 // ==============================================
 
-.woo-container {
-    // background-color: black;
-	background-image: linear-gradient(180deg, black 0%, black 21%, var(--off-white) 26%, var(--off-white) 100%), 
-                    url('../img/body-bg-1.png');
-	background-position: 0 0, 
-                        right top;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
-}
+// .woo-container {
+//     background-image: linear-gradient(180deg, black 0%, black 21%, var(--off-white) 26%, var(--off-white) 100%), 
+//                     url('../img/body-bg-1.png');
+// 	background-position: 0 0, 
+//                         right top;
+// 	background-repeat: no-repeat;
+// 	background-size: 100% auto;
+// }
 
 .woocommerce-products-header {
+    margin-bottom: $large-spacing;
     padding: $large-spacing;
-    // background-color: var(--brand-l-grey);
+    color: var(--off-white);
+    background-color: var(--off-black);
 
     // @include breakpoint(medium) {
     //     margin-bottom: rem-calc(100);
@@ -45,8 +46,8 @@
     align-items: center;
     justify-content: center;
     padding: 0 $medium-spacing;
-    height: rem-calc(66); // to match the select
-    color: white;
+    height: rem-calc(50); // to match the select
+    color: black;
     // background-color: rgba(black, 90%);
 
     @include breakpoint(large) {
@@ -59,7 +60,7 @@
     padding: 0 $medium-spacing;
     width: 100%;
 
-    @include breakpoint(medium) {}
+    // @include breakpoint(medium) {}
 
     .orderby {
         margin-bottom: 0;
@@ -67,11 +68,13 @@
 }
 
 .shop-sidebar {
-    // padding: $large-spacing;
+    padding: $small-spacing;
+    background-color: rgba( #50e887, 0.3);
+    border-radius: rem-calc(5);
 
     @include breakpoint(large) {
-        margin-right: 25px;
-        width: 24vw;
+        margin-right: rem-calc(15);
+        width: 24.5vw;
     }
 }
 
