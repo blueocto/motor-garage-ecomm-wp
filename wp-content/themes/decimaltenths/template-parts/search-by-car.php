@@ -5,7 +5,6 @@ $categories = get_terms( ['taxonomy' => 'product_cat'] );
 
 <section class="search-by-car-form">
     <form role="search" method="get" class="search-form" action="<?php echo home_url( '/' ); ?>">
-        <input type="hidden" name="swoof" value="1" />
         <div class="form-row">
             <select class="manufacturer" name="manufacturer">
                 <option value="">--Choose Your Manufacturer--</option>
@@ -21,6 +20,11 @@ $categories = get_terms( ['taxonomy' => 'product_cat'] );
         <div class="form-row">
             <select class="model" name="model">
                 <option value="">--Model--</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <select class="chassis" name="chassis">
+                <option value="">--Chassis--</option>
             </select>
         </div>
         <div class="form-row">

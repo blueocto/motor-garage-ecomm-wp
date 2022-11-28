@@ -69,8 +69,45 @@
 
 .shop-sidebar {
     padding: $small-spacing;
-    background-color: rgba( #50e887, 0.3);
+    background-color: var(--brand-d-grey);
     border-radius: rem-calc(5);
+    color: white;
+
+    .widget {
+        padding: $xlarge-spacing $medium-spacing $xlarge-spacing $medium-spacing;
+        border-bottom: 1px solid white;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            &.wpfFilterButton {
+                display: inline-block;
+                padding: 10px 50px;
+                height: 50px;
+                font-family: $heading-font;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                background-color: transparent;
+                border: 2px solid var(--brand-neon-green);
+                border-radius: 50px;
+                cursor: pointer;
+                color: var(--brand-neon-green);
+                width: auto;
+
+                @include breakpoint(small down) {
+                    margin-bottom: $medium-spacing;
+                }
+
+                &:hover,
+                &:focus {
+                    color: var(--off-black);
+                    background: var(--brand-neon-green);
+                }
+            }
+        }
+    }
 
     @include breakpoint(large) {
         margin-right: rem-calc(15);

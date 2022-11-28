@@ -44,6 +44,7 @@ require_once( 'library/woocommerce.php' );
 function myplugin_register_query_vars( $vars ) {
     $vars[] = 'manufacturer';
     $vars[] = 'model';
+    $vars[] = 'chassis';
     return $vars;
 }
 add_filter( 'query_vars', 'myplugin_register_query_vars' );
@@ -63,6 +64,7 @@ function search_title($title){
     global $template;
     $manufacturer = $_GET['manufacturer'] ?? '';
     $model = $_GET['model'] ?? '';
+    $model = $_GET['chassis'] ?? '';
     $search = $_GET['s'] ?? '';
     
     if( basename($template) == "search.php" ) {

@@ -1,9 +1,1911 @@
 [
     {
+        "name": "\u00a0 3.0 TFSI B8 Coup\u00e9 &amp; Cabriolet (S tronic)",
+        "slug": "3-0-tfsi-b8-coupe-cabriolet-s-tronic",
+        "parent": "18165",
+        "id": "20078"
+    },
+    {
+        "name": "\u00a01.0TSI 90PS (3 &amp; 5 Door)",
+        "slug": "1-0tsi-90ps-3-5-door-up",
+        "parent": "18311",
+        "id": "19897"
+    },
+    {
+        "name": "\u00a01.4 TFSI S line 122PS",
+        "slug": "1-4-tfsi-s-line-122ps",
+        "parent": "18287",
+        "id": "19940"
+    },
+    {
+        "name": "\u00a01.4 TFSI S line 150PS ACT",
+        "slug": "1-4-tfsi-s-line-150ps-act",
+        "parent": "18287",
+        "id": "19943"
+    },
+    {
+        "name": "\u00a01.4 TFSI S line 185PS S tronic",
+        "slug": "1-4-tfsi-s-line-185ps-s-tronic",
+        "parent": "18287",
+        "id": "19941"
+    },
+    {
+        "name": "\u00a01.8 TSI 2WD 3-Door",
+        "slug": "1-8-tsi-2wd-3-door",
+        "parent": "18272",
+        "id": "19946"
+    },
+    {
+        "name": "\u00a01.8T 2WD",
+        "slug": "1-8t-2wd-bora",
+        "parent": "18319",
+        "id": "19842"
+    },
+    {
+        "name": "\u00a01.8T 2WD 3 &amp; 5 door",
+        "slug": "1-8t-2wd-3-5-door",
+        "parent": "18272",
+        "id": "19953"
+    },
+    {
+        "name": "\u00a01.8T B6 quattro Cabriolet",
+        "slug": "1-8t-b6-quattro-cabriolet",
+        "parent": "18093",
+        "id": "19968"
+    },
+    {
+        "name": "\u00a01.8T B6 quattro Saloon - Avant 163BHP (5 speed)",
+        "slug": "1-8t-b6-quattro-saloon-avant-163bhp-5-speed",
+        "parent": "18093",
+        "id": "19970"
+    },
+    {
+        "name": "\u00a01.8T B6 quattro Saloon - Avant 190BHP (6 speed)",
+        "slug": "1-8t-b6-quattro-saloon-avant-190bhp-6-speed",
+        "parent": "18093",
+        "id": "19969"
+    },
+    {
+        "name": "\u00a01.8T B7 quattro Saloon - Avant",
+        "slug": "1-8t-b7-quattro-saloon-avant",
+        "parent": "18093",
+        "id": "19971"
+    },
+    {
+        "name": "\u00a01.8T quattro 8L",
+        "slug": "1-8t-quattro-8l",
+        "parent": "18273",
+        "id": "20067"
+    },
+    {
+        "name": "\u00a01.8T Sport and Cupra 180PS",
+        "slug": "1-8t-sport-and-cupra-180ps",
+        "parent": "18329",
+        "id": "19915"
+    },
+    {
+        "name": "\u00a01.9 TDI 130 \/ 150",
+        "slug": "1-9-tdi-130-150-bora",
+        "parent": "18319",
+        "id": "19843"
+    },
+    {
+        "name": "\u00a01.9 TDi 130PS and 160PS",
+        "slug": "1-9-tdi-130ps-and-160ps",
+        "parent": "18331",
+        "id": "19908"
+    },
+    {
+        "name": "\u00a01.9 TDI 90 \/ 100 \/ 110 \/ 130 BHP",
+        "slug": "1-9-tdi-90-100-110-130-bhp",
+        "parent": "18272",
+        "id": "19955"
+    },
+    {
+        "name": "\u00a01.9 TDi Mk1",
+        "slug": "1-9-tdi-mk1",
+        "parent": "18339",
+        "id": "19956"
+    },
+    {
+        "name": "\u00a0150 \/ 180 2WD Coupe &amp; Roadster",
+        "slug": "150-180-2wd-coupe-roadster",
+        "parent": "18267",
+        "id": "20086"
+    },
+    {
+        "name": "\u00a0180 \/ 225 quattro Coupe &amp; Roadster",
+        "slug": "180-225-quattro-coupe-roadster",
+        "parent": "18267",
+        "id": "20068"
+    },
+    {
+        "name": "\u00a02.0 BiTDI 163 &amp; 180PS",
+        "slug": "2-0-bitdi-163-180ps-amarok",
+        "parent": "18307",
+        "id": "19825"
+    },
+    {
+        "name": "\u00a02.0 FSiT",
+        "slug": "2-0-fsit-tiguan",
+        "parent": "18303",
+        "id": "19015"
+    },
+    {
+        "name": "\u00a02.0 T quattro 3-Door 8P",
+        "slug": "2-0-t-quattro-3-door-8p",
+        "parent": "18273",
+        "id": "19950"
+    },
+    {
+        "name": "\u00a02.0 T quattro Sportback 8P",
+        "slug": "2-0-t-quattro-sportback-8p",
+        "parent": "18273",
+        "id": "19951"
+    },
+    {
+        "name": "\u00a02.0 TDI 140PS",
+        "slug": "2-0-tdi-140ps",
+        "parent": "18329",
+        "id": "19919"
+    },
+    {
+        "name": "\u00a02.0 TDI 170bhp 2WD 3 door DPF",
+        "slug": "2-0-tdi-170bhp-2wd-3-door-dpf",
+        "parent": "18272",
+        "id": "19957"
+    },
+    {
+        "name": "\u00a02.0 TDI 170bhp 2WD Sportback DPF",
+        "slug": "2-0-tdi-170bhp-2wd-sportback-dpf",
+        "parent": "18272",
+        "id": "19959"
+    },
+    {
+        "name": "\u00a02.0 TDI 184PS MQB 2WD (3 Door &amp; Sportback Models)",
+        "slug": "2-0-tdi-184ps-mqb-2wd-3-door-sportback-models",
+        "parent": "18272",
+        "id": "19960"
+    },
+    {
+        "name": "\u00a02.0 TDi B8 140PS \/ 177PS 2WD Saloon and Avant (S line models only)",
+        "slug": "2-0-tdi-b8-140ps-177ps-2wd-saloon-and-avant-s-line-models-only",
+        "parent": "18093",
+        "id": "19972"
+    },
+    {
+        "name": "\u00a02.0 TDi B8 177PS quattro Saloon and Avant",
+        "slug": "2-0-tdi-b8-177ps-quattro-saloon-and-avant",
+        "parent": "18093",
+        "id": "19973"
+    },
+    {
+        "name": "\u00a02.0 TFSi 2WD",
+        "slug": "2-0-tfsi-2wd",
+        "parent": "18087",
+        "id": "20087"
+    },
+    {
+        "name": "\u00a02.0 TFSI B7 quattro and DTM",
+        "slug": "2-0-tfsi-b7-quattro-and-dtm",
+        "parent": "18093",
+        "id": "19975"
+    },
+    {
+        "name": "\u00a02.0 TFSI B9 Quattro Saloon &amp; Avant (Non OPF\/GPF Models &amp; Without Brace Bars)",
+        "slug": "2-0-tfsi-b9-quattro-saloon-avant-non-opf-gpf-models-without-brace-bars",
+        "parent": "18093",
+        "id": "19976"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro",
+        "slug": "2-0-tfsi-quattro",
+        "parent": "18172",
+        "id": "20066"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro 3-Door 8V.2 (GPF Equipped Models Only)",
+        "slug": "2-0-tfsi-quattro-3-door-8v-2-gpf-equipped-models-only",
+        "parent": "18273",
+        "id": "20069"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro 3-Door 8V\/8V.2 (Non-GPF Equipped Models Only)",
+        "slug": "2-0-tfsi-quattro-3-door-8v-8v-2-non-gpf-equipped-models-only",
+        "parent": "18273",
+        "id": "19962"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro Saloon &amp; Cabrio 8V.2 (GPF Equipped Models Only)",
+        "slug": "2-0-tfsi-quattro-saloon-cabrio-8v-2-gpf-equipped-models-only",
+        "parent": "18273",
+        "id": "20070"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro Saloon &amp; Cabrio 8V\/8V.2 (Non-GPF Equipped Models Only)",
+        "slug": "2-0-tfsi-quattro-saloon-cabrio-8v-8v-2-non-gpf-equipped-models-only",
+        "parent": "18273",
+        "id": "19963"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro Sedan 8V (US-only)",
+        "slug": "2-0-tfsi-quattro-sedan-8v-us-only",
+        "parent": "18272",
+        "id": "19961"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro Sportback 8V.2 (GPF Equipped Models Only)",
+        "slug": "2-0-tfsi-quattro-sportback-8v-2-gpf-equipped-models-only",
+        "parent": "18273",
+        "id": "20071"
+    },
+    {
+        "name": "\u00a02.0 TFSI quattro Sportback 8V\/8V.2 (Non-GPF Equipped Models Only)",
+        "slug": "2-0-tfsi-quattro-sportback-8v-8v-2-non-gpf-equipped-models-only",
+        "parent": "18273",
+        "id": "19964"
+    },
+    {
+        "name": "\u00a02.0 TFSI S line B8 (2WD and quattro manual-only) Saloon &amp; Avant",
+        "slug": "2-0-tfsi-s-line-b8-2wd-and-quattro-manual-only-saloon-avant",
+        "parent": "18093",
+        "id": "19977"
+    },
+    {
+        "name": "\u00a02.0 TFSI S line B8 (2WD and quattro Tiptronic-only) Saloon &amp; Avant",
+        "slug": "2-0-tfsi-s-line-b8-2wd-and-quattro-tiptronic-only-saloon-avant",
+        "parent": "18093",
+        "id": "19978"
+    },
+    {
+        "name": "\u00a02.0 TSI (A5 Chassis)",
+        "slug": "2-0-tsi-a5-chassis-beetle",
+        "parent": "18318",
+        "id": "19836"
+    },
+    {
+        "name": "\u00a02.0 up to 2016",
+        "slug": "2-0-up-to-2016",
+        "parent": "18304",
+        "id": "18974"
+    },
+    {
+        "name": "\u00a02.0T FSI 2WD 3 door",
+        "slug": "2-0t-fsi-2wd-3-door",
+        "parent": "18272",
+        "id": "19947"
+    },
+    {
+        "name": "\u00a02.0T FSI 2WD 5 door Sportback",
+        "slug": "2-0t-fsi-2wd-5-door-sportback",
+        "parent": "18272",
+        "id": "19948"
+    },
+    {
+        "name": "\u00a02.0T FSI quattro 5 door SportBack",
+        "slug": "2-0t-fsi-quattro-5-door-sportback",
+        "parent": "18272",
+        "id": "19949"
+    },
+    {
+        "name": "\u00a02.0TDI &amp; 3.0TDI (Non-Quattro) C7",
+        "slug": "2-0tdi-3-0tdi-non-quattro-c7",
+        "parent": "18270",
+        "id": "19991"
+    },
+    {
+        "name": "\u00a02.0TDI 140PS 2WD Manual and DSG (not Maxi models)",
+        "slug": "2-0tdi-140ps-2wd-manual-and-dsg-not-maxi-models-caddy",
+        "parent": "18312",
+        "id": "19844"
+    },
+    {
+        "name": "\u00a02.0TDI 2WD Manual and DSG (Maxi Models)",
+        "slug": "2-0tdi-2wd-manual-and-dsg-maxi-models-caddy",
+        "parent": "18312",
+        "id": "19845"
+    },
+    {
+        "name": "\u00a02.0TFSI 4Drive 310PS",
+        "slug": "2-0tfsi-4drive-310ps-2-0tfsi-4drive-310ps",
+        "parent": "18089",
+        "id": "19907"
+    },
+    {
+        "name": "\u00a02.0TFSI Quattro Saloon\/Sedan 310PS 8Y (OPF\/GPF Models Only)",
+        "slug": "2-0tfsi-quattro-saloon-sedan-310ps-8y-opf-gpf-models-only",
+        "parent": "18273",
+        "id": "20072"
+    },
+    {
+        "name": "\u00a02.0TFSI Quattro Sportback 310PS 8Y (OPF\/GPF Models Only)",
+        "slug": "2-0tfsi-quattro-sportback-310ps-8y-opf-gpf-models-only",
+        "parent": "18273",
+        "id": "20073"
+    },
+    {
+        "name": "\u00a02.0TSI 280PS 4Motion (Non OPF\/GPF Vehicles Only)",
+        "slug": "2-0tsi-280ps-4motion-non-opf-gpf-vehicles-only-arteon",
+        "parent": "18322",
+        "id": "19828"
+    },
+    {
+        "name": "\u00a02.0TSI 280PS 4Motion (OPF\/GPF Vehicles Only)",
+        "slug": "2-0tsi-280ps-4motion-opf-gpf-vehicles-only-arteon",
+        "parent": "18322",
+        "id": "19829"
+    },
+    {
+        "name": "\u00a02.5T Sportback &amp; SUV (OPF\/GPF Equipped Models Only)",
+        "slug": "2-5t-sportback-suv-opf-gpf-equipped-models-only",
+        "parent": "18293",
+        "id": "20029"
+    },
+    {
+        "name": "\u00a03.0 Bi-TDI C7",
+        "slug": "3-0-bi-tdi-c7",
+        "parent": "18270",
+        "id": "19992"
+    },
+    {
+        "name": "\u00a03.0 Supercharged V6 B8",
+        "slug": "3-0-supercharged-v6-b8",
+        "parent": "18275",
+        "id": "20074"
+    },
+    {
+        "name": "\u00a03.0 Supercharged V6 B8.5",
+        "slug": "3-0-supercharged-v6-b8-5",
+        "parent": "18275",
+        "id": "20075"
+    },
+    {
+        "name": "\u00a03.0 TDi B8 quattro Saloon and Avant",
+        "slug": "3-0-tdi-b8-quattro-saloon-and-avant",
+        "parent": "18093",
+        "id": "19981"
+    },
+    {
+        "name": "\u00a03.0 TDi quattro",
+        "slug": "3-0-tdi-quattro",
+        "parent": "18290",
+        "id": "20012"
+    },
+    {
+        "name": "\u00a03.0 TFSI B8 Sportback",
+        "slug": "3-0-tfsi-b8-sportback",
+        "parent": "18165",
+        "id": "20079"
+    },
+    {
+        "name": "\u00a03.0 TFSI B8.5 Coup\u00e9 &amp; Cabriolet",
+        "slug": "3-0-tfsi-b8-5-coupe-cabriolet",
+        "parent": "18165",
+        "id": "20076"
+    },
+    {
+        "name": "\u00a03.0 TFSI B8.5 Sportback",
+        "slug": "3-0-tfsi-b8-5-sportback",
+        "parent": "18165",
+        "id": "20077"
+    },
+    {
+        "name": "\u00a03.0 TFSI Supercharged",
+        "slug": "3-0-tfsi-supercharged",
+        "parent": "18167",
+        "id": "20085"
+    },
+    {
+        "name": "\u00a03.0 Turbo V6 B9 - Saloon\/Sedan &amp; Avant (Non Sport Diff Models)",
+        "slug": "3-0-turbo-v6-b9-saloon-sedan-avant-non-sport-diff-models",
+        "parent": "18275",
+        "id": "20004"
+    },
+    {
+        "name": "\u00a03.0 Turbo V6 B9 - Saloon\/Sedan &amp; Avant (Sport Diff Models Only &amp; Without Brace Bars)",
+        "slug": "3-0-turbo-v6-b9-saloon-sedan-avant-sport-diff-models-only-without-brace-bars",
+        "parent": "18275",
+        "id": "20005"
+    },
+    {
+        "name": "\u00a03.0 V6 B6 quattro Saloon Avant &amp; Cabriolet",
+        "slug": "3-0-v6-b6-quattro-saloon-avant-cabriolet",
+        "parent": "18093",
+        "id": "19983"
+    },
+    {
+        "name": "\u00a03.0 V6 TDI (204 &amp; 224PS)",
+        "slug": "3-0-v6-tdi-204-224ps-amarok",
+        "parent": "18307",
+        "id": "19827"
+    },
+    {
+        "name": "\u00a03.0 V6 Turbo Coupe Only B9 (Sport Diff Models Only &amp; Without Brace Bars)",
+        "slug": "3-0-v6-turbo-coupe-only-b9-sport-diff-models-only-without-brace-bars",
+        "parent": "18165",
+        "id": "20006"
+    },
+    {
+        "name": "\u00a03.0 V6 Turbo Coupe\/Cabrio B9 (Non Sport Diff Models Only)",
+        "slug": "3-0-v6-turbo-coupe-cabrio-b9-non-sport-diff-models-only",
+        "parent": "18165",
+        "id": "20007"
+    },
+    {
+        "name": "\u00a03.0 V6 Turbo Sportback B9 (Non Sport Diff Models Only)",
+        "slug": "3-0-v6-turbo-sportback-b9-non-sport-diff-models-only",
+        "parent": "18165",
+        "id": "20008"
+    },
+    {
+        "name": "\u00a03.0 V6 Turbo Sportback B9 (Sport Diff Models Only &amp; without Brace Bars)",
+        "slug": "3-0-v6-turbo-sportback-b9-sport-diff-models-only-without-brace-bars",
+        "parent": "18165",
+        "id": "20009"
+    },
+    {
+        "name": "\u00a03.0TDI (218 &amp; 272PS) 4M",
+        "slug": "3-0tdi-218-272ps-4m",
+        "parent": "18290",
+        "id": "20013"
+    },
+    {
+        "name": "\u00a03.0TFSI V6 Turbo",
+        "slug": "3-0tfsi-v6-turbo",
+        "parent": "18167",
+        "id": "20080"
+    },
+    {
+        "name": "\u00a03.2 quattro",
+        "slug": "3-2-quattro",
+        "parent": "18087",
+        "id": "20088"
+    },
+    {
+        "name": "\u00a03.2 V6 quattro 3 door &amp; 5 door Sportback",
+        "slug": "3-2-v6-quattro-3-door-5-door-sportback",
+        "parent": "18272",
+        "id": "19967"
+    },
+    {
+        "name": "\u00a04.0 TFSI C7 quattro",
+        "slug": "4-0-tfsi-c7-quattro",
+        "parent": "18276",
+        "id": "20050"
+    },
+    {
+        "name": "\u00a04.0 TFSI quattro S tronic",
+        "slug": "4-0-tfsi-quattro-s-tronic",
+        "parent": "18087",
+        "id": "20051"
+    },
+    {
+        "name": "\u00a04.0 V8 Bi-Turbo (Non OPF \/ GPF Equipped Models)",
+        "slug": "4-0-v8-bi-turbo-non-opf-gpf-equipped-models",
+        "parent": "18087",
+        "id": "20058"
+    },
+    {
+        "name": "\u00a04.0 V8 Bi-Turbo (Non OPF \/ GPF Equipped Models)",
+        "slug": "4-0-v8-bi-turbo-non-opf-gpf-equipped-models-4-0-v8-bi-turbo-non-opf-gpf-equipped-models-audi",
+        "parent": "18087",
+        "id": "20061"
+    },
+    {
+        "name": "\u00a04.0 V8 Bi-Turbo (OPF \/ GPF Equipped Models)",
+        "slug": "4-0-v8-bi-turbo-opf-gpf-equipped-models",
+        "parent": "18087",
+        "id": "20059"
+    },
+    {
+        "name": "\u00a04.0 V8 Bi-Turbo (OPF \/ GPF Equipped Models)",
+        "slug": "4-0-v8-bi-turbo-opf-gpf-equipped-models-4-0-v8-bi-turbo-non-opf-gpf-equipped-models-audi",
+        "parent": "18087",
+        "id": "20062"
+    },
+    {
+        "name": "\u00a04.0 V8 TDI",
+        "slug": "4-0-v8-tdi-4-0-v8-tdi",
+        "parent": "18087",
+        "id": "20001"
+    },
+    {
+        "name": "\u00a04.2 V8 B8 Coup\u00e9 (Manual Only)",
+        "slug": "4-2-v8-b8-coupe-manual-only",
+        "parent": "18165",
+        "id": "20082"
+    },
+    {
+        "name": "\u00a04.2 V8 quattro B6 Saloon\/Sedan",
+        "slug": "4-2-v8-quattro-b6-saloon-sedan",
+        "parent": "18275",
+        "id": "19984"
+    },
+    {
+        "name": "\u00a04.2 V8 quattro B7 Saloon\/Sedan",
+        "slug": "4-2-v8-quattro-b7-saloon-sedan",
+        "parent": "18275",
+        "id": "20081"
+    },
+    {
+        "name": "\u00a040TFSI 5 Door 2.0 (200PS) with OPF\/GPF",
+        "slug": "40tfsi-5-door-2-0-200ps-with-opf-gpf",
+        "parent": "18287",
+        "id": "19945"
+    },
+    {
+        "name": "\u00a05.2 V10 C6 FSI quattro",
+        "slug": "5-2-v10-c6-fsi-quattro",
+        "parent": "18276",
+        "id": "20083"
+    },
+    {
+        "name": "\u00a055 TDI Quattro",
+        "slug": "55-tdi-quattro",
+        "parent": "18291",
+        "id": "20014"
+    },
+    {
+        "name": "\u00a055 TFSI (3.0 V6 Turbo) C8",
+        "slug": "55-tfsi-3-0-v6-turbo-c8",
+        "parent": "18270",
+        "id": "20002"
+    },
+    {
+        "name": "\u00a055 TFSI (3.0 V6 Turbo) C8",
+        "slug": "55-tfsi-3-0-v6-turbo-c8-a7",
+        "parent": "18278",
+        "id": "20003"
+    },
+    {
+        "name": "\u00a0B5 V6 Bi-Turbo Avant",
+        "slug": "b5-v6-bi-turbo-avant",
+        "parent": "18092",
+        "id": "20036"
+    },
+    {
+        "name": "\u00a0B7 4.2 V8 Saloon Avant and Cabriolet",
+        "slug": "b7-4-2-v8-saloon-avant-and-cabriolet",
+        "parent": "18092",
+        "id": "20037"
+    },
+    {
+        "name": "\u00a0B8 4.2 FSI quattro Avant",
+        "slug": "b8-4-2-fsi-quattro-avant",
+        "parent": "18092",
+        "id": "20038"
+    },
+    {
+        "name": "\u00a0B8 Coup\u00e9",
+        "slug": "b8-coupe",
+        "parent": "18282",
+        "id": "20045"
+    },
+    {
+        "name": "\u00a0B9 2.9 V6 Turbo Avant (Non OPF\/GPF Models)",
+        "slug": "b9-2-9-v6-turbo-avant-non-opf-gpf-models",
+        "parent": "18092",
+        "id": "20039"
+    },
+    {
+        "name": "\u00a0B9 2.9 V6 Turbo Avant (OPF\/GPF Models)",
+        "slug": "b9-2-9-v6-turbo-avant-opf-gpf-models",
+        "parent": "18092",
+        "id": "20040"
+    },
+    {
+        "name": "\u00a0B9 2.9 V6 Turbo Coupe (Non OPF\/GPF Models)",
+        "slug": "b9-2-9-v6-turbo-coupe-non-opf-gpf-models",
+        "parent": "18282",
+        "id": "20041"
+    },
+    {
+        "name": "\u00a0B9 2.9 V6 Turbo Coupe (OPF\/GPF Models)",
+        "slug": "b9-2-9-v6-turbo-coupe-opf-gpf-models",
+        "parent": "18282",
+        "id": "20042"
+    },
+    {
+        "name": "\u00a0B9 2.9 V6 Turbo Sportback (Non-OPF\/GPF Models)",
+        "slug": "b9-2-9-v6-turbo-sportback-non-opf-gpf-models",
+        "parent": "18282",
+        "id": "20043"
+    },
+    {
+        "name": "\u00a0B9 2.9 V6 Turbo Sportback (OPF\/GPF Models)",
+        "slug": "b9-2-9-v6-turbo-sportback-opf-gpf-models",
+        "parent": "18282",
+        "id": "20044"
+    },
+    {
+        "name": "\u00a0C5 V8 Bi-Turbo Saloon &amp; Avant",
+        "slug": "c5-v8-bi-turbo-saloon-avant",
+        "parent": "18171",
+        "id": "20046"
+    },
+    {
+        "name": "\u00a0C6 5.0 V10 biturbo quattro",
+        "slug": "c6-5-0-v10-biturbo-quattro",
+        "parent": "18171",
+        "id": "20047"
+    },
+    {
+        "name": "\u00a0C7 3.0 Bi-TDI",
+        "slug": "c7-3-0-bi-tdi",
+        "parent": "18278",
+        "id": "19993"
+    },
+    {
+        "name": "\u00a0C7 4.0 TFSI biturbo quattro inc Performance Edition",
+        "slug": "c7-4-0-tfsi-biturbo-quattro-inc-performance-edition",
+        "parent": "18171",
+        "id": "20048"
+    },
+    {
+        "name": "\u00a0C7 Sportback 4.0 V8 TFSI biturbo inc Performance Edition",
+        "slug": "c7-sportback-4-0-v8-tfsi-biturbo-inc-performance-edition",
+        "parent": "18277",
+        "id": "20049"
+    },
+    {
+        "name": "\u00a0C8 4.0 V8 bi-turbo (Non OPF\/GPF Models - USA\/ROW Models)",
+        "slug": "c8-4-0-v8-bi-turbo-non-opf-gpf-models-usa-row-models",
+        "parent": "18171",
+        "id": "20052"
+    },
+    {
+        "name": "\u00a0C8 4.0 V8 bi-turbo (Non OPF\/GPF US\/ROW Models)",
+        "slug": "c8-4-0-v8-bi-turbo-non-opf-gpf-us-row-models",
+        "parent": "18277",
+        "id": "20054"
+    },
+    {
+        "name": "\u00a0C8 4.0 V8 bi-turbo (OPF\/GPF Models)",
+        "slug": "c8-4-0-v8-bi-turbo-opf-gpf-models-rs7",
+        "parent": "18277",
+        "id": "20055"
+    },
+    {
+        "name": "\u00a0C8 4.0 V8 bi-turbo (OPF\/GPF Models)",
+        "slug": "c8-4-0-v8-bi-turbo-opf-gpf-models",
+        "parent": "18171",
+        "id": "20053"
+    },
+    {
+        "name": "\u00a0Cabriolet 2.0 TFSI 2WD and quattro (manual only)",
+        "slug": "cabriolet-2-0-tfsi-2wd-and-quattro-manual-only",
+        "parent": "18281",
+        "id": "19985"
+    },
+    {
+        "name": "\u00a0Cabriolet 3.0 TDi (DPF) quattro",
+        "slug": "cabriolet-3-0-tdi-dpf-quattro",
+        "parent": "18281",
+        "id": "19989"
+    },
+    {
+        "name": "\u00a0Coup\u00e9 2.0 TDi",
+        "slug": "coupe-2-0-tdi",
+        "parent": "18281",
+        "id": "19974"
+    },
+    {
+        "name": "\u00a0Coup\u00e9 3.0 TDi (DPF) quattro",
+        "slug": "coupe-3-0-tdi-dpf-quattro",
+        "parent": "18281",
+        "id": "19990"
+    },
+    {
+        "name": "\u00a0Coup\u00e9 S line 2.0 TFSI 2WD and quattro (manual only)",
+        "slug": "coupe-s-line-2-0-tfsi-2wd-and-quattro-manual-only",
+        "parent": "18281",
+        "id": "19986"
+    },
+    {
+        "name": "\u00a0Coup\u00e9 S line 2.0 TFSI 2WD and quattro (Tiptronic only)",
+        "slug": "coupe-s-line-2-0-tfsi-2wd-and-quattro-tiptronic-only",
+        "parent": "18281",
+        "id": "19987"
+    },
+    {
+        "name": "\u00a0Coup\u00e9 S line 2.0 TFSI 2WD and quattro S tronic",
+        "slug": "coupe-s-line-2-0-tfsi-2wd-and-quattro-s-tronic",
+        "parent": "18281",
+        "id": "19979"
+    },
+    {
+        "name": "\u00a0Cupra \/ Bocanegra 1.4 TSI 180PS",
+        "slug": "cupra-bocanegra-1-4-tsi-180ps",
+        "parent": "18331",
+        "id": "19913"
+    },
+    {
+        "name": "\u00a0Cupra 1.8 20VT 180PS",
+        "slug": "cupra-1-8-20vt-180ps",
+        "parent": "18331",
+        "id": "19909"
+    },
+    {
+        "name": "\u00a0Cupra 1.8TFSI (6P)",
+        "slug": "cupra-1-8tfsi-6p",
+        "parent": "18331",
+        "id": "19914"
+    },
+    {
+        "name": "\u00a0Cupra 1.9 TDi 90PS \/ 110PS \/ 150PS",
+        "slug": "cupra-1-9-tdi-90ps-110ps-150ps",
+        "parent": "18329",
+        "id": "19916"
+    },
+    {
+        "name": "\u00a0Cupra 2.0T FSI 240PS",
+        "slug": "cupra-2-0t-fsi-240ps",
+        "parent": "18329",
+        "id": "19921"
+    },
+    {
+        "name": "\u00a0Cupra 280 &amp; 290 2.0 TSI (Non OPF\/GPF Models)",
+        "slug": "cupra-280-290-2-0-tsi-non-opf-gpf-models",
+        "parent": "18329",
+        "id": "19922"
+    },
+    {
+        "name": "\u00a0Cupra 290 3 &amp; 5 Door Hatch (GPF\/OPF Equipped Models Only)",
+        "slug": "cupra-290-3-5-door-hatch-gpf-opf-equipped-models-only",
+        "parent": "18329",
+        "id": "19924"
+    },
+    {
+        "name": "\u00a0Cupra 300 2.0 TSI (Non-OPF\/GPF Models)",
+        "slug": "cupra-300-2-0-tsi-non-opf-gpf-models",
+        "parent": "18329",
+        "id": "19923"
+    },
+    {
+        "name": "\u00a0Cupra 300 4Drive (GPF\/OPF Models Only)",
+        "slug": "cupra-300-4drive-gpf-opf-models-only",
+        "parent": "18348",
+        "id": "19905"
+    },
+    {
+        "name": "\u00a0Cupra K1",
+        "slug": "cupra-k1-leon",
+        "parent": "18329",
+        "id": "19925"
+    },
+    {
+        "name": "\u00a0Cupra Leon Mk4 Hatch 300ps (OPF\/GPF Equipped)",
+        "slug": "cupra-leon-mk4-hatch-300ps-opf-gpf-equipped",
+        "parent": "18329",
+        "id": "19926"
+    },
+    {
+        "name": "\u00a0Cupra R 2.0 TSI 265PS",
+        "slug": "cupra-r-2-0-tsi-265ps",
+        "parent": "18329",
+        "id": "19927"
+    },
+    {
+        "name": "\u00a0Cupra R 210-225PS",
+        "slug": "cupra-r-210-225ps",
+        "parent": "18329",
+        "id": "19928"
+    },
+    {
+        "name": "\u00a0Cupra R 310PS",
+        "slug": "cupra-r-310ps",
+        "parent": "18329",
+        "id": "19929"
+    },
+    {
+        "name": "\u00a0D4 4.0 TFSI quattro Tiptronic",
+        "slug": "d4-4-0-tfsi-quattro-tiptronic",
+        "parent": "18288",
+        "id": "20084"
+    },
+    {
+        "name": "\u00a0D5 4.0 TFSI V8 Saloon \/ Sedan (Non OPF\/GPF US\/ROW Models)",
+        "slug": "d5-4-0-tfsi-v8-saloon-sedan-non-opf-gpf-us-row-models",
+        "parent": "18288",
+        "id": "20056"
+    },
+    {
+        "name": "\u00a0D5 4.0 TFSI V8 Saloon \/ Sedan (OPF\/GPF UK\/Euro Models)",
+        "slug": "d5-4-0-tfsi-v8-saloon-sedan-opf-gpf-uk-euro-models",
+        "parent": "18288",
+        "id": "20057"
+    },
+    {
+        "name": "\u00a0FR 1.4 TSI SC and 5-door",
+        "slug": "fr-1-4-tsi-sc-and-5-door",
+        "parent": "18329",
+        "id": "19930"
+    },
+    {
+        "name": "\u00a0FR 1.5 eTSI Mk4 Hatch (OPF\/GPF Equipped)",
+        "slug": "fr-1-5-etsi-mk4-hatch-opf-gpf-equipped",
+        "parent": "18329",
+        "id": "19931"
+    },
+    {
+        "name": "\u00a0FR 1.8 20VT (Formula Racing)",
+        "slug": "fr-1-8-20vt-formula-racing",
+        "parent": "18331",
+        "id": "19910"
+    },
+    {
+        "name": "\u00a0FR 1.8 TSI 180PS SC and 5-door",
+        "slug": "fr-1-8-tsi-180ps-sc-and-5-door",
+        "parent": "18329",
+        "id": "19932"
+    },
+    {
+        "name": "\u00a0FR 2.0 T FSI 200-211PS",
+        "slug": "fr-2-0-t-fsi-200-211ps",
+        "parent": "18329",
+        "id": "19952"
+    },
+    {
+        "name": "\u00a0FR 2.0 TDI 150 SC and 5-door (manual and DSG-auto)",
+        "slug": "fr-2-0-tdi-150-sc-and-5-door-manual-and-dsg-auto",
+        "parent": "18329",
+        "id": "19933"
+    },
+    {
+        "name": "\u00a0FR 2.0 TDi 170PS DPF",
+        "slug": "fr-2-0-tdi-170ps-dpf",
+        "parent": "18329",
+        "id": "19934"
+    },
+    {
+        "name": "\u00a0FR 2.0 TDI 184PS SC and 5-door (manual and DSG-auto)",
+        "slug": "fr-2-0-tdi-184ps-sc-and-5-door-manual-and-dsg-auto",
+        "parent": "18329",
+        "id": "19936"
+    },
+    {
+        "name": "\u00a0G60 1.8",
+        "slug": "g60-1-8-corrado",
+        "parent": "18317",
+        "id": "19846"
+    },
+    {
+        "name": "\u00a0GT 2.0 TDI CR 170",
+        "slug": "gt-2-0-tdi-cr-170-scirocco",
+        "parent": "18304",
+        "id": "19958"
+    },
+    {
+        "name": "\u00a0GT 2.0 TSi 200PS",
+        "slug": "gt-2-0-tsi-200ps-scirocco",
+        "parent": "18304",
+        "id": "19879"
+    },
+    {
+        "name": "\u00a0GTI 1.0TSI 115PS (3 &amp; 5 Door)",
+        "slug": "gti-1-0tsi-115ps-3-5-door-up",
+        "parent": "18311",
+        "id": "19898"
+    },
+    {
+        "name": "\u00a0GTi 1.4 TSI 180PS 7spd DSG",
+        "slug": "gti-1-4-tsi-180ps-7spd-dsg-polo",
+        "parent": "18308",
+        "id": "19942"
+    },
+    {
+        "name": "\u00a0GTI 1.8 TSI 192PS (3 &amp; 5 door)",
+        "slug": "gti-1-8-tsi-192ps-3-5-door-polo",
+        "parent": "18308",
+        "id": "19874"
+    },
+    {
+        "name": "\u00a0GTi 1.8T",
+        "slug": "gti-1-8t-polo",
+        "parent": "18308",
+        "id": "19875"
+    },
+    {
+        "name": "\u00a0GTI 2.0 TSI (AW - 5 Door) - Non GPF\/OPF Models Only",
+        "slug": "gti-2-0-tsi-aw-5-door-non-gpf-opf-models-only-polo",
+        "parent": "18308",
+        "id": "19876"
+    },
+    {
+        "name": "\u00a0GTI 2.0 TSI (AW 5 Door) - GPF\/OPF Models Only",
+        "slug": "gti-2-0-tsi-aw-5-door-gpf-opf-models-only-polo",
+        "parent": "18308",
+        "id": "19877"
+    },
+    {
+        "name": "\u00a0Mk1 GTi",
+        "slug": "mk1-gti-golf",
+        "parent": "18306",
+        "id": "19848"
+    },
+    {
+        "name": "\u00a0Mk2 GTi 16v",
+        "slug": "mk2-gti-16v-golf",
+        "parent": "18306",
+        "id": "19849"
+    },
+    {
+        "name": "\u00a0Mk2 GTI 8v",
+        "slug": "mk2-gti-8v-golf",
+        "parent": "18306",
+        "id": "19850"
+    },
+    {
+        "name": "\u00a0Mk4 1.9 TDI PD and non-PD",
+        "slug": "mk4-1-9-tdi-pd-and-non-pd-golf",
+        "parent": "18306",
+        "id": "19917"
+    },
+    {
+        "name": "\u00a0Mk4 337 Anniversary 180bhp",
+        "slug": "mk4-337-anniversary-180bhp-golf",
+        "parent": "18306",
+        "id": "19851"
+    },
+    {
+        "name": "\u00a0Mk4 4-Motion V6",
+        "slug": "mk4-4-motion-v6-golf",
+        "parent": "18306",
+        "id": "19852"
+    },
+    {
+        "name": "\u00a0Mk4 GTI 1.8T",
+        "slug": "mk4-gti-1-8t-golf",
+        "parent": "18306",
+        "id": "19918"
+    },
+    {
+        "name": "\u00a0Mk4 R32 3.2 V6 4WD",
+        "slug": "mk4-r32-3-2-v6-4wd-golf",
+        "parent": "18306",
+        "id": "19853"
+    },
+    {
+        "name": "\u00a0Mk5 2.0 TDI 140PS",
+        "slug": "mk5-2-0-tdi-140ps-golf",
+        "parent": "18306",
+        "id": "19854"
+    },
+    {
+        "name": "\u00a0Mk5 GLI 2.0T FSI",
+        "slug": "mk5-gli-2-0t-fsi-jetta",
+        "parent": "18315",
+        "id": "19871"
+    },
+    {
+        "name": "\u00a0Mk5 GT 2.0 TDI 170PS DPF",
+        "slug": "mk5-gt-2-0-tdi-170ps-dpf-golf",
+        "parent": "18306",
+        "id": "19935"
+    },
+    {
+        "name": "\u00a0Mk5 GTi 2.0T FSI",
+        "slug": "mk5-gti-2-0t-fsi-golf",
+        "parent": "18306",
+        "id": "19837"
+    },
+    {
+        "name": "\u00a0Mk5 GTi Edition 30 2.0T FSi 230PS",
+        "slug": "mk5-gti-edition-30-2-0t-fsi-230ps-golf",
+        "parent": "18306",
+        "id": "19838"
+    },
+    {
+        "name": "\u00a0MK5 R32 3.2 V6",
+        "slug": "mk5-r32-3-2-v6-golf",
+        "parent": "18306",
+        "id": "19855"
+    },
+    {
+        "name": "\u00a0Mk6 GLI 2.0 TSI",
+        "slug": "mk6-gli-2-0-tsi-jetta",
+        "parent": "18315",
+        "id": "19872"
+    },
+    {
+        "name": "\u00a0Mk6 GT 1.4 TSI 160PS",
+        "slug": "mk6-gt-1-4-tsi-160ps-golf",
+        "parent": "18306",
+        "id": "19856"
+    },
+    {
+        "name": "\u00a0Mk6 GT 2.0 TDI 140PS",
+        "slug": "mk6-gt-2-0-tdi-140ps-golf",
+        "parent": "18306",
+        "id": "19920"
+    },
+    {
+        "name": "\u00a0Mk6 GTD 2.0 TDI 170PS",
+        "slug": "mk6-gtd-2-0-tdi-170ps-golf",
+        "parent": "18306",
+        "id": "19857"
+    },
+    {
+        "name": "\u00a0Mk6 GTi 2.0 TSI 210PS",
+        "slug": "mk6-gti-2-0-tsi-210ps-golf",
+        "parent": "18306",
+        "id": "19839"
+    },
+    {
+        "name": "\u00a0Mk6 GTi Edition 35",
+        "slug": "mk6-gti-edition-35-golf",
+        "parent": "18306",
+        "id": "19840"
+    },
+    {
+        "name": "\u00a0Mk6 R 2.0 TFSI 270PS",
+        "slug": "mk6-r-2-0-tfsi-270ps-golf",
+        "parent": "18306",
+        "id": "19858"
+    },
+    {
+        "name": "\u00a0Mk7 (MQB) GLi 2.0T",
+        "slug": "mk7-mqb-gli-2-0t-jetta",
+        "parent": "18315",
+        "id": "19873"
+    },
+    {
+        "name": "\u00a0Mk7 2.0TFSI Alltrack \/ Estate \/ Station Wagon \/ Combi 4-Motion",
+        "slug": "mk7-2-0tfsi-alltrack-estate-station-wagon-combi-4-motion-golf",
+        "parent": "18306",
+        "id": "19859"
+    },
+    {
+        "name": "\u00a0MK7 GTD 2.0 TDI 185PS",
+        "slug": "mk7-gtd-2-0-tdi-185ps-golf",
+        "parent": "18306",
+        "id": "19860"
+    },
+    {
+        "name": "\u00a0MK7 GTi (including GTi Performance Pack",
+        "slug": "mk7-gti-including-gti-performance-pack",
+        "parent": "18306",
+        "id": "19861"
+    },
+    {
+        "name": "\u00a0MK7 R 2.0 TSI 300PS",
+        "slug": "mk7-r-2-0-tsi-300ps-golf",
+        "parent": "18306",
+        "id": "19830"
+    },
+    {
+        "name": "\u00a0MK7 R Estate \/ Variant 2.0 TSI 300PS",
+        "slug": "mk7-r-estate-variant-2-0-tsi-300ps-golf",
+        "parent": "18306",
+        "id": "19862"
+    },
+    {
+        "name": "\u00a0Mk7.5 1.5TSI Evo GT &amp; R-Line (Both GPF\/OPF &amp; Non GPF\/OPF Models)",
+        "slug": "mk7-5-1-5tsi-evo-gt-r-line-both-gpf-opf-non-gpf-opf-models-golf",
+        "parent": "18306",
+        "id": "19863"
+    },
+    {
+        "name": "\u00a0MK7.5 GTi (Non Performance Pack Models &amp; Non-GPF Equipped Models Only)",
+        "slug": "mk7-5-gti-non-performance-pack-models-non-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19864"
+    },
+    {
+        "name": "\u00a0MK7.5 GTi (Performance Pack Models &amp; Non OPF\/GPF Equipped Models Only)",
+        "slug": "mk7-5-gti-performance-pack-models-non-opf-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19865"
+    },
+    {
+        "name": "\u00a0MK7.5 GTi (TCR &amp; Performance Pack Models - GPF\/OPF Equipped Models Only)",
+        "slug": "mk7-5-gti-tcr-performance-pack-models-gpf-opf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19866"
+    },
+    {
+        "name": "\u00a0Mk7.5 R 2.0 TSI 300PS (GPF Equipped Models Only) - 76mm &amp; EC Approved Systems",
+        "slug": "mk7-5-r-2-0-tsi-300ps-gpf-equipped-models-only-76mm-ec-approved-systems-golf",
+        "parent": "18306",
+        "id": "19831"
+    },
+    {
+        "name": "\u00a0Mk7.5 R 2.0 TSI 300PS (GPF Equipped Models Only) - 80mm Race Systems",
+        "slug": "mk7-5-r-2-0-tsi-300ps-gpf-equipped-models-only-80mm-race-systems-golf",
+        "parent": "18306",
+        "id": "19832"
+    },
+    {
+        "name": "\u00a0Mk7.5 R 2.0 TSI 310PS (Non-GPF Equipped Models Only) - 76mm &amp; EC Approved Systems",
+        "slug": "mk7-5-r-2-0-tsi-310ps-non-gpf-equipped-models-only-76mm-ec-approved-systems-golf",
+        "parent": "18306",
+        "id": "19833"
+    },
+    {
+        "name": "\u00a0Mk7.5 R 2.0 TSI 310PS (Non-GPF Equipped Models Only) - 80mm Race Systems",
+        "slug": "mk7-5-r-2-0-tsi-310ps-non-gpf-equipped-models-only-80mm-race-systems-golf",
+        "parent": "18306",
+        "id": "19834"
+    },
+    {
+        "name": "\u00a0Mk7.5 R Estate \/ Variant 2.0 TSI 300PS (GPF Equipped Models Only)",
+        "slug": "mk7-5-r-estate-variant-2-0-tsi-300ps-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19867"
+    },
+    {
+        "name": "\u00a0Mk7.5 R Estate \/ Variant 2.0 TSI 310PS (Non-GPF Equipped Models Only)",
+        "slug": "mk7-5-r-estate-variant-2-0-tsi-310ps-non-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19868"
+    },
+    {
+        "name": "\u00a0Mk8 GTi (245ps OPF\/GPF Equipped Models Only)",
+        "slug": "mk8-gti-245ps-opf-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19869"
+    },
+    {
+        "name": "\u00a0Mk8 GTi Clubsport (300ps OPF\/GPF Equipped Models Only)",
+        "slug": "mk8-gti-clubsport-300ps-opf-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19870"
+    },
+    {
+        "name": "\u00a0Mk8 R 2.0 TSI 320PS (GPF Equipped Models Only)",
+        "slug": "mk8-r-2-0-tsi-320ps-gpf-equipped-models-only-golf",
+        "parent": "18306",
+        "id": "19835"
+    },
+    {
+        "name": "\u00a0R",
+        "slug": "r-scirocco",
+        "parent": "18304",
+        "id": "19841"
+    },
+    {
+        "name": "\u00a0R 2.0TSI 300ps (with OPF\/GPF)",
+        "slug": "r-2-0tsi-300ps-with-opf-gpf-t-roc",
+        "parent": "18301",
+        "id": "19880"
+    },
+    {
+        "name": "\u00a0R 320ps (OPF\/GPF Models Only)",
+        "slug": "r-320ps-opf-gpf-models-only-tiguan",
+        "parent": "18303",
+        "id": "19881"
+    },
+    {
+        "name": "\u00a0R WRC",
+        "slug": "r-wrc-polo",
+        "parent": "18308",
+        "id": "19878"
+    },
+    {
+        "name": "\u00a0RS 1.8T 180 and 1.8T 150",
+        "slug": "rs-1-8t-180-and-1-8t-150",
+        "parent": "18339",
+        "id": "19954"
+    },
+    {
+        "name": "\u00a0Saloon \/ Sedan 400PS (8V MQB) - Non-OPF\/GPF Models",
+        "slug": "saloon-sedan-400ps-8v-mqb-non-opf-gpf-models",
+        "parent": "18169",
+        "id": "20022"
+    },
+    {
+        "name": "\u00a0Saloon \/ Sedan 400PS (8V MQB) - OPF\/GPF Models",
+        "slug": "saloon-sedan-400ps-8v-mqb-opf-gpf-models",
+        "parent": "18169",
+        "id": "20023"
+    },
+    {
+        "name": "\u00a0Saloon\/Sedan 400PS (8Y MQB EVO) - OPF\/GPF Models",
+        "slug": "saloon-sedan-400ps-8y-mqb-evo-opf-gpf-models",
+        "parent": "18169",
+        "id": "20030"
+    },
+    {
+        "name": "\u00a0Sportback (8V MQB - Pre Facelift Only)",
+        "slug": "sportback-8v-mqb-pre-facelift-only",
+        "parent": "18169",
+        "id": "20024"
+    },
+    {
+        "name": "\u00a0Sportback 2.0 TFSI 2WD and quattro Manual",
+        "slug": "sportback-2-0-tfsi-2wd-and-quattro-manual",
+        "parent": "18281",
+        "id": "19988"
+    },
+    {
+        "name": "\u00a0Sportback 2.0 TFSI 2WD and quattro Multitronic \/ S tronic",
+        "slug": "sportback-2-0-tfsi-2wd-and-quattro-multitronic-s-tronic",
+        "parent": "18281",
+        "id": "19980"
+    },
+    {
+        "name": "\u00a0Sportback 3.0 TDI quattro Manual \/ Multitronic \/ S tronic",
+        "slug": "sportback-3-0-tdi-quattro-manual-multitronic-s-tronic",
+        "parent": "18281",
+        "id": "19982"
+    },
+    {
+        "name": "\u00a0Sportback 400PS (8V MQB - Facelift Only) - Non-OPF\/GPF Models",
+        "slug": "sportback-400ps-8v-mqb-facelift-only-non-opf-gpf-models",
+        "parent": "18169",
+        "id": "20025"
+    },
+    {
+        "name": "\u00a0Sportback 400PS (8V MQB - Facelift Only) - OPF\/GPF Models",
+        "slug": "sportback-400ps-8v-mqb-facelift-only-opf-gpf-models",
+        "parent": "18169",
+        "id": "20026"
+    },
+    {
+        "name": "\u00a0Sportback 400PS (8Y MQB EVO) - OPF\/GPF Models",
+        "slug": "sportback-400ps-8y-mqb-evo-opf-gpf-models",
+        "parent": "18169",
+        "id": "20031"
+    },
+    {
+        "name": "\u00a0Sportback S tronic (8P)",
+        "slug": "sportback-s-tronic-8p",
+        "parent": "18169",
+        "id": "20032"
+    },
+    {
+        "name": "\u00a0ST Cupra 280 &amp; 290 2.0 TSI (280 &amp; 290PS - Non-OPF\/GPF Models)",
+        "slug": "st-cupra-280-290-2-0-tsi-280-290ps-non-opf-gpf-models",
+        "parent": "18329",
+        "id": "19937"
+    },
+    {
+        "name": "\u00a0ST Cupra 300 (4x4) Estate \/ Station Wagon \/ Combi (Non-OPF\/GPF)",
+        "slug": "st-cupra-300-4x4-estate-station-wagon-combi-non-opf-gpf",
+        "parent": "18329",
+        "id": "19938"
+    },
+    {
+        "name": "\u00a0ST Cupra 300 (4x4) Estate \/ Station Wagon \/ Combi (OPF\/GPF Equipped Only)",
+        "slug": "st-cupra-300-4x4-estate-station-wagon-combi-opf-gpf-equipped-only",
+        "parent": "18329",
+        "id": "19939"
+    },
+    {
+        "name": "\u00a0T5 LWB 1.9 TDi (85ps &amp; 104ps) 2WD and 4MOTION",
+        "slug": "t5-lwb-1-9-tdi-85ps-104ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19882"
+    },
+    {
+        "name": "\u00a0T5 LWB 180PS 2.0-litre BiTDI 2WD and 4MOTION",
+        "slug": "t5-lwb-180ps-2-0-litre-bitdi-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19883"
+    },
+    {
+        "name": "\u00a0T5 LWB 2.0-litre (140ps) 2WD and 4MOTION",
+        "slug": "t5-lwb-2-0-litre-140ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19884"
+    },
+    {
+        "name": "\u00a0T5 LWB 2.0-litre (84ps &amp; 102ps) 2WD and 4MOTION",
+        "slug": "t5-lwb-2-0-litre-84ps-102ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19885"
+    },
+    {
+        "name": "\u00a0T5 LWB 2.5 TDi (130ps &amp; 174ps) 2WD and 4MOTION",
+        "slug": "t5-lwb-2-5-tdi-130ps-174ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19886"
+    },
+    {
+        "name": "\u00a0T5 SWB 1.9 TDi (85ps &amp; 104ps) 2WD and 4MOTION",
+        "slug": "t5-swb-1-9-tdi-85ps-104ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19887"
+    },
+    {
+        "name": "\u00a0T5 SWB 180PS 2.0-litre BiTDI 2WD and 4MOTION",
+        "slug": "t5-swb-180ps-2-0-litre-bitdi-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19888"
+    },
+    {
+        "name": "\u00a0T5 SWB 2.0-litre (140ps) 2WD and 4MOTION",
+        "slug": "t5-swb-2-0-litre-140ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19889"
+    },
+    {
+        "name": "\u00a0T5 SWB 2.0-litre (84ps &amp; 102ps) 2WD and 4MOTION",
+        "slug": "t5-swb-2-0-litre-84ps-102ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19890"
+    },
+    {
+        "name": "\u00a0T5 SWB 2.5 TDi (130ps &amp; 174ps) 2WD and 4MOTION",
+        "slug": "t5-swb-2-5-tdi-130ps-174ps-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19891"
+    },
+    {
+        "name": "\u00a0T6 LWB 150\/180\/204PS 2.0-Litre BiTDI 2WD and 4MOTION",
+        "slug": "t6-lwb-150-180-204ps-2-0-litre-bitdi-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19892"
+    },
+    {
+        "name": "\u00a0T6 LWB 150PS &amp; 204PS 2.0-litre TSI (Petrol) 2WD",
+        "slug": "t6-lwb-150ps-204ps-2-0-litre-tsi-petrol-2wd-transporter-caravelle",
+        "parent": "19755",
+        "id": "19894"
+    },
+    {
+        "name": "\u00a0T6 SWB 150\/180\/204PS 2.0-Litre BiTDI 2WD and 4MOTION",
+        "slug": "t6-swb-150-180-204ps-2-0-litre-bitdi-2wd-and-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19893"
+    },
+    {
+        "name": "\u00a0T6 SWB 150PS &amp; 204PS 2.0-litre TSI (Petrol) 2WD",
+        "slug": "t6-swb-150ps-204ps-2-0-litre-tsi-petrol-2wd-transporter-caravelle",
+        "parent": "19755",
+        "id": "19895"
+    },
+    {
+        "name": "\u00a0T6.1 SWB 199PS 2.0TDI 2wd &amp; 4MOTION",
+        "slug": "t6-1-swb-199ps-2-0tdi-2wd-4motion-transporter-caravelle",
+        "parent": "19755",
+        "id": "19896"
+    },
+    {
+        "name": "\u00a0TT RS Coup\u00e9 2.5-litre TFSI quattro",
+        "slug": "tt-rs-coupe-2-5-litre-tfsi-quattro-tt-rs-coupe-2-5-litre-tfsi-quattro",
+        "parent": "18087",
+        "id": "20034"
+    },
+    {
+        "name": "\u00a0TT RS Roadster 2.5-litre TFSI quattro",
+        "slug": "tt-rs-roadster-2-5-litre-tfsi-quattro",
+        "parent": "18087",
+        "id": "20035"
+    },
+    {
+        "name": "\u00a0TTRS 2.5TFSI Quattro (Non-OPF\/GPF Models)",
+        "slug": "ttrs-2-5tfsi-quattro-non-opf-gpf-models",
+        "parent": "18087",
+        "id": "20027"
+    },
+    {
+        "name": "\u00a0TTRS 2.5TFSI Quattro (OPF\/GPF Models)",
+        "slug": "ttrs-2-5tfsi-quattro-opf-gpf-models",
+        "parent": "18087",
+        "id": "20028"
+    },
+    {
+        "name": "\u00a0TTS 2.0TFSI Quattro (Non-OPF\/GPF Models)",
+        "slug": "tts-2-0tfsi-quattro-non-opf-gpf-models-tts-2-0tfsi-quattro-non-opf-gpf-models",
+        "parent": "18087",
+        "id": "19966"
+    },
+    {
+        "name": "\u00a0TTS 2.0TFSI Quattro (OPF\/GPF Models)",
+        "slug": "tts-2-0tfsi-quattro-opf-gpf-models",
+        "parent": "18087",
+        "id": "20090"
+    },
+    {
+        "name": "\u00a0TTS quattro",
+        "slug": "tts-quattro",
+        "parent": "18087",
+        "id": "20089"
+    },
+    {
+        "name": "\u00a0UR quattro 10v Turbo",
+        "slug": "ur-quattro-10v-turbo",
+        "parent": "18091",
+        "id": "20010"
+    },
+    {
+        "name": "\u00a0UR quattro 20v Turbo",
+        "slug": "ur-quattro-20v-turbo",
+        "parent": "18091",
+        "id": "20011"
+    },
+    {
+        "name": "\u00a0V10 5.2 FSI quattro Coup\u00e9 and Spyder (excludes V10 Plus models)",
+        "slug": "v10-5-2-fsi-quattro-coupe-and-spyder-excludes-v10-plus-models",
+        "parent": "18280",
+        "id": "20018"
+    },
+    {
+        "name": "\u00a0V10 5.2L Gen 2 (OPF\/GPF Equipped Models Only)",
+        "slug": "v10-5-2l-gen-2-opf-gpf-equipped-models-only",
+        "parent": "18280",
+        "id": "20019"
+    },
+    {
+        "name": "\u00a0V10 5.2l Plus Coupe &amp; Spyder",
+        "slug": "v10-5-2l-plus-coupe-spyder",
+        "parent": "18280",
+        "id": "20020"
+    },
+    {
+        "name": "\u00a0V8 4.2 FSI quattro",
+        "slug": "v8-4-2-fsi-quattro",
+        "parent": "18280",
+        "id": "20021"
+    },
+    {
+        "name": "\u00a0VR6",
+        "slug": "vr6-corrado",
+        "parent": "18317",
+        "id": "19847"
+    },
+    {
+        "name": "\u00a0vRS 1.4 TSI 180bhp Hatch",
+        "slug": "vrs-1-4-tsi-180bhp-hatch",
+        "parent": "18090",
+        "id": "19944"
+    },
+    {
+        "name": "\u00a0vRS 2.0 TDI 184PS Hatch &amp; Estate (manual and DSG-auto)",
+        "slug": "vrs-2-0-tdi-184ps-hatch-estate-manual-and-dsg-auto",
+        "parent": "18339",
+        "id": "19899"
+    },
+    {
+        "name": "\u00a0vRS 2.0 TSI",
+        "slug": "vrs-2-0-tsi",
+        "parent": "18339",
+        "id": "19903"
+    },
+    {
+        "name": "\u00a0vRS 2.0 TSI 220PS &amp; 230PS Hatch &amp; Estate (manual and DSG-auto)",
+        "slug": "vrs-2-0-tsi-220ps-230ps-hatch-estate-manual-and-dsg-auto",
+        "parent": "18339",
+        "id": "19900"
+    },
+    {
+        "name": "\u00a0vRS 2.0 TSI 245PS (MQB EVO Mk4) Hatch &amp; Estate (OPF\/GPF Models Only)",
+        "slug": "vrs-2-0-tsi-245ps-mqb-evo-mk4-hatch-estate-opf-gpf-models-only",
+        "parent": "18339",
+        "id": "19902"
+    },
+    {
+        "name": "\u00a0vRS 2.0 TSI 245PS Hatch &amp; Estate (manual and DSG-auto",
+        "slug": "vrs-2-0-tsi-245ps-hatch-estate-manual-and-dsg-auto",
+        "parent": "18339",
+        "id": "19901"
+    },
+    {
+        "name": "\u00a0vRS 2.0T FSi",
+        "slug": "vrs-2-0t-fsi",
+        "parent": "18339",
+        "id": "19904"
+    },
+    {
+        "name": "\u00a0vRS TDI",
+        "slug": "vrs-tdi-vrs-tdi",
+        "parent": "18090",
+        "id": "19912"
+    },
+    {
+        "name": "(2003-2009)",
+        "slug": "2003-2009",
+        "parent": "18310",
+        "id": "18984"
+    },
+    {
+        "name": "(2015-2019)",
+        "slug": "2015-2019",
+        "parent": "18305",
+        "id": "18994"
+    },
+    {
+        "name": "(B7) V8",
+        "slug": "b7-v8",
+        "parent": "18092",
+        "id": "19246"
+    },
+    {
+        "name": "1.0",
+        "slug": "1-0-ltr-engine-size",
+        "parent": "18455",
+        "id": "20117"
+    },
+    {
+        "name": "1.0 GTI\/TSI",
+        "slug": "1-0-gti-tsi",
+        "parent": "18311",
+        "id": "19028"
+    },
+    {
+        "name": "1.0\u00a0TSI\u00a0",
+        "slug": "1-0-tsi-fabia-skoda",
+        "parent": "19030",
+        "id": "19032"
+    },
+    {
+        "name": "1.0 TSI",
+        "slug": "1-0-tsi",
+        "parent": "18342",
+        "id": "19141"
+    },
+    {
+        "name": "1.0TSI",
+        "slug": "1-0tsi",
+        "parent": "18272",
+        "id": "19157"
+    },
+    {
+        "name": "1.0TSI 90PS (3 &amp; 5 Door)",
+        "slug": "1-0tsi-90ps-3-5-door",
+        "parent": "18311",
+        "id": "19806"
+    },
+    {
+        "name": "1.2 TSI",
+        "slug": "1-2-tsi-1-2-tsi-2",
+        "parent": "18331",
+        "id": "19101"
+    },
+    {
+        "name": "1.2 TSI 2012-2015",
+        "slug": "1-2-tsi-2012-2015",
+        "parent": "18329",
+        "id": "19132"
+    },
+    {
+        "name": "1.2 TSI\u00a02015 Onwards",
+        "slug": "1-2-tsi-2015-onwards-1-0-tsi-1-0-tsi-9",
+        "parent": "18287",
+        "id": "19147"
+    },
+    {
+        "name": "1.2 TSI\u00a0upto 2014",
+        "slug": "1-2-tsi-upto-2014-2",
+        "parent": "18272",
+        "id": "19160"
+    },
+    {
+        "name": "1.4",
+        "slug": "1-4-ltr-engine-size",
+        "parent": "18455",
+        "id": "18789"
+    },
+    {
+        "name": "1.4 150BHP",
+        "slug": "1-4-150bhp-1-4-150bhp-4",
+        "parent": "18295",
+        "id": "19219"
+    },
+    {
+        "name": "1.4 GT Blue",
+        "slug": "1-4-gt-blue",
+        "parent": "18308",
+        "id": "18954"
+    },
+    {
+        "name": "1.4 GTI",
+        "slug": "1-4-gti",
+        "parent": "18308",
+        "id": "18957"
+    },
+    {
+        "name": "1.4 S\/Charge",
+        "slug": "1-4-s-charge",
+        "parent": "18306",
+        "id": "18858"
+    },
+    {
+        "name": "1.4 TFSI 148bhp (2015)",
+        "slug": "1-4-tfsi-148bhp-2015",
+        "parent": "18294",
+        "id": "19222"
+    },
+    {
+        "name": "1.4 TSI",
+        "slug": "1-4-tsi",
+        "parent": "18308",
+        "id": "18947"
+    },
+    {
+        "name": "1.4 TSI",
+        "slug": "1-4-tsi-1-2-tsi-3",
+        "parent": "18331",
+        "id": "19106"
+    },
+    {
+        "name": "1.4 TSI",
+        "slug": "1-4-tsi-1-2-tsi-2",
+        "parent": "18331",
+        "id": "19102"
+    },
+    {
+        "name": "1.4 TSI 2018 Onwards",
+        "slug": "1-4-tsi-2018-onwards",
+        "parent": "18315",
+        "id": "18924"
+    },
+    {
+        "name": "1.4 Turbo",
+        "slug": "1-4-turbo-2",
+        "parent": "18272",
+        "id": "19161"
+    },
+    {
+        "name": "1.4 Turbo",
+        "slug": "1-4-turbo-1-0-tsi-1-0-tsi-9",
+        "parent": "18287",
+        "id": "19149"
+    },
+    {
+        "name": "1.4 Twincharged",
+        "slug": "1-4-twincharged-2",
+        "parent": "18272",
+        "id": "19163"
+    },
+    {
+        "name": "1.4 Twincharged",
+        "slug": "1-4-twincharged-1-0-tsi-1-0-tsi-9",
+        "parent": "18287",
+        "id": "19151"
+    },
+    {
+        "name": "1.4 Twincharged",
+        "slug": "1-4-twincharged",
+        "parent": "18306",
+        "id": "18876"
+    },
+    {
+        "name": "1.4 Twincharged 160",
+        "slug": "1-4-twincharged-160",
+        "parent": "18304",
+        "id": "18967"
+    },
+    {
+        "name": "1.6",
+        "slug": "1-6-ltr-engine-size",
+        "parent": "18455",
+        "id": "20091"
+    },
+    {
+        "name": "1.6T",
+        "slug": "1-6-turbo-ltr-engine-size",
+        "parent": "18455",
+        "id": "20092"
+    },
+    {
+        "name": "1.8\/2.0 TFSI (B8)",
+        "slug": "1-8-2-0-tfsi-b8",
+        "parent": "18093",
+        "id": "19183"
+    },
+    {
+        "name": "1.8T",
+        "slug": "1-8t",
+        "parent": "18306",
+        "id": "18846"
+    },
+    {
+        "name": "1.8T",
+        "slug": "1-8t-1-0-tsi-3",
+        "parent": "18308",
+        "id": "18951"
+    },
+    {
+        "name": "1.8T",
+        "slug": "1-8-turbo-ltr-engine-size",
+        "parent": "18455",
+        "id": "18769"
+    },
+    {
+        "name": "1.8T (B5,B6 Models)",
+        "slug": "1-8t-b5b6-models",
+        "parent": "18270",
+        "id": "19204"
+    },
+    {
+        "name": "1.8T 2WD",
+        "slug": "1-8t-2wd",
+        "parent": "18319",
+        "id": "19350"
+    },
+    {
+        "name": "1.9 (84-102)",
+        "slug": "1-9-84-102",
+        "parent": "18310",
+        "id": "18985"
+    },
+    {
+        "name": "1.9 TDI 130 \/ 150",
+        "slug": "1-9-tdi-130-150",
+        "parent": "18319",
+        "id": "19356"
+    },
+    {
         "name": "100",
         "slug": "100",
         "parent": "18087",
         "id": "18299"
+    },
+    {
+        "name": "150\/180BHP",
+        "slug": "150-180bhp",
+        "parent": "18267",
+        "id": "19294"
+    },
+    {
+        "name": "199bhp",
+        "slug": "199bhp",
+        "parent": "18305",
+        "id": "19004"
+    },
+    {
+        "name": "2.0",
+        "slug": "2-0-ltr-engine-size",
+        "parent": "18455",
+        "id": "18770"
+    },
+    {
+        "name": "2.0",
+        "slug": "2-0-150-180bhp",
+        "parent": "18267",
+        "id": "19300"
+    },
+    {
+        "name": "2.0 BiTDI 163 &amp; 180PS",
+        "slug": "2-0-bitdi-163-180ps",
+        "parent": "18307",
+        "id": "19317"
+    },
+    {
+        "name": "2.0 FSiT",
+        "slug": "2-0-fsit-2",
+        "parent": "18272",
+        "id": "19172"
+    },
+    {
+        "name": "2.0 FSiT",
+        "slug": "2-0-fsit-1-2-tsi-2015-onwards",
+        "parent": "18339",
+        "id": "19056"
+    },
+    {
+        "name": "2.0 FSiT",
+        "slug": "2-0-fsit",
+        "parent": "18313",
+        "id": "18938"
+    },
+    {
+        "name": "2.0 FSiT (8P Chassis)",
+        "slug": "2-0-fsit-8p-chassis",
+        "parent": "18273",
+        "id": "19261"
+    },
+    {
+        "name": "2.0 TDI 180",
+        "slug": "2-0-tdi-180",
+        "parent": "18310",
+        "id": "18990"
+    },
+    {
+        "name": "2.0 TDI 84\/102\/114\/140",
+        "slug": "2-0-tdi-84-102-114-140",
+        "parent": "18310",
+        "id": "18991"
+    },
+    {
+        "name": "2.0 TFSI",
+        "slug": "2-0-tfsi",
+        "parent": "18281",
+        "id": "19199"
+    },
+    {
+        "name": "2.0 TFSI (B9)",
+        "slug": "2-0-tfsi-b9",
+        "parent": "18093",
+        "id": "19190"
+    },
+    {
+        "name": "2.0 TSI",
+        "slug": "2-0-tsi-2015-2019",
+        "parent": "18305",
+        "id": "18995"
+    },
+    {
+        "name": "2.0 TSI\u00a0(8V Chassis)",
+        "slug": "2-0-tsi-8v-chassis",
+        "parent": "18273",
+        "id": "19264"
+    },
+    {
+        "name": "2.0 TSI (A5 Chassis)",
+        "slug": "2-0-tsi-a5-chassis",
+        "parent": "18318",
+        "id": "19341"
+    },
+    {
+        "name": "2.0 TSI\u00a02013 Onwards",
+        "slug": "2-0-tsi-2013-onwards",
+        "parent": "18271",
+        "id": "19228"
+    },
+    {
+        "name": "2.0 TSI\u00a02015 Onwards",
+        "slug": "2-0-tsi-2015-onwards",
+        "parent": "18304",
+        "id": "18969"
+    },
+    {
+        "name": "2.0 TSI\u00a02015 Onwards",
+        "slug": "2-0-tsi-2015-onwards-150-180bhp",
+        "parent": "18267",
+        "id": "19305"
+    },
+    {
+        "name": "2.0 TSI 2017 Onwards",
+        "slug": "2-0-tsi-2017-onwards",
+        "parent": "18303",
+        "id": "19012"
+    },
+    {
+        "name": "2.0L \u00a0",
+        "slug": "2-0l",
+        "parent": "18339",
+        "id": "19058"
+    },
+    {
+        "name": "2.0T",
+        "slug": "2-0-turbo-ltr-engine-size",
+        "parent": "18455",
+        "id": "20093"
+    },
+    {
+        "name": "2.0TDI 140PS 2WD Manual and DSG (not Maxi models)",
+        "slug": "2-0tdi-140ps-2wd-manual-and-dsg-not-maxi-models",
+        "parent": "18312",
+        "id": "19362"
+    },
+    {
+        "name": "2.0TDI 2WD Manual and DSG (Maxi Models)",
+        "slug": "2-0tdi-2wd-manual-and-dsg-maxi-models",
+        "parent": "18312",
+        "id": "19369"
+    },
+    {
+        "name": "2.0TSI (8Y Chassis)",
+        "slug": "2-0tsi-8y-chassis",
+        "parent": "18273",
+        "id": "19266"
+    },
+    {
+        "name": "2.0TSI 280PS 4Motion (Non OPF\/GPF Vehicles Only)",
+        "slug": "2-0tsi-280ps-4motion-non-opf-gpf-vehicles-only",
+        "parent": "18322",
+        "id": "19325"
+    },
+    {
+        "name": "2.0TSI 280PS 4Motion (OPF\/GPF Vehicles Only)",
+        "slug": "2-0tsi-280ps-4motion-opf-gpf-vehicles-only",
+        "parent": "18322",
+        "id": "19334"
+    },
+    {
+        "name": "2.5 (130-174)",
+        "slug": "2-5-130-174",
+        "parent": "18310",
+        "id": "18987"
+    },
+    {
+        "name": "2.7 V6",
+        "slug": "2-7-v6-2-7-v6",
+        "parent": "18275",
+        "id": "19269"
     },
     {
         "name": "200",
@@ -12,10 +1914,94 @@
         "id": "18300"
     },
     {
+        "name": "2011 On",
+        "slug": "2011-on-2011-on",
+        "parent": "18166",
+        "id": "19282"
+    },
+    {
+        "name": "2012 On",
+        "slug": "2012-on-2012-on",
+        "parent": "18167",
+        "id": "19290"
+    },
+    {
+        "name": "2015 On",
+        "slug": "2015-on-2015-on",
+        "parent": "18290",
+        "id": "19233"
+    },
+    {
+        "name": "2018 Onwards",
+        "slug": "2018-onwards",
+        "parent": "18167",
+        "id": "19291"
+    },
+    {
+        "name": "204PS TDI Transporter",
+        "slug": "204ps-tdi-transporter",
+        "parent": "18320",
+        "id": "18997"
+    },
+    {
+        "name": "210\/225BHP",
+        "slug": "210-225bhp",
+        "parent": "18267",
+        "id": "19296"
+    },
+    {
+        "name": "3.0",
+        "slug": "3-0-ltr-engine-size",
+        "parent": "18455",
+        "id": "20094"
+    },
+    {
+        "name": "3.0 V6 TDI (204 &amp; 224PS)",
+        "slug": "3-0-v6-tdi-204-224ps",
+        "parent": "18307",
+        "id": "19323"
+    },
+    {
+        "name": "3.2",
+        "slug": "3-2",
+        "parent": "18272",
+        "id": "19176"
+    },
+    {
+        "name": "35 TFSI (1.5 TSI)",
+        "slug": "35-tfsi-1-5-tsi-1-4-150bhp-4",
+        "parent": "18295",
+        "id": "19220"
+    },
+    {
         "name": "80",
         "slug": "80",
         "parent": "18087",
         "id": "18297"
+    },
+    {
+        "name": "80-84",
+        "slug": "80-84-80-84",
+        "parent": "18091",
+        "id": "19217"
+    },
+    {
+        "name": "8V 1.4 TSI\u00a02015 Onwards",
+        "slug": "8v-1-4-tsi-2015-onwards",
+        "parent": "18272",
+        "id": "19178"
+    },
+    {
+        "name": "8V 2015-2017",
+        "slug": "8v-2015-2017",
+        "parent": "18169",
+        "id": "19235"
+    },
+    {
+        "name": "8V Facelift 2017 On",
+        "slug": "8v-facelift-2017-on",
+        "parent": "18169",
+        "id": "19238"
     },
     {
         "name": "90",
@@ -114,9 +2100,33 @@
         "id": "18309"
     },
     {
+        "name": "B8\/8.5 3.0T",
+        "slug": "b8-8-5-3-0t",
+        "parent": "18275",
+        "id": "19271"
+    },
+    {
+        "name": "B8\/8.5 3.0T",
+        "slug": "b8-8-5-3-0t-s5",
+        "parent": "18165",
+        "id": "19275"
+    },
+    {
+        "name": "B9",
+        "slug": "b9",
+        "parent": "18275",
+        "id": "19273"
+    },
+    {
+        "name": "B9",
+        "slug": "b9-b8-8-5-3-0t-2",
+        "parent": "18165",
+        "id": "19277"
+    },
+    {
         "name": "Bearings",
         "slug": "bearings",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17973"
     },
     {
@@ -126,16 +2136,52 @@
         "id": "18318"
     },
     {
+        "name": "Blanking Plates and Plugs",
+        "slug": "blanking-plates-and-plugs",
+        "parent": "20101",
+        "id": "20115"
+    },
+    {
+        "name": "Boost Gauge Fitting Kits",
+        "slug": "boost-gauge-fitting-kits",
+        "parent": "20101",
+        "id": "20123"
+    },
+    {
         "name": "Bora",
         "slug": "bora",
         "parent": "18088",
         "id": "18319"
     },
     {
+        "name": "Brake Kits",
+        "slug": "brake-kits",
+        "parent": "20101",
+        "id": "20113"
+    },
+    {
         "name": "C7",
         "slug": "c7",
         "parent": "18087",
         "id": "18279"
+    },
+    {
+        "name": "C7 (2013-2019)",
+        "slug": "c7-2013-2019-c7-2013-2019",
+        "parent": "18171",
+        "id": "19251"
+    },
+    {
+        "name": "C7 (2013-2019)",
+        "slug": "c7-2013-2019-c7-2013-2019-2",
+        "parent": "18277",
+        "id": "19254"
+    },
+    {
+        "name": "C8 (2019-",
+        "slug": "c8-2019",
+        "parent": "18171",
+        "id": "19252"
     },
     {
         "name": "Cabriolet",
@@ -151,21 +2197,15 @@
     },
     {
         "name": "Camshafts",
-        "slug": "camshafts-camshafts-spark-plugs",
-        "parent": "18080",
-        "id": "18081"
-    },
-    {
-        "name": "Camshafts",
         "slug": "camshafts",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18014"
     },
     {
-        "name": "Caravelle",
-        "slug": "caravelle",
-        "parent": "18088",
-        "id": "18321"
+        "name": "Car Hose Kits",
+        "slug": "car-hose-kits",
+        "parent": "20101",
+        "id": "20110"
     },
     {
         "name": "CC",
@@ -182,7 +2222,7 @@
     {
         "name": "Clutches",
         "slug": "clutches",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18001"
     },
     {
@@ -210,21 +2250,57 @@
         "id": "18091"
     },
     {
+        "name": "Coupe 2017 Onwards",
+        "slug": "coupe-2017-onwards",
+        "parent": "18165",
+        "id": "19278"
+    },
+    {
         "name": "Cupra",
         "slug": "cupra",
         "parent": "18089",
         "id": "18351"
     },
     {
+        "name": "Cupra 1.8T",
+        "slug": "cupra-1-8t",
+        "parent": "18329",
+        "id": "19114"
+    },
+    {
+        "name": "Cupra 2.0 TFSi",
+        "slug": "cupra-2-0-tfsi",
+        "parent": "18329",
+        "id": "19125"
+    },
+    {
+        "name": "Deletes",
+        "slug": "deletes",
+        "parent": "20101",
+        "id": "20114"
+    },
+    {
+        "name": "Diesel",
+        "slug": "diesel-fuel",
+        "parent": "20102",
+        "id": "19180"
+    },
+    {
         "name": "ECU &amp; Electrical",
         "slug": "ecu-electrical",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18036"
+    },
+    {
+        "name": "ED30",
+        "slug": "ed30",
+        "parent": "18306",
+        "id": "18864"
     },
     {
         "name": "Engine Fasteners",
         "slug": "engine-fasteners",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17960"
     },
     {
@@ -241,6 +2317,12 @@
     },
     {
         "name": "Fabia",
+        "slug": "fabia-skoda",
+        "parent": "18090",
+        "id": "19030"
+    },
+    {
+        "name": "Fabia",
         "slug": "fabia",
         "parent": "18089",
         "id": "18333"
@@ -248,7 +2330,7 @@
     {
         "name": "Forged Rods",
         "slug": "forged-rods",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17958"
     },
     {
@@ -260,13 +2342,19 @@
     {
         "name": "Fuel Pumps &amp; Injectors",
         "slug": "fuel-pumps-injectors",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18045"
+    },
+    {
+        "name": "G60 1.8",
+        "slug": "g60-1-8",
+        "parent": "18317",
+        "id": "19370"
     },
     {
         "name": "Gaskets",
         "slug": "gaskets",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17981"
     },
     {
@@ -280,6 +2368,90 @@
         "slug": "golf-r",
         "parent": "18088",
         "id": "18266"
+    },
+    {
+        "name": "GT 2.0 TSi 200PS",
+        "slug": "gt-2-0-tsi-200ps",
+        "parent": "18304",
+        "id": "19743"
+    },
+    {
+        "name": "GTE",
+        "slug": "gte",
+        "parent": "18306",
+        "id": "18895"
+    },
+    {
+        "name": "GTI",
+        "slug": "gti-1-2-tsi",
+        "parent": "18306",
+        "id": "18880"
+    },
+    {
+        "name": "GTI",
+        "slug": "gti-1-4-s-charge",
+        "parent": "18306",
+        "id": "18867"
+    },
+    {
+        "name": "GTI",
+        "slug": "gti-1-5-tsi-2",
+        "parent": "18306",
+        "id": "18920"
+    },
+    {
+        "name": "GTI\u00a0",
+        "slug": "gti-1-0-tsi-2",
+        "parent": "18306",
+        "id": "18910"
+    },
+    {
+        "name": "GTI",
+        "slug": "gti-1-0-tsi",
+        "parent": "18306",
+        "id": "18897"
+    },
+    {
+        "name": "GTI 1.0TSI 115PS (3 &amp; 5 Door)",
+        "slug": "gti-1-0tsi-115ps-3-5-door",
+        "parent": "18311",
+        "id": "19824"
+    },
+    {
+        "name": "GTi 1.4 TSI 180PS 7spd DSG",
+        "slug": "gti-1-4-tsi-180ps-7spd-dsg",
+        "parent": "18308",
+        "id": "19703"
+    },
+    {
+        "name": "GTI 1.8 TSI 192PS (3 &amp; 5 door)",
+        "slug": "gti-1-8-tsi-192ps-3-5-door",
+        "parent": "18308",
+        "id": "19708"
+    },
+    {
+        "name": "GTi 1.8T",
+        "slug": "gti-1-8t",
+        "parent": "18308",
+        "id": "19716"
+    },
+    {
+        "name": "GTI 2.0 TSI (AW - 5 Door) - Non GPF\/OPF Models Only",
+        "slug": "gti-2-0-tsi-aw-5-door-non-gpf-opf-models-only",
+        "parent": "18308",
+        "id": "19718"
+    },
+    {
+        "name": "GTI 2.0 TSI (AW 5 Door) - GPF\/OPF Models Only",
+        "slug": "gti-2-0-tsi-aw-5-door-gpf-opf-models-only",
+        "parent": "18308",
+        "id": "19728"
+    },
+    {
+        "name": "Hose Clamp Kits",
+        "slug": "hose-clamp-kits",
+        "parent": "20101",
+        "id": "20111"
     },
     {
         "name": "Ibiza",
@@ -300,9 +2472,15 @@
         "id": "18345"
     },
     {
+        "name": "Induction",
+        "slug": "induction",
+        "parent": "20101",
+        "id": "20116"
+    },
+    {
         "name": "Intake",
         "slug": "intake",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18030"
     },
     {
@@ -332,7 +2510,7 @@
     {
         "name": "Lifters",
         "slug": "lifters",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18025"
     },
     {
@@ -350,20 +2528,332 @@
     {
         "name": "Misc",
         "slug": "misc",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18006"
     },
     {
-        "name": "MK2",
-        "slug": "mk2",
-        "parent": "18267",
-        "id": "18284"
+        "name": "MK1",
+        "slug": "mk1-mk1-2",
+        "parent": "18306",
+        "id": "18840"
     },
     {
-        "name": "MK3",
-        "slug": "mk3",
-        "parent": "18267",
-        "id": "18285"
+        "name": "Mk1 1998-2005",
+        "slug": "mk1-1998-2005-mk1-1998-2005",
+        "parent": "18329",
+        "id": "19113"
+    },
+    {
+        "name": "Mk1 GTi",
+        "slug": "mk1-gti",
+        "parent": "18306",
+        "id": "19384"
+    },
+    {
+        "name": "Mk2 2005-2012",
+        "slug": "mk2-2005-2012",
+        "parent": "18329",
+        "id": "19119"
+    },
+    {
+        "name": "Mk2 8J (2009-2014)",
+        "slug": "mk2-8j-2009-2014-mk2-8j-2009-2014-2",
+        "parent": "18283",
+        "id": "19312"
+    },
+    {
+        "name": "Mk2 8J (2009-2014)",
+        "slug": "mk2-8j-2009-2014-mk2-8j-2009-2014",
+        "parent": "18168",
+        "id": "19307"
+    },
+    {
+        "name": "Mk2 GTi 16v",
+        "slug": "mk2-gti-16v",
+        "parent": "18306",
+        "id": "19391"
+    },
+    {
+        "name": "Mk2 GTI 8v",
+        "slug": "mk2-gti-8v",
+        "parent": "18306",
+        "id": "19392"
+    },
+    {
+        "name": "Mk3 (6L) 2002-2008",
+        "slug": "mk3-6l-2002-2008",
+        "parent": "18331",
+        "id": "19095"
+    },
+    {
+        "name": "Mk3 2012-2020",
+        "slug": "mk3-2012-2020",
+        "parent": "18329",
+        "id": "19130"
+    },
+    {
+        "name": "Mk3 8S (2014-)",
+        "slug": "mk3-8s-2014",
+        "parent": "18168",
+        "id": "19309"
+    },
+    {
+        "name": "Mk3 8S (2014-)",
+        "slug": "mk3-8s-2014-mk2-8j-2009-2014-2",
+        "parent": "18283",
+        "id": "19314"
+    },
+    {
+        "name": "MK4",
+        "slug": "mk4-mk1-2",
+        "parent": "18306",
+        "id": "18844"
+    },
+    {
+        "name": "Mk4 (6J) 2008-2015",
+        "slug": "mk4-6j-2008-2015",
+        "parent": "18331",
+        "id": "19099"
+    },
+    {
+        "name": "Mk4 1.9 TDI PD and non-PD",
+        "slug": "mk4-1-9-tdi-pd-and-non-pd",
+        "parent": "18306",
+        "id": "19394"
+    },
+    {
+        "name": "Mk4 337 Anniversary 180bhp",
+        "slug": "mk4-337-anniversary-180bhp",
+        "parent": "18306",
+        "id": "19398"
+    },
+    {
+        "name": "Mk4 4-Motion V6",
+        "slug": "mk4-4-motion-v6",
+        "parent": "18306",
+        "id": "19401"
+    },
+    {
+        "name": "Mk4 R32 3.2 V6 4WD",
+        "slug": "mk4-r32-3-2-v6-4wd",
+        "parent": "18306",
+        "id": "19405"
+    },
+    {
+        "name": "Mk4.5 (6P) 2015-2017",
+        "slug": "mk4-5-6p-2015-2017",
+        "parent": "18331",
+        "id": "19103"
+    },
+    {
+        "name": "MK5",
+        "slug": "mk5-mk1-2",
+        "parent": "18306",
+        "id": "18856"
+    },
+    {
+        "name": "Mk5 2.0 TDI 140PS",
+        "slug": "mk5-2-0-tdi-140ps",
+        "parent": "18306",
+        "id": "19407"
+    },
+    {
+        "name": "Mk5 GLI 2.0T FSI",
+        "slug": "mk5-gli-2-0t-fsi",
+        "parent": "18315",
+        "id": "19680"
+    },
+    {
+        "name": "Mk5 GT 2.0 TDI 170PS DPF",
+        "slug": "mk5-gt-2-0-tdi-170ps-dpf",
+        "parent": "18306",
+        "id": "19412"
+    },
+    {
+        "name": "Mk5 GTi 2.0T FSI",
+        "slug": "mk5-gti-2-0t-fsi",
+        "parent": "18306",
+        "id": "19413"
+    },
+    {
+        "name": "Mk5 GTi Edition 30 2.0T FSi 230PS",
+        "slug": "mk5-gti-edition-30-2-0t-fsi-230ps",
+        "parent": "18306",
+        "id": "19429"
+    },
+    {
+        "name": "MK5 R32 3.2 V6",
+        "slug": "mk5-r32-3-2-v6",
+        "parent": "18306",
+        "id": "19438"
+    },
+    {
+        "name": "MK6",
+        "slug": "mk6-mk1-2",
+        "parent": "18306",
+        "id": "18871"
+    },
+    {
+        "name": "Mk6 GLI 2.0 TSI",
+        "slug": "mk6-gli-2-0-tsi",
+        "parent": "18315",
+        "id": "19683"
+    },
+    {
+        "name": "Mk6 GT 1.4 TSI 160PS",
+        "slug": "mk6-gt-1-4-tsi-160ps",
+        "parent": "18306",
+        "id": "19444"
+    },
+    {
+        "name": "Mk6 GT 2.0 TDI 140PS",
+        "slug": "mk6-gt-2-0-tdi-140ps",
+        "parent": "18306",
+        "id": "19445"
+    },
+    {
+        "name": "Mk6 GTD 2.0 TDI 170PS",
+        "slug": "mk6-gtd-2-0-tdi-170ps",
+        "parent": "18306",
+        "id": "19446"
+    },
+    {
+        "name": "Mk6 GTi 2.0 TSI 210PS",
+        "slug": "mk6-gti-2-0-tsi-210ps",
+        "parent": "18306",
+        "id": "19452"
+    },
+    {
+        "name": "Mk6 GTi Edition 35",
+        "slug": "mk6-gti-edition-35",
+        "parent": "18306",
+        "id": "19466"
+    },
+    {
+        "name": "Mk6 R 2.0 TFSI 270PS",
+        "slug": "mk6-r-2-0-tfsi-270ps",
+        "parent": "18306",
+        "id": "19469"
+    },
+    {
+        "name": "MK7",
+        "slug": "mk7",
+        "parent": "18306",
+        "id": "18885"
+    },
+    {
+        "name": "Mk7 (MQB) GLi 2.0T",
+        "slug": "mk7-mqb-gli-2-0t",
+        "parent": "18315",
+        "id": "19688"
+    },
+    {
+        "name": "Mk7 2.0TFSI Alltrack \/ Estate \/ Station Wagon \/ Combi 4-Motion",
+        "slug": "mk7-2-0tfsi-alltrack-estate-station-wagon-combi-4-motion",
+        "parent": "18306",
+        "id": "19479"
+    },
+    {
+        "name": "MK7 GTD 2.0 TDI 185PS",
+        "slug": "mk7-gtd-2-0-tdi-185ps",
+        "parent": "18306",
+        "id": "19496"
+    },
+    {
+        "name": "MK7 GTi (including GTi Performance Pack\u0082 Clubsport &amp; Clubsport S models)",
+        "slug": "mk7-gti-including-gti-performance-pack%c2%82-clubsport-clubsport-s-models",
+        "parent": "18306",
+        "id": "19502"
+    },
+    {
+        "name": "MK7 R 2.0 TSI 300PS",
+        "slug": "mk7-r-2-0-tsi-300ps",
+        "parent": "18306",
+        "id": "19520"
+    },
+    {
+        "name": "MK7 R Estate \/ Variant 2.0 TSI 300PS",
+        "slug": "mk7-r-estate-variant-2-0-tsi-300ps",
+        "parent": "18306",
+        "id": "19549"
+    },
+    {
+        "name": "MK7.5",
+        "slug": "mk7-5-mk1-2",
+        "parent": "18306",
+        "id": "18905"
+    },
+    {
+        "name": "Mk7.5 1.5TSI Evo GT &amp; R-Line (Both GPF\/OPF &amp; Non GPF\/OPF Models)",
+        "slug": "mk7-5-1-5tsi-evo-gt-r-line-both-gpf-opf-non-gpf-opf-models",
+        "parent": "18306",
+        "id": "19552"
+    },
+    {
+        "name": "MK7.5 GTi (Non Performance Pack Models &amp; Non-GPF Equipped Models Only)",
+        "slug": "mk7-5-gti-non-performance-pack-models-non-gpf-equipped-models-only",
+        "parent": "18306",
+        "id": "19573"
+    },
+    {
+        "name": "MK7.5 GTi (Performance Pack Models &amp; Non OPF\/GPF Equipped Models Only)",
+        "slug": "mk7-5-gti-performance-pack-models-non-opf-gpf-equipped-models-only",
+        "parent": "18306",
+        "id": "19589"
+    },
+    {
+        "name": "MK7.5 GTi (TCR &amp; Performance Pack Models - GPF\/OPF Equipped Models Only)",
+        "slug": "mk7-5-gti-tcr-performance-pack-models-gpf-opf-equipped-models-only",
+        "parent": "18306",
+        "id": "19592"
+    },
+    {
+        "name": "Mk7.5 R 2.0 TSI 300PS (GPF Equipped Models Only) - 76mm &amp; EC Approved Systems",
+        "slug": "mk7-5-r-2-0-tsi-300ps-gpf-equipped-models-only-76mm-ec-approved-systems",
+        "parent": "18306",
+        "id": "19599"
+    },
+    {
+        "name": "Mk7.5 R 2.0 TSI 300PS (GPF Equipped Models Only) - 80mm Race Systems",
+        "slug": "mk7-5-r-2-0-tsi-300ps-gpf-equipped-models-only-80mm-race-systems",
+        "parent": "18306",
+        "id": "19607"
+    },
+    {
+        "name": "Mk7.5 R 2.0 TSI 310PS (Non-GPF Equipped Models Only) - 76mm &amp; EC Approved Systems",
+        "slug": "mk7-5-r-2-0-tsi-310ps-non-gpf-equipped-models-only-76mm-ec-approved-systems",
+        "parent": "18306",
+        "id": "19622"
+    },
+    {
+        "name": "Mk7.5 R Estate \/ Variant 2.0 TSI 300PS (GPF Equipped Models Only)",
+        "slug": "mk7-5-r-estate-variant-2-0-tsi-300ps-gpf-equipped-models-only",
+        "parent": "18306",
+        "id": "19646"
+    },
+    {
+        "name": "Mk7.5 R Estate \/ Variant 2.0 TSI 310PS (Non-GPF Equipped Models Only)",
+        "slug": "mk7-5-r-estate-variant-2-0-tsi-310ps-non-gpf-equipped-models-only",
+        "parent": "18306",
+        "id": "19651"
+    },
+    {
+        "name": "MK8",
+        "slug": "mk8",
+        "parent": "18306",
+        "id": "18916"
+    },
+    {
+        "name": "Mk8 GTi (245ps OPF\/GPF Equipped Models Only)",
+        "slug": "mk8-gti-245ps-opf-gpf-equipped-models-only",
+        "parent": "18306",
+        "id": "19654"
+    },
+    {
+        "name": "Mk8 R 2.0 TSI 320PS (GPF Equipped Models Only)",
+        "slug": "mk8-r-2-0-tsi-320ps-gpf-equipped-models-only",
+        "parent": "18306",
+        "id": "19665"
     },
     {
         "name": "Octavia",
@@ -372,9 +2862,21 @@
         "id": "18339"
     },
     {
+        "name": "Octavia 4 RS",
+        "slug": "octavia-4-rs",
+        "parent": "18090",
+        "id": "19062"
+    },
+    {
+        "name": "Oil Cooling",
+        "slug": "oil-cooling",
+        "parent": "20101",
+        "id": "20112"
+    },
+    {
         "name": "Oil Pumps",
         "slug": "oil-pumps",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17996"
     },
     {
@@ -382,6 +2884,12 @@
         "slug": "passat",
         "parent": "18088",
         "id": "18313"
+    },
+    {
+        "name": "Petrol",
+        "slug": "petrol-fuel",
+        "parent": "20102",
+        "id": "19098"
     },
     {
         "name": "Phaeton",
@@ -392,7 +2900,7 @@
     {
         "name": "Pistons",
         "slug": "pistons",
-        "parent": "17951",
+        "parent": "20101",
         "id": "18023"
     },
     {
@@ -432,6 +2940,66 @@
         "id": "18291"
     },
     {
+        "name": "R",
+        "slug": "r-1-0-tsi",
+        "parent": "18306",
+        "id": "18902"
+    },
+    {
+        "name": "R",
+        "slug": "r-1-2-tsi",
+        "parent": "18306",
+        "id": "18883"
+    },
+    {
+        "name": "R",
+        "slug": "r-1-4-125bhp",
+        "parent": "18304",
+        "id": "18972"
+    },
+    {
+        "name": "R",
+        "slug": "r-1-5-tsi-2",
+        "parent": "18306",
+        "id": "18921"
+    },
+    {
+        "name": "R",
+        "slug": "r-1-0-tsi-2",
+        "parent": "18306",
+        "id": "18913"
+    },
+    {
+        "name": "R 2.0TSI 300ps (with OPF\/GPF)",
+        "slug": "r-2-0tsi-300ps-with-opf-gpf",
+        "parent": "18301",
+        "id": "19798"
+    },
+    {
+        "name": "R 320ps (OPF\/GPF Models Only)",
+        "slug": "r-320ps-opf-gpf-models-only",
+        "parent": "18303",
+        "id": "19749"
+    },
+    {
+        "name": "R WRC",
+        "slug": "r-wrc",
+        "parent": "18308",
+        "id": "19738"
+    },
+    {
+        "name": "R32",
+        "slug": "r32",
+        "parent": "18306",
+        "id": "18853"
+    },
+    {
+        "name": "R32",
+        "slug": "r32-1-4-s-charge",
+        "parent": "18306",
+        "id": "18869"
+    },
+    {
         "name": "R8",
         "slug": "r8",
         "parent": "18087",
@@ -444,9 +3012,15 @@
         "id": "18341"
     },
     {
+        "name": "Remapping Software",
+        "slug": "remapping-software",
+        "parent": "20101",
+        "id": "20121"
+    },
+    {
         "name": "Rings",
         "slug": "rings",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17971"
     },
     {
@@ -460,6 +3034,12 @@
         "slug": "rs3",
         "parent": "18087",
         "id": "18169"
+    },
+    {
+        "name": "RS3 (8P)",
+        "slug": "rs3-8p",
+        "parent": "18169",
+        "id": "19241"
     },
     {
         "name": "RS4",
@@ -490,12 +3070,6 @@
         "slug": "rsq3",
         "parent": "18087",
         "id": "18293"
-    },
-    {
-        "name": "RSQ8",
-        "slug": "rsq8",
-        "parent": "18087",
-        "id": "18292"
     },
     {
         "name": "S1",
@@ -554,13 +3128,13 @@
     {
         "name": "Sealants &amp; Lubricants",
         "slug": "sealants-lubricants",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17955"
     },
     {
         "name": "Service Items",
         "slug": "service-items",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17967"
     },
     {
@@ -572,8 +3146,14 @@
     {
         "name": "Spark Plugs",
         "slug": "spark-plugs-spark-plugs-spark-plugs",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17952"
+    },
+    {
+        "name": "Sportback 2.0TSI (8Y Chassis)",
+        "slug": "sportback-2-0tsi-8y-chassis",
+        "parent": "18273",
+        "id": "19267"
     },
     {
         "name": "SQ5",
@@ -606,10 +3186,64 @@
         "id": "18310"
     },
     {
+        "name": "T5 LWB 1.9 TDi (85ps &amp; 104ps) 2WD and 4MOTION",
+        "slug": "t5-lwb-1-9-tdi-85ps-104ps-2wd-and-4motion",
+        "parent": "19755",
+        "id": "19757"
+    },
+    {
+        "name": "T5 SWB 1.9 TDi (85ps &amp; 104ps) 2WD and 4MOTION",
+        "slug": "t5-swb-1-9-tdi-85ps-104ps-2wd-and-4motion",
+        "parent": "19755",
+        "id": "19772"
+    },
+    {
+        "name": "T5.1 (2010-2015)",
+        "slug": "t5-1-2010-2015",
+        "parent": "18310",
+        "id": "18988"
+    },
+    {
         "name": "T6",
         "slug": "t6",
         "parent": "18088",
         "id": "18305"
+    },
+    {
+        "name": "T6 LWB 150PS &amp; 204PS 2.0-litre TSI (Petrol) 2WD",
+        "slug": "t6-lwb-150ps-204ps-2-0-litre-tsi-petrol-2wd",
+        "parent": "19755",
+        "id": "19783"
+    },
+    {
+        "name": "T6 SWB 150PS &amp; 204PS 2.0-litre TSI (Petrol) 2WD",
+        "slug": "t6-swb-150ps-204ps-2-0-litre-tsi-petrol-2wd-t6-swb-150ps-204ps-2-0-litre-tsi-petrol-2wd-2",
+        "parent": "19755",
+        "id": "19793"
+    },
+    {
+        "name": "T6 SWB 150PS &amp; 204PS 2.0-litre TSI (Petrol) 2WD",
+        "slug": "t6-swb-150ps-204ps-2-0-litre-tsi-petrol-2wd",
+        "parent": "19755",
+        "id": "19791"
+    },
+    {
+        "name": "T6.1 (2019-Onwards)",
+        "slug": "t6-1-2019-onwards",
+        "parent": "18305",
+        "id": "19002"
+    },
+    {
+        "name": "T6.1 SWB 199PS 2.0TDI 2wd &amp; 4MOTION",
+        "slug": "t6-1-swb-199ps-2-0tdi-2wd-4motion",
+        "parent": "19755",
+        "id": "19794"
+    },
+    {
+        "name": "TDI (2002-2010)",
+        "slug": "tdi-2002-2010",
+        "parent": "19017",
+        "id": "19019"
     },
     {
         "name": "Teramont",
@@ -648,6 +3282,12 @@
         "id": "18320"
     },
     {
+        "name": "Transporter  Caravelle",
+        "slug": "transporter-caravelle",
+        "parent": "18088",
+        "id": "19755"
+    },
+    {
         "name": "TT",
         "slug": "tt",
         "parent": "18087",
@@ -666,10 +3306,16 @@
         "id": "18283"
     },
     {
-        "name": "Turbo",
-        "slug": "turbo",
-        "parent": "17951",
-        "id": "17963"
+        "name": "Turbo Inlet Adaptors",
+        "slug": "turbo-inlet-adaptors",
+        "parent": "20101",
+        "id": "20122"
+    },
+    {
+        "name": "Universal",
+        "slug": "universal",
+        "parent": "20101",
+        "id": "18109"
     },
     {
         "name": "Up",
@@ -678,9 +3324,15 @@
         "id": "18311"
     },
     {
+        "name": "Valves",
+        "slug": "valves",
+        "parent": "20101",
+        "id": "20124"
+    },
+    {
         "name": "Valvetrain",
         "slug": "valvetrain",
-        "parent": "17951",
+        "parent": "20101",
         "id": "17954"
     },
     {
@@ -688,6 +3340,12 @@
         "slug": "vento",
         "parent": "18088",
         "id": "18323"
+    },
+    {
+        "name": "VR6",
+        "slug": "vr6",
+        "parent": "18317",
+        "id": "19375"
     },
     {
         "name": "Yeti",
