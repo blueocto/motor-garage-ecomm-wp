@@ -10,9 +10,7 @@
 		margin-top: 0;
 		margin-right: auto;
 		margin-left: auto;
-		padding-right: $small-spacing;
-		padding-left: $small-spacing;
-		padding-bottom: $xxlarge-spacing;
+		padding: rem-calc(50);
 	}
 
 	h1 {
@@ -160,7 +158,7 @@ table:not(.variations) {
 		border: 2px solid var(--brand-neon-green);
 		border-radius: 50px;
 		cursor: pointer;
-		color: var(--brand-neon-green);
+		color: var(--off-black);
 
 		&:hover,
 		&:focus {
