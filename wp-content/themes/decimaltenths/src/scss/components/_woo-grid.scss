@@ -14,6 +14,15 @@ ul.products {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	@include breakpoint(large) {
+		margin-right: rem-calc(50);
+	}
+}
+
+.shop-sidebar {
+	@include breakpoint(large) {
+		margin-left: rem-calc(50);
+	}
 }
 
 .filter-size {
