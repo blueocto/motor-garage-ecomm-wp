@@ -5,4 +5,12 @@
 video-feed {
     display: block;
     padding: rem-calc(50);
+
+    .sby_play_btn {
+        svg {
+            path {
+                color: #FF0000;
+            }
+        }
+    }
 }
