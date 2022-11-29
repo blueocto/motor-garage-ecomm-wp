@@ -199,6 +199,11 @@
 				padding: 0 $small-spacing;
 				font-size: rem-calc(14);
 
+				@include breakpoint(medium down) {
+					flex: 0 0 100%;
+					max-width: 100%;
+				}
+
 				.sub-sub-menu {
 					margin-top: $large-spacing;
 				}
