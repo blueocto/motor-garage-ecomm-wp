@@ -3,9 +3,8 @@
 // ==============================================
 
 service-highlight {
-    margin: $medium-spacing;
-    padding-top: rem-calc(50);
-    padding-bottom: rem-calc(50);
+    margin: $medium-spacing auto;
+	padding: rem-calc(50);
     max-width: $global-width;
 
 	// CSS Grid

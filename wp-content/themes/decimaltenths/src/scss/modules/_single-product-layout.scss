@@ -103,17 +103,11 @@
 	> .product {
 		@include breakpoint(large) {
 			display: grid;
-			grid-template-columns: 48vw 2vw 47vw;
+			grid-template-columns: 48vw 2vw 38vw;
 			grid-template-rows: auto;
 			gap: 0px;
 			grid-template-areas: "product-gallery . product-description";
-		}
-
-		@media screen and (min-width: $global-width) {
-			grid-template-columns:
-				minmax($small-spacing, 768px)
-				1fr
-				minmax($small-spacing, 60ch);
+			padding: rem-calc(50);
 		}
 
 		.woocommerce-product-gallery {

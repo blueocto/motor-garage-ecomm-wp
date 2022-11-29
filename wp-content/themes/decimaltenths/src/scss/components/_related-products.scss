@@ -14,7 +14,7 @@
         @extend %row;
         justify-content: center;
         list-style: none;
-        padding: $small-spacing;
+        padding: rem-calc(50);
 
         // .woocommerce-loop-product__title {
         //     @extend %h3;

@@ -56,7 +56,7 @@
                 a {
                     color: var(--brand-neon-green);
                     border: 2px solid var(--brand-neon-green);
-                    border-bottom: 2px solid black;
+                    border-bottom: 2px solid var(--brand-l-grey);
                     z-index: 2;
 
                     @include breakpoint(small down) {
