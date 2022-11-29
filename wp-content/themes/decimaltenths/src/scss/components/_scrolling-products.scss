@@ -27,11 +27,11 @@ scrolling-products {
     }
 
     .product--title {
-        @extend %h2;
+        font-size: var(--size-l-2);
     }
 
     .product--price {
-        @extend %h3;
+        font-size: var(--size-l-1);
         font-weight: $bold;
     }
 

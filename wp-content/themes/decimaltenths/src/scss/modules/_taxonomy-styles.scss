@@ -123,9 +123,9 @@
 
         a {
             .woocommerce-loop-product__title {
-                font-size: 0.85rem !important;
                 text-transform: capitalize;
                 line-height: 1.375;
+                font-weight: 400;
             }
         }
     }
@@ -157,18 +157,18 @@
                 background-color: var(--brand-neon-green);
 
                 &.dots {
-                    color: var(--off-white);
+                    color: var(--off-black);
                     background-color: transparent;
                 }
 
                 &:hover,
                 &:focus {
-                    color: var(--off-white);
+                    color: var(--off-black);
                     background-color: transparent;
                 }
 
                 &.current {
-                    color: var(--off-white);
+                    color: var(--off-black);
                     background-color: transparent;
                 }
             }
