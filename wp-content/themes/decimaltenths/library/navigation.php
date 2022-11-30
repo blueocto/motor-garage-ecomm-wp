@@ -11,6 +11,7 @@ register_nav_menus(
 		'primary-nav'  => esc_html__( 'Primary Navigation', 'decimaltenths' ),
 		'shop-by-car' => esc_html__( 'Shop By Car', 'decimaltenths' ),
 		'shop-by-part' => esc_html__( 'Shop By Part', 'decimaltenths' ),
+		'popular-cat' => esc_html__( 'Popular Categories', 'decimaltenths' ),
 		'footer-nav-a' => esc_html__( 'Footer A', 'decimaltenths' ),
 		'footer-nav-b' => esc_html__( 'Footer B', 'decimaltenths' ),
 		'footer-nav-c' => esc_html__( 'Footer C', 'decimaltenths' ),
@@ -61,11 +62,31 @@ if ( ! function_exists( 'octopress_shopbypart_nav' ) ) {
 		wp_nav_menu(
 			array(
 				'theme_location'  => 'shop-by-part',
-				'menu_class'      => 'sub-menu',
+				'menu_class'      => 'sub-menu parts',
 				'container'       => false,
 				// 'container_class' => false,
 				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
 				'fallback_cb'     => false,
+				'add_li_class'  => 'level-1'
+			)
+		);
+	}
+}
+
+/**
+ * Popular categories navigation
+ */
+if ( ! function_exists( 'octopress_populatcat_nav' ) ) {
+	function octopress_populatcat_nav() {
+		wp_nav_menu(
+			array(
+				'theme_location'  => 'popular-cat',
+				'menu_class'      => 'sub-menu popular',
+				'container'       => false,
+				// 'container_class' => false,
+				'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+				'fallback_cb'     => false,
+				'add_li_class'  => 'level-1'
 			)
 		);
 	}

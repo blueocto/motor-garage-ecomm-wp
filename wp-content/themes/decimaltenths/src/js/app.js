@@ -2,6 +2,19 @@
 jQuery(document).ready(function ($) {
 
 	$.ajaxSetup({ cache: false });
+
+	function secondNavMove(){
+		if ($(window).width() < 1024) {
+			console.log("Move");
+			$(".secondary-nav").insertAfter(".primary-menu-container");
+		} else {
+			$(".secondary-nav").insertAfter("header.header");
+		}
+	}
+	secondNavMove();
+	$(window).resize(function(){
+		secondNavMove();
+	});
 	
     // wrap a container around the Title and Description on a Taxonomy/shop category page
     $( ".woocommerce-products-header .page-title, .woocommerce-products-header .term-description, .woocommerce-products-header .page-description" ).wrapAll( "<div class='taxonomy-head-wrap'/>" );

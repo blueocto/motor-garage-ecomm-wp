@@ -87,4 +87,21 @@
 	</div>
 </header><!-- // header -->
 
+<div class="secondary-nav">
+	<div class="secondary-menu-container">
+        <ul id="secondary-menu-list" class="menu secondary--menu">
+			<li class="menu-item menu-item-has-children">
+                <a href="#">Popular Categories</a>
+                <button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
+				<?php octopress_populatcat_nav(); ?>
+			</li>
+            <li class="menu-item menu-item-has-children">
+                <a href="#">Shop by Parts</a>
+                <button class="sub-menu-toggle" aria-expanded="false" onclick="twentytwentyoneExpandSubMenu(this)"><span class="visuallyhidden">Open menu</span></button>
+                <?php octopress_shopbypart_nav(); ?>
+			</li>
+		</ul>
+	</div>
+</div>
+
 <div class="bo-content">
