@@ -8,10 +8,6 @@ hero-car-filters {
     height: 100%;
     height: rem-calc(600);
 
-    @include breakpoint(small only) {
-        height: 95vh;
-    }
-
     &::before {
         content: '';
         position: absolute;

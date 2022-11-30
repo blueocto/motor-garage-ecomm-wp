@@ -6,6 +6,10 @@ category-panels {
     display: block;
     padding: rem-calc(50);
 
+    @include breakpoint(medium down) {
+        padding: rem-calc(25);
+    }
+
     .row {
         justify-content: center;
     }

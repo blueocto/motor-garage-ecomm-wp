@@ -7,6 +7,10 @@ scrolling-products {
     display: block;
     padding: rem-calc(50);
 
+    @include breakpoint(medium down) {
+        padding: rem-calc(25);
+    }
+
     .h3 {
         margin-bottom: rem-calc(24);
     }

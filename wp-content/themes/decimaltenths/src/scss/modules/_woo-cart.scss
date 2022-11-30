@@ -11,6 +11,10 @@
 		margin-right: auto;
 		margin-left: auto;
 		padding: rem-calc(50);
+
+		@include breakpoint(medium down) {
+			padding: rem-calc(25);
+		}
 	}
 
 	h1 {

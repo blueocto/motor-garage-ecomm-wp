@@ -6,6 +6,18 @@ video-feed {
     display: block;
     padding: rem-calc(50);
 
+    @include breakpoint(medium down) {
+        padding: rem-calc(30);
+    }
+
+    h2,
+    p {
+        flex: 1;
+    }
+    p {
+        text-align: right;
+    }
+
     .sby_play_btn {
         svg {
             path {

@@ -7,6 +7,10 @@ service-highlight {
 	padding: rem-calc(50);
     max-width: $global-width;
 
+	@include breakpoint(medium down) {
+        padding: rem-calc(25);
+    }
+
 	// CSS Grid
 	display: grid;
 	grid-template-columns: 1fr;

@@ -23,5 +23,11 @@
 
     [type="submit"] {
         @extend %btn;
+        color: var(--brand-neon-green);
+
+        &:hover,
+        &:focus {
+            color: var(--off-black);
+        }
     }
 }
