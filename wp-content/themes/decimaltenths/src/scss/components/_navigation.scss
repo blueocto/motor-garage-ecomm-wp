@@ -163,7 +163,8 @@
 		}
 
 		&.vehicles,
-		&.parts {
+		&.parts,
+		&.popular {
 			display: flex;
 			flex-flow: row wrap;
 			justify-content: center;
@@ -337,9 +338,9 @@
 			font-size: 0.65rem;
 		}
 
-		&.parts {
-			height: 50vh;
-			max-height: 70vh;
+		&.parts,
+		&.popular {
+			height: auto;
 			.level-1 {
 				flex: 0 0 19%;
 				max-width: 19%;
