@@ -47,13 +47,14 @@ $alert-types: (
 
 	.button {
 		padding: 5px 7px;
-		background-color: darken($alert-success, 5%);
+		background-color: darken($alert-success, 60%);
+		color: white;
 		border: 1px solid darken($alert-success, 20%);
 		border-radius: 3px;
 
 		&:hover,
 		&:focus {
-			background-color: darken($alert-success, 10%);
+			background-color: darken($alert-success, 50%);
 		}
 		
 		@include breakpoint(small only) {
