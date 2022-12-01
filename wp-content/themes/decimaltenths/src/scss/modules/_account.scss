@@ -125,6 +125,10 @@
         padding-bottom: $large-spacing;
 	}
 
+	@include breakpoint(medium down) {
+		padding: rem-calc(25);
+	}
+
 	h3 {
 		position: relative;
 		display: inline-block;
@@ -166,7 +170,6 @@
 		margin-bottom: $large-spacing;
 		@extend %btn;
 		// color: $dark-green;
-		background-color: white;
 		// border: 1px solid $dark-green;
 
 		&:hover,
