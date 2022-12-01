@@ -81,6 +81,10 @@
         padding: $xlarge-spacing $medium-spacing $xlarge-spacing $medium-spacing;
         border-bottom: 1px solid white;
 
+        .wpfFilterTaxNameWrapper {
+            color: white;
+        }
+
         &:last-child {
             border-bottom: none;
         }
