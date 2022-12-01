@@ -15,6 +15,10 @@
 		margin-left: auto;
         background-color: var(--off-white);
         color: var(--off-black);
+
+		@include breakpoint(medium down) {
+			padding: rem-calc(25);
+		}
 	}
 
     h1 {
