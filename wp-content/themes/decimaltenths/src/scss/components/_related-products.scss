@@ -16,6 +16,10 @@
         list-style: none;
         padding: rem-calc(50);
 
+        @include breakpoint(medium down) {
+            padding: rem-calc(0);
+        }
+
         // .woocommerce-loop-product__title {
         //     @extend %h3;
         // }
