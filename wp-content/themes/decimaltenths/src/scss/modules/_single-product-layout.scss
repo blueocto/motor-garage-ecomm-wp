@@ -164,6 +164,11 @@
 			.price {
 				font-size: var(--size-l-4);
 			}
+
+			form.cart {
+				margin-bottom: $medium-spacing;
+			}
 		}
 	}
 }
+
