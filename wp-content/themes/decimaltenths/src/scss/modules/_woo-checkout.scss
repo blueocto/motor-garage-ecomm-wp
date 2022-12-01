@@ -82,6 +82,18 @@
 		}
 	}
 
+	.woocommerce-NoticeGroup {
+		padding: 0;
+		flex: 0 0 100%;
+    	max-width: 100%;
+
+		ul {
+			li {
+				margin-left: $medium-spacing;
+			}
+		}
+	}
+
 	> * {
 		@include column();
 		// small-12
