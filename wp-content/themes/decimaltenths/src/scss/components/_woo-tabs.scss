@@ -52,9 +52,14 @@
                 }
             }
 
+            &:hover,
+            &:focus {
+                text-decoration: underline;
+            }
+
             &.active {
                 a {
-                    color: var(--brand-neon-green);
+                    //color: var(--brand-neon-green);
                     border: 2px solid var(--brand-neon-green);
                     border-bottom: 2px solid var(--brand-l-grey);
                     z-index: 2;
