@@ -186,7 +186,7 @@
 	font-family: $heading-font;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
-	background-color: transparent;
+	background-color: var(--brand-neon-green);
 	border: 2px solid var(--brand-neon-green);
 	border-radius: 50px;
 	cursor: pointer;
@@ -199,7 +199,7 @@
 	&:hover,
 	&:focus {
 		color: var(--off-black);
-		background: var(--brand-neon-green);
+		background-color: transparent;
 	}
 }
 

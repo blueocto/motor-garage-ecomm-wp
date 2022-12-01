@@ -116,3 +116,9 @@ function add_additional_class_on_li($classes, $item, $args) {
     return $classes;
 }
 add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
+
+//add quantity label
+add_action( 'woocommerce_before_add_to_cart_quantity', 'echo_qty_front_add_cart' );
+function echo_qty_front_add_cart() {
+ echo '<label>Quantity</label>'; 
+}

@@ -88,10 +88,12 @@
         button {
 
             &[type=submit] {
+                background-color: transparent;
                 color: var(--brand-neon-green);
 
                 &:hover,
                 &:focus {
+                    background-color: var(--brand-neon-green);
                     color: var(--off-black);
                 }
             }
