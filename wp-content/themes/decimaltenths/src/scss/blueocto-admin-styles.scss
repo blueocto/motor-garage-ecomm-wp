@@ -24,12 +24,10 @@ html :where(.editor-styles-wrapper) {
 		"Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
 		"Helvetica Neue", sans-serif;
 
-	.wp-block {
-		max-width: var(--responsive--aligndefault-width);
-	}
-}
+	// .wp-block {
+	// 	max-width: var(--responsive--aligndefault-width);
+	// }
 
-html :where(.editor-styles-wrapper) {
 	// Headings
 	h1,
 	.h1,

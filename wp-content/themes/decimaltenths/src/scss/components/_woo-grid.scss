@@ -9,7 +9,6 @@
 // separate styles here, else Slick slide will break
 ul.products {
 	@extend %row;
-	// justify-content: center;
 	align-content: flex-start;
 	list-style: none;
 	margin: 0;
@@ -50,7 +49,6 @@ ul.products,
 	.woocommerce-loop-category__title {
 		@extend %h5;
 		margin-bottom: 0;
-		// font-weight: 400;
 	}
 
 	.product-category {
@@ -145,7 +143,6 @@ ul.products,
 			font-weight: bold;
 			line-height: 50px;
 			text-transform: uppercase;
-			// letter-spacing: $letter-spacing;
 			background-color: darkgreen;
 			border-radius: 50%;
 			z-index: 5;
@@ -179,7 +176,6 @@ ul.products,
 		.picture {
 			position: relative;
 			overflow: hidden;
-			// height: 30vh;
 			height: 0; 
             padding-top: 100%;
 			
@@ -208,27 +204,8 @@ ul.products,
 			}
 		}
 
-
-
-		// .picture {
-		// 	margin: 0 auto $large-spacing;
-		// 	// aspect ratio
-		// 	height: 0;
-		// 	padding-top: calc(762 / 503 * 100%);
-		// 	background-color: green;
-
-		// 	img {
-
-		// 		&:hover,
-		// 		&:focus {
-		// 			mix-blend-mode: multiply;
-		// 		}
-		// 	}
-		// }
-
 		.woocommerce-loop-product__title {
 			@extend %h5;
-			// font-weight: $regular;
 		}
 	}
 }
@@ -243,123 +220,3 @@ ul.products,
 		opacity: 0.5;
 	}
 }
-
-
-// WooCommerce Blocks
-// ==============================================
-
-// DIV
-// .wc-block-grid {
-
-// 	.wc-block-grid__product-image {
-// 		margin-bottom: $large-spacing;
-// 	}
-	
-// 	.wc-block-grid__product-title {
-// 		@extend %h5;
-// 		margin-bottom: 0;
-// 		// font-weight: $regular;
-// 		text-transform: uppercase;
-// 		// letter-spacing: $letter-spacing;
-// 	}
-
-// 	.woocommerce-Price-amount {
-// 		@extend %h6;
-// 		font-weight: bold;
-// 		color: darkgreen;
-
-// 		del {
-// 			opacity: 0.5;
-// 		}
-// 	}
-
-// 	// UL
-// 	.wc-block-grid__products {
-// 		@extend %row;
-// 		max-width: var(--grid-width);
-// 		margin-right: auto;
-// 		margin-left: auto;
-// 		list-style: none;
-// 		padding: 0;
-// 	}
-
-// 		// LI
-// 		.wc-block-grid__product {
-// 			@extend %column;
-// 			// small-12
-// 			flex: 0 0 100%;
-// 			max-width: 100%;
-// 		}
-
-// 			// A
-// 			.wc-block-grid__product-link {
-// 				display: block;
-// 			}
-
-	
-// 	&.has-2-columns {
-
-// 		@include breakpoint(medium) {
-
-// 			.wc-block-grid__product {
-// 				// medium-6
-// 				flex: 0 0 50%;
-// 				max-width: 50%;
-// 			}
-// 		}
-// 	}
-
-
-// 	&.has-3-columns {
-
-// 		@include breakpoint(medium) {
-
-// 			.wc-block-grid__product {
-// 				// medium-6
-// 				flex: 0 0 50%;
-// 				max-width: 50%;
-// 			}
-// 		}
-
-// 		@include breakpoint(large) {
-
-// 			.wc-block-grid__product {
-// 				// large-4
-// 				flex: 0 0 33.33333%;
-// 				max-width: 33.33333%;
-// 			}
-// 		}
-// 	}
-
-	
-// 	&.has-4-columns {
-
-// 		@include breakpoint(medium) {
-
-// 			.wc-block-grid__product {
-// 				// medium-6
-// 				flex: 0 0 50%;
-// 				max-width: 50%;
-// 			}
-// 		}
-
-// 		@include breakpoint(large) {
-
-// 			.wc-block-grid__product {
-// 				// large-4
-// 				flex: 0 0 33.33333%;
-// 				max-width: 33.33333%;
-// 			}
-// 		}
-
-// 		@include breakpoint(xlarge) {
-
-// 			.wc-block-grid__product {
-// 				// xlarge-3
-// 				flex: 0 0 25%;
-// 				max-width: 25%;
-// 			}
-// 		}
-// 	}
-// }
-
