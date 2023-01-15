@@ -50,6 +50,7 @@ jQuery(document).ready(function ($) {
 		var selectedCatID = $(this).find(':selected').data('catid');
 		carSearch(selectedCatID, "select.model", "Model");
 	});
+	
 	$(".model").change(function(){
 		var selectedCatID = $(this).find(':selected').data('catid');
 		carSearch(selectedCatID, "select.chassis", "Chassis");
